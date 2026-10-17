@@ -110,8 +110,12 @@ export async function startFixture() {
     if (url.pathname === '/beacon' || url.pathname === '/ping') return send(204, '')
     // A 307 keeps the method and the body: the browser sends the same POST to the new URL. The second
     // goes to another name for this machine, which the fixture adapter does not list.
-    if (url.pathname === '/bounce-post') return send(307, '', { location: '/items' })
-    if (url.pathname === '/bounce-post-localhost') return send(307, '', { location: `http://localhost:${port()}/items` })
+    // Delay POST redirects beyond a fixed 500 ms pause: walks must await the actual hop.
+    if (url.pathname === '/bounce-post' || url.pathname === '/bounce-post-localhost') {
+      const location = url.pathname === '/bounce-post' ? '/items' : `http://localhost:${port()}/items`
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      return send(307, '', { location })
+    }
     if (url.pathname === '/details') return send(200, DETAILS)
     if (url.pathname === '/items') return send(200, '{"ok":true}', { 'content-type': 'application/json' })
     return send(404, page('Not found', ''))
