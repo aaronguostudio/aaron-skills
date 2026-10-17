@@ -1,8 +1,8 @@
 # Security
 
-Please report vulnerabilities privately using **Security -> Report a
-vulnerability** in the GitHub repository. Private vulnerability reporting must be
-enabled when the repository is published. If that route is unavailable, use the
+Please [report vulnerabilities privately](https://github.com/aaronguostudio/aaron-skills/security/advisories/new)
+using **Security -> Report a vulnerability** in the GitHub repository. Private
+vulnerability reporting is enabled. If that route is unavailable, use the
 contact options on [the author's website](https://aaronguo.com) to request a
 private channel before sending details. Do not post credentials, customer screens
 or exploit details in public issues.

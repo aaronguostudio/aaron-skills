@@ -35,8 +35,9 @@ automatic routing, model superiority or general performance.
 
 The measured machine is macOS arm64, Node 24.18.0, Python 3.14.5, Bun 1.4.3,
 Playwright 1.62.1 and Remotion 4.0.536. The declared minimums are Node 22 and
-Python 3.11; the CI recipe targets those minimums. A remote CI run has not occurred
-before publication. An isolated fresh installation is not an external person's
+Python 3.11; the CI recipe targets those minimums. These local checks preceded publication. Remote runs of the minimum-version
+recipe are recorded in [GitHub Actions](https://github.com/aaronguostudio/aaron-skills/actions/workflows/ci.yml);
+consult the run for the release revision for its result. An isolated fresh installation is not an external person's
 clean machine.
 
 ## Reproduce
@@ -59,5 +60,6 @@ outside source repositories. See evaluation.md and releasing.md for methodology.
 Intel hardware, an external clean machine, Linux/Windows and additional
 harness/provider combinations are unverified. Voice synthesis is mocked. Human
 style acceptance and clipboard behavior in untested browsers are separate.
-After publication is authorized, enable private vulnerability reporting and
-verify the first remote CI run before calling that public release verified.
+Private vulnerability reporting is enabled on the public repository. Each release
+requires a successful remote CI run for its tagged revision; the release notes
+link to that run.

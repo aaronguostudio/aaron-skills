@@ -19,8 +19,11 @@ is not provided, and adapters are trusted code.
 
 This release does not certify other operating systems, harnesses or model
 providers. DeepSeek, GLM and MiniMax are Phase 2. Local acceptance evidence and
-limitations are in verification.md. See README.md for the installation prompt,
-SECURITY.md for private reporting and THIRD_PARTY_NOTICES.md for dependency terms.
+limitations are in [verification](https://github.com/aaronguostudio/aaron-skills/blob/v0.1.0/docs/verification.md).
+See the [README](https://github.com/aaronguostudio/aaron-skills/tree/v0.1.0#install)
+for installation, [security policy](https://github.com/aaronguostudio/aaron-skills/blob/v0.1.0/SECURITY.md)
+for private reporting, and [third-party notices](https://github.com/aaronguostudio/aaron-skills/blob/v0.1.0/THIRD_PARTY_NOTICES.md)
+for dependency terms.
 
 Built by [Aaron Guo](https://aaronguo.com), a product builder and engineer
 exploring practical AI workflows. Original project code is MIT; dependencies

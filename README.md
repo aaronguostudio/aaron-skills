@@ -6,14 +6,16 @@ Demo Capture, Walkthrough Video, and Paste Ready Update.
 
 ## Install
 
-The v0.1.0 release candidate targets **macOS and local Codex or Claude Code**.
+The v0.1.0 release targets **macOS and local Codex or Claude Code**.
 Requirements: Git, Python 3.11+, Node 22+, and FFmpeg/ffprobe. The installer adds
 pinned browser, video and Python dependencies. No customer account or paid API is
 needed for the example.
 
-From a checkout, choose your host:
+Clone the repository, then choose your host:
 
 ```sh
+git clone https://github.com/aaronguostudio/aaron-skills.git
+cd aaron-skills
 bash scripts/setup.sh --agent codex --smoke
 # Or:
 bash scripts/setup.sh --agent claude --smoke

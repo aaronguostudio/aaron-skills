@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 release candidate
+## 0.1.0 — 2026-10-17
 
 - Demo Capture, Walkthrough Video and Paste Ready Update share a local toolkit.
 - Exact business-field assertions and saved evidence geometry support checked
