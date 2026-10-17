@@ -82,6 +82,7 @@
     "packages/demo/capture/test/mutation-check.test.mjs",
     "packages/demo/capture/test/project.test.mjs",
     "packages/demo/capture/test/recorder.test.mjs",
+    "packages/demo/capture/test/redirect-wait.test.mjs",
     "packages/demo/capture/test/session.test.mjs",
     "packages/demo/config/brand-profiles.json",
     "packages/demo/contracts/evidence.mjs",

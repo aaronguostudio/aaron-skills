@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { existsSync, mkdtempSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
-import { join } from "path";
+import { basename, join } from "path";
 import { readingMs, type Step } from "../remotion/src/projects/walkthrough-video/timeline";
 import {
   NARRATION_PAD_MS,
@@ -94,7 +94,7 @@ describe("narrate", () => {
       said.push(text);
       return new TextEncoder().encode(text);
     };
-    const probe = (path: string) => (path.includes("/01-") ? 1500 : 4200);
+    const probe = (path: string) => (basename(path).startsWith("01-") ? 1500 : 4200);
     const steps = [step("Open the form"), step("Save it", { narration: "Then save it." })];
 
     const first = await narrate(run, steps, profile, synthesize, probe);

@@ -42,7 +42,7 @@ const ORIGIN = 'https://app.example.com'
 
 test('sessions live in ~/.demo-capture/<name>/<env>/, and a test can move the root', () => {
   assert.equal(captureRoot({ env: {}, home: '/home/me' }), join('/home/me', '.demo-capture'))
-  assert.equal(captureRoot({ env: { DEMO_CAPTURE_HOME: '/tmp/x/../y' }, home: '/home/me' }), '/tmp/y')
+  assert.equal(captureRoot({ env: { DEMO_CAPTURE_HOME: `${tmpdir()}/x/../y` }, home: '/home/me' }), join(tmpdir(), 'y'))
   assert.deepEqual(sessionPaths('/r', 'my-app', 'dev'), {
     dir: join('/r', 'my-app', 'dev'),
     state: join('/r', 'my-app', 'dev', 'state.json'),

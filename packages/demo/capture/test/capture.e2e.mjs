@@ -13,6 +13,7 @@ import { chromium } from 'playwright'
 import { launchArgs } from '../scripts/cli.mjs'
 import { saveState, sessionPaths } from '../scripts/session.mjs'
 import { FIXTURE_LOGIN, startFixture } from './fixture/server.mjs'
+import { UNOBSERVED_REDIRECT_DNS_FAILURE } from './fixture/demo-capture/walks/lib/follow-redirect.mjs'
 
 const TILE = resolve(import.meta.dirname, '..')
 const CLI = join(TILE, 'scripts', 'cli.mjs')
@@ -342,7 +343,15 @@ test('a post that a redirect sends to an unlisted host is refused by the browser
   assert.equal(result.code, 1, result.output)
   const capture = await readJson(join(outDir('redirected-by-name'), 'capture.json'))
   assert.equal(capture.failedStep, 'redirect')
-  assert.equal(capture.failure, "POST localhost/items was refused: localhost is not in this environment's hosts.")
+  assert.ok([
+    "POST localhost/items was refused: localhost is not in this environment's hosts.",
+    UNOBSERVED_REDIRECT_DNS_FAILURE
+  ].includes(capture.failure), capture.failure)
+  // The permitted first POST must really have reached the redirect route. A
+  // timeout before the click or an unrelated browser error is not a passing test.
+  assert.deepEqual(receivedFrom(before).filter(request => request.method === 'POST' && request.path !== '/beacon'), [
+    { method: 'POST', path: '/bounce-post-localhost', body: '{"page":"home"}' }
+  ])
   assert.deepEqual(app.requests().slice(before).filter((request) => request.host.startsWith('localhost')), [])
 })
 

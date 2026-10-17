@@ -123,7 +123,7 @@ export async function loadChromium(importPlaywright = () => import('playwright')
   }
 }
 
-const BROWSERS_FROM_CACHE = "Run the demo-tools macOS installer to install this Playwright version's Chromium."
+const BROWSERS_FROM_CACHE = "Run the Demo bundle installer to install this Playwright version's Chromium."
 
 // chromium.launch, where a browser that will not start is a refusal (exit 2) with one plain
 // sentence, not a stack trace: the first line of why, and what not to do about it.

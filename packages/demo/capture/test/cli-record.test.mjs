@@ -11,20 +11,21 @@ import { CaptureRefusal } from '../scripts/guards.mjs'
 import { sessionPaths } from '../scripts/session.mjs'
 import { LEARNING_FAILURE, main, record } from '../scripts/cli.mjs'
 
-// record() makes its temporary video folder in os.tmpdir(), which follows TMPDIR. Pointing TMPDIR at
-// a folder of this file's own makes "nothing was left behind" a statement about this file alone.
-const SAVED_TMPDIR = process.env.TMPDIR
+// Point the OS's preferred temp variable at this file's own directory, so cleanup
+// assertions observe only this file. Windows checks TEMP before TMPDIR.
+const TMP_KEY = process.platform === 'win32' ? 'TEMP' : 'TMPDIR'
+const SAVED_TMPDIR = process.env[TMP_KEY]
 const TMP = mkdtempSync(join(tmpdir(), 'demo-capture-record-tmp-'))
-process.env.TMPDIR = TMP
+process.env[TMP_KEY] = TMP
 // Every folder these tests make is under TMP, so removing it removes them all.
 after(() => {
-  if (SAVED_TMPDIR === undefined) delete process.env.TMPDIR
-  else process.env.TMPDIR = SAVED_TMPDIR
+  if (SAVED_TMPDIR === undefined) delete process.env[TMP_KEY]
+  else process.env[TMP_KEY] = SAVED_TMPDIR
   rmSync(TMP, { recursive: true, force: true })
 })
 const videoFolders = () => readdirSync(TMP).filter((name) => name.startsWith('demo-capture-video-'))
 
-const CACHE_SENTENCE = "Run the demo-tools macOS installer to install this Playwright version's Chromium."
+const CACHE_SENTENCE = "Run the Demo bundle installer to install this Playwright version's Chromium."
 
 // A fake Playwright chromium. What it was asked is kept on the returned object.
 //   videoSaved   false: video.saveAs writes nothing; 'throws': it rejects

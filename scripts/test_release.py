@@ -37,3 +37,13 @@ class ReleaseTests(unittest.TestCase):
     def test_public_manifest_contains_all_runtime_files(self):
         from bundle import bundle_files
         self.assertFalse(set(bundle_files()) - set(public_files()))
+
+    def test_maintainer_imports_require_exported_test_fixtures(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            driver, fixture = root / 'driver.mjs', root / 'fixture.mjs'
+            driver.write_text("import { fixture } from '../capture/test/fixture.mjs'\n")
+            fixture.write_text('export const fixture = true\n')
+            scan_public({'scripts/driver.mjs': driver, 'capture/test/fixture.mjs': fixture})
+            with self.assertRaisesRegex(ValueError, 'Missing bundled imports'):
+                scan_public({'scripts/driver.mjs': driver})

@@ -71,15 +71,16 @@ def private_path(path, directory=False):
 @contextmanager
 def installation_lock(root):
     root.mkdir(parents=True, exist_ok=True)
-    with (root / '.install.lock').open('a+b') as lock:
+    with (root / '.install.lock').open('a+b', buffering=0) as lock:
         if os.name == 'nt':
             import msvcrt
-            lock.seek(0)
-            if not lock.read(1):
-                lock.write(b'0')
-                lock.flush()
-            lock.seek(0)
-            acquire = lambda: msvcrt.locking(lock.fileno(), msvcrt.LK_NBLCK, 1)
+            def acquire():
+                # Windows byte-range locks also deny reads of the locked byte.
+                # Inspect metadata rather than reading another installer's lock.
+                if os.fstat(lock.fileno()).st_size == 0:
+                    lock.write(b'0')
+                lock.seek(0)
+                msvcrt.locking(lock.fileno(), msvcrt.LK_NBLCK, 1)
             release = lambda: (lock.seek(0), msvcrt.locking(lock.fileno(), msvcrt.LK_UNLCK, 1))
         else:
             import fcntl

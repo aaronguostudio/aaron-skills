@@ -48,8 +48,8 @@ def scan_public(files):
         raise ValueError('Public-source privacy check failed:\n' + '\n'.join(failures))
     # Test sources deliberately contain synthetic module strings; execution checks
     # their real imports. Runtime closure is checked independently by bundle.metadata.
-    check_imports({name: path for name, path in files.items()
-                   if '/test/' not in name and '.test.' not in name})
+    check_imports(files, sources={name: path for name, path in files.items()
+                                if '/test/' not in name and '.test.' not in name})
     check_documents(files)
 
 

@@ -23,11 +23,11 @@ def bundle_files(root=ROOT):
     return files
 
 
-def check_imports(files):
+def check_imports(files, *, sources=None):
     """Check relative module closure in the exported set, including TS type imports."""
     import posixpath
     missing = []
-    for relative, source in files.items():
+    for relative, source in (files if sources is None else sources).items():
         if source.suffix not in ('.ts', '.tsx', '.mjs'):
             continue
         for ref in re.findall(r'''(?:from\s*|import\s*)["'](\.[^"']+)["']''', source.read_text(encoding='utf-8')):

@@ -2,6 +2,9 @@ name: Checks
 on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 jobs:
   platform:
     strategy:
@@ -9,6 +12,8 @@ jobs:
       matrix:
         os: [macos-15, ubuntu-24.04, windows-2022]
     runs-on: ${{ matrix.os }}
+    env:
+      PYTHONUTF8: '1'
     defaults:
       run:
         shell: bash
@@ -25,7 +30,7 @@ jobs:
       - name: Dependencies
         run: |
           if [ "$RUNNER_OS" = macOS ]; then brew install ffmpeg; fi
-          if [ "$RUNNER_OS" = Linux ]; then sudo apt-get update && sudo apt-get install -y ffmpeg python3-venv fonts-noto-cjk; fi
+          if [ "$RUNNER_OS" = Linux ]; then sudo apt-get update && sudo apt-get install -y ffmpeg python3-venv fonts-noto-cjk xvfb; fi
           if [ "$RUNNER_OS" = Windows ]; then choco install ffmpeg -y --no-progress; fi
           npm ci
           npm ci --prefix packages/demo/capture
@@ -33,6 +38,11 @@ jobs:
           python -m pip install -r scripts/requirements.txt
           node packages/demo/capture/node_modules/playwright/cli.js install chromium
           if [ "$RUNNER_OS" = Linux ]; then node packages/demo/capture/node_modules/playwright/cli.js install-deps chromium; fi
+      - name: Runtime versions
+        run: |
+          node --version
+          python --version
+          python -c 'import platform; print(platform.platform()); print(platform.machine())'
       - name: PowerShell syntax
         if: runner.os == 'Windows'
         shell: pwsh
@@ -49,15 +59,21 @@ jobs:
           npm audit --omit=dev --audit-level=high
           npm audit --prefix packages/demo/capture --omit=dev --audit-level=high
           npm audit --prefix packages/demo/remotion --omit=dev --audit-level=high
-      - name: Installed smoke
+      - name: Install bundle
         run: >-
           python scripts/install.py --agent both
           --root "$RUNNER_TEMP/demo install/runtime"
-          --bin-dir "$RUNNER_TEMP/demo install/bin" --smoke
+          --bin-dir "$RUNNER_TEMP/demo install/bin"
       - name: Installed revision, playback and clipboard
         run: |
           release=$(python -c 'import os,sys;from pathlib import Path;sys.path.insert(0,"scripts");from managed_registration import active_release;root=Path(os.environ["RUNNER_TEMP"])/"demo install/runtime";print(active_release(root) if os.name=="nt" else root/"current")')
           node scripts/verify-installed.mjs "$release"
+      - name: Installed sign-in and recovery
+        run: |
+          release=$(python -c 'import os,sys;from pathlib import Path;sys.path.insert(0,"scripts");from managed_registration import active_release;root=Path(os.environ["RUNNER_TEMP"])/"demo install/runtime";print(active_release(root) if os.name=="nt" else root/"current")')
+          if [ "$RUNNER_OS" = Linux ]; then xvfb-run -a node scripts/verify-sign-in.mjs "$release"; else node scripts/verify-sign-in.mjs "$release"; fi
+          skills=$(python -c 'from pathlib import Path;print(Path.home()/".agents/skills")')
+          python scripts/verify-lifecycle.py --root "$RUNNER_TEMP/demo install/runtime" --skills-dir "$skills" --bin-dir "$RUNNER_TEMP/demo install/bin"
       - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
         if: runner.os == 'macOS'
         env:

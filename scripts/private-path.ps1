@@ -4,13 +4,14 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent()
-$acl = if ($Directory) {
-    New-Object System.Security.AccessControl.DirectorySecurity
-} else {
-    New-Object System.Security.AccessControl.FileSecurity
-}
-$acl.SetOwner($identity.User)
+# Load and modify only the DACL. A fresh security descriptor passed to Set-Acl
+# can also request audit/owner updates, which require elevated privileges.
+$item = Get-Item -LiteralPath $Target -Force
+$acl = $item.GetAccessControl([System.Security.AccessControl.AccessControlSections]::Access)
 $acl.SetAccessRuleProtection($true, $false)
+foreach ($entry in @($acl.GetAccessRules($true, $false, [System.Security.Principal.SecurityIdentifier]))) {
+    $acl.RemoveAccessRuleSpecific($entry)
+}
 $inherit = if ($Directory) {
     [System.Security.AccessControl.InheritanceFlags]'ContainerInherit, ObjectInherit'
 } else {
@@ -24,7 +25,7 @@ $rule = [System.Security.AccessControl.FileSystemAccessRule]::new(
     [System.Security.AccessControl.AccessControlType]::Allow
 )
 $acl.AddAccessRule($rule)
-Set-Acl -LiteralPath $Target -AclObject $acl
+$item.SetAccessControl($acl)
 # Fail closed if setting or reading back the private ACL is unavailable.
 $actual = Get-Acl -LiteralPath $Target
 if (-not $actual.AreAccessRulesProtected) { throw 'Private ACL inheritance was not disabled.' }

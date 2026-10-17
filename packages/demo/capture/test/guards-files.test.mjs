@@ -77,9 +77,11 @@ test('the run lock admits one run, refuses a live holder, and takes over from a 
 test('the run lock treats a process it may not signal as alive', async () => {
   const dir = tempDir('lock-')
   const lock = join(dir, 'lock')
-  // pid 1 always exists and belongs to root: signalling it fails with EPERM.
-  writeFileSync(lock, '1')
-  await rejects(acquireRunLock(lock), /Another run \(pid 1\)/)
+  // The Unix init process and Windows System process cannot be signalled by an
+  // ordinary account. PID 1 is not a live process on Windows.
+  const protectedPid = process.platform === 'win32' ? 4 : 1
+  writeFileSync(lock, String(protectedPid))
+  await rejects(acquireRunLock(lock), new RegExp(`Another run \\(pid ${protectedPid}\\)`))
   writeFileSync(lock, String(process.pid))
   await rejects(acquireRunLock(lock), /Another run/)
   // No process has this pid (macOS and Linux stop well below it), so the lock is stale.

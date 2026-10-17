@@ -50,7 +50,7 @@ class RevisionTests(unittest.TestCase):
         return revise(self.source, self.patch, self.output)
 
     def test_caption_and_focus_derivative_preserves_source_and_media(self):
-        before = {str(p.relative_to(self.source)): digest(p) for p in self.source.rglob('*') if p.is_file()}
+        before = {p.relative_to(self.source).as_posix(): digest(p) for p in self.source.rglob('*') if p.is_file()}
         result = self.apply({'result': {'caption': 'Revised', 'focus': [{'box': [10, 20, 80, 40], 'fromMs': 100, 'toMs': 200}]}})
         self.assertEqual(result['sourceHashes'], before)
         self.assertFalse(result['businessAssertionsReplayed'])

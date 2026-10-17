@@ -173,7 +173,7 @@ const broken = {
     throw new Error("browserType.launch: Executable doesn't exist at /cache/chromium-1234\nLooks like Playwright was just installed")
   }
 }
-const NOT_STARTED = /^demo-capture: The browser did not start \(browserType\.launch: Executable doesn't exist at \/cache\/chromium-1234\)\. Run the demo-tools macOS installer to install this Playwright version's Chromium\.$/
+const NOT_STARTED = /^demo-capture: The browser did not start \(browserType\.launch: Executable doesn't exist at \/cache\/chromium-1234\)\. Run the Demo bundle installer to install this Playwright version's Chromium\.$/
 
 test('sign-in with a browser that will not start exits 2 with one sentence and releases the lock', async () => {
   const root = scratch('demo-capture-cli-')
@@ -212,7 +212,7 @@ test('a recording with a browser that will not start exits 2 with the same sente
   assert.equal(code, 2, lines.join('\n'))
   assert.equal(lines.length, 2)
   // The run folder is named as soon as it is made, so a run that dies later still says where it is.
-  assert.match(lines[0], /^Run folder: .*\/fixture-app\/runs\/\d{8}-\d{6}-outside-host$/)
+  assert.match(lines[0].replaceAll('\\', '/'), /^Run folder: .*\/fixture-app\/runs\/\d{8}-\d{6}-outside-host$/)
   assert.match(lines[1], NOT_STARTED)
   assert.equal(existsSync(session.lock), false)
   // A refusal leaves no empty run folder behind.
@@ -248,7 +248,7 @@ test('an --out in the capture folder must be under the project\'s runs folder, a
     })
     assert.equal(code, 2, out)
     assert.match(
-      lines.join('\n'),
+      lines.join('\n').replaceAll('\\', '/'),
       /^demo-capture: The run folder .* is in the capture folder .*, where a run folder belongs under .*\/fixture-app\/runs; pick another --out$/,
       out
     )
