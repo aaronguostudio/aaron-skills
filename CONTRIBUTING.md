@@ -47,3 +47,8 @@ out of tests; release actions require the maintainer's explicit authorization.
 
 Public-history checks require GitHub noreply author and committer emails. Set
 that identity for this repository without changing your global Git configuration.
+
+PR CI validates identities on the actual base and head histories; GitHub's
+disposable test-merge identity is outside the repository's control. Every
+reachable blob, including merged and deleted content, is still scanned. Push and
+release checks require noreply identities across all reachable history.

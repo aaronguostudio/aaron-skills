@@ -53,7 +53,15 @@ jobs:
             if ($parseErrors.Count) { throw ($parseErrors | Out-String) }
           }
       - name: Deterministic checks and public history
-        run: npm run check -- --public-history --python python
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = pull_request ]; then
+            python scripts/check.py --public-history --python python --history-identity-ref "$PR_BASE_SHA" --history-identity-ref "$PR_HEAD_SHA"
+          else
+            python scripts/check.py --public-history --python python
+          fi
       - name: Dependency audit
         run: |
           npm audit --omit=dev --audit-level=high

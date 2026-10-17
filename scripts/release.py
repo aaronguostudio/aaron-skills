@@ -53,10 +53,16 @@ def scan_public(files):
     check_documents(files)
 
 
-def scan_history(root):
+def scan_history(root, *, identity_refs=None):
     def git(*args):
         return subprocess.check_output(['git', '-C', str(root), *args])
-    emails = git('log', '--all', '--format=%ae%n%ce').decode().splitlines()
+    # PR CI also checks GitHub's disposable merge commit. Its generated identity
+    # is outside our control; validate identities on both actual PR histories,
+    # while still scanning every reachable blob, including the merged tree.
+    refs = identity_refs or ['--all']
+    if identity_refs and any(not re.fullmatch(r'[a-fA-F0-9]{40}', ref) for ref in identity_refs):
+        raise ValueError('History identity refs must be full commit hashes')
+    emails = git('log', '--format=%ae%n%ce', *refs).decode().splitlines()
     if not emails or any(not re.fullmatch(r'[A-Za-z0-9+_-]+@users\.noreply\.github\.com', email) for email in emails):
         raise ValueError('Public history must use GitHub noreply author/committer identities; values withheld')
     # Publication carries deleted files too. Inspect every reachable text blob.

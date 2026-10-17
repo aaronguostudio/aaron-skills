@@ -5,10 +5,33 @@ import subprocess
 import tempfile
 import unittest
 
-from release import export, public_files, scan_public
+from release import export, public_files, scan_public, scan_history
 
 
 class ReleaseTests(unittest.TestCase):
+    def test_pr_identity_refs_do_not_exclude_merged_or_deleted_blobs(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / 'public'
+            result = export(root, author_name='Fixture Maintainer', author_email='1+fixture@users.noreply.github.com')
+            def git(*args):
+                return subprocess.check_output(['git', '-C', str(root), *args], stderr=subprocess.PIPE)
+            def commit():
+                git('add', '.')
+                git('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid', 'commit', '-m', 'Synthetic CI merge identity')
+            (root / 'synthetic.txt').write_text('public fixture', encoding='utf-8')
+            commit()
+            with self.assertRaisesRegex(ValueError, 'noreply'):
+                scan_history(root)
+            scan_history(root, identity_refs=[result['revision']])
+            with self.assertRaisesRegex(ValueError, 'full commit hashes'):
+                scan_history(root, identity_refs=['--all'])
+            (root / 'synthetic.txt').write_text('/' + 'Users' + '/' + 'private-fixture/deleted', encoding='utf-8')
+            commit()
+            (root / 'synthetic.txt').unlink()
+            commit()
+            with self.assertRaisesRegex(ValueError, 'Personal path in reachable history blob'):
+                scan_history(root, identity_refs=[result['revision']])
+
     def test_public_candidate_has_one_noreply_commit_and_no_internal_provenance(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / 'public source'

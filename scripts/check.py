@@ -18,12 +18,15 @@ def main():
     parser.add_argument('--python', default=sys.executable, help='Python with Pillow for page tests')
     parser.add_argument('--skip-browser', action='store_true', help='Quick iteration only; not the release gate')
     parser.add_argument('--public-history', action='store_true', help='Require sanitized public commit metadata/history')
+    parser.add_argument('--history-identity-ref', action='append', help='Actual PR base/head commit hashes; blob scanning still covers all refs')
     args = parser.parse_args()
     metadata()
     files = public_files()
     scan_public(files)
     if args.public_history:
-        scan_history(ROOT)
+        scan_history(ROOT, identity_refs=args.history_identity_ref)
+    elif args.history_identity_ref:
+        parser.error('--history-identity-ref requires --public-history')
     for relative, path in files.items():
         if path.suffix == '.py':
             ast.parse(path.read_text(encoding='utf-8'), filename=relative)

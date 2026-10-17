@@ -23,7 +23,7 @@ skill prerequisite wording are excluded:
 ## Completed acceptance
 
 - Source gate: 253 capture tests, 68 renderer/timeline/narration/brand tests,
-  41 Python tooling tests, 28 page/annotation tests and 19 real Chromium tests.
+  42 Python tooling tests, 28 page/annotation tests and 19 real Chromium tests.
   Platform-specific skips remain visible: Windows skips POSIX-only mutation
   harness/registration/bootstrap cases; POSIX skips the Windows-only ACL case.
   The additional redirect helper tests and stronger real-browser POST assertion
