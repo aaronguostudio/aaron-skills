@@ -2,6 +2,7 @@
 """Shared deterministic maintainer/CI gate. Never runs a model or voice provider."""
 import argparse
 import ast
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -28,7 +29,10 @@ def main():
             ast.parse(path.read_text(encoding='utf-8'), filename=relative)
         elif path.suffix == '.mjs':
             subprocess.run(['node', '--check', str(path)], check=True)
-    subprocess.run(['bash', '-n', 'scripts/setup.sh'], cwd=ROOT, check=True)
+    # Native Windows does not need Bash/WSL. CI parses PowerShell there;
+    # validate the POSIX entry point on the POSIX matrix hosts.
+    if os.name != 'nt':
+        subprocess.run(['bash', '-n', 'scripts/setup.sh'], cwd=ROOT, check=True)
     commands = [
         ['node', 'node_modules/typescript/bin/tsc', '--noEmit'],
         npm_command({'npm': shutil.which('npm'), 'node': shutil.which('node')}, 'run', 'test:unit', '--prefix', 'packages/demo/capture'),
