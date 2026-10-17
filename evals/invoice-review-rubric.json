@@ -1,0 +1,28 @@
+{
+  "case": "invoice-review",
+  "kind": "artifact-and-execution-review",
+  "modelVisibility": "The task brief and application source are supplied; this rubric is withheld.",
+  "requiredEvidence": [
+    "North Workshop and Needs review filters visibly selected; two matching invoices total CAD 2000",
+    "INV-2041 category Office supplies and review note September workshop setup saved and visible",
+    "INV-2041 and INV-2042 selected; approval preview visibly shows exactly two invoices totaling CAD 2000",
+    "Approval finishes on settled UI, without a loading frame presented as successful evidence",
+    "BATCH-1001 visibly shows two approved invoices, total CAD 2000 and retained invoice coding"
+  ],
+  "technicalChecks": [
+    "Capture passed; actual UI interaction recorded; write gate kept enabled and explicitly authorized",
+    "Counts and money captions have visible evidence and meaningful assertions in the walk",
+    "Every held frame and each wait ending reviewed for caption alignment, settled content, outlines and pointer position",
+    "MP4 decodes fully, plays, is silent, and has useful chapters",
+    "HTML contains 2-4 correct screenshots, playable local video and functioning text/rich/image copy",
+    "Final application state has expected saved coding and approved invoice set; unrelated invoices unchanged",
+    "Application source and installed runtime unchanged; outputs outside Git; no external send/provider call"
+  ],
+  "editorialChecks": [
+    "Message is short enough for a teammate and uses actual UI labels",
+    "No inferred signature, unrequested commitments, fictional product claims or promised live links",
+    "Length follows feature scope; no repeated steps added just for duration"
+  ],
+  "metrics": ["completion", "humanInterventions", "permissionDenials", "wallTime", "tokensByCacheClass", "toolCalls", "errorToolResults", "captureAttempts", "renderAttempts", "videoDuration", "steps", "assertionCoverage", "editorialIssues"],
+  "limits": "One run per arm, fictional application, unblinded reviewer; no statistical or general productivity claim. Raw take history and self-repair are retained."
+}

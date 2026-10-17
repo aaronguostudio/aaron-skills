@@ -1,0 +1,4 @@
+interface:
+  display_name: "Walkthrough Video"
+  short_description: "Render guided videos from passed captures"
+  default_prompt: "Use $walkthrough-video to render this passed capture with review stills."

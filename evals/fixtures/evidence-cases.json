@@ -1,0 +1,358 @@
+{
+  "viewport": {
+    "w": 1440,
+    "h": 900
+  },
+  "cases": [
+    {
+      "id": "complete",
+      "valid": true,
+      "step": {
+        "id": "result",
+        "caption": "Approved total",
+        "kind": "action",
+        "startMs": 100,
+        "endMs": 300,
+        "clicks": [],
+        "shot": null,
+        "targets": {
+          "total": {
+            "boxes": [
+              {
+                "x": 10,
+                "y": 20,
+                "w": 80,
+                "h": 40
+              }
+            ],
+            "fromMs": 120,
+            "toMs": 290
+          }
+        },
+        "evidence": {
+          "total": {
+            "kind": "dollarMinor",
+            "expected": 200000
+          }
+        },
+        "focus": [
+          {
+            "box": [
+              10,
+              20,
+              80,
+              40
+            ],
+            "fromMs": 120,
+            "toMs": 290
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing-highlight",
+      "valid": false,
+      "step": {
+        "id": "result",
+        "caption": "Approved total",
+        "kind": "action",
+        "startMs": 100,
+        "endMs": 300,
+        "clicks": [],
+        "shot": null,
+        "targets": {
+          "total": {
+            "boxes": [
+              {
+                "x": 10,
+                "y": 20,
+                "w": 80,
+                "h": 40
+              }
+            ],
+            "fromMs": 120,
+            "toMs": 290
+          }
+        },
+        "evidence": {
+          "total": {
+            "kind": "dollarMinor",
+            "expected": 200000
+          }
+        },
+        "focus": []
+      }
+    },
+    {
+      "id": "narrow-highlight",
+      "valid": false,
+      "step": {
+        "id": "result",
+        "caption": "Approved total",
+        "kind": "action",
+        "startMs": 100,
+        "endMs": 300,
+        "clicks": [],
+        "shot": null,
+        "targets": {
+          "total": {
+            "boxes": [
+              {
+                "x": 10,
+                "y": 20,
+                "w": 80,
+                "h": 40
+              }
+            ],
+            "fromMs": 120,
+            "toMs": 290
+          }
+        },
+        "evidence": {
+          "total": {
+            "kind": "dollarMinor",
+            "expected": 200000
+          }
+        },
+        "focus": [
+          {
+            "box": [
+              10,
+              20,
+              40,
+              40
+            ],
+            "fromMs": 120,
+            "toMs": 290
+          }
+        ]
+      }
+    },
+    {
+      "id": "late-highlight",
+      "valid": false,
+      "step": {
+        "id": "result",
+        "caption": "Approved total",
+        "kind": "action",
+        "startMs": 100,
+        "endMs": 300,
+        "clicks": [],
+        "shot": null,
+        "targets": {
+          "total": {
+            "boxes": [
+              {
+                "x": 10,
+                "y": 20,
+                "w": 80,
+                "h": 40
+              }
+            ],
+            "fromMs": 120,
+            "toMs": 290
+          }
+        },
+        "evidence": {
+          "total": {
+            "kind": "dollarMinor",
+            "expected": 200000
+          }
+        },
+        "focus": [
+          {
+            "box": [
+              10,
+              20,
+              80,
+              40
+            ],
+            "fromMs": 130,
+            "toMs": 290
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing-target",
+      "valid": false,
+      "step": {
+        "id": "result",
+        "caption": "Approved total",
+        "kind": "action",
+        "startMs": 100,
+        "endMs": 300,
+        "clicks": [],
+        "shot": null,
+        "targets": {},
+        "evidence": {
+          "total": {
+            "kind": "dollarMinor",
+            "expected": 200000
+          }
+        },
+        "focus": [
+          {
+            "box": [
+              10,
+              20,
+              80,
+              40
+            ],
+            "fromMs": 120,
+            "toMs": 290
+          }
+        ]
+      }
+    },
+    {
+      "id": "negative-receipt",
+      "valid": false,
+      "step": {
+        "id": "result",
+        "caption": "Approved total",
+        "kind": "action",
+        "startMs": 100,
+        "endMs": 300,
+        "clicks": [],
+        "shot": null,
+        "targets": {
+          "total": {
+            "boxes": [
+              {
+                "x": 10,
+                "y": 20,
+                "w": 80,
+                "h": 40
+              }
+            ],
+            "fromMs": 120,
+            "toMs": 290
+          }
+        },
+        "evidence": {
+          "total": {
+            "kind": "dollarMinor",
+            "expected": -1
+          }
+        },
+        "focus": [
+          {
+            "box": [
+              10,
+              20,
+              80,
+              40
+            ],
+            "fromMs": 120,
+            "toMs": 290
+          }
+        ]
+      }
+    },
+    {
+      "id": "string-money",
+      "valid": false,
+      "step": {
+        "id": "result",
+        "caption": "Approved total",
+        "kind": "action",
+        "startMs": 100,
+        "endMs": 300,
+        "clicks": [],
+        "shot": null,
+        "targets": {
+          "total": {
+            "boxes": [
+              {
+                "x": 10,
+                "y": 20,
+                "w": 80,
+                "h": 40
+              }
+            ],
+            "fromMs": 120,
+            "toMs": 290
+          }
+        },
+        "evidence": {
+          "total": {
+            "kind": "dollarMinor",
+            "expected": "200000"
+          }
+        },
+        "focus": [
+          {
+            "box": [
+              10,
+              20,
+              80,
+              40
+            ],
+            "fromMs": 120,
+            "toMs": 290
+          }
+        ]
+      }
+    },
+    {
+      "id": "offscreen-target",
+      "valid": false,
+      "step": {
+        "id": "result",
+        "caption": "Approved total",
+        "kind": "action",
+        "startMs": 100,
+        "endMs": 300,
+        "clicks": [],
+        "shot": null,
+        "targets": {
+          "total": {
+            "boxes": [
+              {
+                "x": 1500,
+                "y": 20,
+                "w": 80,
+                "h": 40
+              }
+            ],
+            "fromMs": 120,
+            "toMs": 290
+          }
+        },
+        "evidence": {
+          "total": {
+            "kind": "dollarMinor",
+            "expected": 200000
+          }
+        },
+        "focus": [
+          {
+            "box": [
+              10,
+              20,
+              80,
+              40
+            ],
+            "fromMs": 120,
+            "toMs": 290
+          }
+        ]
+      }
+    },
+    {
+      "id": "legacy-contract-1",
+      "valid": true,
+      "step": {
+        "id": "result",
+        "caption": "Approved total",
+        "kind": "action",
+        "startMs": 100,
+        "endMs": 300,
+        "clicks": [],
+        "shot": null,
+        "focus": []
+      }
+    }
+  ]
+}

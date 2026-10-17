@@ -1,0 +1,20 @@
+{
+  "profiles": {
+    "demo": {
+      "name": "Demo App",
+      "slogan": "Show what changed.",
+      "primary": "#172033",
+      "parts": [
+        {
+          "kind": "rect",
+          "x": 2,
+          "y": 2,
+          "width": 16,
+          "height": 16,
+          "rx": 3
+        }
+      ],
+      "viewBox": "0 0 20 20"
+    }
+  }
+}

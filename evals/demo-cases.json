@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "kind": "routing-and-decision",
+  "cases": [
+    {
+      "id": "record-local",
+      "prompt": "Make a short guided demo of the feature in our local web app. Use its existing adapter. The local walk is read-only.",
+      "expected": {
+        "requiredSkills": [
+          "demo-capture",
+          "walkthrough-video"
+        ],
+        "allowedSkills": [
+          "demo-capture",
+          "walkthrough-video"
+        ],
+        "operation": "capture",
+        "reuseCapture": false,
+        "needsAuthorization": false
+      }
+    },
+    {
+      "id": "narration-only",
+      "prompt": "Here is a passed capture. Change only the narration to a concise English voiceover. My own voice profile is configured and I authorize the account usage for this run.",
+      "expected": {
+        "requiredSkills": [
+          "walkthrough-video"
+        ],
+        "allowedSkills": [
+          "walkthrough-video"
+        ],
+        "operation": "render",
+        "reuseCapture": true,
+        "needsAuthorization": false
+      }
+    },
+    {
+      "id": "failed-capture",
+      "prompt": "Render this capture into a customer video. capture.json says status failed at save because an error toast was shown.",
+      "expected": {
+        "requiredSkills": [
+          "walkthrough-video"
+        ],
+        "allowedSkills": [
+          "walkthrough-video",
+          "demo-capture"
+        ],
+        "operation": "repair",
+        "reuseCapture": false,
+        "needsAuthorization": false
+      }
+    },
+    {
+      "id": "screenshot-update",
+      "prompt": "Prepare a paste-ready Teams update using these screenshots. No video is needed. I will send it myself.",
+      "expected": {
+        "requiredSkills": [
+          "paste-ready-update"
+        ],
+        "allowedSkills": [
+          "paste-ready-update"
+        ],
+        "operation": "page",
+        "reuseCapture": false,
+        "needsAuthorization": false
+      }
+    },
+    {
+      "id": "backend-debug",
+      "prompt": "Investigate why this API endpoint returns HTTP 500. I need a code fix and no customer communication.",
+      "expected": {
+        "requiredSkills": [],
+        "allowedSkills": [],
+        "operation": "none",
+        "reuseCapture": false,
+        "needsAuthorization": false
+      }
+    },
+    {
+      "id": "production-pending",
+      "prompt": "Record a demo using the existing production adapter. The walk is read-only. You have no production go-ahead for this run yet.",
+      "expected": {
+        "requiredSkills": [
+          "demo-capture"
+        ],
+        "allowedSkills": [
+          "demo-capture",
+          "walkthrough-video"
+        ],
+        "operation": "capture",
+        "reuseCapture": false,
+        "needsAuthorization": true
+      }
+    },
+    {
+      "id": "production-approved",
+      "prompt": "For this run I explicitly authorize the existing read-only production walkthrough. Record a short guided demo, and keep the configured guards.",
+      "expected": {
+        "requiredSkills": [
+          "demo-capture",
+          "walkthrough-video"
+        ],
+        "allowedSkills": [
+          "demo-capture",
+          "walkthrough-video"
+        ],
+        "operation": "capture",
+        "reuseCapture": false,
+        "needsAuthorization": false
+      }
+    },
+    {
+      "id": "caption-revision",
+      "prompt": "The capture already passed. Render the same walkthrough with French captions instead of English. Do not change the application or add narration.",
+      "expected": {
+        "requiredSkills": [
+          "walkthrough-video"
+        ],
+        "allowedSkills": [
+          "walkthrough-video"
+        ],
+        "operation": "render",
+        "reuseCapture": true,
+        "needsAuthorization": false
+      }
+    }
+  ]
+}

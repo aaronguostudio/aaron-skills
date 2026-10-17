@@ -1,0 +1,122 @@
+import json
+from pathlib import Path
+import tempfile
+import os
+import stat
+import unittest
+from revise_capture import digest, revise
+from capture_view import inspect_capture
+
+class RevisionTests(unittest.TestCase):
+    def test_revision_is_private_with_a_permissive_shell_umask(self):
+        previous = os.umask(0o022)
+        try:
+            self.apply({'result': {'caption': 'Revised'}})
+        finally:
+            os.umask(previous)
+        self.assertEqual(stat.S_IMODE(self.output.stat().st_mode), 0o700)
+        for path in self.output.rglob('*'):
+            if path.is_file():
+                self.assertEqual(stat.S_IMODE(path.stat().st_mode), 0o600)
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.source = self.root / 'source'; self.source.mkdir()
+        self.output = self.root / 'revision'
+        self.patch = self.root / 'patch.json'
+        (self.source / 'capture.json').write_text(json.dumps({'version': 1, 'status': 'passed', 'viewport': {'w': 1440, 'h': 900}}))
+        (self.source / 'steps.json').write_text(json.dumps([{'id': 'result', 'caption': 'Original', 'kind': 'action', 'startMs': 100, 'endMs': 200, 'shot': 'shots/result.png', 'clicks': []}]))
+        (self.source / 'video.webm').write_bytes(b'original video')
+        (self.source / 'shots').mkdir(); (self.source / 'shots/result.png').write_bytes(b'original screenshot')
+
+    def apply(self, changes):
+        self.patch.write_text(json.dumps({'steps': changes}))
+        return revise(self.source, self.patch, self.output)
+
+    def test_caption_and_focus_derivative_preserves_source_and_media(self):
+        before = {str(p.relative_to(self.source)): digest(p) for p in self.source.rglob('*') if p.is_file()}
+        result = self.apply({'result': {'caption': 'Revised', 'focus': [{'box': [10, 20, 80, 40], 'fromMs': 100, 'toMs': 200}]}})
+        self.assertEqual(result['sourceHashes'], before)
+        self.assertFalse(result['businessAssertionsReplayed'])
+        for name, expected in before.items():
+            self.assertEqual(digest(self.source / name), expected)
+            if name != 'steps.json': self.assertEqual(digest(self.output / name), expected)
+        self.assertEqual(json.loads((self.output / 'steps.json').read_text())[0]['caption'], 'Revised')
+        (self.output / 'video.webm').write_bytes(b'changed derivative')
+        self.assertEqual(digest(self.source / 'video.webm'), before['video.webm'])
+        with self.assertRaisesRegex(ValueError, 'new folder'): revise(self.source, self.patch, self.output)
+
+    def test_rejects_evidence_changes_unknown_ids_bad_boxes_and_times_before_output(self):
+        for change in [
+            {'missing': {'caption': 'Unknown'}}, {'result': {'endMs': 999}},
+            {'result': {'clicks': []}}, {'result': {'caption': ''}}, {'result': None},
+            {'result': {'focus': [{'box': [-1, 0, 20, 20], 'fromMs': 100, 'toMs': 200}]}},
+            {'result': {'focus': [{'box': [1400, 0, 100, 20], 'fromMs': 100, 'toMs': 200}]}},
+            {'result': {'focus': [{'box': [0, 0, 10, 20], 'fromMs': 0, 'toMs': 200}]}},
+        ]:
+            with self.subTest(change=change), self.assertRaises(ValueError): self.apply(change)
+            self.assertFalse(self.output.exists())
+
+    def test_failed_capture_and_symlink_assets_refused(self):
+        path = self.source / 'capture.json'; capture = json.loads(path.read_text())
+        capture['status'] = 'failed'; path.write_text(json.dumps(capture))
+        with self.assertRaisesRegex(ValueError, 'Only passed'): self.apply({'result': {'caption': 'Revised'}})
+        capture['status'] = 'passed'; path.write_text(json.dumps(capture))
+        (self.source / 'video.webm').unlink(); (self.source / 'video.webm').symlink_to(self.root / 'outside')
+        (self.root / 'outside').write_bytes(b'not captured')
+        with self.assertRaisesRegex(ValueError, 'regular files'): self.apply({'result': {'caption': 'Revised'}})
+
+    def test_output_overlap_and_git_are_refused(self):
+        self.patch.write_text(json.dumps({'steps': {'result': {'caption': 'Revised'}}}))
+        for output in [self.source, self.source / 'derived', self.root]:
+            with self.assertRaises(ValueError): revise(self.source, self.patch, output)
+        repo = self.root / 'repo'; repo.mkdir(); (repo / '.git').write_text('gitdir: elsewhere')
+        with self.assertRaisesRegex(ValueError, 'outside Git'): revise(self.source, self.patch, repo / 'derived')
+
+    def evidence_step(self, complete=True):
+        path = self.source / 'steps.json'; step = json.loads(path.read_text())[0]
+        step['targets'] = {name: {'boxes': [{'x': x, 'y': 20, 'w': 80, 'h': 40}], 'fromMs': 120, 'toMs': 190}
+                           for name, x in [('count', 10), ('total', 110), ('status', 210)]}
+        step['evidence'] = {'count': {'kind': 'integer', 'expected': 2}, 'total': {'kind': 'dollarMinor', 'expected': 200000},
+                            'status': {'kind': 'text', 'expected': 'Approved'}}
+        step['focus'] = [{'box': [10, 20, 280 if complete else 80, 40], 'fromMs': 120, 'toMs': 190}]
+        path.write_text(json.dumps([step])); return step
+
+    def test_named_geometry_repairs_first_pass_omission_without_touching_capture_evidence(self):
+        before = self.evidence_step(complete=False)
+        review = inspect_capture(self.source)
+        self.assertFalse(review['readyToRender'])
+        self.assertIn('total', review['issues'][0])
+        self.assertEqual(review['steps'][0]['targets'], before['targets'], 'bad focus remains inspectable so it can be repaired offline')
+        with self.assertRaisesRegex(ValueError, 'omits checked'):
+            inspect_capture(self.source, strict=True)
+        self.apply({'result': {'caption': 'Two invoices approved', 'focusTargets': ['count', 'total', 'status']}})
+        after = json.loads((self.output / 'steps.json').read_text())[0]
+        self.assertEqual(after['focus'][0]['box'], {'x': 10, 'y': 20, 'w': 280, 'h': 40})
+        for key in ('evidence', 'targets', 'clicks', 'shot', 'startMs', 'endMs'):
+            self.assertEqual(after[key], before[key])
+        self.assertTrue(inspect_capture(self.output, strict=True)['readyToRender'])
+        self.assertEqual(json.loads((self.source / 'steps.json').read_text())[0], before)
+
+    def test_target_selection_and_manual_boxes_cannot_omit_checked_metrics(self):
+        self.evidence_step()
+        for change in [
+            {'focusTargets': ['count', 'total']}, {'focusTargets': ['unknown']}, {'focusTargets': ['count', 'count']},
+            {'focusTargets': []}, {'focusTargets': ['count', 'total', 'status'], 'focus': []}, {'focus': []},
+            {'focus': [{'box': [10, 20, 80, 40], 'fromMs': 120, 'toMs': 190}]},
+            {'focus': [{'box': [10, 20, 280, 40], 'fromMs': 150, 'toMs': 190}]},
+        ]:
+            with self.subTest(change=change), self.assertRaises(ValueError): self.apply({'result': change})
+            self.assertFalse(self.output.exists())
+
+    def test_incompatible_saved_geometry_cannot_be_projected_on_a_different_step_time(self):
+        step = self.evidence_step()
+        for invalid in [dict(boxes=[{'x': -1, 'y': 0, 'w': 10, 'h': 20}], fromMs=120, toMs=190),
+                        dict(boxes=[{'x': 110, 'y': 20, 'w': 80, 'h': 40}], fromMs=195, toMs=200)]:
+            step['targets']['total'] = invalid
+            (self.source / 'steps.json').write_text(json.dumps([step]))
+            with self.assertRaises(ValueError): self.apply({'result': {'focusTargets': ['count', 'total', 'status']}})
+            self.assertFalse(self.output.exists())
+
+if __name__ == '__main__': unittest.main()

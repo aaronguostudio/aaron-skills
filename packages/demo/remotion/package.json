@@ -1,0 +1,15 @@
+{
+  "name": "aaron-demo-walkthrough-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.536",
+    "bun": "1.4.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "remotion": "4.0.536"
+  }
+}
