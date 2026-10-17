@@ -4,7 +4,7 @@ description: Record a real web application's feature walkthrough or step screens
 ---
 # Demo capture
 
-Runtime requirements: Requires the aaron-demo Demo bundle, macOS, Node 22+, Chromium, and local filesystem access. Other platforms are unverified.
+Runtime requirements: Requires the aaron-demo Demo bundle, a verified platform (see `aaron-demo docs compatibility`), Node 22+, Chromium, and local filesystem access.
 
 Use the installed `aaron-demo` CLI. If it is unavailable, explain that this skill needs the Demo runtime and follow the repository installation guide; do not invent a recording substitute. `aaron-demo docs installation` and `aaron-demo docs project-adapters` provide setup and adapter details when the CLI is installed.
 

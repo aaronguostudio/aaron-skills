@@ -4,7 +4,7 @@ description: Render an existing passed application capture into a guided MP4 wit
 ---
 # Walkthrough video
 
-Runtime requirements: Requires the aaron-demo Demo bundle, macOS, FFmpeg, and the installed Bun and Remotion runtime. Narration needs a user-owned provider account.
+Runtime requirements: Requires the aaron-demo Demo bundle, a verified platform (see `aaron-demo docs compatibility`), FFmpeg, and the installed Bun and Remotion runtime. Narration needs a user-owned provider account.
 
 Use `aaron-demo render <run-folder> --stills`. If the CLI is missing, follow the repository installation guide; copying this instruction folder alone does not install the renderer.
 

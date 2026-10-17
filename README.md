@@ -53,41 +53,45 @@ can have their own dependencies and installation paths.
 
 ## Install
 
-The v0.1.0 release targets **macOS and local Codex or Claude Code**.
-Verification used Apple Silicon; Intel and a second clean machine remain unverified.
-Requirements: Git, Python 3.11+, Node 22+, and FFmpeg/ffprobe. The installer adds
-pinned browser, video and Python dependencies. No customer account or paid API is
-needed for the example.
-
-Clone the repository, then choose your host:
+The current checkout supports **macOS arm64, Ubuntu 24.04 x64 and native
+Windows 11 x64**. The existing v0.1.0 tag is macOS-only. See
+[compatibility](docs/compatibility.md) for the measured scope and host limits.
+Requirements: Git, Python 3.11+, Node 22+ with npm, and FFmpeg/ffprobe. The installer
+adds pinned browser, video and Python dependencies. The example needs no customer
+account or paid API.
 
 ```sh
 git clone https://github.com/aaronguostudio/aaron-skills.git
 cd aaron-skills
+# macOS / Ubuntu; replace codex with claude or both if needed:
 bash scripts/setup.sh --agent codex --smoke
-# Or:
-bash scripts/setup.sh --agent claude --smoke
 ```
 
-To install missing prerequisites through an existing Homebrew installation, add
-`--install-prerequisites`. Setup does not install Homebrew or request administrator
-access. See [installation and recovery](docs/installation.md) for isolated paths,
-both-host registration, upgrades, repair and uninstall.
+On native Windows, clone the same repository, then run in ordinary PowerShell:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/setup.ps1 --agent codex --smoke
+```
+
+Windows needs no WSL or administrator token. Execution-policy bypass applies only
+to that process. Prerequisites must already be installed; Ubuntu also needs
+Chromium system libraries. On macOS, `--install-prerequisites` can install missing
+tools through existing Homebrew. See [installation and recovery](docs/installation.md)
+for platform preparation, isolated paths, upgrades, repair and uninstall.
 
 You can instead give your local agent this prompt from the checkout:
 
-> Read README.md and docs/installation.md. Install the Demo bundle for the agent
-> I am using. Inspect prerequisites first; you may install missing Node, Python
-> and FFmpeg through an existing Homebrew installation. Preserve unrelated skills
+> Read README.md and docs/installation.md. Inspect prerequisites for this platform,
+> then install the Demo bundle for the agent I am using. Preserve unrelated skills
 > and configuration. Run doctor and the public smoke check, open its update page
-> and inspect its video frames. Report any manual setup still needed. Use no
-> customer application, credentials or paid narration for this installation.
+> and inspect its video frames. Report manual setup still needed. Use no customer
+> application, credentials or paid narration for this installation.
 
-Codex skills register under `~/.agents/skills`; Claude Code skills under
-`~/.claude/skills`. Installation preserves unrelated entries and stops on name
-conflicts. Add `~/.local/bin` to PATH if the printed instructions request it;
-start a new agent session to refresh discovery. The smoke check prints an MP4,
-review stills and a local HTML update page.
+Codex registers under `~/.agents/skills`; Claude Code under `~/.claude/skills`.
+Windows uses the corresponding user-home folders and managed copies; POSIX uses
+links. Name conflicts stop installation. Add the printed command directory to
+PATH if needed and start a new agent session to refresh discovery. Smoke prints
+an MP4, review stills and a local HTML update page.
 
 ## Make a demo
 
@@ -129,7 +133,8 @@ not a sandbox for malicious adapters. See [data and network behavior](docs/data-
 
 The shared CLI is independent of the model. [Compatibility](docs/compatibility.md)
 distinguishes format compatibility, host discovery and actual workflow testing.
-DeepSeek, GLM, MiniMax, other harnesses, and Linux/Windows certification are Phase 2.
+DeepSeek, GLM, MiniMax and additional harness certifications remain unverified.
+Windows/Linux runtime acceptance does not certify native LLM-host invocation.
 A standard SKILL.md alone does not prove the browser or renderer works on a host.
 
 ## Develop and extend

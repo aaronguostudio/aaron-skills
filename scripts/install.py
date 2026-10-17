@@ -166,7 +166,7 @@ def main():
             (release / 'installed.json').write_text(json.dumps(config, indent=2) + '\n')
         launcher = release / 'aaron-demo'
         launcher.write_text('#!/bin/sh\nexec ' + shlex.quote(tools['python']) + ' ' +
-            shlex.quote(str(release / 'scripts/cli.py')) + ' "$@"\n')
+            shlex.quote(str(release / 'scripts/cli.py')) + ' "$@"\n', encoding='utf-8')
         launcher.chmod(0o755)
         (release / 'READY').touch()
         # Check again after downloads, before any links change.

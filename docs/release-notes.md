@@ -1,5 +1,8 @@
 # Aaron Skills v0.1.0
 
+Historical v0.1.0 scope. For the current checkout’s platform support, see
+[compatibility](compatibility.md) and [verification](verification.md).
+
 A local toolkit for turning a real web feature into a guided demo and a useful
 update. Three standard Agent Skills share the same capture, render and delivery
 implementation:

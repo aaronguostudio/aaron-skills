@@ -36,27 +36,35 @@ Aaron Skills 将工作流与执行工作流所需的工具放在同一个集合�
 
 ## 安装
 
-v0.1.0 面向 **macOS，以及本地运行的 Codex 或 Claude Code**。目前验证使用 Apple Silicon Mac；Intel Mac 和第二台独立机器尚未验证。
+当前代码支持 **macOS arm64、Ubuntu 24.04 x64 和原生 Windows 11 x64**。
+已有的 v0.1.0 标签仍然只有 macOS 支持；具体实测环境和宿主限制请看[兼容性说明](docs/compatibility.md)。
 
-需要 Git、Python 3.11+、Node 22+，以及 FFmpeg/ffprobe。安装器会安装固定版本的浏览器、视频和 Python 依赖。运行示例不需要客户账号或付费 API。
-
-克隆仓库后，根据使用的 Agent 选择：
+需要 Git、Python 3.11+、Node 22+（含 npm）和 FFmpeg/ffprobe。安装器会安装固定版本的浏览器、视频和 Python 依赖。运行示例不需要客户账号或付费 API。
 
 ```sh
 git clone https://github.com/aaronguostudio/aaron-skills.git
 cd aaron-skills
+# macOS / Ubuntu；也可以把 codex 改成 claude 或 both：
 bash scripts/setup.sh --agent codex --smoke
-# 或：
-bash scripts/setup.sh --agent claude --smoke
 ```
 
-如果希望通过已有的 Homebrew 安装缺少的前置工具，可以加上 `--install-prerequisites`。脚本不会安装 Homebrew，也不会请求管理员权限。隔离安装、同时注册两个 Agent、升级、修复和卸载，请看[安装与恢复](docs/installation.md)。
+原生 Windows 克隆同一仓库后，在普通 PowerShell 中运行：
 
-也可以在仓库目录中直接给本地 Agent 这段提示词：
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/setup.ps1 --agent codex --smoke
+```
 
-> 阅读 README.zh-CN.md 和 docs/installation.md，为我当前使用的 Agent 安装 Demo 能力组合。先检查前置工具；可以通过已有的 Homebrew 安装缺少的 Node、Python 和 FFmpeg。保留其他 Skills 和配置。运行 doctor 和公开示例的 smoke 检查，打开生成的更新页面，检查视频帧，并报告仍需手动完成的设置。此次安装不要使用客户应用、凭据或付费旁白。
+Windows 不需要 WSL 或管理员权限；执行策略的 Bypass 只作用于这一次 PowerShell 进程。
+前置工具需要先安装，Ubuntu 还需要 Chromium 系统依赖。macOS 可以加 `--install-prerequisites`，通过已有的 Homebrew 安装缺少的工具。各平台准备、隔离安装、升级、修复和卸载，请看[安装与恢复](docs/installation.md)。
 
-Codex Skills 注册在 `~/.agents/skills`，Claude Code Skills 注册在 `~/.claude/skills`。安装保留其他条目，遇到名称冲突会停止。如果安装输出提示 PATH 配置，请将 `~/.local/bin` 加入 PATH；安装后开启新的 Agent 会话以刷新发现结果。Smoke 检查会输出 MP4、供审阅的静帧和本地 HTML 更新页面。
+也可以在仓库目录中给本地 Agent 这段提示词：
+
+> 阅读 README.zh-CN.md 和 docs/installation.md，检查当前平台的前置工具，再为我正在使用的 Agent 安装 Demo。保留其他 Skills 和配置。运行 doctor 和公开示例的 smoke 检查，打开生成的更新页面并检查视频帧，报告仍需手动完成的设置。此次安装不要使用客户应用、凭据或付费旁白。
+
+Codex Skills 注册在用户目录的 `.agents/skills`，Claude Code 在 `.claude/skills`。
+Windows 使用受管理的副本，macOS/Ubuntu 使用链接；安装保留无关条目，遇到名称冲突会停止。
+如果需要，请将安装输出的命令目录加入 PATH，并开启新的 Agent 会话以刷新发现结果。
+Smoke 检查会输出 MP4、供审阅的静帧和本地 HTML 更新页面。
 
 ## 制作一个 Demo
 
@@ -81,7 +89,7 @@ aaron-demo page /path/to/message.md --out /path/to/message.html
 
 会话、录制和生成页面保存在 Git 仓库之外。产物可能包含真实界面，分享前请检查；工具不会自动对个人信息脱敏。适配器是需要信任的可执行 JavaScript，浏览器网络防护不能作为恶意适配器的沙箱。详见[数据与网络行为](docs/data-and-network-behavior.md)。
 
-共享 CLI 独立于模型。[兼容性说明](docs/compatibility.md)区分格式兼容、宿主发现和实际工作流验证。DeepSeek、GLM、MiniMax、其他宿主，以及 Linux/Windows 验证属于后续阶段。仅有标准 `SKILL.md`，不能证明浏览器和渲染器已在某个宿主上运行通过。
+共享 CLI 独立于模型。[兼容性说明](docs/compatibility.md)区分格式兼容、宿主发现和实际工作流验证。DeepSeek、GLM、MiniMax 及更多宿主组合仍未验证。Windows/Linux 的运行时验收不等于已经验证本地 LLM 宿主的原生调用。仅有标准 `SKILL.md`，不能证明浏览器和渲染器已在某个宿主上运行通过。
 
 ## 开发与扩展
 

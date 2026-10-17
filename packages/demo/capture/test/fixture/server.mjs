@@ -24,12 +24,14 @@ const SIGN_IN = page(
 
 // ?beacon=1 posts a beacon on load, and offers buttons: one posts a beacon with a body the config
 // does not allow, one posts a ping with no body at all, and two post to a route that redirects with
-// a 307, which the browser follows with the same method and body.
+// a 307, which the browser follows with the same method and body. The named-host
+// POST is fire-and-forget (no-cors): it tests whether the guard observes/stops
+// the write, without depending on cross-origin response access or CORS redirects.
 const BEACONS = `<script>fetch('/beacon', { method: 'POST', body: JSON.stringify({ page: 'home' }) })</script>
 <button type="button" onclick="fetch('/beacon', { method: 'POST', body: JSON.stringify({ page: 'home', extra: true }) })">Send odd beacon</button>
 <button type="button" onclick="fetch('/ping', { method: 'POST' })">Send empty ping</button>
 <button type="button" onclick="fetch('/bounce-post', { method: 'POST', body: JSON.stringify({ page: 'home' }) })">Send redirected post</button>
-<button type="button" onclick="fetch('/bounce-post-localhost', { method: 'POST', body: JSON.stringify({ page: 'home' }) })">Send redirected post by name</button>`
+<button type="button" onclick="fetch('/bounce-post-localhost', { method: 'POST', mode: 'no-cors', body: JSON.stringify({ page: 'home' }) })">Send redirected post by name</button>`
 
 // ?shared=1 offers a button that starts a shared worker, whose script posts to /items. The page
 // catches the error the engine's block throws, as an app might.
@@ -101,6 +103,10 @@ export async function startFixture() {
       const ok = form.get('username') === FIXTURE_LOGIN.username && form.get('password') === FIXTURE_LOGIN.password
       return send(303, '', ok ? { location: '/home', 'set-cookie': 'session=ok; HttpOnly; Path=/; SameSite=Lax' } : { location: '/login' })
     }
+    // The redirected write target is intentionally public test data. localhost
+    // does not share the 127.0.0.1 session cookie; an auth redirect here would
+    // test CORS/login behavior instead of the guard's observation of the POST.
+    if (url.pathname === '/items' && req.method === 'POST') return send(200, '{"ok":true}', { 'content-type': 'application/json' })
     if (!/(?:^|;\s*)session=ok(?:;|$)/.test(req.headers.cookie ?? '')) return send(302, '', { location: '/login' })
     if (url.pathname === '/home') {
       const has = (flag) => url.searchParams.has(flag)

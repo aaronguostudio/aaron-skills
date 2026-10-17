@@ -4,7 +4,7 @@ description: Prepare a customer or teammate update, release note, handoff, or ho
 ---
 # Paste ready update
 
-Runtime requirements: Requires the aaron-demo Demo bundle, macOS, Python 3.11+, and Pillow. The generated page is a local HTML file.
+Runtime requirements: Requires the aaron-demo Demo bundle, a verified platform (see `aaron-demo docs compatibility`), Python 3.11+, and Pillow. The generated page is a local HTML file.
 
 Prepare a message the user can review, paste, and send. Identify the reader, relevant change, destination, language, and signature from the brief. Ask only for missing information that affects the message.
 

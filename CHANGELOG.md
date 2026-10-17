@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased
+
+- Present Aaron Skills as a collection of senior-engineer workflows and tools,
+  with Demo as the first bundle; add an English/Chinese overview and setup.
+- Add a shared platform layer, Ubuntu 24.04 and native Windows x64 installation,
+  commands, private state, rendering and recovery while retaining macOS behavior.
+- Use native Windows launchers, transactional managed skill copies, NTFS DACLs
+  and Windows locks; no WSL, Bash or symlink privileges required by the runtime.
+- Validate real Windows 11 ordinary-user and macOS workflows, Ubuntu container
+  workflows, Unicode/spaced paths, revision integrity, playback, clipboard,
+  synthetic sign-in/session reuse, repair and uninstall. Add three-platform CI.
+- Keep runtime acceptance separate from new native LLM-host certification.
+
 ## 0.1.0 — 2026-10-17
 
 - Demo Capture, Walkthrough Video and Paste Ready Update share a local toolkit.

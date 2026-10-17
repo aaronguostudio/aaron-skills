@@ -1,5 +1,8 @@
 # v0.1.0 launch readiness
 
+Historical v0.1.0 scope. For the current checkout’s platform support, see
+[compatibility](compatibility.md) and [verification](verification.md).
+
 The goal is a reviewable first open-source release candidate, not an unlimited
 feature or compatibility project. Publication is a separate final action after
 reviewing the candidate. Keep the original development history private.

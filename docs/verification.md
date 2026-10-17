@@ -1,4 +1,81 @@
-# v0.1.0 local launch verification
+# Platform verification — current checkout
+
+Date: 2026-10-17. These checks extend the original macOS-only v0.1.0 acceptance.
+Raw recordings, temporary access keys and machine logs are outside the public
+source. No customer system, real credentials or live voice synthesis was used.
+
+## Measured runtime environments
+
+| Environment | Tools | Scope |
+| --- | --- | --- |
+| macOS 26.6 arm64, real hardware | Node 24.18.0, Python 3.14.5, FFmpeg 8.1.1 | Full source and exported-install acceptance; macOS regression |
+| Ubuntu 24.04.4 x64 container, emulated on ARM Mac | Node 24.17.0, Python 3.12.3, FFmpeg 6.1.1 | Full source and exported-install acceptance; not native Linux hardware evidence |
+| Windows 11 Home x64, build 26200, real NTFS laptop | Node 22.23.3, Python 3.14.2, FFmpeg 9.0.2, PowerShell 5.1 | Full native acceptance under a non-administrator interactive token; no WSL/Bash runtime dependency |
+
+All three used pinned Bun 1.4.3, Playwright 1.62.1 and Remotion 4.0.536.
+The final bundled executable fingerprint is SHA-256 of the JSON object mapping
+sorted manifest paths under `packages/`, `scripts/` and `examples/` to SHA-256
+file hashes, serialized with Python `json.dumps(..., sort_keys=True)`. Docs and
+skill prerequisite wording are excluded:
+
+`96a3427b5799e99509deb33f5434ab9aae7012815ca6a3bd131e68da5bd150f0`
+
+## Completed acceptance
+
+- Source gate: 253 capture tests, 68 renderer/timeline/narration/brand tests,
+  41 Python tooling tests, 28 page/annotation tests and 19 real Chromium tests.
+  Platform-specific skips remain visible: Windows skips POSIX-only mutation
+  harness/registration/bootstrap cases; POSIX skips the Windows-only ACL case.
+  The additional redirect helper tests and stronger real-browser POST assertion
+  also passed on all three platforms.
+- Exported runtime: install and doctor; public capture to silent H.264 MP4;
+  presentation-only revision in a path containing spaces/Chinese; unchanged raw
+  recording and capture metadata hashes; both MP4s decode; original/revised pages
+  load images, play video and copy plain text plus HTML to Chromium's clipboard.
+- Visual review: all four held frames in each original/revised walkthrough and
+  generated pages checked for captions, highlights and the asserted result.
+- Headed synthetic fixture sign-in and saved-session reuse on all three systems.
+  This tests the login mechanism, not a real identity provider or customer login.
+- Recovery: repeated install, upgrade, repair to a separately prepared release,
+  failed prerequisites preserving the active release, managed uninstall preserving
+  unrelated skills/runtime/data, and reinstall. Windows also ran `setup.ps1` and
+  its `.cmd` launcher as an ordinary user.
+- Windows privacy and filesystem checks: independently inspected protected DACLs,
+  removal of a deliberately added Everyone read ACE, ordinary-user reapplication,
+  lock contention, copied-registration rollback and alias/path guards.
+- Root/capture/renderer dependency audits and independent Gitleaks scans of
+  intended public source and Git history reported no findings.
+
+The [CI matrix](https://github.com/aaronguostudio/aaron-skills/actions/workflows/ci.yml)
+uses Node 22 and Python 3.11 on macOS 15, Ubuntu 24.04 and Windows Server 2022.
+It repeats source checks, fresh exported installation, revision/media/clipboard,
+headed synthetic sign-in and recovery. Consult the run for the exact commit;
+a recipe or a previous green run is not evidence for a later revision.
+
+## Reproduce platform acceptance
+
+Prepare the three npm dependency sets as in CONTRIBUTING.md, then run the shared
+source check and an isolated install. On POSIX, use the commands in the historical
+reproduction section below. On Windows, the complete entry point is:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify-windows.ps1 -Workspace "$env:LOCALAPPDATA/Demo acceptance with spaces"
+```
+
+Use an ordinary user and a fresh workspace outside Git; the source gate needs
+Pillow via the installed virtual environment. The verifier must not target global
+skills or user data. For custom paths, `scripts/verify-lifecycle.py` requires root,
+skills and bin under one isolated workspace. Inspect the resulting frames/pages.
+Synthetic sign-in drives only the public fixture; it never types real credentials.
+
+New native Codex/Claude invocation on Windows/Linux, Intel/Windows ARM hardware,
+other Linux distributions, real voice synthesis and external customer acceptance
+remain unverified. Existing macOS host-task evidence below is retained as history;
+these platform checks did not rerun LLM hosts or certify new model combinations.
+
+---
+
+# Historical v0.1.0 local launch verification
 
 Date: 2026-10-17. This is local release-candidate evidence, not a public deployment
 or a claim of universal skill benefit. Raw recordings and model logs stay outside
