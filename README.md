@@ -1,12 +1,60 @@
 # Aaron Skills
 
-Turn a real web feature into a guided video, screenshots, and a copyable update.
-The Demo bundle combines three portable agent skills with a shared local toolchain:
-Demo Capture, Walkthrough Video, and Paste Ready Update.
+[English](README.md) | [简体中文](README.zh-CN.md)
+
+Reusable agent skills and executable tools for solving software problems with
+the care of a senior engineer—from understanding an unfamiliar project to
+delivering a verified result that others can see and use.
+
+Aaron Skills brings working methods and the tools that carry them out into one
+collection. The aim is to make it easier to pick up a project, understand the
+problem, make a focused change, verify the behavior, and explain the result.
+Each skill captures a repeatable part of that process; related skills can work
+together through shared tools and documented artifacts.
+
+## The bigger picture
+
+The workflow we are building toward is:
+
+```text
+Understand the project and problem
+  → Plan and implement a focused change
+  → Verify the actual behavior
+  → Demonstrate the result
+  → Deliver a clear update or handoff
+```
+
+The collection will grow around practical steps in that workflow. Skills should
+help an agent decide what to do, execute it with the right tools, and leave
+evidence that someone else can review. New capabilities belong here when they
+solve a real, repeatable problem and can be documented and verified.
+
+**The first available capability is Demo**, covering demonstration and
+communication. Project onboarding, implementation, and broader engineering
+verification are the direction for the collection; they are not yet separate
+released skills here.
+
+## Available now: Demo
+
+Turn a working web feature into a guided video, screenshots, and a copyable
+update. The Demo bundle connects three skills with a shared local toolchain:
+
+| Skill | Role |
+| --- | --- |
+| [Demo Capture](skills/demo-capture/SKILL.md) | Record the real application flow and save screenshots and checked result evidence. |
+| [Walkthrough Video](skills/walkthrough-video/SKILL.md) | Render a passed capture into a guided MP4; refine captions, highlights, and optional narration. |
+| [Paste Ready Update](skills/paste-ready-update/SKILL.md) | Prepare a reviewable update page with text, screenshots, and an optional video. |
+
+For example, after changing a feature in a project you have taken over, ask your
+agent to show the starting state, walk through the change, check the visible
+result, and prepare an update for the customer or team. Demo supplies this part
+of the workflow. The following setup installs the Demo bundle; future bundles
+can have their own dependencies and installation paths.
 
 ## Install
 
 The v0.1.0 release targets **macOS and local Codex or Claude Code**.
+Verification used Apple Silicon; Intel and a second clean machine remain unverified.
 Requirements: Git, Python 3.11+, Node 22+, and FFmpeg/ffprobe. The installer adds
 pinned browser, video and Python dependencies. No customer account or paid API is
 needed for the example.
@@ -100,7 +148,11 @@ bundle in this repository; there is no need for a coordinating master repository
 
 Built by **[Aaron Guo](https://aaronguo.com)**, a product builder and engineer
 exploring practical AI workflows. This repository shares reusable tools for
-showing what changed and communicating it clearly.
+solving software problems, verifying results, and communicating them clearly.
+
+The English and Chinese READMEs cover the project overview and getting started.
+Detailed technical references remain in English for now; commands, paths, and
+skill identifiers are the same in both versions.
 
 Original project code is [MIT](LICENSE). Dependencies retain their own terms;
 Remotion has free-use eligibility conditions and a Company License requirement
