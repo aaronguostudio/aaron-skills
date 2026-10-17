@@ -34,6 +34,7 @@ def walkup_block():
     return found[0]
 
 
+@unittest.skipIf(os.name == 'nt', 'This document example uses POSIX shells; Windows uses an explicit --project path')
 class WalkUpTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

@@ -47,7 +47,9 @@ try {
 } finally {
   await new Promise(done => server.close(done))
 }
-const python = config.tools.python
+// All smoke helpers use the installed virtual environment, including Pillow.
+// A developer's global packages must never make an incomplete install pass.
+const python = join(bundle, '.venv', process.platform === 'win32' ? 'Scripts' : 'bin', process.platform === 'win32' ? 'python.exe' : 'python3')
 const cli = join(bundle, 'scripts/cli.py')
 execFileSync(python, [cli, 'render', run, '--stills'], { stdio: 'inherit' })
 const steps = JSON.parse(await readFile(join(run, 'steps.json'), 'utf8'))

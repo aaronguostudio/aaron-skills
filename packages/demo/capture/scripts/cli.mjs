@@ -242,6 +242,7 @@ export async function record({ chromium, config, env, walk, params, runDir, stat
   )
   const storageState = await readSavedState(statePath)
   const videoDir = await mkdtemp(join(tmpdir(), 'demo-capture-video-'))
+  await ensurePrivateDir(videoDir)
   // The recording is raw screens: a process that exits in the middle of the run removes it too.
   const removeVideoDir = () => rmSync(videoDir, { recursive: true, force: true })
   process.on('exit', removeVideoDir)

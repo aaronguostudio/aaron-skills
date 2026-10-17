@@ -1,10 +1,11 @@
 // A project's signed-in browser state: where it lives, how a person signs in, and how a run
 // reuses it, re-saves it and recovers when it is signed out. The state is Playwright's
 // storageState. It never enters a repo or a run folder, and it is never printed.
-import { chmod, mkdir, rename, rm, stat, writeFile } from 'node:fs/promises'
+import { rename, rm, stat, writeFile } from 'node:fs/promises'
 import { homedir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { CaptureRefusal } from './guards.mjs'
+import { privateDirectory, privatePath } from './platform.mjs'
 
 export const SIGN_IN_TIMEOUT_MS = 10 * 60_000
 // Signed in means: on the app's own origin, and isSignedOut has said false for this long. A
@@ -41,8 +42,7 @@ export function defaultRunDir(root, name, walk, now = new Date()) {
 
 // mkdir's mode is masked by the umask and ignored for a folder that exists, so chmod as well.
 export async function ensurePrivateDir(dir) {
-  await mkdir(dir, { recursive: true, mode: 0o700 })
-  await chmod(dir, 0o700)
+  await privateDirectory(dir)
 }
 
 export async function hasState(statePath) {
@@ -68,7 +68,7 @@ export async function saveState(context, statePath) {
   // writeFile's mode applies only when it creates the file, so start from no file at all.
   await rm(temp, { force: true })
   await writeFile(temp, JSON.stringify(state), { mode: 0o600 })
-  await chmod(temp, 0o600)
+  await privatePath(temp)
   await rename(temp, statePath)
 }
 

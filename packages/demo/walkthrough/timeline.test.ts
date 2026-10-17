@@ -43,6 +43,12 @@ describe("validateCapture", () => {
     expect(validateCapture(capture, steps)).toEqual([]);
   });
 
+  test("capture asset paths remain relative on both Windows and POSIX", () => {
+    for (const shot of ["C:/outside.png", "C:outside.png", "\\\\server\\share\\outside.png", "shots\\outside.png", "/outside.png", "../outside.png"]) {
+      expect(validateCapture(capture, [{ ...steps[0], shot }]).join(" ")).toContain("inside the capture folder");
+    }
+  });
+
   test("refuses a failed walk and names the step", () => {
     const problems = validateCapture({ ...capture, status: "failed", failedStep: "save" }, steps);
     expect(problems.join(" ")).toContain('status is "failed" at step "save"');

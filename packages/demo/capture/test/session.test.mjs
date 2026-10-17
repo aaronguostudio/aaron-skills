@@ -1,3 +1,4 @@
+import { assertPrivate, privacySnapshot } from './privacy-assertions.mjs'
 import assert from 'node:assert/strict'
 import { mkdtempSync, rmSync } from 'node:fs'
 import { chmod, link, mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises'
@@ -60,7 +61,7 @@ test('the session folder is 0700 even when it already exists', async () => {
   await mkdir(dir, { recursive: true, mode: 0o755 })
   await chmod(dir, 0o755)
   await ensurePrivateDir(dir)
-  assert.equal(await mode(dir), 0o700)
+  await assertPrivate(dir, true)
 })
 
 test('saveState writes the storage state, with IndexedDB, as a 0600 file in a 0700 folder', async () => {
@@ -71,8 +72,8 @@ test('saveState writes the storage state, with IndexedDB, as a 0600 file in a 07
   await saveState(context, state)
   assert.deepEqual(asked, [{ indexedDB: true }])
   assert.deepEqual(JSON.parse(await readFile(state, 'utf8')), { cookies: [{ name: 's' }], origins: [] })
-  assert.equal(await mode(state), 0o600)
-  assert.equal(await mode(join(state, '..')), 0o700)
+  await assertPrivate(state)
+  await assertPrivate(join(state, '..'), true)
   assert.equal(await hasState(state), true)
   // No temporary file is left behind.
   assert.deepEqual(await readdir(join(state, '..')), ['state.json'])
@@ -80,7 +81,7 @@ test('saveState writes the storage state, with IndexedDB, as a 0600 file in a 07
   await writeFile(state, '{}', { mode: 0o644 })
   await chmod(state, 0o644)
   await saveState(context, state)
-  assert.equal(await mode(state), 0o600)
+  await assertPrivate(state)
   await deleteState(state)
   assert.equal(await hasState(state), false)
   await deleteState(state)
@@ -103,10 +104,10 @@ test('saveState is private whatever the umask says', async () => {
   } finally {
     process.umask(before)
   }
-  assert.equal(await mode(join(state, '..')), 0o700)
+  await assertPrivate(join(state, '..'), true)
   // The folders created on the way (the project's, which also holds its runs) are private too.
-  assert.equal(await mode(join(state, '..', '..')), 0o700)
-  assert.equal(await mode(state), 0o600)
+  await assertPrivate(join(state, '..', '..'), true)
+  await assertPrivate(state)
 })
 
 // The temporary file is created with the mode minus the umask, so it needs the chmod to end at 0600.
@@ -121,7 +122,7 @@ test('saveState sets 0600 itself, whatever the umask took off the temporary file
   } finally {
     process.umask(before)
   }
-  assert.equal(await mode(state), 0o600)
+  await assertPrivate(state)
 })
 
 // An orphaned temporary file holds live cookies, so no save and no delete may leave one.
@@ -135,12 +136,13 @@ test('a stale temporary file is replaced by a fresh 0600 one, never written thro
   // A second name for the stale file's inode: if the save wrote through it, it would change.
   const alias = join(root, 'alias')
   await link(`${state}.tmp`, alias)
+  const aliasPermissions = await privacySnapshot(alias)
   await saveState(context, state)
-  assert.equal(await mode(state), 0o600)
+  await assertPrivate(state)
   assert.deepEqual(JSON.parse(await readFile(state, 'utf8')), { cookies: [{ name: 's' }], origins: [] })
   assert.deepEqual(await readdir(join(state, '..')), ['state.json'])
   assert.equal(await readFile(alias, 'utf8'), 'stale')
-  assert.equal(await mode(alias), 0o644)
+  assert.deepEqual(await privacySnapshot(alias), aliasPermissions)
 })
 
 test('deleteState also removes a leftover temporary file', async () => {
@@ -256,7 +258,7 @@ test('signIn opens a visible browser at the sign-in page, waits for the person, 
   assert.deepEqual(calls, ['launch headless=false', 'context viewport=null', `goto ${ORIGIN}/app/login`, 'networkidle', 'close'])
   assert.equal(waited.p, page)
   assert.deepEqual(waited.options, { origin: ORIGIN, isSignedOut })
-  assert.equal(await mode(state), 0o600)
+  await assertPrivate(state)
   assert.match(logs[0], /Sign in there yourself; nothing is typed for you/)
 })
 

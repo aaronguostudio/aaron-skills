@@ -6,13 +6,15 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+from platform_tools import bun_binary, venv_python, configure_console
+import managed_registration
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / 'packages/demo/capture'
 RENDER = ROOT / 'packages/demo/remotion'
 
 def settings():
-    return json.loads((ROOT / 'installed.json').read_text())
+    return json.loads((ROOT / 'installed.json').read_text(encoding='utf-8'))
 
 def environment(config):
     env = dict(os.environ)
@@ -20,6 +22,7 @@ def environment(config):
     directories = [str(Path(value).parent) for value in config['tools'].values()]
     env['PATH'] = os.pathsep.join(dict.fromkeys(directories + [env.get('PATH', '')]))
     env['PLAYWRIGHT_BROWSERS_PATH'] = config['playwrightBrowsers']
+    env['PYTHONUTF8'] = '1'
     return env
 
 def run(command, config, **kwargs):
@@ -28,28 +31,34 @@ def run(command, config, **kwargs):
 def doctor(config, check_links=True):
     failures = []
     def check(label, command, **kwargs):
-        result = run(command, config, capture_output=True, text=True, **kwargs)
+        result = run(command, config, capture_output=True, text=True, encoding='utf-8', errors='replace', **kwargs)
         print(f'{"PASS" if result.returncode == 0 else "FAIL"} {label}', flush=True)
         if result.returncode:
             failures.append(label)
             print((result.stderr or result.stdout)[-2000:])
-    manifest = json.loads((ROOT / 'bundle-manifest.json').read_text())
+    manifest = json.loads((ROOT / 'bundle-manifest.json').read_text(encoding='utf-8'))
     for relative, expected in manifest['files'].items():
         path = ROOT / relative
         if path.is_symlink() or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != expected:
             failures.append(f'Bundle file changed or missing: {relative}')
     check('Node >=22', [config['tools']['node'], '-e', 'if(+process.versions.node.split(".")[0]<22)process.exit(1)'])
-    check('Python + Pillow', [ROOT / '.venv/bin/python3', '-c', 'from PIL import Image'])
+    check('Python + Pillow', [venv_python(ROOT), '-c', 'from PIL import Image'])
     for name in ('ffmpeg', 'ffprobe'):
         check(name, [config['tools'][name], '-version'])
-    check('Pinned Bun', [RENDER / 'node_modules/.bin/bun', '--version'])
-    check('Walkthrough entry loads', [RENDER / 'node_modules/.bin/bun', '-e', "await import('../walkthrough/render-walkthrough.ts')"], cwd=RENDER)
+    check('Pinned Bun', [bun_binary(RENDER), '--version'])
+    check('Walkthrough entry loads', [bun_binary(RENDER), '-e', "await import('../walkthrough/render-walkthrough.ts')"], cwd=RENDER)
+    if os.name == 'nt':
+        check('Private Windows ACL storage', [config['tools']['python'], '-c',
+            "import sys,tempfile;from pathlib import Path;sys.path.insert(0,sys.argv[1]);from platform_tools import private_path;"
+            "\nwith tempfile.TemporaryDirectory() as d: private_path(Path(d),directory=True)", str(ROOT / 'scripts')])
     check('Headed Chromium installed + headless Chromium launches', [config['tools']['node'], '--input-type=module', '-e',
         "import {chromium} from 'playwright';import {existsSync} from 'node:fs';"
         "if(!existsSync(chromium.executablePath()))throw Error('Headed Chromium is missing');"
         "const b=await chromium.launch();await b.close()"], cwd=ENGINE)
     check('Remotion browser', [config['tools']['node'], RENDER / 'node_modules/@remotion/cli/remotion-cli.js', 'browser', 'ensure'], cwd=RENDER)
-    if check_links:
+    if check_links and config.get('registrationMode') == 'copies':
+        failures.extend(managed_registration.errors(Path(config['installRoot']), ROOT, config, manifest['skills']))
+    elif check_links:
         for directory in config.get('skillsDirs', [config['skillsDir']]):
             for name in manifest['skills']:
                 path = Path(directory) / name
@@ -66,6 +75,7 @@ def doctor(config, check_links=True):
     return bool(failures)
 
 def main():
+    configure_console()
     os.umask(0o077)
     args = sys.argv[1:]
     if not args or args[0] in ('--help', '-h'):
@@ -77,21 +87,21 @@ def main():
         if topic not in documents:
             print('Available topics: ' + ', '.join(sorted(documents)), file=sys.stderr)
             return 2
-        print(documents[topic].read_text())
+        print(documents[topic].read_text(encoding='utf-8'))
         return 0
     config = settings()
     command, rest = args[0], args[1:]
     if command == 'uninstall':
-        return run([config['tools']['python'], ROOT / 'scripts/install.py', '--root', ROOT.parent.parent, '--uninstall'], config).returncode
+        return run([config['tools']['python'], ROOT / 'scripts/install.py', '--root', config.get('installRoot', ROOT.parent.parent), '--uninstall'], config).returncode
     if command == 'doctor':
         return doctor(config)
     commands = {
         'capture': [config['tools']['node'], ENGINE / 'scripts/cli.mjs'],
-        'render': [RENDER / 'node_modules/.bin/bun', ROOT / 'packages/demo/walkthrough/render-walkthrough.ts'],
-        'revise': [ROOT / '.venv/bin/python3', ROOT / 'scripts/revise_capture.py'],
-        'inspect': [ROOT / '.venv/bin/python3', ROOT / 'scripts/capture_view.py'],
-        'page': [ROOT / '.venv/bin/python3', ROOT / 'packages/demo/update/scripts/build_page.py'],
-        'mark': [ROOT / '.venv/bin/python3', ROOT / 'packages/demo/update/scripts/mark_screenshot.py'],
+        'render': [bun_binary(RENDER), ROOT / 'packages/demo/walkthrough/render-walkthrough.ts'],
+        'revise': [venv_python(ROOT), ROOT / 'scripts/revise_capture.py'],
+        'inspect': [venv_python(ROOT), ROOT / 'scripts/capture_view.py'],
+        'page': [venv_python(ROOT), ROOT / 'packages/demo/update/scripts/build_page.py'],
+        'mark': [venv_python(ROOT), ROOT / 'packages/demo/update/scripts/mark_screenshot.py'],
         'smoke': [config['tools']['node'], ROOT / 'scripts/smoke.mjs'],
     }
     if command not in commands:

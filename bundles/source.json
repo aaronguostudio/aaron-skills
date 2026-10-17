@@ -134,6 +134,19 @@
     "skills/paste-ready-update/agents/openai.yaml",
     "skills/walkthrough-video/SKILL.md",
     "skills/walkthrough-video/agents/openai.yaml",
-    "tsconfig.json"
+    "tsconfig.json",
+    "scripts/platform_tools.py",
+    "scripts/test_platform_tools.py",
+    "scripts/verify-installed.mjs",
+    "scripts/managed_registration.py",
+    "scripts/private-path.ps1",
+    "packages/demo/capture/scripts/platform.mjs",
+    "scripts/setup.ps1",
+    "scripts/test_managed_registration.py",
+    "packages/demo/capture/test/privacy-assertions.mjs",
+    ".gitattributes",
+    "scripts/verify-lifecycle.py",
+    "scripts/verify-windows.ps1",
+    "scripts/verify-sign-in.mjs"
   ]
 }

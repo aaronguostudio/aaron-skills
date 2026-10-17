@@ -3,21 +3,36 @@ from pathlib import Path
 import tempfile
 import os
 import stat
+import subprocess
+import base64
+import shutil
 import unittest
 from revise_capture import digest, revise
 from capture_view import inspect_capture
 
 class RevisionTests(unittest.TestCase):
+    def assert_private(self, path, directory=False):
+        if os.name != 'nt':
+            self.assertEqual(stat.S_IMODE(path.stat().st_mode), 0o700 if directory else 0o600)
+            return
+        literal = str(path).replace("'", "''")
+        script = ("$ErrorActionPreference='Stop';$me=[Security.Principal.WindowsIdentity]::GetCurrent().User.Value;"
+                  f"$rules=@((Get-Acl -LiteralPath '{literal}').Access | Where-Object {{$_.AccessControlType -eq 'Allow'}});"
+                  "if(!$rules.Count){exit 1};foreach($r in $rules){if($r.IdentityReference.Translate([Security.Principal.SecurityIdentifier]).Value -ne $me){exit 2}}")
+        result = subprocess.run(['powershell.exe', '-NoProfile', '-NonInteractive', '-EncodedCommand',
+                                 base64.b64encode(script.encode('utf-16le')).decode()], capture_output=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_revision_is_private_with_a_permissive_shell_umask(self):
         previous = os.umask(0o022)
         try:
             self.apply({'result': {'caption': 'Revised'}})
         finally:
             os.umask(previous)
-        self.assertEqual(stat.S_IMODE(self.output.stat().st_mode), 0o700)
+        self.assert_private(self.output, directory=True)
         for path in self.output.rglob('*'):
             if path.is_file():
-                self.assertEqual(stat.S_IMODE(path.stat().st_mode), 0o600)
+                self.assert_private(path)
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
@@ -63,8 +78,13 @@ class RevisionTests(unittest.TestCase):
         capture['status'] = 'failed'; path.write_text(json.dumps(capture))
         with self.assertRaisesRegex(ValueError, 'Only passed'): self.apply({'result': {'caption': 'Revised'}})
         capture['status'] = 'passed'; path.write_text(json.dumps(capture))
-        (self.source / 'video.webm').unlink(); (self.source / 'video.webm').symlink_to(self.root / 'outside')
-        (self.root / 'outside').write_bytes(b'not captured')
+        if os.name == 'nt':
+            outside = self.root / 'outside'; outside.mkdir(); (outside / 'result.png').write_bytes(b'not captured')
+            shutil.rmtree(self.source / 'shots')
+            subprocess.run(['node', '-e', "require('fs').symlinkSync(process.argv[1],process.argv[2],'junction')", str(outside), str(self.source / 'shots')], check=True)
+        else:
+            (self.source / 'video.webm').unlink(); (self.source / 'video.webm').symlink_to(self.root / 'outside')
+            (self.root / 'outside').write_bytes(b'not captured')
         with self.assertRaisesRegex(ValueError, 'regular files'): self.apply({'result': {'caption': 'Revised'}})
 
     def test_output_overlap_and_git_are_refused(self):
@@ -73,6 +93,16 @@ class RevisionTests(unittest.TestCase):
             with self.assertRaises(ValueError): revise(self.source, self.patch, output)
         repo = self.root / 'repo'; repo.mkdir(); (repo / '.git').write_text('gitdir: elsewhere')
         with self.assertRaisesRegex(ValueError, 'outside Git'): revise(self.source, self.patch, repo / 'derived')
+
+    def test_windows_drive_assets_are_refused_on_every_host_before_output(self):
+        path = self.source / 'steps.json'
+        steps = json.loads(path.read_text())
+        for shot in ['C:/outside.png', 'C:outside.png', r'\\server\share\outside.png']:
+            steps[0]['shot'] = shot
+            path.write_text(json.dumps(steps))
+            with self.assertRaisesRegex(ValueError, 'asset|inside'):
+                self.apply({'result': {'caption': 'Revised'}})
+            self.assertFalse(self.output.exists())
 
     def evidence_step(self, complete=True):
         path = self.source / 'steps.json'; step = json.loads(path.read_text())[0]

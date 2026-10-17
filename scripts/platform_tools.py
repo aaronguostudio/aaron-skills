@@ -1,0 +1,97 @@
+"""Small system boundary shared by installation, commands and verification."""
+from contextlib import contextmanager
+import os
+from pathlib import Path
+import platform
+import subprocess
+import sys
+
+
+def configure_console():
+    os.environ['PYTHONUTF8'] = '1'
+    if os.name == 'nt':
+        for stream in (sys.stdout, sys.stderr):
+            if hasattr(stream, 'reconfigure'):
+                stream.reconfigure(encoding='utf-8')
+
+
+def venv_python(root):
+    return Path(root) / ('.venv/Scripts/python.exe' if os.name == 'nt' else '.venv/bin/python3')
+
+
+def bun_binary(render):
+    # The pinned npm package installs a real executable at this path on all OSes.
+    # Avoid npm's .cmd/.sh shims, which need different shell quoting rules.
+    return Path(render) / 'node_modules/bun/bin/bun.exe'
+
+
+def npm_command(tools, *args):
+    npm = Path(tools['npm']).resolve()
+    if npm.suffix.lower() == '.cmd':
+        cli = npm.parent / 'node_modules/npm/bin/npm-cli.js'
+        if not cli.is_file():
+            raise ValueError('Cannot locate npm-cli.js beside npm.cmd. Install the standard Node.js distribution.')
+        return [tools['node'], str(cli), *args]
+    return [str(npm), *args]
+
+
+def check_system():
+    system = platform.system()
+    if system == 'Darwin':
+        return
+    if system == 'Windows' and platform.machine().lower() in ('amd64', 'x86_64'):
+        return
+    if system == 'Linux':
+        release = platform.freedesktop_os_release()
+        if release.get('ID') == 'ubuntu' and release.get('VERSION_ID') == '24.04':
+            return
+        raise ValueError('The Linux installer currently targets Ubuntu 24.04. Other distributions are unverified.')
+    raise ValueError('This installer targets macOS, Ubuntu 24.04 and Windows x64. See docs/compatibility.md for verification status.')
+
+
+def default_root():
+    if os.name == 'nt':
+        return Path(os.environ.get('LOCALAPPDATA', Path.home() / 'AppData/Local')) / 'AaronSkills/demo'
+    return Path.home() / '.local/share/aaron-skills/demo'
+
+
+def default_bin():
+    return default_root().parent / 'bin' if os.name == 'nt' else Path.home() / '.local/bin'
+
+
+def private_path(path, directory=False):
+    if os.name == 'nt':
+        subprocess.run(['powershell.exe', '-NoLogo', '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass',
+                        '-File', str(Path(__file__).with_name('private-path.ps1')), '-Target', str(Path(path).resolve()),
+                        *(['-Directory'] if directory else [])], check=True, capture_output=True)
+    else:
+        Path(path).chmod(0o700 if directory else 0o600)
+
+
+@contextmanager
+def installation_lock(root):
+    root.mkdir(parents=True, exist_ok=True)
+    with (root / '.install.lock').open('a+b') as lock:
+        if os.name == 'nt':
+            import msvcrt
+            lock.seek(0)
+            if not lock.read(1):
+                lock.write(b'0')
+                lock.flush()
+            lock.seek(0)
+            acquire = lambda: msvcrt.locking(lock.fileno(), msvcrt.LK_NBLCK, 1)
+            release = lambda: (lock.seek(0), msvcrt.locking(lock.fileno(), msvcrt.LK_UNLCK, 1))
+        else:
+            import fcntl
+            acquire = lambda: fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            release = lambda: fcntl.flock(lock, fcntl.LOCK_UN)
+        try:
+            acquire()
+        except OSError as error:
+            if error.errno not in (11, 13, 35):
+                raise
+            raise ValueError('Another installer is running for this installation. Wait for it to finish, then retry.') from None
+        try:
+            yield
+        finally:
+            release()

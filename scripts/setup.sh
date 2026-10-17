@@ -1,10 +1,9 @@
 #!/bin/bash
-# Local macOS setup. System package installation is an explicit opt-in.
+# Local POSIX setup. System package installation is an explicit opt-in.
 set -eo pipefail
 cd "$(dirname "$0")/.."
-if [[ "$(uname -s)" != Darwin ]]; then
-  echo 'v0.1.0 supports macOS only.' >&2; exit 2
-fi
+system="$(uname -s)"
+case "$system" in Darwin|Linux) ;; *) echo 'Use setup.ps1 on Windows.' >&2; exit 2 ;; esac
 install_prerequisites=false
 forward=()
 for arg in "$@"; do
@@ -27,6 +26,9 @@ if ! command -v node >/dev/null || ! node -e 'process.exit(+process.versions.nod
 if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then missing+=(ffmpeg); fi
 command -v git >/dev/null || missing+=(git)
 if ((${#missing[@]})); then
+  if [[ "$system" == Linux ]]; then
+    echo 'Missing prerequisites. Ubuntu needs Node 22+, Python 3.11+ with venv, Git, FFmpeg and Chromium system libraries. See docs/installation.md. System packages are not installed automatically.' >&2; exit 2
+  fi
   if ! $install_prerequisites; then
     echo "Missing prerequisites: ${missing[*]}. Re-run with --install-prerequisites to use an existing Homebrew installation." >&2; exit 2
   fi

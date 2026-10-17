@@ -1,3 +1,4 @@
+import { assertPrivate } from './privacy-assertions.mjs'
 // End to end (npm run test:e2e): the real CLI drives a headless Chromium through the fixture
 // app on 127.0.0.1, and the walkthrough renderer's own validator checks the folder it writes.
 // Needs `npm ci` here (Playwright; its Chromium comes from the machine's cache), ffprobe, and
@@ -39,7 +40,7 @@ function run(command, args, env = {}) {
 
 const runCapture = (args) =>
   run(process.execPath, [CLI, '--project', PROJECT, ...args], { DEMO_CAPTURE_HOME: root, DEMO_CAPTURE_FIXTURE_URL: app.url })
-const renderDryRun = (dir) => run(resolve(TILE, '..', 'remotion/node_modules/.bin/bun'), [RENDERER, dir, '--dry-run'])
+const renderDryRun = (dir) => run(resolve(TILE, '..', 'remotion/node_modules/bun/bin/bun.exe'), [RENDERER, dir, '--dry-run'])
 // Inside the capture folder, a run folder belongs under the project's runs.
 const outDir = (name) => join(root, 'fixture-app', 'runs', name)
 // What the fixture received since `before` (a requests().length), as { method, path, body }.
@@ -121,10 +122,10 @@ test('a read-only tour passes on the saved session, re-saves it, and passes the 
   assert.deepEqual(steps.map((step) => step.id), ['search', 'open', 'details'])
   assert.equal(steps[1].clicks.length, 1)
   assert.ok((await stat(state)).mtimeMs > savedBefore, 'the session is saved again after the run')
-  assert.equal((await stat(state)).mode & 0o777, 0o600)
-  assert.equal((await stat(dir)).mode & 0o777, 0o700)
-  assert.equal((await stat(outDir('tour'))).mode & 0o777, 0o700)
-  assert.equal((await stat(join(outDir('tour'), 'capture.json'))).mode & 0o777, 0o600)
+  await assertPrivate(state)
+  await assertPrivate(dir, true)
+  await assertPrivate(outDir('tour'), true)
+  await assertPrivate(join(outDir('tour'), 'capture.json'))
   const rendered = await renderDryRun(outDir('tour'))
   assert.equal(rendered.code, 0, rendered.output)
   const plan = JSON.parse(rendered.output)

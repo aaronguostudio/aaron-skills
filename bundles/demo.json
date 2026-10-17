@@ -72,7 +72,12 @@
     "packages/demo/contracts/evidence.mjs",
     "CONTRIBUTING.md",
     "SECURITY.md",
-    "scripts/setup.sh"
+    "scripts/setup.sh",
+    "scripts/platform_tools.py",
+    "scripts/managed_registration.py",
+    "scripts/private-path.ps1",
+    "packages/demo/capture/scripts/platform.mjs",
+    "scripts/setup.ps1"
   ],
   "version": "0.1.0"
 }

@@ -6,7 +6,7 @@ import sys
 from PIL import Image, ImageChops, ImageStat
 
 run = Path(sys.argv[1])
-steps = json.loads((run / 'steps.json').read_text())
+steps = json.loads((run / 'steps.json').read_text(encoding='utf-8'))
 checks = []
 # The heading region excludes the pointer and outline borders in this public fixture.
 # A result screen shown during the overview has a large mismatch in this region.

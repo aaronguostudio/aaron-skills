@@ -3,8 +3,15 @@ on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
 jobs:
-  macos:
-    runs-on: macos-14
+  platform:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15, ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -17,12 +24,24 @@ jobs:
           python-version: '3.11'
       - name: Dependencies
         run: |
-          brew install ffmpeg
+          if [ "$RUNNER_OS" = macOS ]; then brew install ffmpeg; fi
+          if [ "$RUNNER_OS" = Linux ]; then sudo apt-get update && sudo apt-get install -y ffmpeg python3-venv fonts-noto-cjk; fi
+          if [ "$RUNNER_OS" = Windows ]; then choco install ffmpeg -y --no-progress; fi
           npm ci
           npm ci --prefix packages/demo/capture
           npm ci --prefix packages/demo/remotion
           python -m pip install -r scripts/requirements.txt
           node packages/demo/capture/node_modules/playwright/cli.js install chromium
+          if [ "$RUNNER_OS" = Linux ]; then node packages/demo/capture/node_modules/playwright/cli.js install-deps chromium; fi
+      - name: PowerShell syntax
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Get-ChildItem scripts/*.ps1 | ForEach-Object {
+            $tokens = $null; $parseErrors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$tokens, [ref]$parseErrors) | Out-Null
+            if ($parseErrors.Count) { throw ($parseErrors | Out-String) }
+          }
       - name: Deterministic checks and public history
         run: npm run check -- --public-history --python python
       - name: Dependency audit
@@ -35,7 +54,12 @@ jobs:
           python scripts/install.py --agent both
           --root "$RUNNER_TEMP/demo install/runtime"
           --bin-dir "$RUNNER_TEMP/demo install/bin" --smoke
+      - name: Installed revision, playback and clipboard
+        run: |
+          release=$(python -c 'import os,sys;from pathlib import Path;sys.path.insert(0,"scripts");from managed_registration import active_release;root=Path(os.environ["RUNNER_TEMP"])/"demo install/runtime";print(active_release(root) if os.name=="nt" else root/"current")')
+          node scripts/verify-installed.mjs "$release"
       - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
+        if: runner.os == 'macOS'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_VERSION: 8.30.1

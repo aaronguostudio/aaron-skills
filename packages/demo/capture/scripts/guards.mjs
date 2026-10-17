@@ -5,8 +5,9 @@
 // A capture is a presentation tool, not a test: it drives a real app to record a walkthrough. It
 // is never test evidence.
 import { existsSync, realpathSync } from 'node:fs'
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
+import { readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
+import { privateDirectory, publishLock } from './platform.mjs'
 
 // A refusal fails the run with one plain sentence. `step` names the step it stopped, when known.
 export class CaptureRefusal extends Error {
@@ -548,10 +549,10 @@ function pidAlive(pid) {
 // effort: two runs that start at the same instant against a stale lock can both proceed, which is
 // accepted for a single-user CLI.
 export async function acquireRunLock(lockPath, { pid = process.pid, isAlive = pidAlive } = {}) {
-  await mkdir(dirname(lockPath), { recursive: true, mode: 0o700 })
+  await privateDirectory(dirname(lockPath))
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      await writeFile(lockPath, String(pid), { flag: 'wx', mode: 0o600 })
+      await publishLock(lockPath, pid)
       return () => rm(lockPath, { force: true })
     } catch (error) {
       if (error.code !== 'EEXIST') throw error

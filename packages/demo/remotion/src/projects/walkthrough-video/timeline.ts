@@ -154,7 +154,7 @@ export function validateCapture(capture: Capture, steps: Step[]): string[] {
         problems.push(`${where}: focus from ${focus.fromMs} to ${focus.toMs} ms is outside the step`);
       }
     }
-    if (step.shot != null && (typeof step.shot !== "string" || step.shot.startsWith("/") || step.shot.split(/[\\/]/).includes(".."))) {
+    if (step.shot != null && (typeof step.shot !== "string" || /^[\\/]|^[A-Za-z]:/.test(step.shot) || step.shot.includes("\\") || step.shot.split("/").includes(".."))) {
       problems.push(`${where}: shot path must stay inside the capture folder`);
     }
     problems.push(...validateEvidence(step, { w, h }));

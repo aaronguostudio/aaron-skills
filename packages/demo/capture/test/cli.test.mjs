@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
-import { join } from 'node:path'
+import { basename, dirname, join } from 'node:path'
 import { after, test } from 'node:test'
 import { fileURLToPath } from 'node:url'
 import { CaptureRefusal } from '../scripts/guards.mjs'
@@ -106,8 +106,13 @@ test('isEntryPoint compares the script and the module through symlinks', () => {
   assert.equal(isEntryPoint(import.meta.url, '/no/such/file.mjs'), false)
   // The case this exists for: node was started through a link to the script.
   const folder = scratch('demo-capture-link-')
-  const link = join(folder, 'linked.mjs')
-  symlinkSync(fileURLToPath(import.meta.url), link)
+  let link = join(folder, 'linked.mjs')
+  if (process.platform === 'win32') {
+    symlinkSync(dirname(fileURLToPath(import.meta.url)), join(folder, 'source'), 'junction')
+    link = join(folder, 'source', basename(fileURLToPath(import.meta.url)))
+  } else {
+    symlinkSync(fileURLToPath(import.meta.url), link)
+  }
   assert.equal(isEntryPoint(import.meta.url, link), true)
 })
 
@@ -231,7 +236,7 @@ test('a refusal removes the run folder it made, but never one that was there bef
 test('an --out in the capture folder must be under the project\'s runs folder, and an --out that is a file is refused', async () => {
   const root = scratch('demo-capture-cli-')
   const link = join(scratch('demo-capture-link-'), 'root')
-  symlinkSync(root, link)
+  symlinkSync(root, link, process.platform === 'win32' ? 'junction' : 'dir')
   // Another environment's session folder, another project's runs, the capture folder's own files.
   for (const out of [join(root, 'fixture-app', 'stage'), join(root, 'other-app', 'runs', 'x'), join(root, 'loose'), join(link, 'fixture-app', 'live')]) {
     const lines = []
@@ -272,7 +277,7 @@ test('--out may not be, hold or sit inside the session folder, and nothing is cr
   // Recovering from a signed-out run empties the run folder: it must never be where the session is kept.
   // A symlink to the root is another spelling of the same folders.
   const link = join(scratch('demo-capture-link-'), 'root')
-  symlinkSync(root, link)
+  symlinkSync(root, link, process.platform === 'win32' ? 'junction' : 'dir')
   for (const out of [session.dir, join(root, 'fixture-app'), join(session.dir, 'runs'), join(link, 'fixture-app', 'local')]) {
     const lines = []
     const code = await main(['--project', PROJECT, '--env', 'local', '--walk', 'tour', '--out', out], {

@@ -8,6 +8,8 @@ import sys
 
 from bundle import ROOT, metadata
 from release import public_files, scan_history, scan_public
+from platform_tools import bun_binary, npm_command
+import shutil
 
 
 def main():
@@ -23,19 +25,19 @@ def main():
         scan_history(ROOT)
     for relative, path in files.items():
         if path.suffix == '.py':
-            ast.parse(path.read_text(), filename=relative)
+            ast.parse(path.read_text(encoding='utf-8'), filename=relative)
         elif path.suffix == '.mjs':
             subprocess.run(['node', '--check', str(path)], check=True)
     subprocess.run(['bash', '-n', 'scripts/setup.sh'], cwd=ROOT, check=True)
     commands = [
         ['node', 'node_modules/typescript/bin/tsc', '--noEmit'],
-        ['npm', 'run', 'test:unit', '--prefix', 'packages/demo/capture'],
-        ['packages/demo/remotion/node_modules/.bin/bun', 'test', 'packages/demo/walkthrough'],
+        npm_command({'npm': shutil.which('npm'), 'node': shutil.which('node')}, 'run', 'test:unit', '--prefix', 'packages/demo/capture'),
+        [str(bun_binary(ROOT / 'packages/demo/remotion')), 'test', 'packages/demo/walkthrough'],
         [args.python, '-m', 'unittest', 'discover', '-s', 'scripts', '-p', 'test_*.py'],
         [args.python, '-m', 'unittest', 'discover', '-s', 'packages/demo/update/scripts', '-p', 'test_*.py'],
     ]
     if not args.skip_browser:
-        commands.append(['npm', 'run', 'test:e2e', '--prefix', 'packages/demo/capture'])
+        commands.append(npm_command({'npm': shutil.which('npm'), 'node': shutil.which('node')}, 'run', 'test:e2e', '--prefix', 'packages/demo/capture'))
     for command in commands:
         print('CHECK ' + ' '.join(command), flush=True)
         subprocess.run(command, cwd=ROOT, check=True)

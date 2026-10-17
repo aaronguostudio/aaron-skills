@@ -33,7 +33,8 @@
 //                                           root always exists on POSIX, so the walk never gets
 //                                           that far. (The same test with !== is a mutant.)
 import { spawn, spawnSync } from 'node:child_process'
-import { mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs'
+import { mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync, linkSync, unlinkSync } from 'node:fs'
+import { randomUUID } from 'node:crypto'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -406,11 +407,11 @@ export const MUTANTS = [
   m('guards', 'if (repo)\n    throw new CaptureRefusal(', 'if (false)\n    throw new CaptureRefusal(', 'guards-files.test'),
   m('guards', "return error.code === 'EPERM'", 'return false', 'guards-files.test'),
   m('guards', 'process.kill(pid, 0)\n    return true', 'process.kill(pid, 0)\n    return false', 'guards-files.test'),
-  m('guards', '  await mkdir(dirname(lockPath), { recursive: true, mode: 0o700 })\n', '', 'guards-files.test'),
-  m('guards', '{ recursive: true, mode: 0o700 })', '{ recursive: true })', 'guards-files.test'),
+  m('guards', '  await privateDirectory(dirname(lockPath))\n', '', 'guards-files.test'),
+  m('platform', 'await mkdir(path, { recursive: true, mode: 0o700 })', 'await mkdir(path, { recursive: true })', 'guards-files.test'),
   m('guards', 'attempt < 2; attempt++', 'attempt < 1; attempt++', 'guards-files.test'),
-  m('guards', "flag: 'wx'", "flag: 'w'", 'guards-files.test'),
-  m('guards', "{ flag: 'wx', mode: 0o600 }", "{ flag: 'wx' }", 'guards-files.test'),
+  m('platform', 'await link(pending, path)', 'await writeFile(path, String(pid))', 'guards-files.test'),
+  m('platform', "await writeFile(pending, String(pid), { flag: 'wx', mode: 0o600 })\n    await privatePath(pending)", "await writeFile(pending, String(pid), { flag: 'wx' })", 'guards-files.test'),
   m('guards', "if (error.code !== 'EEXIST') throw error", 'if (false) throw error', 'guards-files.test'),
   m('guards', 'if (Number.isInteger(holder) && holder > 0 && isAlive(holder))', 'if (Number.isInteger(holder) && holder > 0)', 'guards-files.test'),
   m('guards', 'holder > 0 && isAlive(holder)', 'holder >= 0 && isAlive(holder)', 'guards-files.test'),
@@ -425,14 +426,14 @@ export const MUTANTS = [
   m('session', 'resolve(env.DEMO_CAPTURE_HOME)', 'env.DEMO_CAPTURE_HOME', 'session.test'),
   m('session', '${pad(now.getMinutes())}${pad(now.getSeconds())}', '${pad(now.getMinutes())}', 'session.test'),
   m('session', 'pad(now.getMonth() + 1)', 'pad(now.getMonth())', 'session.test'),
-  m('session', 'await chmod(dir, 0o700)', '', 'session.test'),
+  m('platform', 'await chmod(path, directory ? 0o700 : 0o600)', '', 'session.test'),
   m('session', 'return (await stat(statePath)).isFile()', 'return true', 'session.test'),
   m('session', 'return (await stat(statePath)).isFile()\n  } catch {\n    return false', 'return (await stat(statePath)).isFile()\n  } catch {\n    return true', 'session.test'),
-  m('session', 'await mkdir(dir, { recursive: true, mode: 0o700 })', 'await mkdir(dir, { recursive: true })', 'session.test'),
+  m('session', 'await privateDirectory(dir)', '', 'session.test'),
   m('session', '`${statePath}.tmp`', '`${statePath}.temp`', 'session.test'),
   m('session', 'await rm(temp, { force: true })\n', '', 'session.test'),
-  m('session', 'await chmod(temp, 0o600)\n', '', 'session.test'),
-  m('session', 'await writeFile(temp, JSON.stringify(state), { mode: 0o600 })\n  await chmod(temp, 0o600)', 'await writeFile(temp, JSON.stringify(state))', 'session.test'),
+  m('session', 'await privatePath(temp)\n', '', 'session.test'),
+  m('session', 'await writeFile(temp, JSON.stringify(state), { mode: 0o600 })\n  await privatePath(temp)', 'await writeFile(temp, JSON.stringify(state))', 'session.test'),
   m('session', 'context.storageState({ indexedDB: true })', 'context.storageState()', 'session.test'),
   m('session', 'await rename(temp, statePath)', '', 'session.test'),
   m('session', '  await ensurePrivateDir(dirname(statePath))\n', '', 'session.test'),
@@ -587,7 +588,13 @@ export const checkLockPath = (tile = TILE) => join(tile, 'test', '.mutation-chec
 export function acquireCheckLock(lockPath = checkLockPath(), { pid = process.pid, isAlive = pidAlive } = {}) {
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      writeFileSync(lockPath, String(pid), { flag: 'wx', mode: 0o600 })
+      const pending = `${lockPath}.pending-${pid}-${randomUUID()}`
+      try {
+        writeFileSync(pending, String(pid), { flag: 'wx', mode: 0o600 })
+        linkSync(pending, lockPath)
+      } finally {
+        try { unlinkSync(pending) } catch (error) { if (error.code !== 'ENOENT') throw error }
+      }
       return () => {
         try {
           if (readFileSync(lockPath, 'utf8') === String(pid)) rmSync(lockPath, { force: true })

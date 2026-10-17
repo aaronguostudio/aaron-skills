@@ -88,8 +88,8 @@ def validate_coverage(step, viewport):
 
 def inspect_capture(source, *, strict=False):
     source = Path(source).resolve()
-    capture = json.loads((source / 'capture.json').read_text())
-    steps = json.loads((source / 'steps.json').read_text())
+    capture = json.loads((source / 'capture.json').read_text(encoding='utf-8'))
+    steps = json.loads((source / 'steps.json').read_text(encoding='utf-8'))
     if capture.get('version') != 1 or capture.get('status') != 'passed':
         raise ValueError('Only a passed contract-1 capture is ready for presentation review')
     viewport = capture.get('viewport', {})

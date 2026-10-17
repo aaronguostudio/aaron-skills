@@ -3,17 +3,17 @@
 import argparse
 import hashlib
 import json
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import re
 import shutil
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILLS = tuple(json.loads((ROOT / 'bundles/demo.json').read_text())['skills'])
+SKILLS = tuple(json.loads((ROOT / 'bundles/demo.json').read_text(encoding='utf-8'))['skills'])
 
 
 def bundle_files(root=ROOT):
-    manifest = json.loads((root / 'bundles/demo.json').read_text())
+    manifest = json.loads((root / 'bundles/demo.json').read_text(encoding='utf-8'))
     files = {}
     for relative in manifest['files']:
         path = Path(relative)
@@ -30,8 +30,8 @@ def check_imports(files):
     for relative, source in files.items():
         if source.suffix not in ('.ts', '.tsx', '.mjs'):
             continue
-        for ref in re.findall(r'''(?:from\s*|import\s*)["'](\.[^"']+)["']''', source.read_text()):
-            target = posixpath.normpath(str(Path(relative).parent / ref))
+        for ref in re.findall(r'''(?:from\s*|import\s*)["'](\.[^"']+)["']''', source.read_text(encoding='utf-8')):
+            target = posixpath.normpath(str(PurePosixPath(relative).parent / ref))
             candidates = [target, *(target + ext for ext in ('.ts', '.tsx', '.mjs', '.json')), target + '/index.ts', target + '/index.tsx']
             if not any(candidate in files for candidate in candidates):
                 missing.append(f'{relative}: {ref}')
@@ -47,7 +47,7 @@ def check_documents(files):
         if source.suffix != '.md':
             continue
         fence = None
-        for line in source.read_text().splitlines():
+        for line in source.read_text(encoding='utf-8').splitlines():
             marker = re.match(r'^\s*(`{3,}|~{3,})', line)
             if marker:
                 token = marker[1][0]
@@ -58,7 +58,7 @@ def check_documents(files):
             for ref in re.findall(r'\]\(([^)\s]+)\)', line):
                 if re.match(r'^[a-z][a-z0-9+.-]*:', ref, re.I) or ref.startswith('#'):
                     continue
-                target = posixpath.normpath(str(Path(relative).parent / ref.split('#')[0]))
+                target = posixpath.normpath(str(PurePosixPath(relative).parent / ref.split('#')[0]))
                 if target not in files:
                     missing.append(f'{relative}: {ref}')
             for topic in re.findall(r'aaron-demo docs ([a-z][a-z-]*)', line):
@@ -83,10 +83,10 @@ def metadata(root=ROOT):
         dirty = bool(subprocess.check_output(['git', '-C', str(root), 'status', '--porcelain', '--', *files], text=True).strip())
     except subprocess.CalledProcessError:
         original = root / 'bundle-manifest.json'
-        previous = json.loads(original.read_text()) if original.is_file() else {}
+        previous = json.loads(original.read_text(encoding='utf-8')) if original.is_file() else {}
         revision = previous.get('sourceRevision', 'local-uncommitted')
         dirty = previous.get('sourceDirty', True) or previous.get('files') != hashes
-    return {'schema': 1, 'bundle': 'demo', 'version': json.loads((root / 'bundles/demo.json').read_text())['version'], 'id': digest[:16],
+    return {'schema': 1, 'bundle': 'demo', 'version': json.loads((root / 'bundles/demo.json').read_text(encoding='utf-8'))['version'], 'id': digest[:16],
             'sourceRevision': revision, 'sourceDirty': dirty, 'skills': list(SKILLS), 'files': hashes}
 
 

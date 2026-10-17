@@ -14,7 +14,7 @@ from bundle import ROOT, check_documents, check_imports
 
 
 def public_files(root=ROOT):
-    spec = json.loads((root / 'bundles/source.json').read_text())
+    spec = json.loads((root / 'bundles/source.json').read_text(encoding='utf-8'))
     files = {}
     for name in spec['files']:
         path = Path(name)
@@ -36,7 +36,7 @@ def scan_public(files):
     token = re.compile(r'\b(?:sk-(?:proj-|ant-)?[A-Za-z0-9_-]{24,}|gh[pousr]_[A-Za-z0-9]{24,}|AKIA[0-9A-Z]{16})\b')
     for name, path in files.items():
         try:
-            lines = path.read_text().splitlines()
+            lines = path.read_text(encoding='utf-8').splitlines()
         except UnicodeDecodeError:
             failures.append(f'{name}: unreviewed binary source'); continue
         for number, line in enumerate(lines, 1):

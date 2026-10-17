@@ -136,7 +136,7 @@ describe("sync flash", () => {
   });
 
   test.skipIf(!hasFfmpeg)("the skew between the capture clock and the recording is measured and taken off", () => {
-    const run = makeFixture(mkdtempSync(join(tmpdir(), "walkthrough-sync-")));
+    const run = makeFixture(mkdtempSync(join(tmpdir(), "walkthrough sync 中文 ' -")));
     const offset = detectSyncOffset(join(run, "video.webm"), SKEW_MS + 400)!;
     expect(Math.abs(offset + SKEW_MS)).toBeLessThanOrEqual(40); // one frame at 25 fps
     const prepared = prepare(run);

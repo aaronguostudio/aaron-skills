@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
-"""Install the demo-only bundle on macOS; activate only after verification passes."""
+"""Install the Demo bundle; activate only after verification passes."""
 import argparse
-from contextlib import contextmanager
-import fcntl
 import importlib.util
 import json
 import os
@@ -15,19 +13,8 @@ import sys
 from uuid import uuid4
 
 from bundle import ROOT, SKILLS, build, metadata
-
-@contextmanager
-def installation_lock(root):
-    root.mkdir(parents=True, exist_ok=True)
-    with (root / '.install.lock').open('a') as lock:
-        try:
-            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except BlockingIOError:
-            raise ValueError('Another installer is running for this installation. Wait for it to finish, then retry.') from None
-        try:
-            yield
-        finally:
-            fcntl.flock(lock, fcntl.LOCK_UN)
+from platform_tools import check_system, configure_console, default_root, default_bin, installation_lock, npm_command, venv_python
+import managed_registration
 
 def atomic_link(target, link):
     temporary = link.with_name(link.name + f'.tmp-{os.getpid()}')
@@ -57,8 +44,7 @@ def link_conflicts(root, skills_dir, bin_dir):
     return wanted
 
 def prerequisites():
-    if platform.system() != 'Darwin':
-        raise ValueError('This installer supports macOS.')
+    check_system()
     if sys.version_info < (3, 11):
         raise ValueError('Python >=3.11 is required. Install prerequisites from docs/installation.md.')
     tools = {name: shutil.which(name) for name in ('node', 'npm', 'ffmpeg', 'ffprobe')}
@@ -73,12 +59,18 @@ def prerequisites():
 
 def uninstall(root):
     """Remove our registrations only; retain releases, browser caches and user work."""
+    if os.name == 'nt':
+        current = managed_registration.active_release(root)
+        if current is not None:
+            config = json.loads((current / 'installed.json').read_text(encoding='utf-8'))
+            managed_registration.uninstall(root, config, SKILLS)
+        return
     current = root / 'current'
     config_path = current / 'installed.json'
     if not current.is_symlink() or not config_path.is_file():
         print('No active installation. Nothing removed.')
         return
-    config = json.loads(config_path.read_text())
+    config = json.loads(config_path.read_text(encoding='utf-8'))
     directories = [Path(p) for p in config.get('skillsDirs', [config['skillsDir']])]
     wanted = {directory / name: current / 'skills' / name for directory in directories for name in SKILLS}
     wanted[Path(config['binDir']) / 'aaron-demo'] = current / 'aaron-demo'
@@ -92,13 +84,14 @@ def uninstall(root):
 
 
 def main():
+    configure_console()
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--root', type=Path, default=Path.home() / '.local/share/aaron-skills/demo')
+    parser.add_argument('--root', type=Path, default=default_root())
     parser.add_argument('--agent', choices=['codex', 'claude', 'both'], default='codex')
     parser.add_argument('--skills-dir', type=Path, help='Override one host registration directory.')
     parser.add_argument('--smoke', action='store_true', help='Run the public recording/rendering check after installation.')
     parser.add_argument('--uninstall', action='store_true', help='Remove managed registrations; retain runtime and all user data.')
-    parser.add_argument('--bin-dir', type=Path, default=Path.home() / '.local/bin')
+    parser.add_argument('--bin-dir', type=Path, default=default_bin())
     parser.add_argument('--repair', action='store_true', help='Build and verify a fresh release without modifying the active release.')
     args = parser.parse_args()
     root, bin_dir = [path.expanduser().resolve() for path in (args.root, args.bin_dir)]
@@ -113,16 +106,22 @@ def main():
     if root.resolve().is_relative_to(ROOT.resolve()):
         raise ValueError('Install outside the source checkout.')
     with installation_lock(root):
-        current = root / 'current'
-        if (current.exists() or current.is_symlink()) and not current.is_symlink():
+        current = managed_registration.active_release(root) if os.name == 'nt' else root / 'current'
+        if current is None:
+            current = root / 'releases/not-installed'
+        if os.name != 'nt' and (current.exists() or current.is_symlink()) and not current.is_symlink():
             raise ValueError(f'Preserved existing directory: {current}')
         if current.is_symlink() and not current.resolve().is_relative_to((root / 'releases').resolve()):
             raise ValueError(f'Preserved unrelated current link: {current}')
         previous_path = current / 'installed.json'
         if previous_path.is_file():
-            previous = json.loads(previous_path.read_text())
+            previous = json.loads(previous_path.read_text(encoding='utf-8'))
             directories = list(dict.fromkeys([*(Path(p) for p in previous.get('skillsDirs', [previous['skillsDir']])), *directories]))
-        wanted = link_conflicts(root, directories, bin_dir)
+        if os.name == 'nt':
+            managed_registration.check_conflicts(root, directories, bin_dir, SKILLS)
+            wanted = {}
+        else:
+            wanted = link_conflicts(root, directories, bin_dir)
         source = metadata()
         release_name = source['id'] + (f'-repair-{uuid4().hex[:12]}' if args.repair else '')
         release = root / 'releases' / release_name
@@ -137,7 +136,7 @@ def main():
             (release / 'installed.json').write_text(json.dumps(config, indent=2) + '\n')
         # Identical content can move from a local test to a committed revision without another dependency install.
         manifest_path = release / 'bundle-manifest.json'
-        manifest = json.loads(manifest_path.read_text())
+        manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
         manifest.update(sourceRevision=source['sourceRevision'], sourceDirty=source['sourceDirty'])
         spec = importlib.util.spec_from_file_location('demo_cli', release / 'scripts/cli.py')
         cli = importlib.util.module_from_spec(spec)
@@ -147,39 +146,47 @@ def main():
         cli.RENDER = release / 'packages/demo/remotion'
         config = cli.settings()
         # Save machine-local executable paths; no credentials belong here.
-        config.update(tools=tools, skillsDir=str(directories[0]), skillsDirs=[str(p) for p in directories], binDir=str(bin_dir), agent=args.agent)
+        config.update(tools=tools, skillsDir=str(directories[0]), skillsDirs=[str(p) for p in directories], binDir=str(bin_dir), agent=args.agent,
+                      installRoot=str(root), registrationMode='copies' if os.name == 'nt' else 'links')
         # Retry a partially installed release without changing the currently active one.
         def run(command, **kwargs):
             subprocess.run([str(part) for part in command], env=cli.environment(config), check=True, **kwargs)
         if not (release / 'READY').exists():
             for directory in (cli.ENGINE, cli.RENDER):
-                run([tools['npm'], 'ci', '--no-audit', '--no-fund'], cwd=directory)
+                run(npm_command(tools, 'ci', '--no-audit', '--no-fund'), cwd=directory)
             run([sys.executable, '-m', 'venv', release / '.venv'])
-            run([release / '.venv/bin/python3', '-m', 'pip', 'install', '--disable-pip-version-check', '-r', release / 'scripts/requirements.txt'])
+            run([venv_python(release), '-m', 'pip', 'install', '--disable-pip-version-check', '-r', release / 'scripts/requirements.txt'])
         # Browser caches may have been removed after a successful installation. Prepare them on retries too.
         run([tools['node'], cli.ENGINE / 'node_modules/playwright/cli.js', 'install', 'chromium'])
         run([tools['node'], cli.RENDER / 'node_modules/@remotion/cli/remotion-cli.js', 'browser', 'ensure'], cwd=cli.RENDER)
         if cli.doctor(config, check_links=False):
             raise ValueError('Verification failed; the active release was preserved. Retry with --repair to rebuild dependencies and files.')
         manifest_path.write_text(json.dumps(manifest, indent=2) + '\n')
-        (release / 'installed.json').write_text(json.dumps(config, indent=2) + '\n')
+        if os.name != 'nt':
+            (release / 'installed.json').write_text(json.dumps(config, indent=2) + '\n')
         launcher = release / 'aaron-demo'
         launcher.write_text('#!/bin/sh\nexec ' + shlex.quote(tools['python']) + ' ' +
             shlex.quote(str(release / 'scripts/cli.py')) + ' "$@"\n')
         launcher.chmod(0o755)
         (release / 'READY').touch()
         # Check again after downloads, before any links change.
-        link_conflicts(root, directories, bin_dir)
-        for path in (*directories, bin_dir):
-            path.mkdir(parents=True, exist_ok=True)
-        atomic_link(release, current)
-        for link, target in wanted.items():
-            atomic_link(target, link)
+        if os.name == 'nt':
+            managed_registration.activate(root, release, directories, bin_dir, SKILLS, tools['python'], configuration=config)
+        else:
+            link_conflicts(root, directories, bin_dir)
+            for path in (*directories, bin_dir):
+                path.mkdir(parents=True, exist_ok=True)
+            atomic_link(release, current)
+            for link, target in wanted.items():
+                atomic_link(target, link)
         if cli.doctor(config):
             raise ValueError('Installed files passed, but skill registration needs attention.')
         print(f'Installed for {args.agent}. Start a new agent session in your application project.\nCommand: {bin_dir / "aaron-demo"}\nSmoke check: {bin_dir / "aaron-demo"} smoke')
         if str(bin_dir) not in os.environ.get('PATH', '').split(os.pathsep):
-            print('Add to your shell profile if needed: export PATH=' + shlex.quote(str(bin_dir)) + ':"$PATH"')
+            if os.name == 'nt':
+                print(f'Add {bin_dir} to your user PATH, then open a new terminal. This installer does not change PATH.')
+            else:
+                print('Add to your shell profile if needed: export PATH=' + shlex.quote(str(bin_dir)) + ':"$PATH"')
         if args.smoke:
             run([tools['python'], release / 'scripts/cli.py', 'smoke'])
 

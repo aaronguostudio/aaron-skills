@@ -5,9 +5,16 @@ import fs, { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSy
 import { syncBuiltinESMExports } from 'node:module'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
-import { after, test } from 'node:test'
+import { after, test as nodeTest } from 'node:test'
 import { fileURLToPath } from 'node:url'
 import { acquireCheckLock, checkLockPath, runMutationCheck } from './mutation-check.mjs'
+
+// This optional maintainer harness is not included in the installed Demo runtime.
+// Its POSIX process-group semantics are exercised on macOS and Ubuntu.
+const test = process.platform !== 'win32' ? nodeTest : (name, options, fn) =>
+  typeof options === 'function'
+    ? nodeTest(name, { skip: 'POSIX mutation-check maintainer harness' }, options)
+    : nodeTest(name, { ...options, skip: 'POSIX mutation-check maintainer harness' }, fn)
 
 // Every temp folder a test makes is removed when this file's tests are done.
 const tempDirs = []
@@ -142,23 +149,31 @@ test('two checks started at once: exactly one runs, the other is refused', { tim
   const here = fileURLToPath(new URL('./mutation-check.mjs', import.meta.url))
   const script = `
     import { acquireCheckLock } from ${JSON.stringify(here)}
+    process.send('ready')
+    await new Promise(done => process.once('message', done))
     try {
       const release = acquireCheckLock(${JSON.stringify(lock)})
-      console.log('ran')
-      await new Promise((done) => setTimeout(done, 700))
+      process.send('ran')
+      await new Promise(done => process.once('message', done))
       release()
     } catch (error) {
-      console.log('refused')
-    }`
-  const start = () =>
-    new Promise((done) => {
-      let out = ''
-      const child = spawn(process.execPath, ['--input-type=module', '-e', script], { stdio: ['ignore', 'pipe', 'inherit'] })
-      child.stdout.on('data', (chunk) => (out += chunk))
-      child.on('close', () => done(out.trim()))
-    })
-  const outcomes = await Promise.all([start(), start()])
-  assert.deepEqual(outcomes.sort(), ['ran', 'refused'])
+      process.send('refused')
+    }
+    process.disconnect()`
+  const children = [0, 1].map(() => spawn(process.execPath, ['--input-type=module', '-e', script], { stdio: ['ignore', 'ignore', 'inherit', 'ipc'] }))
+  const next = child => new Promise((done, fail) => { child.once('message', done); child.once('error', fail) })
+  const closed = children.map(child => new Promise(done => child.once('close', done)))
+  try {
+    assert.deepEqual(await Promise.all(children.map(next)), ['ready', 'ready'])
+    const results = Promise.all(children.map(next))
+    children.forEach(child => child.send('start'))
+    const outcomes = await results
+    assert.deepEqual([...outcomes].sort(), ['ran', 'refused'])
+    children[outcomes.indexOf('ran')].send('release')
+    await Promise.all(closed)
+  } finally {
+    children.forEach(child => { if (child.exitCode === null) child.kill('SIGKILL') })
+  }
   assert.equal(existsSync(lock), false)
 })
 
@@ -250,7 +265,8 @@ test('a timeout is a kill only for a mutant marked endless; for any other it fai
   assert.match(marked.text, /^killed \(timed out\) #  1 /m)
   assert.equal(unmarked.code, 1)
   assert.match(unmarked.text, /^TIMED OUT #  1 /m)
-  assert.match(unmarked.text, /the test file did not finish in 0\.7 s/)
+  const budget = /a mutant gets (\d+\.\d) s/.exec(unmarked.text)[1]
+  assert.ok(unmarked.text.includes(`the test file did not finish in ${budget} s`))
   assert.match(unmarked.text, /1 of 1 mutants survived, timed out, errored or did not apply\./)
   for (const { tile } of [marked, unmarked]) {
     assert.equal(readFileSync(join(tile, 'scripts/target.mjs'), 'utf8'), TARGET)
@@ -268,11 +284,11 @@ test('a run that ends by a signal the runner did not send is an error, never a k
 
 test('a mutant gets three times its test file baseline, and never less than the minimum', async () => {
   const [quick, slow] = await Promise.all([
-    run(sandbox(), [KEEP]),
+    run(sandbox(), [KEEP], { minTimeoutMs: 60000 }),
     run(sandbox({ before: 'await new Promise((done) => setTimeout(done, 600))' }), [KEEP])
   ])
   const line = (text) => /baseline test\/target\.test\.mjs passes unmutated \((\d+\.\d) s; a mutant gets (\d+\.\d) s\)/.exec(text)
-  assert.equal(line(quick.text)[2], '0.7')
+  assert.equal(line(quick.text)[2], '60.0')
   const [, took, cap] = line(slow.text)
   assert.ok(Number(took) >= 0.6, took)
   assert.ok(Math.abs(Number(cap) - 3 * Number(took)) < 0.4, `${took} s baseline, ${cap} s cap`)

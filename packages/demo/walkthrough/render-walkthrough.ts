@@ -8,7 +8,8 @@
 // so a work recording can never land in the content pipelines here.
 import { execFileSync, spawnSync } from "child_process";
 import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from "fs";
-import { dirname, join, resolve, sep } from "path";
+import { basename, dirname, join, resolve, sep } from "path";
+import { privateDirectory } from "../capture/scripts/platform.mjs";
 import {
   cardMinMs,
   elevenLabs,
@@ -91,14 +92,16 @@ export type Timing = { stepMinMs?: number[]; titleMs?: number; endMs?: number };
 // black to white (capture.json `sync.tMs`); this finds that frame and returns the offset to add
 // to every capture time. Null when there is no such transition or ffprobe is missing.
 export function detectSyncOffset(video: string, syncMs: number): number | null {
-  const movie = `movie='${video.replace(/'/g, "'\\''")}',signalstats`;
+  // Resolve the directory through cwd, outside FFmpeg's filter grammar. Windows
+  // drive colons/backslashes and apostrophes in directory names are not filters.
+  const movie = `movie='${basename(video).replace(/'/g, "'\\''")}',signalstats`;
   let csv: string;
   try {
     csv = execFileSync(
       "ffprobe",
       ["-v", "error", "-f", "lavfi", "-i", movie, "-read_intervals", `%+${Math.ceil(syncMs / 1000) + 10}`,
         "-show_entries", "frame=pts_time:frame_tags=lavfi.signalstats.YAVG", "-of", "csv=p=0"],
-      { encoding: "utf8", maxBuffer: 16 * 1024 * 1024 },
+      { cwd: dirname(resolve(video)), encoding: "utf8", maxBuffer: 16 * 1024 * 1024 },
     );
   } catch {
     return null;
@@ -267,6 +270,7 @@ export async function main(argv: string[]): Promise<number> {
   // Private outputs even when the user's shell has a permissive umask.
   process.umask(0o077);
   mkdirSync(dirname(prepared.out), { recursive: true });
+  if (process.platform === "win32") await privateDirectory(dirname(prepared.out));
   // Before any voice is made, so a brand that is not there costs nothing.
   let branding: Brand | undefined;
   if (brandArg !== undefined) {

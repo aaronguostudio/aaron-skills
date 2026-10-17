@@ -1,3 +1,4 @@
+import { assertPrivate } from './privacy-assertions.mjs'
 import assert from 'node:assert/strict'
 import { mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
 import fsPromises, { readFile, stat } from 'node:fs/promises'
@@ -28,7 +29,7 @@ test('a folder inside a git working tree is refused, found through symlinks and 
   mkdirSync(join(base, 'worktree'))
   writeFileSync(join(base, 'worktree', '.git'), 'gitdir: /elsewhere\n')
   mkdirSync(join(base, 'plain'))
-  symlinkSync(join(base, 'repo'), join(base, 'link'))
+  symlinkSync(join(base, 'repo'), join(base, 'link'), process.platform === 'win32' ? 'junction' : 'dir')
   assert.equal(enclosingRepo(join(base, 'repo', 'a', 'b')), join(base, 'repo'))
   assert.equal(enclosingRepo(join(base, 'worktree', 'runs', 'x')), join(base, 'worktree'))
   assert.equal(enclosingRepo(join(base, 'link', 'run')), join(base, 'repo'))
@@ -53,8 +54,8 @@ test('the run lock admits one run, refuses a live holder, and takes over from a 
   const lock = join(dir, 'session', 'lock')
   const release = await acquireRunLock(lock, { pid: 111, isAlive: () => true })
   assert.equal(await readFile(lock, 'utf8'), '111')
-  assert.equal((await stat(lock)).mode & 0o777, 0o600)
-  assert.equal((await stat(dirname(lock))).mode & 0o777, 0o700)
+  await assertPrivate(lock)
+  await assertPrivate(dirname(lock), true)
   await rejects(acquireRunLock(lock, { pid: 222, isAlive: (pid) => pid === 111 }), /Another run \(pid 111\) is using this session/)
   // The refusal names the lock file, so a leftover lock (a recycled pid after a reboot) can be found.
   await assert.rejects(
@@ -86,6 +87,31 @@ test('the run lock treats a process it may not signal as alive', async () => {
   const release = await acquireRunLock(lock)
   assert.equal(await readFile(lock, 'utf8'), String(process.pid))
   await release()
+})
+
+test('concurrent runs never observe a half-written PID as a stale lock', async () => {
+  const lock = join(tempDir('lock-race-'), 'session', 'lock')
+  const realWrite = fsPromises.writeFile
+  fsPromises.writeFile = async (path, data, options) => {
+    const handle = await fsPromises.open(path, options.flag, options.mode)
+    try {
+      // Force the scheduling window between creating a file and writing its PID.
+      await new Promise(done => setTimeout(done, 30))
+      await handle.writeFile(data)
+    } finally { await handle.close() }
+  }
+  syncBuiltinESMExports()
+  let results = []
+  try {
+    results = await Promise.allSettled([acquireRunLock(lock), acquireRunLock(lock)])
+    assert.equal(results.filter(result => result.status === 'fulfilled').length, 1)
+    const refused = results.find(result => result.status === 'rejected')
+    assert.match(refused.reason.message, /Another run/)
+  } finally {
+    fsPromises.writeFile = realWrite
+    syncBuiltinESMExports()
+    for (const result of results) if (result.status === 'fulfilled') await result.value()
+  }
 })
 
 test('the last attempt gives up without deleting a lock another run has just taken', async () => {
@@ -120,10 +146,10 @@ test('the run lock folder and file are private whatever the umask says', async (
   } finally {
     process.umask(before)
   }
-  assert.equal((await stat(lock)).mode & 0o777, 0o600)
-  assert.equal((await stat(dirname(lock))).mode & 0o777, 0o700)
+  await assertPrivate(lock)
+  await assertPrivate(dirname(lock), true)
   // The folders made on the way are private too.
-  assert.equal((await stat(dirname(dirname(lock)))).mode & 0o777, 0o700)
+  await assertPrivate(dirname(dirname(lock)), true)
   await release()
 })
 

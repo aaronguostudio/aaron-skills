@@ -4,9 +4,10 @@ import argparse
 import hashlib
 import json
 import math
-from pathlib import Path, PurePosixPath
+from pathlib import Path, PurePosixPath, PureWindowsPath
 import shutil
 from capture_view import target_focus, validate_coverage
+from platform_tools import private_path
 
 
 def digest(path):
@@ -25,7 +26,7 @@ def revise(source, patch_path, output):
         raise ValueError('Revision output must stay outside Git repositories')
     if output.exists():
         raise ValueError('Revision output must be a new folder')
-    patch = json.loads(Path(patch_path).read_text())
+    patch = json.loads(Path(patch_path).read_text(encoding='utf-8'))
     if not isinstance(patch, dict) or set(patch) != {'steps'} or not isinstance(patch['steps'], dict) or not patch['steps']:
         raise ValueError('Patch must contain only a nonempty steps object keyed by step id')
 
@@ -33,15 +34,15 @@ def revise(source, patch_path, output):
         if not isinstance(relative, str) or '\\' in relative:
             raise ValueError('Invalid capture asset path')
         path = PurePosixPath(relative)
-        if path.is_absolute() or '..' in path.parts or not path.parts:
+        if path.is_absolute() or PureWindowsPath(relative).drive or '..' in path.parts or not path.parts:
             raise ValueError('Capture assets must stay inside the source folder')
         candidate = source.joinpath(*path.parts)
         if not candidate.is_file() or candidate.is_symlink() or candidate.resolve() != candidate:
             raise ValueError('Capture assets must be regular files without symlink parents')
         return candidate
 
-    capture = json.loads(asset('capture.json').read_text())
-    steps = json.loads(asset('steps.json').read_text())
+    capture = json.loads(asset('capture.json').read_text(encoding='utf-8'))
+    steps = json.loads(asset('steps.json').read_text(encoding='utf-8'))
     if capture.get('version') != 1 or capture.get('status') != 'passed':
         raise ValueError('Only passed contract-1 captures can be revised')
     viewport = capture.get('viewport', {})
@@ -99,24 +100,25 @@ def revise(source, patch_path, output):
     hashes = {name: digest(path) for name, path in files.items()}
     output.mkdir(parents=True, exist_ok=False, mode=0o700)
     try:
+        private_path(output, directory=True)
         for name, path in files.items():
             if name == 'revision.json':
                 continue  # parent provenance is retained by hash in this revision's manifest
             dest = output / name
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(path, dest)
-            dest.chmod(0o600)
+            private_path(dest)
             if digest(dest) != hashes[name]:
                 raise ValueError('Source changed while copying; no revision retained')
-        (output / 'steps.json').write_text(json.dumps(steps, indent=2, ensure_ascii=False) + '\n')
+        (output / 'steps.json').write_text(json.dumps(steps, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
         if any(digest(path) != hashes[name] for name, path in files.items()):
             raise ValueError('Source changed during revision; no revision retained')
         manifest = {'version': 1, 'kind': 'presentation-only', 'source': str(source),
                     'sourceHashes': hashes, 'patch': patch,
                     'derivedStepsSha256': digest(output / 'steps.json'), 'businessAssertionsReplayed': False}
-        (output / 'revision.json').write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + '\n')
+        (output / 'revision.json').write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
         for path in (output / 'steps.json', output / 'revision.json'):
-            path.chmod(0o600)
+            private_path(path)
     except BaseException:
         shutil.rmtree(output)
         raise

@@ -18,6 +18,7 @@ class BundleTests(unittest.TestCase):
         self.assertEqual(len(registration_dirs('both', home)), 2)
         with self.assertRaises(ValueError): registration_dirs('both', home, home / 'override')
 
+    @unittest.skipIf(os.name == 'nt', 'POSIX symlink layout; copy registrations have separate transaction tests')
     def test_uninstall_removes_only_our_links_and_retains_runtime(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / 'runtime'
@@ -40,7 +41,7 @@ class BundleTests(unittest.TestCase):
         with tempfile.TemporaryDirectory(prefix='demo-export-') as directory:
             output = Path(directory) / 'bundle with spaces'
             manifest = bundle.build(output)
-            actual = {str(path.relative_to(output)) for path in output.rglob('*') if path.is_file()}
+            actual = {path.relative_to(output).as_posix() for path in output.rglob('*') if path.is_file()}
             self.assertEqual(actual, set(manifest['files']) | {'bundle-manifest.json'})
             self.assertFalse(any(path.is_symlink() for path in output.rglob('*')))
             self.assertFalse(any('src/content/' in path or '/build/' in path or '.env' in path for path in actual))
@@ -58,6 +59,7 @@ class BundleTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'outside'):
             bundle.build(bundle.ROOT / 'demo-export')
 
+    @unittest.skipIf(os.name == 'nt', 'POSIX symlink layout; copy registrations have separate transaction tests')
     def test_registration_preserves_unrelated_entries_including_broken_links(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -68,6 +70,7 @@ class BundleTests(unittest.TestCase):
                 link_conflicts(root / 'install', skills, root / 'bin')
             self.assertTrue((skills / 'demo-capture').is_symlink())
 
+    @unittest.skipIf(os.name == 'nt', 'POSIX symlink layout; copy registrations have separate transaction tests')
     def test_update_switches_only_managed_links_and_handles_spaces(self):
         with tempfile.TemporaryDirectory(prefix='demo tools ') as directory:
             root = Path(directory)
