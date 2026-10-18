@@ -1,6 +1,6 @@
 ---
 name: walkthrough-video
-description: Render an existing passed application capture into a guided MP4 with captions, highlights, chapters, and optional narration. Use for demo rendering and caption, highlight, or narration revisions; reuse the capture for presentation-only changes.
+description: Draft walkthrough scripts from a brief or existing capture, and render passed application captures into guided MP4s with captions, highlights, chapters, and optional narration. Reuse the capture for presentation-only revisions.
 ---
 # Walkthrough video
 
@@ -10,7 +10,9 @@ Use `aaron-demo render <run-folder> --stills`. If the CLI is missing, follow the
 
 Read `aaron-demo docs capture-contract` for input details and `aaron-demo docs guided-demo` for review criteria. Render only `capture.json` with `status: passed`. If the input failed, report the failed step; use demo-capture to repair and record again when available.
 
-Rendering is silent by default. When narration is requested, use `--narrate` for concise lines or `--script <run-folder>/narration.json` for a supplied conversational script. Read `aaron-demo docs narration` for user-owned key and voice configuration. Confirm any missing voice or spending authorization before a provider call; never use an author's personal voice or account by default.
+For script drafting or a requested explanation style, read `aaron-demo docs narrative-styles`. Users can give a brief, notes or a script; do not require them to write finished narration. Choose among quick demo, release update, stakeholder walkthrough, task tutorial and training lesson by viewer outcome. Keep purpose, tone, length, visual template and voice separate. Ground each line in saved evidence or supplied facts; missing footage is a capture gap, not permission to invent a result. Before recording, produce only a provisional outline with the needed evidence.
+
+Rendering is silent by default. When narration is requested, use `--narrate` for saved narration/captions or `--script <external-script.json>` for a drafted or supplied script in any mode. Read `aaron-demo docs narration` for user-owned key and voice configuration. Confirm any missing voice or spending authorization before a provider call; never use an author's personal voice or account by default. Script drafting itself requires no voice account or provider request.
 
 For branded packaging, read `aaron-demo docs video-presentation`. Choose `--template minimal|professional|showcase` or an external `--presentation` configuration and add `--cover` for PNG/WebP share images. Keep the app viewport intact and brand within the caption band. Use a separate output directory per variation. For supplied narration use `--audio <external-manifest.json>`; do not request a provider account for an import. Qwen TTS is a reserved interface, not a working backend. Never silently substitute a voice/provider. Review imported/generated audio as well as the picture.
 

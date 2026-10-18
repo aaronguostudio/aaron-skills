@@ -80,6 +80,8 @@ directory per variation to preserve its MP4, cover, chapters, stills and manifes
 ## Voice selection and revisions
 
 See [narration](narration.md) for the imported-audio manifest and ElevenLabs setup.
+Choose the explanation's purpose and draft its script with
+[narrative styles](narrative-styles.md); all five modes can use any visual template.
 
 - `--voice-provider none`: no narration/account. Optional intro sound remains separate.
 - `--audio <external-manifest.json>`: import local clips and measure their duration;

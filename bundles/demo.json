@@ -83,7 +83,8 @@
     "packages/demo/walkthrough/presentation.ts",
     "packages/demo/walkthrough/import-audio.ts",
     "packages/demo/walkthrough/voice-providers.ts",
-    "docs/video-presentation.md"
+    "docs/video-presentation.md",
+    "docs/narrative-styles.md"
   ],
   "version": "0.1.0"
 }

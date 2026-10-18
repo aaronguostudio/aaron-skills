@@ -4,6 +4,12 @@ Narration can be disabled, imported from local audio, or generated with the conf
 ElevenLabs account. [Video presentation](video-presentation.md) controls templates,
 logos, independent covers and intro sound separately. No narration remains the default.
 
+For help writing the explanation, read [narrative styles](narrative-styles.md).
+The skill can draft from a brief or rough notes, map claims to recorded evidence,
+and write quick demos, release updates, stakeholder walkthroughs, tutorials or
+training lessons. A finished user-written script is optional; those modes guide
+the host agent's writing and do not add renderer flags or choose a voice.
+
 ## Imported audio
 
 Use `aaron-demo render <passed-run> --audio <external-directory>/audio.json --stills`.

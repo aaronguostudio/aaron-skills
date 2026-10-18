@@ -187,6 +187,7 @@
     "docs/video-presentation.md",
     "packages/demo/walkthrough/presentation.test.ts",
     "scripts/verify-presentation.mjs",
-    "docs/presentation-validation.md"
+    "docs/presentation-validation.md",
+    "docs/narrative-styles.md"
   ]
 }
