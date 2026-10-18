@@ -1,0 +1,765 @@
+{
+  "schema": 1,
+  "id": "Fieldnote",
+  "title": "Fieldnote · Equipment requests",
+  "revision": "v0.1",
+  "provenance": "fictional",
+  "notice": "Entirely fictional worked example. Answers are scripted fixtures; the prototype simulates roles and writes. No real customer material or user acceptance is implied.",
+  "outcome": "A teammate can submit an equipment request, and a coordinator can decide it with a traceable reason and history.",
+  "scope": [
+    "One studio; requester and coordinator roles; three equipment choices",
+    "Save draft, submit, approve, reject with reason, revise and resubmit",
+    "Visibility and self-review limits; versioned, idempotent writes; visible history",
+    "Local interactive simulation with empty, pending, invalid, error and stale states"
+  ],
+  "excluded": [
+    "Inventory reservations, availability guarantees, checkout and returns",
+    "Email, external integrations, real sign-in and real personal information",
+    "Production deployment and a production database schema"
+  ],
+  "limits": [
+    "The browser prototype uses memory only; reload and Reset clear every change. The role picker is not authentication.",
+    "Failure and latency are simulated. Server authorization, database atomicity and durable retries are specified but not implemented.",
+    "No independent builder trial, real stakeholder approval, accessibility certification or cross-platform acceptance has been completed.",
+    "This is a worked example, not a new benchmark or a change to an existing baseline."
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Initial request",
+      "date": "2026-10-01",
+      "location": "sources/01-request.md",
+      "authority": "Fictional intake; desired outcome",
+      "excerpt": "Requests get lost in chat. Give teammates one place to ask for a kit and let the studio coordinator approve it."
+    },
+    {
+      "id": "S2",
+      "title": "Discovery meeting",
+      "date": "2026-10-02",
+      "location": "sources/02-meeting.md",
+      "authority": "Fictional discussion; unresolved suggestions",
+      "excerpt": "Maybe everyone could approve anyone's request to keep things moving."
+    },
+    {
+      "id": "S3",
+      "title": "Clarification round 1",
+      "date": "2026-10-03",
+      "location": "sources/03-answers-round-1.md",
+      "authority": "Scripted fictional product-owner decisions",
+      "excerpt": "Only the studio coordinator; no self-approval or self-rejection."
+    },
+    {
+      "id": "S4",
+      "title": "Clarification round 2",
+      "date": "2026-10-04",
+      "location": "sources/04-answers-round-2.md",
+      "authority": "Scripted fictional product-owner decisions",
+      "excerpt": "Other stale writes fail and tell the user to refresh; they never overwrite a decision."
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q1",
+      "round": 1,
+      "question": "Who can see and review requests?",
+      "why": "The meeting suggests open approval, which conflicts with separation of duties.",
+      "options": [
+        "Any teammate",
+        "Coordinator only, excluding own requests"
+      ],
+      "recommendation": "Coordinator only; preserve requester ownership.",
+      "status": "resolved",
+      "answer": "Coordinator reviews others; requesters see only their own records; other drafts are hidden.",
+      "blocking": true,
+      "owner": "Fictional product owner",
+      "next": "Use the decision in the pilot design.",
+      "sources": [
+        "S2",
+        "S3"
+      ],
+      "decisions": [
+        "D1"
+      ]
+    },
+    {
+      "id": "Q2",
+      "round": 1,
+      "question": "Can a sent request be edited, and how does rejection recover?",
+      "why": "Editing after approval changes what was authorized.",
+      "options": [
+        "Edit any time",
+        "Lock submitted; revise rejected"
+      ],
+      "recommendation": "Lock submitted requests; make rejected requests revisable.",
+      "status": "resolved",
+      "answer": "Only owned drafts are editable. Rejected requests return to draft under the same ID; approvals are terminal.",
+      "blocking": true,
+      "owner": "Fictional product owner",
+      "next": "Use the decision in the pilot design.",
+      "sources": [
+        "S2",
+        "S3"
+      ],
+      "decisions": [
+        "D2"
+      ]
+    },
+    {
+      "id": "Q3",
+      "round": 1,
+      "question": "Does approval reserve inventory, and what is required to submit?",
+      "why": "No inventory feed exists; a reservation promise would be misleading.",
+      "options": [
+        "Approval with reservation",
+        "Permission only, basic validation"
+      ],
+      "recommendation": "Keep stock management outside the pilot.",
+      "status": "resolved",
+      "answer": "Approval is permission only. Choose a kit, purpose and valid date range. Drafts may be incomplete.",
+      "blocking": true,
+      "owner": "Fictional product owner",
+      "next": "Use the decision in the pilot design.",
+      "sources": [
+        "S2",
+        "S3"
+      ],
+      "decisions": [
+        "D3"
+      ]
+    },
+    {
+      "id": "Q4",
+      "round": 2,
+      "question": "What happens on duplicate clicks or a stale review?",
+      "why": "Two actions must not silently overwrite each other.",
+      "options": [
+        "Last write wins",
+        "Version check plus idempotency"
+      ],
+      "recommendation": "Reject stale writes and replay exact retries once.",
+      "status": "resolved",
+      "answer": "Use actor-scoped operation IDs, payload checks and expected versions; failed retries cannot disclose hidden records.",
+      "blocking": true,
+      "owner": "Fictional product owner",
+      "next": "Use the decision in the pilot design.",
+      "sources": [
+        "S2",
+        "S4"
+      ],
+      "decisions": [
+        "D4"
+      ]
+    },
+    {
+      "id": "Q5",
+      "round": 2,
+      "question": "What history remains after revision?",
+      "why": "A new draft must not erase why the previous submission failed.",
+      "options": [
+        "Keep only latest status",
+        "Append every successful transition"
+      ],
+      "recommendation": "Keep append-only events with rejection reasons.",
+      "status": "resolved",
+      "answer": "Each successful operation increments version and adds an event; retries and failures do not.",
+      "blocking": true,
+      "owner": "Fictional product owner",
+      "next": "Use the decision in the pilot design.",
+      "sources": [
+        "S2",
+        "S4"
+      ],
+      "decisions": [
+        "D5"
+      ]
+    },
+    {
+      "id": "Q6",
+      "round": 2,
+      "question": "What does the user see during a slow or failed write?",
+      "why": "Optimistic status without recovery could imply an action succeeded.",
+      "options": [
+        "Assume success",
+        "Pending state then confirmed result"
+      ],
+      "recommendation": "Disable actions while pending; preserve data on failure.",
+      "status": "resolved",
+      "answer": "Show failure and retry; never mutate the record on failed writes. Browser reload intentionally resets this simulation.",
+      "blocking": true,
+      "owner": "Fictional product owner",
+      "next": "Use the decision in the pilot design.",
+      "sources": [
+        "S2",
+        "S4"
+      ],
+      "decisions": [
+        "D6"
+      ]
+    },
+    {
+      "id": "Q7",
+      "round": 2,
+      "question": "Should the pilot send email?",
+      "why": "Recipients and delivery semantics are undefined.",
+      "options": [
+        "Add email now",
+        "Defer notifications"
+      ],
+      "recommendation": "Defer email and use in-app history.",
+      "status": "deferred",
+      "answer": "Email is excluded from this pilot; define recipients, consent and delivery behavior before adding it.",
+      "blocking": false,
+      "owner": "Fictional product owner",
+      "next": "Define notification recipients and delivery before a later slice.",
+      "sources": [
+        "S2",
+        "S4"
+      ],
+      "decisions": [
+        "D7"
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D1",
+      "text": "Coordinator reviews others; requesters see only their own records; other drafts are hidden.",
+      "sources": [
+        "S3"
+      ]
+    },
+    {
+      "id": "D2",
+      "text": "Only owned drafts are editable. Rejected requests return to draft under the same ID; approvals are terminal.",
+      "sources": [
+        "S3"
+      ]
+    },
+    {
+      "id": "D3",
+      "text": "Approval is permission only. Choose a kit, purpose and valid date range. Drafts may be incomplete.",
+      "sources": [
+        "S3"
+      ]
+    },
+    {
+      "id": "D4",
+      "text": "Use actor-scoped operation IDs, payload checks and expected versions; failed retries cannot disclose hidden records.",
+      "sources": [
+        "S4"
+      ]
+    },
+    {
+      "id": "D5",
+      "text": "Each successful operation increments version and adds an event; retries and failures do not.",
+      "sources": [
+        "S4"
+      ]
+    },
+    {
+      "id": "D6",
+      "text": "Show failure and retry; never mutate the record on failed writes. Browser reload intentionally resets this simulation.",
+      "sources": [
+        "S4"
+      ]
+    },
+    {
+      "id": "D7",
+      "text": "Email is excluded from this pilot; define recipients, consent and delivery behavior before adding it.",
+      "sources": [
+        "S4"
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "R1",
+      "text": "Requesters see and mutate only their own records. Coordinator sees submitted/decided records plus own drafts; may review only others. Server identity must enforce this, including retry lookups.",
+      "decisions": [
+        "D1",
+        "D4"
+      ]
+    },
+    {
+      "id": "R2",
+      "text": "Only owned Draft records allow save/submit. Coordinator may approve/reject Submitted records only. Owner may revise Rejected to Draft. Approved is terminal.",
+      "decisions": [
+        "D2"
+      ]
+    },
+    {
+      "id": "R3",
+      "text": "Submit requires Camera kit, Lighting kit or Audio kit; trimmed purpose length 10–240; real YYYY-MM-DD dates with end >= start. Drafts may be incomplete. Approval never reserves stock.",
+      "decisions": [
+        "D3"
+      ]
+    },
+    {
+      "id": "R4",
+      "text": "Each write includes expectedVersion and actor-scoped operationId. Exact same-payload retries return the previous result without another event; changed payload with the same key or a stale version fails. Check visibility first.",
+      "decisions": [
+        "D4"
+      ]
+    },
+    {
+      "id": "R5",
+      "text": "Rejection reason is trimmed to 5–240 characters. Every successful write increments version and appends an event. Revise clears current reason but retains history. Invalid/stale/retried writes append nothing.",
+      "decisions": [
+        "D5"
+      ]
+    },
+    {
+      "id": "R6",
+      "text": "Pending actions are disabled. Failure changes no record and offers retry; stale writes request an explicit refresh. Simulation uses memory and exposes no real login or persistence.",
+      "decisions": [
+        "D6"
+      ]
+    },
+    {
+      "id": "R7",
+      "text": "Pilot communicates decisions through status/history only; email remains excluded and Q7 deferred.",
+      "decisions": [
+        "D7"
+      ]
+    }
+  ],
+  "states": [
+    {
+      "id": "Draft",
+      "label": "Draft"
+    },
+    {
+      "id": "Submitted",
+      "label": "Submitted"
+    },
+    {
+      "id": "Approved",
+      "label": "Approved"
+    },
+    {
+      "id": "Rejected",
+      "label": "Rejected"
+    }
+  ],
+  "transitions": [
+    {
+      "id": "T1",
+      "from": "Draft",
+      "to": "Draft",
+      "action": "Save draft",
+      "actor": "Owner",
+      "rules": [
+        "R1",
+        "R2",
+        "R4",
+        "R5"
+      ]
+    },
+    {
+      "id": "T2",
+      "from": "Draft",
+      "to": "Submitted",
+      "action": "Submit",
+      "actor": "Owner",
+      "rules": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ]
+    },
+    {
+      "id": "T3",
+      "from": "Submitted",
+      "to": "Approved",
+      "action": "Approve",
+      "actor": "Coordinator, not owner",
+      "rules": [
+        "R1",
+        "R2",
+        "R4",
+        "R5"
+      ]
+    },
+    {
+      "id": "T4",
+      "from": "Submitted",
+      "to": "Rejected",
+      "action": "Reject with reason",
+      "actor": "Coordinator, not owner",
+      "rules": [
+        "R1",
+        "R2",
+        "R4",
+        "R5"
+      ]
+    },
+    {
+      "id": "T5",
+      "from": "Rejected",
+      "to": "Draft",
+      "action": "Revise",
+      "actor": "Owner",
+      "rules": [
+        "R1",
+        "R2",
+        "R4",
+        "R5"
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "id": "Person",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "key": "PK"
+        },
+        {
+          "name": "display_name",
+          "type": "string",
+          "key": ""
+        },
+        {
+          "name": "role",
+          "type": "enum",
+          "key": ""
+        }
+      ]
+    },
+    {
+      "id": "Request",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "key": "PK"
+        },
+        {
+          "name": "owner_id",
+          "type": "uuid",
+          "key": "FK"
+        },
+        {
+          "name": "equipment",
+          "type": "enum",
+          "key": ""
+        },
+        {
+          "name": "purpose",
+          "type": "text",
+          "key": ""
+        },
+        {
+          "name": "start_date",
+          "type": "date",
+          "key": ""
+        },
+        {
+          "name": "end_date",
+          "type": "date",
+          "key": ""
+        },
+        {
+          "name": "status",
+          "type": "enum",
+          "key": ""
+        },
+        {
+          "name": "version",
+          "type": "integer",
+          "key": ""
+        },
+        {
+          "name": "rejection_reason",
+          "type": "text",
+          "key": ""
+        }
+      ]
+    },
+    {
+      "id": "RequestEvent",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "key": "PK"
+        },
+        {
+          "name": "request_id",
+          "type": "uuid",
+          "key": "FK"
+        },
+        {
+          "name": "actor_id",
+          "type": "uuid",
+          "key": "FK"
+        },
+        {
+          "name": "record_version",
+          "type": "integer",
+          "key": ""
+        },
+        {
+          "name": "operation_id",
+          "type": "uuid",
+          "key": ""
+        },
+        {
+          "name": "from_state",
+          "type": "enum",
+          "key": ""
+        },
+        {
+          "name": "to_state",
+          "type": "enum",
+          "key": ""
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "key": ""
+        },
+        {
+          "name": "occurred_at",
+          "type": "timestamp",
+          "key": ""
+        }
+      ]
+    },
+    {
+      "id": "Operation",
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "key": "PK"
+        },
+        {
+          "name": "operation_id",
+          "type": "uuid",
+          "key": ""
+        },
+        {
+          "name": "actor_id",
+          "type": "uuid",
+          "key": "FK"
+        },
+        {
+          "name": "request_id",
+          "type": "uuid",
+          "key": "FK"
+        },
+        {
+          "name": "payload_digest",
+          "type": "string",
+          "key": ""
+        },
+        {
+          "name": "result_version",
+          "type": "integer",
+          "key": ""
+        },
+        {
+          "name": "result",
+          "type": "json",
+          "key": ""
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "from": "Person",
+      "to": "Request",
+      "label": "owns",
+      "cardinality": "one-many"
+    },
+    {
+      "from": "Request",
+      "to": "RequestEvent",
+      "label": "records",
+      "cardinality": "one-many"
+    },
+    {
+      "from": "Person",
+      "to": "RequestEvent",
+      "label": "performs",
+      "cardinality": "one-many"
+    },
+    {
+      "from": "Request",
+      "to": "Operation",
+      "label": "deduplicates",
+      "cardinality": "one-many"
+    },
+    {
+      "from": "Person",
+      "to": "Operation",
+      "label": "scopes",
+      "cardinality": "one-many"
+    }
+  ],
+  "acceptance": [
+    {
+      "id": "A1",
+      "given": "Jules has an incomplete draft",
+      "when": "Jules saves it",
+      "then": "the draft remains editable and one versioned event is recorded",
+      "rules": [
+        "R1",
+        "R2",
+        "R5"
+      ],
+      "verify": "Model + browser: save then inspect history."
+    },
+    {
+      "id": "A2",
+      "given": "a draft has a short purpose or impossible/reversed date range",
+      "when": "the owner submits",
+      "then": "the write fails with a field message and no state, version or history change",
+      "rules": [
+        "R3",
+        "R5"
+      ],
+      "verify": "Model + browser: invalid dates and purpose; assert no mutation."
+    },
+    {
+      "id": "A3",
+      "given": "a valid owned draft exists",
+      "when": "the owner submits once then retries exactly",
+      "then": "one submitted version and event exist; retry returns the prior result",
+      "rules": [
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ],
+      "verify": "Model + browser: submit; model repeats the exact operation ID."
+    },
+    {
+      "id": "A4",
+      "given": "Morgan is coordinator and a submitted request belongs to Jules",
+      "when": "Morgan approves it",
+      "then": "the request becomes Approved; neither owner nor coordinator can edit or decide it again; no stock is reserved",
+      "rules": [
+        "R1",
+        "R2",
+        "R3"
+      ],
+      "verify": "Model + browser: approve, inspect terminal actions; no reservation UI."
+    },
+    {
+      "id": "A5",
+      "given": "a submitted request is visible to Morgan",
+      "when": "Morgan rejects with a short reason then a valid one",
+      "then": "short reason fails without mutation; valid reason appears in current status and history",
+      "rules": [
+        "R2",
+        "R5"
+      ],
+      "verify": "Model + browser: reject with abc, then a valid sentence."
+    },
+    {
+      "id": "A6",
+      "given": "Jules owns a rejected request",
+      "when": "Jules revises, updates and resubmits",
+      "then": "the ID stays the same, current reason clears, earlier rejection remains in history",
+      "rules": [
+        "R2",
+        "R5"
+      ],
+      "verify": "Model + browser: complete the rejection recovery loop."
+    },
+    {
+      "id": "A7",
+      "given": "an actor is a requester, another owner or a self-reviewing coordinator",
+      "when": "that actor attempts a forbidden read or transition",
+      "then": "other drafts remain hidden and the forbidden write is rejected, including replay of a cached operation",
+      "rules": [
+        "R1",
+        "R4"
+      ],
+      "verify": "Model: direct authorization bypass attempts; browser: switch simulated roles."
+    },
+    {
+      "id": "A8",
+      "given": "a decision increments the request version",
+      "when": "another write uses an old version or a reused key with a changed payload",
+      "then": "a conflict is returned and the accepted decision/history remain unchanged",
+      "rules": [
+        "R4",
+        "R5"
+      ],
+      "verify": "Model + browser: stale-view control; model checks payload collision."
+    },
+    {
+      "id": "A9",
+      "given": "a write is pending or a simulated failure occurs",
+      "when": "the user waits then retries",
+      "then": "actions are disabled while pending; failed write preserves state; retry can succeed",
+      "rules": [
+        "R6"
+      ],
+      "verify": "Browser: enable failure simulation, submit, then Retry last action."
+    },
+    {
+      "id": "A10",
+      "given": "the list is empty and then has a decided request",
+      "when": "the user inspects the page",
+      "then": "an actionable empty state, in-app status and history are visible; no email is sent",
+      "rules": [
+        "R6",
+        "R7"
+      ],
+      "verify": "Browser: empty-list scenario and status/history; no provider dependency."
+    }
+  ],
+  "slices": [
+    {
+      "id": "B1",
+      "title": "Authorized records and durable writes",
+      "outcome": "Implement authenticated identity, visibility, Request/Event/Operation storage and atomic transactions.",
+      "acceptance": [
+        "A1",
+        "A3",
+        "A7",
+        "A8"
+      ],
+      "dependsOn": [],
+      "notes": "Backend first: derive actor from the session, never a supplied role. Unique(actor_id, operation_id); compare canonical payload digest; atomic version compare/update plus event+operation insert. Cache replay must enforce current visibility. Start with additive pilot tables; no legacy data migration is needed in this fictional greenfield case. Decide retention before production."
+    },
+    {
+      "id": "B2",
+      "title": "Request and review journeys",
+      "outcome": "Implement form validation and the complete approval/rejection/revision loop.",
+      "acceptance": [
+        "A2",
+        "A4",
+        "A5",
+        "A6"
+      ],
+      "dependsOn": [
+        "B1"
+      ],
+      "notes": "Use shared rules and calendar-date validation on server and client. RequestEvent is append-only; keep rejection history after resubmission. Record occurred_at from server time. Index owner/status for list queries. Model is conceptual; exact SQL and identity-provider mappings remain implementation work."
+    },
+    {
+      "id": "B3",
+      "title": "Recovery and pilot delivery",
+      "outcome": "Connect pending, error, stale refresh, empty state and history to a real backend.",
+      "acceptance": [
+        "A9",
+        "A10"
+      ],
+      "dependsOn": [
+        "B1",
+        "B2"
+      ],
+      "notes": "Integration tests must use separate real sessions for cross-owner and self-review denial plus concurrent writes. Verify keyboard/error announcements and focus with assistive technology. Pilot behind a disabled-by-default feature flag; disable the flag to roll back, retain audit data. No email, deployment or feature enablement is authorized by this packet."
+    }
+  ]
+}

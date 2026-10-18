@@ -84,7 +84,8 @@
     "packages/demo/walkthrough/import-audio.ts",
     "packages/demo/walkthrough/voice-providers.ts",
     "docs/video-presentation.md",
-    "docs/narrative-styles.md"
+    "docs/narrative-styles.md",
+    "docs/skill-names.md"
   ],
   "version": "0.1.0"
 }

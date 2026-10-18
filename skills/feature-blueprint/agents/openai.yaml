@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shape"
+  short_description: "Build understanding and move the thinking forward"
+  default_prompt: "Use $feature-blueprint to connect the relevant context, question what matters and help us reach a clear understanding of this request."

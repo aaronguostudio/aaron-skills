@@ -40,12 +40,25 @@ communication. Project onboarding, implementation, and broader engineering
 verification are the direction for the collection; they are not yet separate
 released skills here.
 
+**Shape is available as a source-checkout preview**, with the existing
+invocation ID `feature-blueprint`. It helps the agent connect relevant context,
+simplify conflicting information and pursue questions that improve understanding
+and the next decision. Start with the user's problem in the current conversation;
+a short exchange can be a complete result. Visuals and the agent's native design
+capabilities participate when they help discovery or explanation. Read
+`skills/feature-blueprint/SKILL.md`; `docs/feature-blueprint.md` locates deeper
+practice and optional historical cases. A page, packet or fixed output structure
+is not required. The Demo setup below continues to install only the Demo bundle.
+
+The family uses short action names: **Shape → Capture → Film
+→ Share**. See [names and existing invocation IDs](docs/skill-names.md).
+
 ## Available now: Demo
 
 Turn a working web feature into a guided video, screenshots, and a copyable
 update. The Demo bundle connects three skills with a shared local toolchain:
 
-| [Demo Capture](skills/demo-capture/SKILL.md) | [Walkthrough Video](skills/walkthrough-video/SKILL.md) | [Paste Ready Update](skills/paste-ready-update/SKILL.md) |
+| [Capture](skills/demo-capture/SKILL.md) | [Film](skills/walkthrough-video/SKILL.md) | [Share](skills/paste-ready-update/SKILL.md) |
 | :---: | :---: | :---: |
 | <img src="https://skills.aaronguo.com/art/optimized/demo-capture-384.f4d6e043ee50.webp" width="180" alt="Camera and screenshot workshop" /> | <img src="https://skills.aaronguo.com/art/optimized/walkthrough-video-384.46860ec7a03c.webp" width="180" alt="Film and guided-video workshop" /> | <img src="https://skills.aaronguo.com/art/optimized/paste-ready-update-384.c3bf816ed3ae.webp" width="180" alt="Document and update workshop" /> |
 | **Record the real flow.** Save screenshots and checked result evidence. | **Make the result easy to follow.** Turn a passed capture into a guided MP4. | **Bring the work into the conversation.** Prepare text, screenshots and optional video for review and sharing. |
@@ -102,7 +115,7 @@ an MP4, review stills and a local HTML update page.
 
 Ask your agent:
 
-> Use Demo Capture to demonstrate this feature in my local app. Show the starting
+> Use Capture to demonstrate this feature in my local app. Show the starting
 > state, the important actions and the verified result. Produce a short silent
 > walkthrough and an update page for me to review. Reuse the capture for caption
 > or highlight corrections. Do not send or publish anything.

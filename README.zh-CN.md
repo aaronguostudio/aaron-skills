@@ -28,11 +28,15 @@ Aaron Skills 将工作流与执行工作流所需的工具放在同一个集合�
 
 **目前第一个可用的能力组合是 Demo**，覆盖演示与沟通。项目接手、实现改动、更广泛的工程验证，是这个集合后续发展的方向；当前仓库还没有单独发布这些环节的 Skills。
 
+**Shape 已提供源码预览**，保留调用标识 `feature-blueprint`。它帮助 Agent 连接相关上下文、从复杂信息中提炼关系、追问会改变判断的问题，并在反馈中不断校正理解。入口是当前对话里的需求本身，一次简短交流也可以形成完整结果；视觉表达和 Agent 原生设计能力按理解问题的需要参与。请先读 `skills/feature-blueprint/SKILL.md`；`docs/feature-blueprint.md` 提供深入指引和可选历史案例。页面、数据包或固定的输出结构都不是必要条件。下面的安装流程仍只安装 Demo。
+
+系列名称统一为 **Shape → Capture → Film → Share**。请看[名称与现有调用标识](docs/skill-names.md)。
+
 ## 当前可用：Demo
 
 将一个已经能运行的 Web 功能，变成有引导的视频、截图和可复制的更新说明。Demo 通过一套共享的本地工具，串起三个 Skills：
 
-| [Demo Capture](skills/demo-capture/SKILL.md) | [Walkthrough Video](skills/walkthrough-video/SKILL.md) | [Paste Ready Update](skills/paste-ready-update/SKILL.md) |
+| [Capture](skills/demo-capture/SKILL.md) | [Film](skills/walkthrough-video/SKILL.md) | [Share](skills/paste-ready-update/SKILL.md) |
 | :---: | :---: | :---: |
 | <img src="https://skills.aaronguo.com/art/optimized/demo-capture-384.f4d6e043ee50.webp" width="180" alt="相机与截图工作台" /> | <img src="https://skills.aaronguo.com/art/optimized/walkthrough-video-384.46860ec7a03c.webp" width="180" alt="胶片与演示视频工作台" /> | <img src="https://skills.aaronguo.com/art/optimized/paste-ready-update-384.c3bf816ed3ae.webp" width="180" alt="文档与更新说明工作台" /> |
 | **录制真实流程。** 保存截图与经过检查的结果证据。 | **让结果容易看懂。** 将通过检查的录制制作成带引导的 MP4。 | **把工作带进对话。** 整理文字、截图与可选视频，供你审阅和分享。 |
@@ -75,7 +79,7 @@ Smoke 检查会输出 MP4、供审阅的静帧和本地 HTML 更新页面。
 
 可以这样告诉 Agent：
 
-> 使用 Demo Capture 演示我本地应用中的这个功能。展示起始状态、关键操作和经过验证的结果。生成一个简短的静音演示视频和更新页面，供我审阅。字幕或高亮需要修改时，复用已有录制。不要发送或发布任何内容。
+> 使用 Capture 演示我本地应用中的这个功能。展示起始状态、关键操作和经过验证的结果。生成一个简短的静音演示视频和更新页面，供我审阅。字幕或高亮需要修改时，复用已有录制。不要发送或发布任何内容。
 
 接入一个应用需要小型项目适配器，描述应用地址和界面操作步骤。Agent 可以在检查应用后编写它。录制前需要确认写入操作和生产环境限制。登录由你在可见浏览器中完成，Skill 不代填凭据。请看[第一次制作 Demo](docs/first-demo.md)和[适配器参考](docs/project-adapters.md)。
 

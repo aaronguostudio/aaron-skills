@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "name": "feature-blueprint",
+  "version": "0.1.0",
+  "skills": [
+    "feature-blueprint"
+  ],
+  "files": [
+    "LICENSE",
+    "bundles/feature-blueprint.json",
+    "docs/feature-blueprint.md",
+    "packages/feature-blueprint/export.py",
+    "skills/feature-blueprint/SKILL.md",
+    "skills/feature-blueprint/agents/openai.yaml",
+    "skills/feature-blueprint/references/packet.md",
+    "skills/feature-blueprint/references/workflow.md",
+    "skills/feature-blueprint/scripts/blueprint.py",
+    "examples/feature-blueprint/README.md",
+    "examples/feature-blueprint/app.mjs",
+    "examples/feature-blueprint/blueprint.json",
+    "examples/feature-blueprint/index.html",
+    "examples/feature-blueprint/model.mjs",
+    "examples/feature-blueprint/sources/01-request.md",
+    "examples/feature-blueprint/sources/02-meeting.md",
+    "examples/feature-blueprint/sources/03-answers-round-1.md",
+    "examples/feature-blueprint/sources/04-answers-round-2.md",
+    "examples/feature-blueprint/styles.css",
+    "examples/feature-blueprint/lightweight.md",
+    "examples/feature-blueprint/cases.mjs",
+    "examples/feature-blueprint/save-feedback.mjs",
+    "docs/skill-names.md"
+  ]
+}

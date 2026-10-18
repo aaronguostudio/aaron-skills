@@ -1,4 +1,4 @@
 interface:
-  display_name: "Paste Ready Update"
+  display_name: "Share"
   short_description: "Prepare copyable updates with screenshots"
   default_prompt: "Use $paste-ready-update to prepare an update page from these screenshots."
