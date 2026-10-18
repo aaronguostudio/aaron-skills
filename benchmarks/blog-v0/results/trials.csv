@@ -1,0 +1,7 @@
+id,profile,completion,qualityScore,correctness,clarity,handoff,revision,elapsedSeconds,firstPassedCaptureSeconds,captureAttempts,renderAttempts,failedCommands,commandCount,operatorInterventionsDuringTask,inputTokens,cachedInputTokens,outputTokens,reasoningOutputTokens,videoSeconds,nativeArtifactBytes
+trial-1,strict,False,,,,,,157.85,,1,0,5,17,0,816646,767360,7949,2510,,117211
+trial-2,strict,False,,,,,,176.39,,1,0,9,45,0,896019,842880,9650,2296,,1747391
+trial-3,strict,False,,,,,,206.54,,1,0,4,31,0,978580,920960,10342,3466,,1830892
+offline-trial-1,offline,True,95,35,25,20,15,265.43,,1,2,5,31,0,2511120,2392448,12292,2673,30.233333,20739351
+offline-trial-2,offline,True,95,35,25,20,15,395.25,,3,3,4,51,0,4107902,3975040,16919,4735,29.966667,42115375
+offline-trial-3,offline,True,100,35,25,25,15,279.05,,1,2,2,40,0,1989044,1869184,14104,3688,30.566667,23908123

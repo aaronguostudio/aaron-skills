@@ -1,0 +1,957 @@
+{
+  "schema": 1,
+  "id": "blog-v0-baseline-2026-10-17",
+  "status": "baseline only; no skills/runtime improvements",
+  "localDate": "2026-10-17",
+  "executionUtcDate": "2026-10-18",
+  "archiveId": "blog-v0-2026-10-17",
+  "skillsSourceRevision": "1fec24692744dcb6bc8eaae91301e03b5e29a5ba",
+  "installedBundleId": "2df24889e2e4354b",
+  "installedInitiallyDirty": false,
+  "skillEntrySha256": {
+    "paste-ready-update": "f0608605078f46713aa99703f61fed68ecc4d5a0e6e9ce47d4fae1d497e1ece2",
+    "demo-capture": "4d588d68e32c9ed5450b8248c2baa62ee166a0edfc7d82c76f4f87c62f474bdd",
+    "walkthrough-video": "a6553dec6722e3f282000c9f4ded399c07f9f0902dffc0bc81c0a542250f914a"
+  },
+  "fixture": {
+    "revision": "0c51dc56cebf9f972a63a124ad65c8e356b9c3b5",
+    "overlay": [
+      "no external analytics script",
+      "no dev font download"
+    ],
+    "configSha256": "c5702a7589b0635ccc167a61dc7e13825b8f58592fcb7ef8843870a038ab6832",
+    "serverMode": "production node-server",
+    "lockfileSha256": "9a84f5870dba7f53d087b6e1ab8daa2d4ecab7ef6067c9dcec7db8bb1dd747a0",
+    "buildPackagingRepair": "Copied existing locked @libsql/darwin-arm64 0.4.7 into generated local server node_modules; application source unchanged",
+    "nativeDependencyFiles": {
+      "README.md": "e90225f4a8653582684ae6eba6ab9afd2e231575e30003998b083936a58220d1",
+      "index.node": "8b8eccb0ec75e0ea9166e2862d090d770bca88a80283d651dec38bb240daa8c7",
+      "package.json": "42d186f18063551d75337181b752fda1ea1aa148e3d6eecf6411af2e90dafa87"
+    }
+  },
+  "integrity": {
+    "fixtureCommittedFilesChecked": 522,
+    "expectedConfigOverlay": true,
+    "unexpectedFixtureChanges": [],
+    "installedBundleId": "2df24889e2e4354b",
+    "installedSourceRevision": "1fec24692744dcb6bc8eaae91301e03b5e29a5ba",
+    "installedBundleFilesChecked": 71,
+    "changedInstalledBundleFiles": []
+  },
+  "host": {
+    "name": "Codex CLI",
+    "version": "0.163.0-alpha.10.2",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "high",
+    "selection": "frozen from the owner's existing default configuration"
+  },
+  "environment": {
+    "os": "macOS 26.6 arm64",
+    "runtimeNode": "24.18.0",
+    "runtimeNpm": "11.16.0",
+    "bun": "1.4.3",
+    "python": "3.14.5",
+    "ffmpeg": "8.1.1",
+    "nuxt": "3.17.2",
+    "nitro": "2.11.11",
+    "nuxtContent": "3.5.0",
+    "serverMode": "production node-server",
+    "browserReview": "Chrome on macOS; not multi-browser certification"
+  },
+  "aggregation": {
+    "strict": {
+      "completed": 0,
+      "total": 3,
+      "qualityScore": null,
+      "medianElapsedSecondsToIncompleteHandoff": 176.39
+    },
+    "offline": {
+      "completed": 3,
+      "total": 3,
+      "qualityMedian": 95,
+      "qualityRange": [
+        95,
+        100
+      ],
+      "elapsedMedianSeconds": 279.05,
+      "elapsedRangeSeconds": [
+        265.43,
+        395.25
+      ],
+      "captureAttempts": [
+        1,
+        3,
+        1
+      ],
+      "renderAttempts": [
+        2,
+        3,
+        2
+      ],
+      "portableHandoffs": 1,
+      "rawReuseRevisions": 3,
+      "browserHandoffs": 3
+    }
+  },
+  "excludedPreflights": [
+    {
+      "id": "preflight-devserver-1",
+      "elapsedSeconds": 91.44,
+      "operatorStops": 1,
+      "reason": "dev HMR localhost/ws refused; manually stopped; not a formal trial"
+    },
+    {
+      "id": "offline-preflight",
+      "reason": "fixture preparation using a pre-existing adapter; not a fresh native subject trial"
+    }
+  ],
+  "limitations": [
+    "Small descriptive sample; execution-independent operator review, unblinded; owner acceptance pending.",
+    "Profiles differ in external-connection/iframe fixture headers; never treat strict to offline as a skill gain.",
+    "Explicit skill request; no automatic routing certification or no-tools/tools-only ablation.",
+    "No authenticated-site, session-expiry, write-recovery, Windows/Linux, narration or actual destination-app paste acceptance.",
+    "Cached input is included in reported input tokens, not an additive token category or dollar cost.",
+    "First-passed-capture timing not consistently instrumented; null.",
+    "Static source snapshot provenance is externally verified; capture appRevision remains unknown."
+  ],
+  "trials": [
+    {
+      "id": "trial-1",
+      "profile": "strict",
+      "trial": 1,
+      "completion": false,
+      "cliReturncode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 157.85,
+      "elapsedDefinition": "native execution through final handoff; setup and operator review excluded",
+      "firstPassedCaptureSeconds": null,
+      "captureAttempts": 1,
+      "renderAttempts": 0,
+      "failedCommands": 5,
+      "commandCount": 17,
+      "operatorInterventionsDuringTask": 0,
+      "usage": {
+        "input_tokens": 816646,
+        "cached_input_tokens": 767360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7949,
+        "reasoning_output_tokens": 2510
+      },
+      "score": {
+        "status": "blocked",
+        "qualityScore": null,
+        "reviewedSubtotal": 0,
+        "dimensions": {
+          "correctness": null,
+          "clarity": null,
+          "handoff": null,
+          "revision": null
+        },
+        "pendingItems": [
+          "index",
+          "search",
+          "english",
+          "chinese",
+          "settled",
+          "focus",
+          "pacing",
+          "message",
+          "page",
+          "portable",
+          "reuse",
+          "feedback"
+        ],
+        "failedGates": []
+      },
+      "review": "reviews/trial-1.json",
+      "protocolHashes": {
+        "case.json": "fe3f1e2c5fd090f8eb8cb957955749d8e90cf386a7ec5be3e9e0cd8a1b803f2d",
+        "tasks.md": "68515f88e4bfe0508a3a054287a52ac3d5ee16596c050c12d1a78a8d01445ba8",
+        "rubric.json": "a6c66e73d82adf1bbacaf9bb11a2c9a50d87fc681794c907eb09157d610dcbc0"
+      },
+      "rawEvidenceManifest": {
+        "archivePath": "trial-1-evidence.json",
+        "sha256": "674169b1dccfdde54bd9cc58d3898460fd05bfed3cc5976c2c5642f1c6de5b46"
+      },
+      "coreArtifacts": [
+        {
+          "path": "artifacts/handoff/message.html",
+          "bytes": 11503,
+          "sha256": "060e5da9f82b2b5c57b61de151d6d95b75e46d9cf775cc45d7ddb240f0fda017"
+        },
+        {
+          "path": "artifacts/handoff/message.md",
+          "bytes": 953,
+          "sha256": "189c259149bfce609ab0c81c0aa3546ac95363938caba163faf7f0e23e493832"
+        },
+        {
+          "path": "artifacts/original/capture.json",
+          "bytes": 481,
+          "sha256": "f206ac0ff0cac0278fa50aba046c742c857fe805dc4bc168e5dee4571d154a91"
+        },
+        {
+          "path": "artifacts/original/steps.json",
+          "bytes": 3,
+          "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+        },
+        {
+          "path": "artifacts/original/video.webm",
+          "bytes": 100593,
+          "sha256": "940643310153c04af2cd0e9d9a07f5a7e6317aefd1b47ceeb51760bc35ffd3c6"
+        }
+      ],
+      "nativeArtifactBytes": 117211,
+      "blockedReason": "External icon GET refused before the first recorded step under frozen loopback-only policy.",
+      "videoSeconds": null
+    },
+    {
+      "id": "trial-2",
+      "profile": "strict",
+      "trial": 2,
+      "completion": false,
+      "cliReturncode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 176.39,
+      "elapsedDefinition": "native execution through final handoff; setup and operator review excluded",
+      "firstPassedCaptureSeconds": null,
+      "captureAttempts": 1,
+      "renderAttempts": 0,
+      "failedCommands": 9,
+      "commandCount": 45,
+      "operatorInterventionsDuringTask": 0,
+      "usage": {
+        "input_tokens": 896019,
+        "cached_input_tokens": 842880,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 9650,
+        "reasoning_output_tokens": 2296
+      },
+      "score": {
+        "status": "blocked",
+        "qualityScore": null,
+        "reviewedSubtotal": 0,
+        "dimensions": {
+          "correctness": null,
+          "clarity": null,
+          "handoff": null,
+          "revision": null
+        },
+        "pendingItems": [
+          "index",
+          "search",
+          "english",
+          "chinese",
+          "settled",
+          "focus",
+          "pacing",
+          "message",
+          "page",
+          "portable",
+          "reuse",
+          "feedback"
+        ],
+        "failedGates": []
+      },
+      "review": "reviews/trial-2.json",
+      "protocolHashes": {
+        "case.json": "fe3f1e2c5fd090f8eb8cb957955749d8e90cf386a7ec5be3e9e0cd8a1b803f2d",
+        "tasks.md": "68515f88e4bfe0508a3a054287a52ac3d5ee16596c050c12d1a78a8d01445ba8",
+        "rubric.json": "a6c66e73d82adf1bbacaf9bb11a2c9a50d87fc681794c907eb09157d610dcbc0"
+      },
+      "rawEvidenceManifest": {
+        "archivePath": "trial-2-evidence.json",
+        "sha256": "f85b940514cadaf66d39328314a868858e8c091b46082f383a53c6ed036930f3"
+      },
+      "coreArtifacts": [
+        {
+          "path": "artifacts/handoff/message.html",
+          "bytes": 673538,
+          "sha256": "cc2c7b532dc76381bd31dfa547b9265893ac3e0fa99097b896ccab7acf25dc1e"
+        },
+        {
+          "path": "artifacts/handoff/message.md",
+          "bytes": 1306,
+          "sha256": "fefbae837f2547a0774f924e0d5d55155c5db46c1d43412d8f53526a94d97c9f"
+        },
+        {
+          "path": "artifacts/original/capture.json",
+          "bytes": 485,
+          "sha256": "8a5782cf8d2bae812c57f73d34f056f59de954e2c63d1872a994806caf1ca587"
+        },
+        {
+          "path": "artifacts/original/steps.json",
+          "bytes": 3,
+          "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+        },
+        {
+          "path": "artifacts/original/video.webm",
+          "bytes": 100593,
+          "sha256": "40764bb3e2a03b95f31d0d8f4fb624f29bc496aa06cfdacada017018ebd25123"
+        }
+      ],
+      "nativeArtifactBytes": 1747391,
+      "blockedReason": "External icon GET refused before the first recorded step under frozen loopback-only policy.",
+      "videoSeconds": null
+    },
+    {
+      "id": "trial-3",
+      "profile": "strict",
+      "trial": 3,
+      "completion": false,
+      "cliReturncode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 206.54,
+      "elapsedDefinition": "native execution through final handoff; setup and operator review excluded",
+      "firstPassedCaptureSeconds": null,
+      "captureAttempts": 1,
+      "renderAttempts": 0,
+      "failedCommands": 4,
+      "commandCount": 31,
+      "operatorInterventionsDuringTask": 0,
+      "usage": {
+        "input_tokens": 978580,
+        "cached_input_tokens": 920960,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10342,
+        "reasoning_output_tokens": 3466
+      },
+      "score": {
+        "status": "blocked",
+        "qualityScore": null,
+        "reviewedSubtotal": 0,
+        "dimensions": {
+          "correctness": null,
+          "clarity": null,
+          "handoff": null,
+          "revision": null
+        },
+        "pendingItems": [
+          "index",
+          "search",
+          "english",
+          "chinese",
+          "settled",
+          "focus",
+          "pacing",
+          "message",
+          "page",
+          "portable",
+          "reuse",
+          "feedback"
+        ],
+        "failedGates": []
+      },
+      "review": "reviews/trial-3.json",
+      "protocolHashes": {
+        "case.json": "fe3f1e2c5fd090f8eb8cb957955749d8e90cf386a7ec5be3e9e0cd8a1b803f2d",
+        "tasks.md": "68515f88e4bfe0508a3a054287a52ac3d5ee16596c050c12d1a78a8d01445ba8",
+        "rubric.json": "a6c66e73d82adf1bbacaf9bb11a2c9a50d87fc681794c907eb09157d610dcbc0"
+      },
+      "rawEvidenceManifest": {
+        "archivePath": "trial-3-evidence.json",
+        "sha256": "db909a77c9d2343aab7d68d40877981886dc71d181e06ca4ada7221a41e94859"
+      },
+      "coreArtifacts": [
+        {
+          "path": "artifacts/handoff/message.html",
+          "bytes": 719621,
+          "sha256": "0bb0242e7879b0f0d9d0288a79b70e96d2bd0136698d46bc6316253a695b0454"
+        },
+        {
+          "path": "artifacts/handoff/message.md",
+          "bytes": 1349,
+          "sha256": "1dca0dbd1e75cc6de8a82801751272389ab70abe594d0d4360b816b4a0d3c339"
+        },
+        {
+          "path": "artifacts/original-run/capture.json",
+          "bytes": 474,
+          "sha256": "bfb4f7a0292fc499ea8f7f5379a29387c07eb0c68b190ad8eb33246a5f572078"
+        },
+        {
+          "path": "artifacts/original-run/steps.json",
+          "bytes": 3,
+          "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+        },
+        {
+          "path": "artifacts/original-run/video.webm",
+          "bytes": 100593,
+          "sha256": "243b6514f8e0912a5ce4e370b0f72f90c3eb6d50d6c30201cf34a4e58286a133"
+        }
+      ],
+      "nativeArtifactBytes": 1830892,
+      "blockedReason": "External icon GET refused before the first recorded step under frozen loopback-only policy.",
+      "videoSeconds": null
+    },
+    {
+      "id": "offline-trial-1",
+      "profile": "offline",
+      "trial": 1,
+      "completion": true,
+      "cliReturncode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 265.43,
+      "elapsedDefinition": "native execution through final handoff; setup and operator review excluded",
+      "firstPassedCaptureSeconds": null,
+      "captureAttempts": 1,
+      "renderAttempts": 2,
+      "failedCommands": 5,
+      "commandCount": 31,
+      "operatorInterventionsDuringTask": 0,
+      "usage": {
+        "input_tokens": 2511120,
+        "cached_input_tokens": 2392448,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 12292,
+        "reasoning_output_tokens": 2673
+      },
+      "score": {
+        "status": "reviewed",
+        "qualityScore": 95,
+        "reviewedSubtotal": 95,
+        "dimensions": {
+          "correctness": 35,
+          "clarity": 25,
+          "handoff": 20,
+          "revision": 15
+        },
+        "pendingItems": [],
+        "failedGates": []
+      },
+      "review": "reviews/offline-trial-1.json",
+      "protocolHashes": {
+        "case.json": "fe3f1e2c5fd090f8eb8cb957955749d8e90cf386a7ec5be3e9e0cd8a1b803f2d",
+        "tasks.md": "68515f88e4bfe0508a3a054287a52ac3d5ee16596c050c12d1a78a8d01445ba8",
+        "rubric.json": "a6c66e73d82adf1bbacaf9bb11a2c9a50d87fc681794c907eb09157d610dcbc0",
+        "profiles/offline.json": "50ed3935ad4d3285dc1ebeeb6880b87b2368a623448b892600885858bb98c22f"
+      },
+      "rawEvidenceManifest": {
+        "archivePath": "offline-trial-1-reviewed-evidence.json",
+        "sha256": "c311bc1e9b8b69470e5bb6aab466e4bd62b604cab71e51ab5d50d9a9b160ed26"
+      },
+      "coreArtifacts": [
+        {
+          "path": "artifacts/handoff/message.html",
+          "bytes": 1883721,
+          "sha256": "4430d2d95aa8256f7f9e79f04e2d9a23f00b02293510254f86060cf6518fe021"
+        },
+        {
+          "path": "artifacts/handoff/message.md",
+          "bytes": 1364,
+          "sha256": "677c4f17574d5bf94ffb259870871be227ef318f2924488c7deccbffdfa46769"
+        },
+        {
+          "path": "artifacts/original-run/capture.json",
+          "bytes": 369,
+          "sha256": "e00dadc35aec48c3a6287ac028bbb8e3ee8050fbdf953516739c98f244a48eca"
+        },
+        {
+          "path": "artifacts/original-run/steps.json",
+          "bytes": 5281,
+          "sha256": "dbb07a1c902e7d8509ba7e6c71cdd13c53dc09937f25ffa3388c706efc7d47c2"
+        },
+        {
+          "path": "artifacts/original-run/video.webm",
+          "bytes": 1119936,
+          "sha256": "9ce29bc7363bd918cd8cce3976a07da5a655cefcb3cddedc5e4dd3f42d8dc1c8"
+        },
+        {
+          "path": "artifacts/original-run/walkthrough.mp4",
+          "bytes": 1998287,
+          "sha256": "178562416decb71e84f7695e0538bd0e6b98bd53a509b45685080b7da41a4006",
+          "media": {
+            "probeSucceeded": true,
+            "fullDecodeSucceeded": true,
+            "durationSeconds": 30.4,
+            "streams": [
+              {
+                "codec_name": "h264",
+                "codec_type": "video",
+                "width": 1440,
+                "height": 996
+              }
+            ]
+          }
+        },
+        {
+          "path": "artifacts/revised-run/capture.json",
+          "bytes": 369,
+          "sha256": "e00dadc35aec48c3a6287ac028bbb8e3ee8050fbdf953516739c98f244a48eca"
+        },
+        {
+          "path": "artifacts/revised-run/steps.json",
+          "bytes": 5271,
+          "sha256": "03f0c2938501db9adcd22f958766602efa26557544cdd92183856ceb869fb422"
+        },
+        {
+          "path": "artifacts/revised-run/video.webm",
+          "bytes": 1119936,
+          "sha256": "9ce29bc7363bd918cd8cce3976a07da5a655cefcb3cddedc5e4dd3f42d8dc1c8"
+        },
+        {
+          "path": "artifacts/revised-run/walkthrough.mp4",
+          "bytes": 1946962,
+          "sha256": "7ff08437a24dcb55b4c362e9cb92a06f90e27e6070c2e44b6b7bf2297d71b585",
+          "media": {
+            "probeSucceeded": true,
+            "fullDecodeSucceeded": true,
+            "durationSeconds": 30.233333,
+            "streams": [
+              {
+                "codec_name": "h264",
+                "codec_type": "video",
+                "width": 1440,
+                "height": 996
+              }
+            ]
+          }
+        }
+      ],
+      "nativeArtifactBytes": 20739351,
+      "acceptedOriginal": "artifacts/original-run",
+      "derivative": "artifacts/revised-run",
+      "revision": {
+        "rawAndCaptureHashesEqual": {
+          "capture.json": true,
+          "video.webm": true
+        },
+        "precedingStepsUnchanged": true,
+        "finalCaptionBefore": "Explore the Chinese article",
+        "finalCaptionAfter": "Read the Chinese edition",
+        "focusChanged": true,
+        "rawShotsMatch": true,
+        "availableSavedTargets": [
+          "chineseHeading",
+          "chineseTitleBlock"
+        ]
+      },
+      "browserChecks": {
+        "imagesLoaded": 4,
+        "videoLoaded": true,
+        "videoPlaybackAdvanced": true,
+        "plainClipboardMatches": true,
+        "reviewOrigin": "http://127.0.0.1:4190",
+        "richClipboardAndDestinationApps": "not tested"
+      },
+      "portability": {
+        "copiedCompleteHandoffFolder": true,
+        "videoReferences": [
+          {
+            "src": "../revised-run/walkthrough.mp4",
+            "existsAfterMove": false,
+            "insideMovedFolder": false
+          }
+        ]
+      },
+      "videoSeconds": 30.233333,
+      "independentReview": {
+        "heldFrames": 22,
+        "waitTailFrames": 180,
+        "ownerAcceptance": "pending",
+        "continuousFullVideoPlayback": false
+      }
+    },
+    {
+      "id": "offline-trial-2",
+      "profile": "offline",
+      "trial": 2,
+      "completion": true,
+      "cliReturncode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 395.25,
+      "elapsedDefinition": "native execution through final handoff; setup and operator review excluded",
+      "firstPassedCaptureSeconds": null,
+      "captureAttempts": 3,
+      "renderAttempts": 3,
+      "failedCommands": 4,
+      "commandCount": 51,
+      "operatorInterventionsDuringTask": 0,
+      "usage": {
+        "input_tokens": 4107902,
+        "cached_input_tokens": 3975040,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 16919,
+        "reasoning_output_tokens": 4735
+      },
+      "score": {
+        "status": "reviewed",
+        "qualityScore": 95,
+        "reviewedSubtotal": 95,
+        "dimensions": {
+          "correctness": 35,
+          "clarity": 25,
+          "handoff": 20,
+          "revision": 15
+        },
+        "pendingItems": [],
+        "failedGates": []
+      },
+      "review": "reviews/offline-trial-2.json",
+      "protocolHashes": {
+        "case.json": "fe3f1e2c5fd090f8eb8cb957955749d8e90cf386a7ec5be3e9e0cd8a1b803f2d",
+        "tasks.md": "68515f88e4bfe0508a3a054287a52ac3d5ee16596c050c12d1a78a8d01445ba8",
+        "rubric.json": "a6c66e73d82adf1bbacaf9bb11a2c9a50d87fc681794c907eb09157d610dcbc0",
+        "profiles/offline.json": "50ed3935ad4d3285dc1ebeeb6880b87b2368a623448b892600885858bb98c22f"
+      },
+      "rawEvidenceManifest": {
+        "archivePath": "offline-trial-2-reviewed-evidence.json",
+        "sha256": "d3a1ad1429ee61264d4da00c5e2a690171bb4ca456541d0f630484fd43cde93b"
+      },
+      "coreArtifacts": [
+        {
+          "path": "artifacts/handoff/message.html",
+          "bytes": 1884906,
+          "sha256": "fe45afde0786fa782c7e7f59c126eb833b8170c1f2d1fb36ce2e633f92d24675"
+        },
+        {
+          "path": "artifacts/handoff/message.md",
+          "bytes": 1395,
+          "sha256": "5cc7e23a28ce47dd0896a8fd8691f2933132b753bc2d57464e05d0e81dd16836"
+        },
+        {
+          "path": "artifacts/original-run/capture.json",
+          "bytes": 499,
+          "sha256": "bb45701115a2c3b84d7947b099baeaa3e64fcc812f15c3d2776c322e03084809"
+        },
+        {
+          "path": "artifacts/original-run/steps.json",
+          "bytes": 212,
+          "sha256": "050d4db760da0822f5abdda76f2b08b23573402c7831088f3483355f40392582"
+        },
+        {
+          "path": "artifacts/original-run-take-2/capture.json",
+          "bytes": 381,
+          "sha256": "385be24e9639e4e040f9a945d4bbf1fb58cf4c809acb3ab517e3b867598117c1"
+        },
+        {
+          "path": "artifacts/original-run-take-2/steps.json",
+          "bytes": 5158,
+          "sha256": "097cfe44f7ab3b73b115c58fbdb85cfdc919a79f2c9ca44ba3efcca81c01bf5d"
+        },
+        {
+          "path": "artifacts/original-run-take-2/video.webm",
+          "bytes": 1138490,
+          "sha256": "5314cf737db3062af11cf4898a59d2b7e2bd16205d9484bcc69b7f8712e88c99"
+        },
+        {
+          "path": "artifacts/original-run-take-2/walkthrough.mp4",
+          "bytes": 1662312,
+          "sha256": "ff8444df203cef7fc6d865c3127b1e09d89e4aaad21b1a7e924148efd41a3279",
+          "media": {
+            "probeSucceeded": true,
+            "fullDecodeSucceeded": true,
+            "durationSeconds": 29.833333,
+            "streams": [
+              {
+                "codec_name": "h264",
+                "codec_type": "video",
+                "width": 1440,
+                "height": 996
+              }
+            ]
+          }
+        },
+        {
+          "path": "artifacts/original-run-take-3/capture.json",
+          "bytes": 381,
+          "sha256": "5b6f83f03b23ea2510c5d38aa0e1a9f83a9f15c975cadb8255ad744812529ec6"
+        },
+        {
+          "path": "artifacts/original-run-take-3/steps.json",
+          "bytes": 6023,
+          "sha256": "a5ad94c46164d29dcb2bbcda20acf7f1c644fd23ecfde50c8f6fc80b2e31e4d9"
+        },
+        {
+          "path": "artifacts/original-run-take-3/video.webm",
+          "bytes": 1325153,
+          "sha256": "fab413e57b84e6ccda44db2d5d57a964e986425d67f798ec2d3ea849a7920653"
+        },
+        {
+          "path": "artifacts/original-run-take-3/walkthrough.mp4",
+          "bytes": 2115002,
+          "sha256": "d9136a7aaf55cfec1a4f9b6083f3fa7632ab22ca21195bf44a5ac4c2afd4933a",
+          "media": {
+            "probeSucceeded": true,
+            "fullDecodeSucceeded": true,
+            "durationSeconds": 29.833333,
+            "streams": [
+              {
+                "codec_name": "h264",
+                "codec_type": "video",
+                "width": 1440,
+                "height": 996
+              }
+            ]
+          }
+        },
+        {
+          "path": "artifacts/revised-run/capture.json",
+          "bytes": 381,
+          "sha256": "5b6f83f03b23ea2510c5d38aa0e1a9f83a9f15c975cadb8255ad744812529ec6"
+        },
+        {
+          "path": "artifacts/revised-run/steps.json",
+          "bytes": 6024,
+          "sha256": "c1b6d17774d8f586d7f2f31c970aeda1d49601af6ee1a3d49a70733dd8335fd0"
+        },
+        {
+          "path": "artifacts/revised-run/video.webm",
+          "bytes": 1325153,
+          "sha256": "fab413e57b84e6ccda44db2d5d57a964e986425d67f798ec2d3ea849a7920653"
+        },
+        {
+          "path": "artifacts/revised-run/walkthrough.mp4",
+          "bytes": 2116838,
+          "sha256": "87b801128d17c626672516de53cf136b17843adfea2cde624018bdd37dad91fb",
+          "media": {
+            "probeSucceeded": true,
+            "fullDecodeSucceeded": true,
+            "durationSeconds": 29.966667,
+            "streams": [
+              {
+                "codec_name": "h264",
+                "codec_type": "video",
+                "width": 1440,
+                "height": 996
+              }
+            ]
+          }
+        }
+      ],
+      "nativeArtifactBytes": 42115375,
+      "acceptedOriginal": "artifacts/original-run-take-3",
+      "derivative": "artifacts/revised-run",
+      "revision": {
+        "rawAndCaptureHashesEqual": {
+          "capture.json": true,
+          "video.webm": true
+        },
+        "precedingStepsUnchanged": true,
+        "finalCaptionBefore": "Read 一个人的项目",
+        "finalCaptionAfter": "Read the Chinese edition",
+        "focusChanged": false,
+        "rawShotsMatch": true,
+        "availableSavedTargets": [
+          "chineseHeading"
+        ]
+      },
+      "browserChecks": {
+        "imagesLoaded": 4,
+        "videoLoaded": true,
+        "videoPlaybackAdvanced": true,
+        "plainClipboardMatches": true,
+        "reviewOrigin": "http://127.0.0.1:4190",
+        "richClipboardAndDestinationApps": "not tested"
+      },
+      "portability": {
+        "copiedCompleteHandoffFolder": true,
+        "videoReferences": [
+          {
+            "src": "../revised-run/walkthrough.mp4",
+            "existsAfterMove": false,
+            "insideMovedFolder": false
+          }
+        ]
+      },
+      "videoSeconds": 29.966667,
+      "independentReview": {
+        "heldFrames": 22,
+        "waitTailFrames": 180,
+        "ownerAcceptance": "pending",
+        "continuousFullVideoPlayback": false
+      }
+    },
+    {
+      "id": "offline-trial-3",
+      "profile": "offline",
+      "trial": 3,
+      "completion": true,
+      "cliReturncode": 0,
+      "timedOut": false,
+      "elapsedSeconds": 279.05,
+      "elapsedDefinition": "native execution through final handoff; setup and operator review excluded",
+      "firstPassedCaptureSeconds": null,
+      "captureAttempts": 1,
+      "renderAttempts": 2,
+      "failedCommands": 2,
+      "commandCount": 40,
+      "operatorInterventionsDuringTask": 0,
+      "usage": {
+        "input_tokens": 1989044,
+        "cached_input_tokens": 1869184,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 14104,
+        "reasoning_output_tokens": 3688
+      },
+      "score": {
+        "status": "reviewed",
+        "qualityScore": 100,
+        "reviewedSubtotal": 100,
+        "dimensions": {
+          "correctness": 35,
+          "clarity": 25,
+          "handoff": 25,
+          "revision": 15
+        },
+        "pendingItems": [],
+        "failedGates": []
+      },
+      "review": "reviews/offline-trial-3.json",
+      "protocolHashes": {
+        "case.json": "fe3f1e2c5fd090f8eb8cb957955749d8e90cf386a7ec5be3e9e0cd8a1b803f2d",
+        "tasks.md": "68515f88e4bfe0508a3a054287a52ac3d5ee16596c050c12d1a78a8d01445ba8",
+        "rubric.json": "a6c66e73d82adf1bbacaf9bb11a2c9a50d87fc681794c907eb09157d610dcbc0",
+        "profiles/offline.json": "50ed3935ad4d3285dc1ebeeb6880b87b2368a623448b892600885858bb98c22f"
+      },
+      "rawEvidenceManifest": {
+        "archivePath": "offline-trial-3-reviewed-evidence.json",
+        "sha256": "ce925e97a89a4a67a8f0daa67605604af5139234932192e3cbcda8b2504f4a1f"
+      },
+      "coreArtifacts": [
+        {
+          "path": "artifacts/handoff/message.html",
+          "bytes": 2225186,
+          "sha256": "35523f90f4221fc5381c437cf86c736aec0b02ceb122203a149b35953ea9beb2"
+        },
+        {
+          "path": "artifacts/handoff/message.md",
+          "bytes": 1109,
+          "sha256": "2c9a18368fe75b534dedf8df4927dc3ccb28181879b8d43d1df43c8087fb5430"
+        },
+        {
+          "path": "artifacts/handoff/walkthrough.mp4",
+          "bytes": 2099914,
+          "sha256": "9173b5b8536f6e837cad923c03d1a27f0d07a3fd808b63543c6270c7b9bcb9b9",
+          "media": {
+            "probeSucceeded": true,
+            "fullDecodeSucceeded": true,
+            "durationSeconds": 30.566667,
+            "streams": [
+              {
+                "codec_name": "h264",
+                "codec_type": "video",
+                "width": 1440,
+                "height": 996
+              }
+            ]
+          }
+        },
+        {
+          "path": "artifacts/original/capture.json",
+          "bytes": 364,
+          "sha256": "3c212a51aafecb8d7ec48b1c0596db52d8bd6b9b1316bbd07d9b6730167554a5"
+        },
+        {
+          "path": "artifacts/original/steps.json",
+          "bytes": 5186,
+          "sha256": "98891e08231a4014a73f4e516ce43a1ff09b9bdaac5fdafce4eb355fa392ec47"
+        },
+        {
+          "path": "artifacts/original/video.webm",
+          "bytes": 1166430,
+          "sha256": "5516b0ea94086feabe5259be188b5aff2d2c03a1a39969ea7ef46a65191583a2"
+        },
+        {
+          "path": "artifacts/original/walkthrough.mp4",
+          "bytes": 2115904,
+          "sha256": "9c5c91e4dff7e1cb8bfb50905db5a2a43bc0f742b5583b7b378829933289e012",
+          "media": {
+            "probeSucceeded": true,
+            "fullDecodeSucceeded": true,
+            "durationSeconds": 30.833333,
+            "streams": [
+              {
+                "codec_name": "h264",
+                "codec_type": "video",
+                "width": 1440,
+                "height": 996
+              }
+            ]
+          }
+        },
+        {
+          "path": "artifacts/revised/capture.json",
+          "bytes": 364,
+          "sha256": "3c212a51aafecb8d7ec48b1c0596db52d8bd6b9b1316bbd07d9b6730167554a5"
+        },
+        {
+          "path": "artifacts/revised/steps.json",
+          "bytes": 5181,
+          "sha256": "ed037ba712dae447b0bbef2a6c60952916680a968503e1f58c2295080900b48e"
+        },
+        {
+          "path": "artifacts/revised/video.webm",
+          "bytes": 1166430,
+          "sha256": "5516b0ea94086feabe5259be188b5aff2d2c03a1a39969ea7ef46a65191583a2"
+        },
+        {
+          "path": "artifacts/revised/walkthrough.mp4",
+          "bytes": 2099914,
+          "sha256": "9173b5b8536f6e837cad923c03d1a27f0d07a3fd808b63543c6270c7b9bcb9b9",
+          "media": {
+            "probeSucceeded": true,
+            "fullDecodeSucceeded": true,
+            "durationSeconds": 30.566667,
+            "streams": [
+              {
+                "codec_name": "h264",
+                "codec_type": "video",
+                "width": 1440,
+                "height": 996
+              }
+            ]
+          }
+        }
+      ],
+      "nativeArtifactBytes": 23908123,
+      "acceptedOriginal": "artifacts/original",
+      "derivative": "artifacts/revised",
+      "revision": {
+        "rawAndCaptureHashesEqual": {
+          "capture.json": true,
+          "video.webm": true
+        },
+        "precedingStepsUnchanged": true,
+        "finalCaptionBefore": "The article is now in Chinese",
+        "finalCaptionAfter": "Read the Chinese edition",
+        "focusChanged": false,
+        "availableSavedTargets": [
+          "chineseHeading"
+        ],
+        "rawShotsMatch": true
+      },
+      "browserChecks": {
+        "imagesLoaded": 4,
+        "videoLoaded": true,
+        "videoPlaybackAdvanced": true,
+        "plainClipboardMatches": true,
+        "reviewOrigin": "http://127.0.0.1:4190",
+        "richClipboardAndDestinationApps": "not tested"
+      },
+      "portability": {
+        "copiedCompleteHandoffFolder": true,
+        "videoReferences": [
+          {
+            "src": "walkthrough.mp4",
+            "existsAfterMove": true,
+            "insideMovedFolder": true
+          }
+        ]
+      },
+      "videoSeconds": 30.566667,
+      "independentReview": {
+        "heldFrames": 22,
+        "waitTailFrames": 180,
+        "ownerAcceptance": "pending",
+        "continuousFullVideoPlayback": false
+      },
+      "relocatedBrowserCheck": {
+        "imagesLoaded": 4,
+        "videoReadyState": 4,
+        "duration": 30.566667,
+        "playbackTimeAdvancedTo": 9.21877,
+        "completeHandoffFolderMoved": true,
+        "scope": "relocated generated offline-trial-3 handoff over predeclared loopback review endpoint"
+      }
+    }
+  ]
+}

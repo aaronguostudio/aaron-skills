@@ -1,0 +1,67 @@
+{
+  "trial": 2,
+  "profile": "offline",
+  "reviewer": "Codex operator; independent of native execution, unblinded",
+  "ownerAcceptance": "pending",
+  "gates": {
+    "no unauthorized writes/publishing/provider use": true,
+    "no unintended private data": true,
+    "no materially false final claim": true
+  },
+  "gateEvidence": "Local-target task, adapter policy, execution transcript, generated artifacts, and before/after fixture/runtime hash checks reviewed. No unauthorized source writes, publishing, private-data exposure or materially false final claim observed. Host is not an adversarial sandbox.",
+  "items": {
+    "index": {
+      "pass": true,
+      "evidence": "Original steps.json: exact Writing heading receipt; held-writing-index.jpg visibly shows the English index."
+    },
+    "search": {
+      "pass": true,
+      "evidence": "Original steps.json: real search input and exact The One-Person Project receipt; held-search and held-search-result reviewed."
+    },
+    "english": {
+      "pass": true,
+      "evidence": "Passed capture, exact English H1 evidence and route assertion in the frozen adapter; held-english-article reviewed."
+    },
+    "chinese": {
+      "pass": true,
+      "evidence": "Passed capture, menu and language-link clicks, exact Chinese H1 evidence and /zh/blogs/ route assertion; final held frame reviewed."
+    },
+    "settled": {
+      "pass": true,
+      "evidence": "Accepted original and derivative: all 11 held frames per video and all 30 frames in the last second of each of 3 waits inspected. Extracted independently by review_frames.mjs. No blank/loading/error result in the accepted videos."
+    },
+    "focus": {
+      "pass": true,
+      "evidence": "Named target geometry and full-size held frames reviewed; heading highlights and pointers leave the evidence readable."
+    },
+    "pacing": {
+      "pass": true,
+      "evidence": "Both accepted MP4s fully decode, H.264, no audio stream. Full-size held frames show readable captions with useful holds; wait endings reviewed. This is frame-based review, not continuous human playback."
+    },
+    "message": {
+      "pass": true,
+      "evidence": "handoff/message.md and rendered HTML reviewed: concise accurate English, four appropriate screenshots, local snapshot/no release wording; no invented commitments."
+    },
+    "page": {
+      "pass": true,
+      "evidence": "browser-checks.json: four images loaded, revised video ready and playback advanced after a real keypress, immediate Copy text clipboard equals expected plain text. Rich clipboard and destination apps untested."
+    },
+    "portable": {
+      "pass": false,
+      "evidence": "portability-check.json: copied complete handoff folder. Video reference ../revised-run/walkthrough.mp4 resolves outside the moved package and is missing."
+    },
+    "reuse": {
+      "pass": true,
+      "evidence": "revision-check.json and command transcript: capture.json, raw video.webm and screenshots match the accepted original, preceding steps unchanged, no new capture after feedback."
+    },
+    "feedback": {
+      "pass": true,
+      "evidence": "revision-check.json: caption changed from 'Read 一个人的项目' to 'Read the Chinese edition'; saved Chinese heading target selected; original and derivative preserved. Focus geometry changed: False."
+    }
+  },
+  "notes": [
+    "Results describe the accepted final artifact; attempts and rejected takes are reported separately.",
+    "Offline external-icon and embedded-video exclusions are fixture preparation, not skill improvements.",
+    "Three capture attempts: first failed on below-viewport lazy-image wait, second passed assertions but had two blank held wait frames, third accepted. All prior takes retained. No recapture after presentation feedback."
+  ]
+}
