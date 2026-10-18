@@ -178,6 +178,15 @@
     "benchmarks/PRIVACY.md",
     "benchmarks/public-cases.json",
     "benchmarks/workspace.py",
-    "benchmarks/test_workspace.py"
+    "benchmarks/test_workspace.py",
+    "packages/demo/remotion/src/projects/walkthrough-video/presentation/model.ts",
+    "packages/demo/remotion/src/projects/walkthrough-video/presentation/Presentation.tsx",
+    "packages/demo/walkthrough/presentation.ts",
+    "packages/demo/walkthrough/import-audio.ts",
+    "packages/demo/walkthrough/voice-providers.ts",
+    "docs/video-presentation.md",
+    "packages/demo/walkthrough/presentation.test.ts",
+    "scripts/verify-presentation.mjs",
+    "docs/presentation-validation.md"
   ]
 }

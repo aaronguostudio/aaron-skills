@@ -85,6 +85,9 @@ export type TimelineOptions = {
   // Never shorter than TITLE_MS and END_MS.
   titleMs?: number;
   endMs?: number;
+  // Optional packaging card bases; omitted keeps the legacy title/end durations.
+  titleBaseMs?: number;
+  endBaseMs?: number;
 };
 
 // Time to notice a caption and read it, as subtitles are timed: 0.8 s to notice it, then about
@@ -242,7 +245,7 @@ export function buildTimeline(steps: Step[], options: TimelineOptions = {}): Tim
   });
 
   // Frame positions come from cumulative milliseconds, so rounding never drifts.
-  const titleFrames = msToFrames(Math.max(TITLE_MS, options.titleMs ?? 0));
+  const titleFrames = msToFrames(Math.max(options.titleBaseMs ?? TITLE_MS, options.titleMs ?? 0));
   let outMs = 0;
   const segments: Segment[] = [];
   for (const piece of pieces) {
@@ -254,7 +257,7 @@ export function buildTimeline(steps: Step[], options: TimelineOptions = {}): Tim
     segments.push({ ...segment, fromFrame, frames });
   }
   const videoFrames = msToFrames(outMs);
-  const endFrames = msToFrames(Math.max(END_MS, options.endMs ?? 0));
+  const endFrames = msToFrames(Math.max(options.endBaseMs ?? END_MS, options.endMs ?? 0));
   return { fps: FPS, titleFrames, endFrames, videoFrames, durationInFrames: titleFrames + videoFrames + endFrames, segments };
 }
 

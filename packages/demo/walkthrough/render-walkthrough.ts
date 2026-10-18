@@ -12,7 +12,6 @@ import { basename, dirname, join, resolve, sep } from "path";
 import { privateDirectory } from "../capture/scripts/platform.mjs";
 import {
   cardMinMs,
-  elevenLabs,
   loadApiKey,
   loadScript,
   loadVoiceProfile,
@@ -23,6 +22,9 @@ import {
   type NarrationClip,
   type NarrationScript,
 } from "./narration";
+import {loadPresentation, installPresentation, validatePresentationMedia} from './presentation';
+import {outsideGit, readImportedAudio, installImportedAudio} from './import-audio';
+import {speechProvider} from './voice-providers';
 import { installBrand, loadBrandProfile } from "./brand";
 import type { Brand } from "../remotion/src/projects/walkthrough-video/brand/model";
 import {
@@ -85,7 +87,7 @@ export type Prepared = {
 } & Timing;
 
 // The least times narration asks for: per step, and for the title and end cards.
-export type Timing = { stepMinMs?: number[]; titleMs?: number; endMs?: number };
+export type Timing = { stepMinMs?: number[]; titleMs?: number; endMs?: number; titleBaseMs?:number; endBaseMs?:number };
 
 // The capture clock and the recording's first frame drift apart by a few hundred ms (the
 // screencast starts after the page does). A capture can mark the moment its page turned from
@@ -153,6 +155,8 @@ export function prepare(
     ...(mins ? { minStepMs: (_s: Step, i: number) => mins[i] ?? 0 } : {}),
     titleMs,
     endMs,
+    titleBaseMs:timing.titleBaseMs,
+    endBaseMs:timing.endBaseMs,
   });
   return {
     run,
@@ -200,16 +204,23 @@ export type Args = {
   script?: string;
   speed?: number;
   brand?: string;
+  template?: string;
+  presentation?: string;
+  audio?: string;
+  voiceProvider?: string;
+  cover: boolean;
 };
 
 export function parseArgs(argv: string[]): Args {
-  const args: Args = { dryRun: false, stills: false, narrate: false, out: undefined, script: undefined };
+  const args: Args = { dryRun: false, stills: false, narrate: false, out: undefined, script: undefined, cover:false };
   const values: Record<string, keyof Args> = {
     "--out": "out", "--calibration-ms": "calibrationMs", "--voice-profile": "voiceProfile",
     "--script": "script", "--speed": "speed", "--brand": "brand",
+    '--template':'template', '--presentation':'presentation', '--audio':'audio', '--voice-provider':'voiceProvider',
   };
-  const flags = new Map<string, "dryRun" | "stills" | "narrate">([
+  const flags = new Map<string, "dryRun" | "stills" | "narrate" | 'cover'>([
     ["--dry-run", "dryRun"], ["--stills", "stills"], ["--narrate", "narrate"],
+    ['--cover','cover'],
   ]);
   const seen = new Set<string>();
   for (let i = 0; i < argv.length; i++) {
@@ -237,114 +248,86 @@ export function parseArgs(argv: string[]): Args {
   return args;
 }
 
+const USAGE = "usage: aaron-demo render <passed-run> [--template minimal|professional|showcase] [--presentation <external.json>] [--cover] [--audio <manifest.json> | --narrate | --voice-provider none|elevenlabs|import|qwen] [--script <script.json>] [--voice-profile <id>] [--speed <0.7-1.2>] [--brand <legacy-id>] [--out <file.mp4>] [--stills] [--dry-run]";
+
 export async function main(argv: string[]): Promise<number> {
-  let parsed: Args;
-  try { parsed = parseArgs(argv); } catch (error) {
-    console.error(error instanceof Error ? error.message : String(error)); return 2;
-  }
-  const { run, out, dryRun, stills, calibrationMs, narrate: withVoice, voiceProfile, script: scriptArg, speed, brand: brandArg } = parsed;
-  if (!run || (calibrationMs !== undefined && !Number.isFinite(calibrationMs))) {
-    console.error(
-      "usage: render-walkthrough.ts <capture folder> [--out <file.mp4>] [--narrate] [--script <script.json>] [--voice-profile <id>] [--speed <0.7-1.2>] [--brand <id>] [--calibration-ms <n>] [--stills] [--dry-run]",
-    );
-    return 2;
-  }
-  const roots = repoRoots();
-  let prepared: Prepared;
+  if (argv.length === 1 && (argv[0] === '--help' || argv[0] === '-h')) { console.log(USAGE); return 0; }
+  let parsed:Args;
+  try {parsed=parseArgs(argv);} catch(error) {console.error(error instanceof Error?error.message:String(error)); return 2;}
   try {
-    prepared = prepare(run, out, roots, calibrationMs);
-  } catch (error) {
-    if (error instanceof RenderRefusal) {
-      console.error(error.message);
-      return 3;
-    }
-    throw error;
-  }
-  // A plan must not mutate the run, read credentials, download media or incur usage.
-  if (dryRun) {
-    console.log(JSON.stringify({ dryRun: true, out: prepared.out, seconds: prepared.seconds,
-      narrationRequested: withVoice, narrationTiming: withVoice ? "requires synthesis; not performed" : "silent",
-      calibrationMs: prepared.calibrationMs, steps: prepared.steps.length }, null, 2));
-    return 0;
-  }
-  // Private outputs even when the user's shell has a permissive umask.
-  process.umask(0o077);
-  mkdirSync(dirname(prepared.out), { recursive: true });
-  if (process.platform === "win32") await privateDirectory(dirname(prepared.out));
-  // Before any voice is made, so a brand that is not there costs nothing.
-  let branding: Brand | undefined;
-  if (brandArg !== undefined) {
-    try {
-      branding = installBrand(loadBrandProfile(brandArg), prepared.run);
-    } catch (error) {
-      console.error(error instanceof Error ? error.message : String(error));
-      return 3;
-    }
-    console.log(`brand:    ${brandArg} — "${branding.slogan}"${branding.sound ? ` with ${branding.sound}` : ", silent"}`);
-  }
-  let clips: NarrationClip[] = [];
-  if (withVoice) {
-    let script: NarrationScript | undefined;
-    let profile: ReturnType<typeof loadVoiceProfile>;
-    try {
-      // Read before any voice is made, so a bad script or speed costs nothing.
-      script = scriptArg ? readScript(scriptArg, prepared.steps, roots) : undefined;
-      profile = withSpeed(loadVoiceProfile(voiceProfile), speed ?? WALKTHROUGH_SPEED);
-    } catch (error) {
-      console.error(error instanceof Error ? error.message : String(error));
-      return 3;
-    }
-    const key = loadApiKey([]);
-    clips = await narrate(prepared.run, prepared.steps, profile, elevenLabs(key), undefined, script);
-    const source = prepared.calibrationSource;
-    const timing = {
-      stepMinMs: stepMinMs(prepared.steps, clips),
-      ...cardMinMs(clips, branding?.sound ? BRAND_STING_LEAD_MS : 0),
+    const {run, out, dryRun, stills, calibrationMs, voiceProfile, script:scriptArg, speed, brand:brandArg} = parsed;
+    if (!run) {console.error(USAGE); return 2;}
+    const provider = parsed.voiceProvider ?? (parsed.audio ? 'import' : parsed.narrate ? 'elevenlabs' : 'none');
+    if (!['none','import','elevenlabs','qwen'].includes(provider)) throw new RenderRefusal('Unknown voice provider');
+    if (provider === 'qwen') throw new RenderRefusal('Qwen TTS adapter is reserved, not implemented or validated. Use --audio with output from your local TTS. No provider call was made.');
+    if ((provider === 'import') !== !!parsed.audio || (parsed.audio && parsed.narrate) || (provider !== 'elevenlabs' && (parsed.narrate || scriptArg || voiceProfile || speed !== undefined))) throw new RenderRefusal('Conflicting audio options: choose none, imported manifest, or ElevenLabs narration');
+    if (brandArg && (parsed.template || parsed.presentation)) throw new RenderRefusal('Use the presentation brand configuration or legacy --brand, not both');
+    outsideGit(run);
+    if (out) outsideGit(out);
+    const roots = repoRoots();
+    let prepared = prepare(run, out, roots, calibrationMs);
+    const capture = JSON.parse(readFileSync(join(prepared.run,'capture.json'),'utf8'));
+    if (parsed.presentation) outsideGit(parsed.presentation);
+    const config = loadPresentation(parsed.template, parsed.presentation, capture.title, capture.subtitle ?? '');
+    if (parsed.cover && !config) throw new RenderRefusal('--cover requires --template or --presentation');
+    const p = config?.presentation;
+    if(p) validatePresentationMedia(p,config?.assetRoot);
+    const baseTiming = p ? {titleBaseMs:p.intro.enabled?p.intro.durationMs:0, endBaseMs:p.outro.enabled?p.outro.durationMs:0} : {};
+    const imported = parsed.audio ? readImportedAudio(parsed.audio,prepared.steps) : undefined;
+    const checkCards = (clips:NarrationClip[]) => {
+      if (p && ((!p.intro.enabled && clips.some(c=>c.at==='intro')) || (!p.outro.enabled && clips.some(c=>c.at==='outro')))) throw new RenderRefusal('Audio targets a disabled intro or outro card');
     };
-    prepared = { ...prepare(run, out, roots, prepared.calibrationMs, timing), calibrationSource: source };
-    const style = script ? `conversational script ${resolve(scriptArg!)}` : "captions";
-    console.log(
-      `voice:    ${profile.name} at ${profile.voice_settings.speed}×, ${clips.length} clips (${style}) in ${join(prepared.run, "narration")}`,
-    );
+    if (imported) checkCards(imported.clips);
+    prepared = prepare(run,out,roots,prepared.calibrationMs,{...baseTiming,...(imported?{stepMinMs:stepMinMs(prepared.steps,imported.clips),...cardMinMs(imported.clips,p?.intro.enabled&&(p.intro.sound||p.intro.soundPreset!=='none')?BRAND_STING_LEAD_MS:0)}:{})});
+    if (dryRun) {
+      console.log(JSON.stringify({dryRun:true,out:prepared.out,seconds:prepared.seconds,template:p?.template ?? 'legacy',coverRequested:parsed.cover,voiceProvider:provider,narrationRequested:provider!=='none',narrationTiming:provider==='elevenlabs'?'requires synthesis; not performed':provider==='import'?'measured imported clips':'silent',calibrationMs:prepared.calibrationMs,steps:prepared.steps.length},null,2));
+      return 0;
+    }
+    process.umask(0o077);
+    mkdirSync(dirname(prepared.out),{recursive:true});
+    if (process.platform === 'win32') await privateDirectory(dirname(prepared.out));
+    let branding:Brand|undefined;
+    if (brandArg) branding=installBrand(loadBrandProfile(brandArg),prepared.run);
+    const presentation=config?installPresentation(config.presentation,config.assetRoot,prepared.run):undefined;
+    let clips:NarrationClip[]=[];
+    let narrationKind:'ai'|'imported'='ai';
+    if (imported) {
+      clips=installImportedAudio(imported,prepared.run);
+      narrationKind=imported.aiGenerated?'ai':'imported';
+    } else if (provider==='elevenlabs') {
+      const script=scriptArg?readScript(scriptArg,prepared.steps,roots):undefined;
+      if (script && p && ((!p.intro.enabled && script.intro) || (!p.outro.enabled && script.outro))) throw new RenderRefusal('Narration script targets a disabled card');
+      const profile=withSpeed(loadVoiceProfile(voiceProfile),speed??WALKTHROUGH_SPEED);
+      const adapter=speechProvider(provider,()=>loadApiKey([]));
+      clips=await narrate(prepared.run,prepared.steps,profile,(text,voice)=>adapter.synthesizeMp3({text,voice:voice.voice_id,model:voice.model_id,outputFormat:voice.output_format,settings:voice.voice_settings}),undefined,script);
+    }
+    checkCards(clips);
+    const timing={...baseTiming,...(clips.length?{stepMinMs:stepMinMs(prepared.steps,clips),...cardMinMs(clips,(presentation?.intro.sound||branding?.sound)?BRAND_STING_LEAD_MS:0)}:{})};
+    prepared=prepare(run,out,roots,prepared.calibrationMs,timing);
+    writeFileSync(prepared.chaptersPath,prepared.chaptersText);
+    const props=`--props=${JSON.stringify({calibrationMs:prepared.calibrationMs,stepMinMs:prepared.stepMinMs,titleMs:prepared.titleMs,endMs:prepared.endMs,narration:clips.map(({at,file,ms})=>({at,file,ms})),narrationKind,branding,presentation})}`;
+    const cli=join(REMOTION_DIR,'node_modules','@remotion','cli','remotion-cli.js');
+    const invoke=(args:string[])=>{
+      const result=spawnSync('node',[cli,...args],{cwd:REMOTION_DIR,stdio:'inherit'});
+      if (result.status!==0) throw new RenderRefusal('Remotion render failed');
+    };
+    invoke(['render',ENTRY,'WalkthroughVideo',prepared.out,`--public-dir=${prepared.run}`,props,'--codec=h264','--crf=20','--pixel-format=yuv420p',...(clips.length||presentation?.intro.sound||branding?.sound?['--audio-codec=aac']:['--muted']),'--log=error']);
+    if (parsed.cover) {
+      const png=join(dirname(prepared.out),'cover.png');
+      invoke(['still',ENTRY,'WalkthroughCover',png,`--public-dir=${prepared.run}`,props,'--log=error']);
+      // FFmpeg distributions differ in optional WebP encoders. The installed Pillow
+      // wheel is already a verified runtime dependency, so cover export uses it.
+      const python=join(resolve(import.meta.dir,'../../..'),'.venv',process.platform==='win32'?'Scripts':'bin',process.platform==='win32'?'python.exe':'python3');
+      execFileSync(python,['-c','from PIL import Image; import sys; Image.open(sys.argv[1]).convert("RGB").save(sys.argv[2],"WEBP",quality=85,method=6)',png,join(dirname(prepared.out),'cover.webp')]);
+    }
+    if (stills) writeStills(prepared);
+    writeFileSync(join(dirname(prepared.out),'render-manifest.json'),JSON.stringify({version:1,template:p?.template??'legacy',presentation,voiceProvider:provider,narrationKind:clips.length?narrationKind:'none',seconds:prepared.seconds,sourceCaptureSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'capture.json')),'hex'),sourceVideoSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'video.webm')),'hex'),narration:clips},null,2)+'\n');
+    console.log(`video: ${prepared.out} (${prepared.seconds.toFixed(2)}s); template: ${p?.template??'legacy'}; voice: ${provider}`);
+    return 0;
+  } catch (error) {
+    console.error(error instanceof Error?error.message:String(error));
+    return 3;
   }
-  writeFileSync(prepared.chaptersPath, prepared.chaptersText);
-  console.log(`chapters: ${prepared.chaptersPath}`);
-  console.log(`length:   ${Math.round(prepared.seconds)} s`);
-  console.log(`sync:     ${prepared.calibrationMs} ms (${prepared.calibrationSource})`);
-  const result = spawnSync(
-    "node",
-    [
-      join(REMOTION_DIR, "node_modules", "@remotion", "cli", "remotion-cli.js"),
-      "render",
-      ENTRY,
-      "WalkthroughVideo",
-      prepared.out,
-      `--public-dir=${prepared.run}`,
-      `--props=${JSON.stringify({
-        calibrationMs: prepared.calibrationMs,
-        stepMinMs: prepared.stepMinMs,
-        titleMs: prepared.titleMs,
-        endMs: prepared.endMs,
-        narration: clips,
-        branding,
-      })}`,
-      "--codec=h264",
-      "--crf=20",
-      "--pixel-format=yuv420p",
-      // A silent walkthrough can still open on a brand's sting, so muting follows the audio
-      // actually in the composition, not the narration alone.
-      ...(clips.length || branding?.sound ? ["--audio-codec=aac"] : ["--muted"]),
-      "--log=error",
-    ],
-    { cwd: REMOTION_DIR, stdio: "inherit" },
-  );
-  if (result.status !== 0) {
-    console.error("Remotion render failed.");
-    return result.status ?? 1;
-  }
-  console.log(`video:    ${prepared.out}`);
-  if (stills) console.log(`stills:   ${writeStills(prepared)} (one per step; look at every one)`);
-  return 0;
 }
 
 if (import.meta.main) process.exit(await main(process.argv.slice(2)));

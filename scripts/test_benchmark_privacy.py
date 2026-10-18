@@ -68,7 +68,7 @@ class BoundaryTests(unittest.TestCase):
     def test_raw_media_logs_and_browser_state_are_refused(self):
         for path in ['benchmarks/demo/artifacts/note.md', 'benchmarks/demo/video.mp4',
                      'benchmarks/demo/shot.png', 'benchmarks/demo/steps.json',
-                     'benchmarks/demo/trace.jsonl', 'notes/execution.json', 'notes/state.json']:
+                     'benchmarks/demo/trace.jsonl', 'notes/execution.json', 'notes/state.json', 'notes/render-manifest.json']:
             with self.subTest(path=path):
                 blobs = copy.deepcopy(self.blobs)
                 self.add(path, b'{}')

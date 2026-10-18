@@ -28,6 +28,7 @@ state.json
 *.private.*
 *.jsonl
 *.har
+render-manifest.json
 /benchmarks/**/artifacts/
 /benchmarks/**/runs/
 /benchmarks/**/sessions/

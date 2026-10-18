@@ -15,7 +15,7 @@ TEXT_TYPES = {'.md', '.json', '.csv', '.py', '.mjs', '.js', '.ts', '.tsx', '.htm
 PRIVATE_DIRS = {'private', '.private', 'private-benchmarks', 'benchmarks-private', '.benchmark-private'}
 RAW_DIRS = {'artifacts', 'capture-state', 'sessions', 'recordings', 'screenshots', 'raw', 'runs'}
 RAW_NAMES = {'capture.json', 'steps.json', 'state.json', 'session.json', 'storage-state.json', 'storage_state.json', 'storagestate.json',
-             'cookies.json', 'execution.json', 'events.jsonl', 'prompt.txt', 'final.txt', 'stderr.log'}
+             'cookies.json', 'execution.json', 'render-manifest.json', 'events.jsonl', 'prompt.txt', 'final.txt', 'stderr.log'}
 RAW_SUFFIXES = {'.mp4', '.webm', '.mp3', '.wav', '.har', '.jsonl', '.log', '.pem', '.key', '.zip', '.gz', '.7z', '.sqlite', '.db'}
 HOME_PATH = re.compile(r'/(?:Users|home)/([^/\s\x22\x27`]+)')
 WINDOWS_HOME = re.compile(r'[A-Za-z]:\\{1,2}Users\\{1,2}([^\\\s\x22\x27`]+)', re.I)
