@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "privateCases": "disabled",
+  "frameworkFiles": [
+    "benchmarks/README.md",
+    "benchmarks/PRIVACY.md",
+    "benchmarks/public-cases.json",
+    "benchmarks/workspace.py",
+    "benchmarks/test_workspace.py"
+  ],
+  "cases": [
+    {
+      "id": "blog-v0",
+      "path": "benchmarks/blog-v0",
+      "sourceType": "public-blog",
+      "sourceUrl": "https://aaronguo.com",
+      "dataPolicy": "public-only",
+      "credentials": "none"
+    }
+  ]
+}

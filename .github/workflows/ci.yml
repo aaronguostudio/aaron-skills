@@ -27,6 +27,8 @@ jobs:
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.11'
+      - name: Public benchmark boundary
+        run: python scripts/benchmark_privacy.py --tracked
       - name: Dependencies
         run: |
           if [ "$RUNNER_OS" = macOS ]; then brew install ffmpeg; fi
@@ -77,6 +79,7 @@ jobs:
         run: |
           release=$(python -c 'import os,sys;from pathlib import Path;sys.path.insert(0,"scripts");from managed_registration import active_release;root=Path(os.environ["RUNNER_TEMP"])/"demo install/runtime";print(active_release(root) if os.name=="nt" else root/"current")')
           node scripts/verify-installed.mjs "$release"
+          python -c 'import sys,subprocess;from pathlib import Path;sys.path.insert(0,"scripts");from platform_tools import bun_binary;subprocess.run([str(bun_binary(Path(sys.argv[1])/"packages/demo/remotion")),"scripts/verify-presentation.mjs",sys.argv[1]],check=True)' "$release"
       - name: Installed sign-in and recovery
         run: |
           release=$(python -c 'import os,sys;from pathlib import Path;sys.path.insert(0,"scripts");from managed_registration import active_release;root=Path(os.environ["RUNNER_TEMP"])/"demo install/runtime";print(active_release(root) if os.name=="nt" else root/"current")')

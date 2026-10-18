@@ -1,0 +1,11 @@
+#!/bin/sh
+# Git for Windows supplies sh; the checker itself uses only Python's standard library.
+set -eu
+if command -v python3 >/dev/null 2>&1 && python3 -c 'import sys; sys.exit(sys.version_info < (3, 11))' >/dev/null 2>&1; then
+  exec python3 scripts/benchmark_privacy.py --staged
+elif command -v python >/dev/null 2>&1 && python -c 'import sys; sys.exit(sys.version_info < (3, 11))' >/dev/null 2>&1; then
+  exec python scripts/benchmark_privacy.py --staged
+else
+  echo 'Python 3.11 or newer is required for the public benchmark boundary check.' >&2
+  exit 1
+fi

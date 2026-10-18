@@ -40,6 +40,8 @@ import {
 } from "./timeline";
 import { BrandCard, BrandMark } from "./brand/BrandCard";
 import { validateBrand, type Brand } from "./brand/model";
+import {PresentationCard, PresentationCaption} from './presentation/Presentation';
+import {validatePresentation, type Presentation} from './presentation/model';
 
 const C = {
   bg: "#11151c",
@@ -70,6 +72,8 @@ type Props = {
   // An identity for the opening and closing cards and the caption band's corner. Without one the
   // walkthrough keeps its plain cards.
   branding?: Brand;
+  presentation?: Presentation;
+  narrationKind?: 'ai' | 'imported';
 };
 
 const fade = (frame: number, total: number) =>
@@ -84,12 +88,12 @@ const Card: React.FC<{ total: number; children: React.ReactNode }> = ({ total, c
   );
 };
 
-const TitleCard: React.FC<{ capture: Capture; total: number; narrated: boolean }> = ({ capture, total, narrated }) => (
+const TitleCard: React.FC<{ capture: Capture; total: number; narrated: boolean; imported?: boolean }> = ({ capture, total, narrated, imported }) => (
   <Card total={total}>
     <div style={{ color: C.ink, fontSize: 64, fontWeight: 650, lineHeight: 1.15 }}>{capture.title}</div>
     {capture.subtitle ? <div style={{ color: C.muted, fontSize: 30, marginTop: 22 }}>{capture.subtitle}</div> : null}
     <div style={{ color: C.muted, fontSize: 20, marginTop: 40, letterSpacing: 1 }}>
-      Recorded {capture.startedAt.slice(0, 10)} · {narrated ? "AI narration" : "no audio"}
+      Recorded {capture.startedAt.slice(0, 10)} · {narrated ? imported ? 'Imported narration' : "AI narration" : "no audio"}
     </div>
   </Card>
 );
@@ -102,7 +106,7 @@ const EndCard: React.FC<{ capture: Capture; total: number }> = ({ capture, total
 );
 
 // A rounded amber outline with a faint fill. Its stroke draws itself on as `draw` goes 0 → 1.
-const Highlights: React.FC<{ marks: Highlight[]; w: number; h: number }> = ({ marks, w, h }) =>
+const Highlights: React.FC<{ marks: Highlight[]; w: number; h: number; color?: string }> = ({ marks, w, h, color }) =>
   marks.length === 0 ? null : (
     <svg width={w} height={h} style={{ position: "absolute", left: 0, top: 0, pointerEvents: "none" }}>
       {marks.map(({ kind, box, draw, opacity }, i) => (
@@ -115,7 +119,7 @@ const Highlights: React.FC<{ marks: Highlight[]; w: number; h: number }> = ({ ma
             height={box.h}
             rx={8}
             fill="none"
-            stroke={C.mark}
+            stroke={color ?? C.mark}
             strokeWidth={3.5}
             pathLength={1}
             strokeDasharray="1"
@@ -225,7 +229,7 @@ const SpeedBadge: React.FC<{ speed: number; right: number }> = ({ speed, right }
   </div>
 );
 
-export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, narration = [], branding }) => {
+export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, narration = [], branding, presentation, narrationKind }) => {
   const frame = useCurrentFrame();
   if (!capture || !timeline) return <AbsoluteFill style={{ background: C.bg }} />;
   const { w, h } = capture.viewport;
@@ -237,16 +241,17 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, na
     segment?.step ?? timeline.segments.find((s) => s.fromFrame >= (segment?.fromFrame ?? 0) && s.step !== null)?.step ?? null;
   const step = stepIndex !== null ? steps[stepIndex] : undefined;
   const narrated = narration.length > 0;
+  const aiNarrated = narrated && narrationKind !== 'imported';
 
   return (
     <AbsoluteFill style={{ background: C.bg }}>
-      <Sequence durationInFrames={timeline.titleFrames}>
-        {branding ? (
-          <BrandCard brand={branding} total={timeline.titleFrames} narrated={narrated} />
+      {timeline.titleFrames > 0 ? <Sequence durationInFrames={timeline.titleFrames}>
+        {presentation ? <PresentationCard p={presentation} total={timeline.titleFrames} narrated={aiNarrated}/> : branding ? (
+          <BrandCard brand={branding} total={timeline.titleFrames} narrated={aiNarrated} />
         ) : (
-          <TitleCard capture={capture} total={timeline.titleFrames} narrated={narrated} />
+          <TitleCard capture={capture} total={timeline.titleFrames} narrated={narrated} imported={narrationKind === 'imported'} />
         )}
-      </Sequence>
+      </Sequence> : null}
       {timeline.segments.map((s) => (
         <Sequence key={`${s.fromFrame}`} from={s.fromFrame} durationInFrames={s.frames}>
           <div style={{ position: "absolute", left: 0, top: 0, width: w, height: h, overflow: "hidden" }}>
@@ -280,7 +285,7 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, na
         const from =
           clip.at === "intro"
             ? // A brand's sting opens the card on its own; the line comes in over its decay.
-              branding?.sound
+              branding?.sound || presentation?.intro.sound
               ? Math.round((BRAND_STING_LEAD_MS * FPS) / 1000)
               : 0
             : clip.at === "outro"
@@ -294,26 +299,26 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, na
       })}
       {inVideo ? (
         <>
-          <Highlights marks={highlightsAt(timeline, steps, capture.viewport, frame)} w={w} h={h} />
+          <Highlights marks={highlightsAt(timeline, steps, capture.viewport, frame)} w={w} h={h} color={presentation?.body.highlightColor} />
           <Cursor state={cursorAt(timeline, steps, capture.viewport, frame)} />
           {segment && segment.speed > 1 ? <SpeedBadge speed={segment.speed} right={24} /> : null}
-          <CaptionBand
+          {presentation ? <PresentationCaption p={presentation} top={h} width={w} caption={step?.caption ?? ''} position={stepIndex !== null ? `${stepIndex+1}/${steps.length}` : ''} narrated={aiNarrated}/> : <CaptionBand
             top={h}
             width={w}
             caption={step?.caption ?? ""}
             position={stepIndex !== null ? `${stepIndex + 1}/${steps.length}` : ""}
-            narrated={narrated}
+            narrated={aiNarrated}
             brand={branding}
-          />
+          />}
         </>
       ) : null}
-      <Sequence from={videoEnd} durationInFrames={timeline.endFrames}>
-        {branding ? (
+      {timeline.endFrames > 0 ? <Sequence from={videoEnd} durationInFrames={timeline.endFrames}>
+        {presentation ? <PresentationCard p={presentation} closing total={timeline.endFrames}/> : branding ? (
           <BrandCard brand={branding} total={timeline.endFrames} closing />
         ) : (
           <EndCard capture={capture} total={timeline.endFrames} />
         )}
-      </Sequence>
+      </Sequence> : null}
     </AbsoluteFill>
   );
 };
@@ -330,6 +335,7 @@ const calculateMetadata: CalculateMetadataFunction<Props> = async ({ props }) =>
   const capture = await readJson<Capture>("capture.json");
   const raw = await readJson<Step[]>("steps.json");
   if (props.branding) validateBrand(props.branding);
+  if (props.presentation) validatePresentation(props.presentation);
   const problems = validateCapture(capture, raw);
   if (problems.length) throw new Error(`Capture refused:\n- ${problems.join("\n- ")}`);
   const steps = calibrate(raw, props.calibrationMs ?? capture.calibrationMs ?? 0);
@@ -337,17 +343,20 @@ const calculateMetadata: CalculateMetadataFunction<Props> = async ({ props }) =>
     minStepMs: (step, i) => props.stepMinMs?.[i] ?? readingMs(step.caption),
     titleMs: props.titleMs,
     endMs: props.endMs,
+    ...(props.presentation ? {titleBaseMs:props.presentation.intro.enabled?props.presentation.intro.durationMs:0, endBaseMs:props.presentation.outro.enabled?props.presentation.outro.durationMs:0} : {}),
   });
   return {
     durationInFrames: timeline.durationInFrames,
     fps: FPS,
     width: capture.viewport.w,
     height: capture.viewport.h + CAPTION_BAND,
-    props: { capture, steps, timeline, narration: props.narration ?? [], branding: props.branding },
+    props: { capture, steps, timeline, narration: props.narration ?? [], branding: props.branding, presentation:props.presentation, narrationKind:props.narrationKind },
   };
 };
 
-const Root: React.FC = () => (
+const Cover: React.FC<Props> = ({presentation}) => presentation ? <PresentationCard p={presentation} cover/> : <AbsoluteFill style={{background:C.bg}}/>;
+
+const Root: React.FC = () => (<>
   <Composition
     id="WalkthroughVideo"
     component={WalkthroughVideo}
@@ -358,6 +367,9 @@ const Root: React.FC = () => (
     defaultProps={{ capture: null, steps: [], timeline: null, narration: [] } as Props}
     calculateMetadata={calculateMetadata}
   />
+  <Composition id="WalkthroughCover" component={Cover} durationInFrames={FPS} fps={FPS} width={1440} height={996}
+    defaultProps={{capture:null,steps:[],timeline:null,narration:[]} as Props} calculateMetadata={calculateMetadata}/>
+  </>
 );
 
 registerRoot(Root);

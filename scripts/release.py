@@ -11,6 +11,7 @@ import subprocess
 import sys
 
 from bundle import ROOT, check_documents, check_imports
+from benchmark_privacy import check_files as check_benchmark_boundary
 
 
 def public_files(root=ROOT):
@@ -28,6 +29,7 @@ def public_files(root=ROOT):
 
 def scan_public(files):
     """Privacy tripwires, alongside a required independent secret scanner at release."""
+    check_benchmark_boundary({name: path.read_bytes() for name, path in files.items()})
     failures = []
     home = re.compile(r'/(?:Users|home)/([^/\s\x22\x27`]+)')
     # Deliberate generic fixtures; no developer-specific username is allowlisted.

@@ -20,3 +20,21 @@ steps.json
 state.json
 *.pem
 *.key
+
+# Defensive only: the index checker also rejects force-added raw/private material.
+/private-benchmarks/
+/benchmarks-private/
+/.benchmark-private/
+*.private.*
+*.jsonl
+*.har
+render-manifest.json
+/benchmarks/**/artifacts/
+/benchmarks/**/runs/
+/benchmarks/**/sessions/
+/benchmarks/**/recordings/
+/benchmarks/**/screenshots/
+/benchmarks/**/*.png
+/benchmarks/**/*.jpg
+/benchmarks/**/*.jpeg
+/benchmarks/**/*.webp

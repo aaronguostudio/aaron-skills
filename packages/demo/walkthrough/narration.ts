@@ -7,8 +7,8 @@
 // - conversational: a script written for the run (loadScript), with an opening line over the title
 //   card, lines for the steps it chooses (a step without one stays silent) and a closing line.
 //
-// The key is read from the macOS Keychain (service KEYCHAIN_SERVICE), else from this repo's
-// gitignored .env (ELEVENLABS_API_KEY, as the other tiles do). It is never printed or written.
+// The CLI reads the process environment and optional dedicated macOS Keychain service.
+// It never discovers another project's credentials or a repository .env automatically.
 import { execFileSync } from "child_process";
 import { createHash } from "crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
@@ -26,6 +26,7 @@ const SPEED_MAX = 1.2;
 const PROFILES = process.env.AARON_DEMO_VOICE_PROFILES || join(homedir(), ".config", "aaron-skills", "demo", "voice-profiles.json");
 
 export type VoiceProfile = {
+  provider?: string;
   voice_id: string;
   model_id: string;
   output_format: string;
@@ -49,6 +50,7 @@ export function loadVoiceProfile(name?: string, path = PROFILES): VoiceProfile &
   const profile = config.profiles?.[id];
   if (!profile) throw new Error(`No voice profile "${id}" in ${path}`);
   if (profile.provider !== "elevenlabs") throw new Error(`Voice profile "${id}" is not an ElevenLabs voice`);
+  if (![profile.voice_id,profile.model_id,profile.output_format].every(v=>typeof v==='string' && v.trim()) || !profile.output_format.startsWith('mp3_') || !profile.voice_settings || typeof profile.voice_settings!=='object' || Array.isArray(profile.voice_settings)) throw Error('ElevenLabs voice profile needs voice/model IDs, MP3 output_format and voice_settings');
   return { name: id, ...profile };
 }
 
@@ -124,14 +126,14 @@ function readKeychain(): string | null {
 
 export function elevenLabs(apiKey: string): Synthesize {
   return async (text, profile) => {
-    const url = `https://api.elevenlabs.io/v1/text-to-speech/${profile.voice_id}?output_format=${profile.output_format}`;
+    const url = `https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(profile.voice_id)}?output_format=${encodeURIComponent(profile.output_format)}`;
     const response = await fetch(url, {
       method: "POST",
       headers: { "xi-api-key": apiKey, "Content-Type": "application/json", Accept: "audio/mpeg" },
       body: JSON.stringify({ text, model_id: profile.model_id, voice_settings: profile.voice_settings }),
     });
     if (!response.ok) {
-      throw new Error(`ElevenLabs answered ${response.status}: ${(await response.text()).slice(0, 200)}`);
+      throw new Error(`ElevenLabs answered ${response.status}; no response body or credentials were logged`);
     }
     return new Uint8Array(await response.arrayBuffer());
   };
@@ -170,7 +172,7 @@ export async function narrate(
   const clips: NarrationClip[] = [];
   for (const { at, name, text } of lines) {
     const key = createHash("sha256")
-      .update(JSON.stringify([profile.voice_id, profile.model_id, profile.voice_settings, text]))
+      .update(JSON.stringify([profile.provider ?? 'elevenlabs', profile.voice_id, profile.model_id, profile.output_format, profile.voice_settings, text]))
       .digest("hex")
       .slice(0, 12);
     const file = `narration/${name}-${key}.mp3`;

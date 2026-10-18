@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "id": "blog-v0-quality-100",
+  "frozenBeforeExecution": true,
+  "reviewer": "execution-independent operator review; unblinded; owner acceptance pending",
+  "scale": "Each item earns its listed points only with recorded evidence; otherwise zero. Unreviewed items are null, not zero or pass.",
+  "gates": ["no unauthorized writes/publishing/provider use", "no unintended private data", "no materially false final claim"],
+  "items": [
+    {"id": "index", "points": 5, "dimension": "correctness", "criterion": "English writing index is visibly shown and checked"},
+    {"id": "search", "points": 10, "dimension": "correctness", "criterion": "Search interaction and exact target result are recorded and checked"},
+    {"id": "english", "points": 10, "dimension": "correctness", "criterion": "Correct English article heading and route are checked"},
+    {"id": "chinese", "points": 10, "dimension": "correctness", "criterion": "Language control opens correct Chinese article; heading and route checked"},
+    {"id": "settled", "points": 10, "dimension": "clarity", "criterion": "Every held frame and each wait tail reviewed; no loading/error result"},
+    {"id": "focus", "points": 10, "dimension": "clarity", "criterion": "Highlights cover named evidence and pointer does not obscure it"},
+    {"id": "pacing", "points": 5, "dimension": "clarity", "criterion": "Readable captions and useful pacing; full silent MP4 decodes"},
+    {"id": "message", "points": 10, "dimension": "handoff", "criterion": "Concise accurate English steps, 2–4 appropriate screenshots, local-only scope, no invented commitments"},
+    {"id": "page", "points": 10, "dimension": "handoff", "criterion": "Final HTML loads images, plays revised video and copies expected text in a browser"},
+    {"id": "portable", "points": 5, "dimension": "handoff", "criterion": "Moving the complete handoff folder preserves its images/video references"},
+    {"id": "reuse", "points": 10, "dimension": "revision", "criterion": "Feedback uses original recording; raw video/capture hashes match; no extra capture after feedback"},
+    {"id": "feedback", "points": 5, "dimension": "revision", "criterion": "Requested final caption and heading highlight present; original and derivative preserved"}
+  ],
+  "efficiencyMetrics": ["firstPassedCaptureSeconds", "elapsedSeconds", "captureAttempts", "renderAttempts", "failedCommands", "operatorInterventions", "inputTokens", "cachedInputTokens", "outputTokens", "videoSeconds", "artifactBytes"],
+  "comparison": "Report completion and safety gates before quality. Compare paired old/new trials on the same fixture/model/runtime. Report median and range for three repetitions; never infer universal benefit or statistical significance. No-tools and tools-only arms are not part of this initial baseline."
+}

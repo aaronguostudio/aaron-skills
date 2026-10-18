@@ -1,0 +1,21 @@
+{
+  "id": "blog-v0",
+  "schema": 1,
+  "skillsRevision": "1fec24692744dcb6bc8eaae91301e03b5e29a5ba",
+  "applicationRevision": "0c51dc56cebf9f972a63a124ad65c8e356b9c3b5",
+  "site": "https://aaronguo.com",
+  "target": "isolated local copy of committed blog source; never production",
+  "article": {"slug": "one-person-project-ai-coding", "en": "The One-Person Project", "zh": "一个人的项目"},
+  "holdout": "what-ai-code-can-change",
+  "viewport": {"width": 1440, "height": 900},
+  "serverMode": "Nuxt production node-server build; no HMR",
+  "repetitions": 3,
+  "host": {"name": "Codex CLI", "version": "0.163.0-alpha.10.2", "model": "gpt-6.1-sol", "reasoningEffort": "high", "selection": "frozen from the owner's existing default configuration"},
+  "narration": false,
+  "taskTimeoutSeconds": 1200,
+  "policy": {"publishing": false, "businessWrites": false, "credentials": false},
+  "futureCases": [
+    {"id": "authenticated-readonly", "status": "planned", "scope": "human sign-in, saved-session reuse and expiry, no customer credentials in artifacts"},
+    {"id": "authenticated-writes", "status": "planned", "scope": "isolated seeded fixture, write counters, expiry after save, no automatic repeat writes"}
+  ]
+}

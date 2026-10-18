@@ -1,0 +1,12 @@
+{
+  "id": "blog-v0-offline-v1",
+  "parent": "blog-v0",
+  "frozenBeforeExecution": true,
+  "purpose": "Artifact-quality baseline after retaining the strict integration blockers",
+  "server": "same production blog build behind a loopback-only header proxy",
+  "responseHeaders": {"Content-Security-Policy": "connect-src 'self'; frame-src 'none'"},
+  "artifactReview": "Predeclared HTTP endpoint /__benchmark_results__/offline-trial-N/artifacts/...; generated HTML/media only; no logs, sessions, arbitrary file access or directory listing",
+  "excludedFeatures": ["external icon fallback fetches", "embedded third-party video"],
+  "unchanged": ["application source", "local content and images", "search and article routes", "language controls", "Demo skills and runtime", "task and scoring rubric"],
+  "comparisonRule": "Never compare this profile's score to the strict profile as a skill improvement. Future old/new comparisons must use the same profile."
+}

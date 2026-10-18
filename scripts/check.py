@@ -8,6 +8,7 @@ import subprocess
 import sys
 
 from bundle import ROOT, metadata
+from benchmark_privacy import check_repository
 from release import public_files, scan_history, scan_public
 from platform_tools import bun_binary, npm_command
 import shutil
@@ -20,6 +21,7 @@ def main():
     parser.add_argument('--public-history', action='store_true', help='Require sanitized public commit metadata/history')
     parser.add_argument('--history-identity-ref', action='append', help='Actual PR base/head commit hashes; blob scanning still covers all refs')
     args = parser.parse_args()
+    check_repository(ROOT)
     metadata()
     files = public_files()
     scan_public(files)
@@ -42,6 +44,8 @@ def main():
         [str(bun_binary(ROOT / 'packages/demo/remotion')), 'test', 'packages/demo/walkthrough'],
         [args.python, '-m', 'unittest', 'discover', '-s', 'scripts', '-p', 'test_*.py'],
         [args.python, '-m', 'unittest', 'discover', '-s', 'packages/demo/update/scripts', '-p', 'test_*.py'],
+        [args.python, '-m', 'unittest', 'discover', '-s', 'benchmarks/blog-v0', '-p', 'test_*.py'],
+        [args.python, '-m', 'unittest', 'discover', '-s', 'benchmarks', '-p', 'test_*.py'],
     ]
     if not args.skip_browser:
         commands.append(npm_command({'npm': shutil.which('npm'), 'node': shutil.which('node')}, 'run', 'test:e2e', '--prefix', 'packages/demo/capture'))

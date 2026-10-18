@@ -77,7 +77,13 @@
     "scripts/managed_registration.py",
     "scripts/private-path.ps1",
     "packages/demo/capture/scripts/platform.mjs",
-    "scripts/setup.ps1"
+    "scripts/setup.ps1",
+    "packages/demo/remotion/src/projects/walkthrough-video/presentation/model.ts",
+    "packages/demo/remotion/src/projects/walkthrough-video/presentation/Presentation.tsx",
+    "packages/demo/walkthrough/presentation.ts",
+    "packages/demo/walkthrough/import-audio.ts",
+    "packages/demo/walkthrough/voice-providers.ts",
+    "docs/video-presentation.md"
   ],
   "version": "0.1.0"
 }
