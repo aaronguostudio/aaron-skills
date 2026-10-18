@@ -28,6 +28,8 @@ Aaron Skills 将工作流与执行工作流所需的工具放在同一个集合�
 
 **目前第一个可用的能力组合是 Demo**，覆盖演示与沟通。项目接手、实现改动、更广泛的工程验证，是这个集合后续发展的方向；当前仓库还没有单独发布这些环节的 Skills。
 
+**Feature Blueprint v0 已提供源码预览。** 它通过证据整理、需求澄清、流程图、数据模型、交互原型和开发交接，连接 Understand 与 Build。设备借用申请案例的需求、会议记录和回答完全虚构。在完整仓库中，请从 `docs/feature-blueprint.md` 和 `examples/feature-blueprint/README.md` 开始。它使用独立的便携导出包；下面的 Demo 安装流程仍只安装 Demo。结构检查和完整示例不等于已通过独立 Agent 评估或生产验收。
+
 ## 当前可用：Demo
 
 将一个已经能运行的 Web 功能，变成有引导的视频、截图和可复制的更新说明。Demo 通过一套共享的本地工具，串起三个 Skills：

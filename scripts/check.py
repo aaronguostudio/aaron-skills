@@ -46,6 +46,7 @@ def main():
         [args.python, '-m', 'unittest', 'discover', '-s', 'packages/demo/update/scripts', '-p', 'test_*.py'],
         [args.python, '-m', 'unittest', 'discover', '-s', 'benchmarks/blog-v0', '-p', 'test_*.py'],
         [args.python, '-m', 'unittest', 'discover', '-s', 'benchmarks', '-p', 'test_*.py'],
+        [args.python, '-m', 'unittest', 'discover', '-s', 'packages/feature-blueprint', '-p', 'test_*.py'],
     ]
     if not args.skip_browser:
         commands.append(npm_command({'npm': shutil.which('npm'), 'node': shutil.which('node')}, 'run', 'test:e2e', '--prefix', 'packages/demo/capture'))

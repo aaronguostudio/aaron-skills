@@ -40,6 +40,15 @@ communication. Project onboarding, implementation, and broader engineering
 verification are the direction for the collection; they are not yet separate
 released skills here.
 
+**Feature Blueprint v0 is available as a source-checkout preview.** It bridges
+Understand and Build through evidence, clarification, diagrams, a prototype and
+a development handoff. Its equipment-request case uses entirely fictional notes
+and scripted answers. In the full repository, start with
+`docs/feature-blueprint.md` and `examples/feature-blueprint/README.md`. It has a
+separate portable export; the Demo setup below installs only the Demo bundle.
+Structural checks and a worked example do not establish independent agent or
+production acceptance.
+
 ## Available now: Demo
 
 Turn a working web feature into a guided video, screenshots, and a copyable
