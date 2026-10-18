@@ -52,7 +52,9 @@ as the website itself; text, navigation and interactions are real HTML.
 | `workflow-verify.webp` | Ivory plinth, ceramic blocks and a pale-blue glass panel with an embedded white check. |
 
 All generated originals are retained locally; ignored `.artifacts/source-art`
-contains this project's PNG copies. Runtime web assets total about 1.2 MB.
+contains this project's PNG copies. The seven original illustrations total about 1.2 MB. The browser now selects
+smaller, fingerprinted WebP variants for each display size; see
+[image delivery and measured sizes](performance.md).
 
 See `design-qa.md` for visual comparison and browser verification. Local captures
 and audit output remain in ignored `.artifacts/`.

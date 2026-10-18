@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ArrowRightIcon } from "@phosphor-icons/react/dist/csr/ArrowRight";
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/csr/ArrowUpRight";
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
-import "@fontsource-variable/inter";
+import artwork from "./art.json";
 
 const REPO = "https://github.com/aaronguostudio/aaron-skills";
 const copy = {
@@ -209,13 +209,18 @@ function SkillDetails({ selected, onClose, text }) {
         >
           <XIcon size={24} weight="light" />
         </button>
-        <img
-          className="detail-art"
-          src={`/art/${skill.image}.webp`}
-          alt=""
-          width="300"
-          height="230"
-        />
+        {selected !== null && (
+          <img
+            className="detail-art"
+            src={artwork[skill.image].src}
+            srcSet={artwork[skill.image].srcSet}
+            sizes="(max-width: 600px) 200px, 300px"
+            decoding="async"
+            alt=""
+            width="300"
+            height="230"
+          />
+        )}
         <p className="eyebrow">{text.detailLabel}</p>
         <h2 id="detail-title">{skill.name}</h2>
         <p className="detail-intro">{detail.intro}</p>
@@ -337,7 +342,10 @@ export function App() {
           </div>
           <figure className="hero-art">
             <img
-              src="/art/workshop-hero.webp"
+              src={artwork["workshop-hero"].src}
+              srcSet={artwork["workshop-hero"].srcSet}
+              sizes={artwork["workshop-hero"].sizes}
+              decoding="async"
               width="1254"
               height="1254"
               alt={
@@ -364,7 +372,17 @@ export function App() {
                 key={stage}
               >
                 <img
-                  src={`/art/${stageImages[index]}.webp`}
+                  src={
+                    artwork[stageImages[index]].variants.find(
+                      (v) => v.width === 384,
+                    ).src
+                  }
+                  srcSet={artwork[stageImages[index]].variants
+                    .filter((v) => v.width <= 384)
+                    .map((v) => `${v.src} ${v.width}w`)
+                    .join(", ")}
+                  sizes="(max-width: 900px) 160px, 200px"
+                  decoding="async"
                   width="200"
                   height="170"
                   alt=""
@@ -405,7 +423,10 @@ export function App() {
                 >
                   <figure className="skill-art">
                     <img
-                      src={`/art/${skill.image}.webp`}
+                      src={artwork[skill.image].src}
+                      srcSet={artwork[skill.image].srcSet}
+                      sizes={artwork[skill.image].sizes}
+                      decoding="async"
                       width="430"
                       height="360"
                       alt={

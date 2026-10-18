@@ -1,5 +1,10 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { readFileSync } from "node:fs";
+
+const artwork = JSON.parse(
+  readFileSync(new URL("./src/art.json", import.meta.url)),
+);
 
 if (
   process.env.VERCEL_ENV === "production" &&
@@ -25,6 +30,27 @@ export default defineConfig({
   },
   plugins: [
     react(),
+    {
+      name: "preload-hero",
+      transformIndexHtml() {
+        const hero = artwork["workshop-hero"];
+        return [
+          {
+            tag: "link",
+            attrs: {
+              rel: "preload",
+              as: "image",
+              type: "image/webp",
+              href: hero.src,
+              imagesrcset: hero.srcSet,
+              imagesizes: hero.sizes,
+              fetchpriority: "high",
+            },
+            injectTo: "head",
+          },
+        ];
+      },
+    },
     {
       name: "release-metadata",
       generateBundle() {

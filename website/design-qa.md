@@ -117,3 +117,16 @@ for this preview:
 
 Optional: fine-tune subtle paper texture and individual illustration props after
 user review. Motion is intentionally restrained and respects reduced motion.
+
+## Image delivery follow-up (2026-10-17)
+
+Compared the accepted production frame with the responsive-image build at equal
+2056-pixel width and a 1112-pixel content crop (DPR 2). Full-view evidence:
+`.artifacts/performance-comparison.jpg`. The composition, font, copy and palette
+are unchanged; small workflow assets retain clean alpha edges. A 390 × 844 DPR 1
+production-build check selected the 480-pixel hero, retained readable detail,
+showed no overflow, and passed language/dialog navigation. Evidence:
+`.artifacts/performance-phone-built.png`. No actionable P0/P1/P2 differences.
+See `performance.md` for byte counts, cache scope and measurement limits.
+
+final result: passed
