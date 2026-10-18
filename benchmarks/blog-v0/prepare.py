@@ -8,9 +8,12 @@ from pathlib import Path
 import platform
 import shutil
 import subprocess
+import sys
 import tarfile
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parent))
+from workspace import require_external
 
 
 def main():
@@ -19,7 +22,7 @@ def main():
     parser.add_argument('--workspace', type=Path, required=True)
     args = parser.parse_args()
     case = json.loads((HERE / 'case.json').read_text())
-    root = args.workspace.resolve()
+    root = require_external(args.workspace)
     if root.exists():
         parser.error('Workspace must be new; preserve prior baseline artifacts.')
     dependencies = args.blog_repo.resolve() / 'node_modules'

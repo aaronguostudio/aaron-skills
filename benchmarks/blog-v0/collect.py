@@ -5,6 +5,10 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from workspace import require_external
 
 
 def digest(path):
@@ -58,6 +62,8 @@ def main():
     parser.add_argument('--trial', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
     args = parser.parse_args()
+    require_external(args.trial)
+    require_external(args.out)
     if args.out.exists():
         parser.error('Keep prior evidence; select a new output filename.')
     args.out.write_text(json.dumps(collect(args.trial.resolve()), indent=2, ensure_ascii=False) + '\n')

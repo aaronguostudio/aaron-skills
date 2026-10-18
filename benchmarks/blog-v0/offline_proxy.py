@@ -3,9 +3,13 @@
 import http.client
 import argparse
 import mimetypes
+import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from workspace import require_external
 
 CSP = "connect-src 'self'; frame-src 'none'"
 HOP = {'connection', 'transfer-encoding', 'keep-alive', 'content-length'}
@@ -66,6 +70,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--workspace', type=Path, required=True)
     args = parser.parse_args()
+    workspace = require_external(args.workspace)
     server = ThreadingHTTPServer(('127.0.0.1', 4190), Handler)
-    server.workspace = args.workspace.resolve()
+    server.workspace = workspace
     server.serve_forever()

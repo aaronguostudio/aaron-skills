@@ -2,6 +2,15 @@
 
 Keep all work local unless the user explicitly authorizes publishing. Do not add a remote or push as part of tests.
 
+Benchmark boundaries are defined in `benchmarks/PRIVACY.md`. Public cases must be
+registered in `benchmarks/public-cases.json` and explicitly listed in
+`bundles/source.json`. Use the public blog, licensed open-source projects or entirely
+synthetic applications/data. Private project benchmarks are currently disabled;
+do not inspect or import a private project to populate this case library. Raw
+execution/evidence must stay outside every Git checkout. Before committing, run
+`python3 scripts/benchmark_privacy.py --staged`; enable the local hook with
+`git config --local core.hooksPath .githooks`. Do not bypass a failed boundary check.
+
 Keep skill entry points concise and host-neutral. Document runtime prerequisites explicitly. Platform-specific integrations are optional adapters and must not become a hidden requirement of the capture contract.
 
 Use the explicit Demo bundle manifest when adding runtime files. Tests must load and render from an exported installation to catch missing transitive imports. Run output and user configuration stay outside source control.

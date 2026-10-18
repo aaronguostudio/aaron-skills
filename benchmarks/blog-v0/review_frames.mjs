@@ -1,12 +1,22 @@
 // Run with the installed Bun. Extract independent review frames; do not alter deliverables.
-import {mkdirSync, writeFileSync} from 'node:fs';
-import {join, resolve} from 'node:path';
+import {existsSync, mkdirSync, realpathSync, writeFileSync} from 'node:fs';
+import {dirname, join, resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {execFileSync} from 'node:child_process';
 
 const [runtimeArg, runArg, outArg] = process.argv.slice(2);
 if (!runtimeArg || !runArg || !outArg) throw Error('usage: review_frames.mjs <installed-runtime> <passed-run> <new-review-dir>');
 const runtime = resolve(runtimeArg), run = resolve(runArg), out = resolve(outArg);
+for (const target of [run, out]) {
+  let parent = target;
+  while (!existsSync(parent)) parent = dirname(parent);
+  parent = realpathSync(parent);
+  while (true) {
+    if (existsSync(join(parent, '.git'))) throw Error('Raw benchmark evidence must be outside every Git repository');
+    if (dirname(parent) === parent) break;
+    parent = dirname(parent);
+  }
+}
 const {prepare} = await import(pathToFileURL(join(runtime, 'packages/demo/walkthrough/render-walkthrough.ts')).href);
 const {buildTimeline} = await import(pathToFileURL(join(runtime, 'packages/demo/remotion/src/projects/walkthrough-video/timeline.ts')).href);
 const prepared = prepare(run);

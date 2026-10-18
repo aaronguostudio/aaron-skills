@@ -8,9 +8,12 @@ from pathlib import Path
 import shutil
 import signal
 import subprocess
+import sys
 import time
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE.parent))
+from workspace import require_external
 
 
 def digest(path):
@@ -23,9 +26,7 @@ def main():
     parser.add_argument('--trial', type=int, choices=[1, 2, 3], required=True)
     parser.add_argument('--profile', choices=['strict', 'offline'], default='strict')
     args = parser.parse_args()
-    root = args.workspace.resolve()
-    if (root / '.git').exists() or root.is_relative_to(HERE.parents[1]):
-        parser.error('Use an external isolated workspace, never the source repository.')
+    root = require_external(args.workspace)
     trial = root / f'{"offline-" if args.profile == "offline" else ""}trial-{args.trial}'
     trial.mkdir(exist_ok=False)
     project = trial / 'project'

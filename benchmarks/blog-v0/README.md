@@ -135,6 +135,10 @@ session expiry or business-write recovery. Reserve separate cases for:
 2. A seeded write-capable fixture with independent save/approve counters, especially
    expiry after a successful write and confirmation that no write repeats.
 
+Under the current [public/private boundary](../PRIVACY.md), these future cases must
+use wholly fictional test applications, accounts and data. Private project cases
+are disabled. Their inclusion here is planning, not a new benchmark execution.
+
 For login cases, separate human sign-in wait from agent execution time; reset account
 and session state between trials. A session file is never an artifact to share. The
 write case must compare independent application counters before and after a

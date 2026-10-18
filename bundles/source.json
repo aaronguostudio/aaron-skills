@@ -171,6 +171,13 @@
     "benchmarks/blog-v0/score.py",
     "benchmarks/blog-v0/tasks.md",
     "benchmarks/blog-v0/test_offline_proxy.py",
-    "benchmarks/blog-v0/test_score.py"
+    "benchmarks/blog-v0/test_score.py",
+    ".githooks/pre-commit",
+    "scripts/benchmark_privacy.py",
+    "scripts/test_benchmark_privacy.py",
+    "benchmarks/PRIVACY.md",
+    "benchmarks/public-cases.json",
+    "benchmarks/workspace.py",
+    "benchmarks/test_workspace.py"
   ]
 }
