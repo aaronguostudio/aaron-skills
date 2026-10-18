@@ -13,3 +13,8 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 The user selected the first homepage mock on 2026-10-17: warm ivory, copper/coral ribbons, floating ceramic engineering workstations, pale-blue glass, generous editorial typography. Preserve that source rather than substituting a generic SaaS layout. Show the five-stage workflow while labelling Understand/Build/Verify as future direction; only the three Demo skills are available today. Default English with a working Chinese switch.
 
 The user accepted the implemented preview and authorized committing, merging and deploying it to Vercel, with `skills.aaronguo.com` as the intended custom domain. Production must use the connected repository's committed `main` revision through Git deployment. Keep the website independent of the Demo runtime.
+
+The user requested lightweight image delivery and richer bilingual READMEs using
+the existing website art. Preserve the accepted artwork, use responsive WebP
+variants and keep README image payload small. Published illustration URLs must
+remain valid when regenerating content-hashed assets.

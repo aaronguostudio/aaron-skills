@@ -1,0 +1,181 @@
+{
+  "workshop-hero": {
+    "src": "/art/optimized/workshop-hero-960.b8eb9ef0636d.webp",
+    "srcSet": "/art/optimized/workshop-hero-480.5e80a9493704.webp 480w, /art/optimized/workshop-hero-768.16aef54b89d8.webp 768w, /art/optimized/workshop-hero-960.b8eb9ef0636d.webp 960w, /art/optimized/workshop-hero-1254.3fba5c45c26b.webp 1254w",
+    "sizes": "(max-width: 686px) calc(100vw - 6px), (max-width: 900px) 680px, (max-width: 1199px) 640px, 850px",
+    "variants": [
+      {
+        "width": 480,
+        "src": "/art/optimized/workshop-hero-480.5e80a9493704.webp",
+        "bytes": 63478
+      },
+      {
+        "width": 768,
+        "src": "/art/optimized/workshop-hero-768.16aef54b89d8.webp",
+        "bytes": 129196
+      },
+      {
+        "width": 960,
+        "src": "/art/optimized/workshop-hero-960.b8eb9ef0636d.webp",
+        "bytes": 183994
+      },
+      {
+        "width": 1254,
+        "src": "/art/optimized/workshop-hero-1254.3fba5c45c26b.webp",
+        "bytes": 312984
+      }
+    ]
+  },
+  "demo-capture": {
+    "src": "/art/optimized/demo-capture-640.b4e7d1383115.webp",
+    "srcSet": "/art/optimized/demo-capture-192.505766a63ff9.webp 192w, /art/optimized/demo-capture-384.f4d6e043ee50.webp 384w, /art/optimized/demo-capture-640.b4e7d1383115.webp 640w, /art/optimized/demo-capture-960.f0aa5badb2ec.webp 960w, /art/optimized/demo-capture-1254.da6c8804023b.webp 1254w",
+    "sizes": "(max-width: 509px) calc(100vw - 44px), (max-width: 900px) 465px, (max-width: 1199px) 360px, 520px",
+    "variants": [
+      {
+        "width": 192,
+        "src": "/art/optimized/demo-capture-192.505766a63ff9.webp",
+        "bytes": 12960
+      },
+      {
+        "width": 384,
+        "src": "/art/optimized/demo-capture-384.f4d6e043ee50.webp",
+        "bytes": 35928
+      },
+      {
+        "width": 640,
+        "src": "/art/optimized/demo-capture-640.b4e7d1383115.webp",
+        "bytes": 76930
+      },
+      {
+        "width": 960,
+        "src": "/art/optimized/demo-capture-960.f0aa5badb2ec.webp",
+        "bytes": 142350
+      },
+      {
+        "width": 1254,
+        "src": "/art/optimized/demo-capture-1254.da6c8804023b.webp",
+        "bytes": 250110
+      }
+    ]
+  },
+  "walkthrough-video": {
+    "src": "/art/optimized/walkthrough-video-640.0b836af2502c.webp",
+    "srcSet": "/art/optimized/walkthrough-video-192.96ac2c291148.webp 192w, /art/optimized/walkthrough-video-384.46860ec7a03c.webp 384w, /art/optimized/walkthrough-video-640.0b836af2502c.webp 640w, /art/optimized/walkthrough-video-960.76545d509a55.webp 960w, /art/optimized/walkthrough-video-1254.ffe0e5ffce27.webp 1254w",
+    "sizes": "(max-width: 509px) calc(100vw - 44px), (max-width: 900px) 465px, (max-width: 1199px) 360px, 520px",
+    "variants": [
+      {
+        "width": 192,
+        "src": "/art/optimized/walkthrough-video-192.96ac2c291148.webp",
+        "bytes": 9426
+      },
+      {
+        "width": 384,
+        "src": "/art/optimized/walkthrough-video-384.46860ec7a03c.webp",
+        "bytes": 25744
+      },
+      {
+        "width": 640,
+        "src": "/art/optimized/walkthrough-video-640.0b836af2502c.webp",
+        "bytes": 53460
+      },
+      {
+        "width": 960,
+        "src": "/art/optimized/walkthrough-video-960.76545d509a55.webp",
+        "bytes": 97536
+      },
+      {
+        "width": 1254,
+        "src": "/art/optimized/walkthrough-video-1254.ffe0e5ffce27.webp",
+        "bytes": 176860
+      }
+    ]
+  },
+  "paste-ready-update": {
+    "src": "/art/optimized/paste-ready-update-640.62ba99c88163.webp",
+    "srcSet": "/art/optimized/paste-ready-update-192.b1ec9f161ef3.webp 192w, /art/optimized/paste-ready-update-384.c3bf816ed3ae.webp 384w, /art/optimized/paste-ready-update-640.62ba99c88163.webp 640w, /art/optimized/paste-ready-update-960.e91ed68ec529.webp 960w, /art/optimized/paste-ready-update-1254.e47cfae3baab.webp 1254w",
+    "sizes": "(max-width: 509px) calc(100vw - 44px), (max-width: 900px) 465px, (max-width: 1199px) 360px, 520px",
+    "variants": [
+      {
+        "width": 192,
+        "src": "/art/optimized/paste-ready-update-192.b1ec9f161ef3.webp",
+        "bytes": 9052
+      },
+      {
+        "width": 384,
+        "src": "/art/optimized/paste-ready-update-384.c3bf816ed3ae.webp",
+        "bytes": 24270
+      },
+      {
+        "width": 640,
+        "src": "/art/optimized/paste-ready-update-640.62ba99c88163.webp",
+        "bytes": 50526
+      },
+      {
+        "width": 960,
+        "src": "/art/optimized/paste-ready-update-960.e91ed68ec529.webp",
+        "bytes": 90626
+      },
+      {
+        "width": 1254,
+        "src": "/art/optimized/paste-ready-update-1254.e47cfae3baab.webp",
+        "bytes": 159554
+      }
+    ]
+  },
+  "workflow-understand": {
+    "src": "/art/optimized/workflow-understand-384.cc311fefc454.webp",
+    "srcSet": "/art/optimized/workflow-understand-192.d95ab9ce83a0.webp 192w, /art/optimized/workflow-understand-384.cc311fefc454.webp 384w",
+    "sizes": "(max-width: 900px) 160px, 200px",
+    "variants": [
+      {
+        "width": 192,
+        "src": "/art/optimized/workflow-understand-192.d95ab9ce83a0.webp",
+        "bytes": 6394
+      },
+      {
+        "width": 384,
+        "src": "/art/optimized/workflow-understand-384.cc311fefc454.webp",
+        "bytes": 16716
+      }
+    ]
+  },
+  "workflow-build": {
+    "src": "/art/optimized/workflow-build-384.2b9b9873bc95.webp",
+    "srcSet": "/art/optimized/workflow-build-192.18d72309f2e9.webp 192w, /art/optimized/workflow-build-384.2b9b9873bc95.webp 384w",
+    "sizes": "(max-width: 900px) 160px, 200px",
+    "variants": [
+      {
+        "width": 192,
+        "src": "/art/optimized/workflow-build-192.18d72309f2e9.webp",
+        "bytes": 4504
+      },
+      {
+        "width": 384,
+        "src": "/art/optimized/workflow-build-384.2b9b9873bc95.webp",
+        "bytes": 11574
+      }
+    ]
+  },
+  "workflow-verify": {
+    "src": "/art/optimized/workflow-verify-384.22a8508197c6.webp",
+    "srcSet": "/art/optimized/workflow-verify-192.ce0c6a58ebc4.webp 192w, /art/optimized/workflow-verify-384.22a8508197c6.webp 384w",
+    "sizes": "(max-width: 900px) 160px, 200px",
+    "variants": [
+      {
+        "width": 192,
+        "src": "/art/optimized/workflow-verify-192.ce0c6a58ebc4.webp",
+        "bytes": 5072
+      },
+      {
+        "width": 384,
+        "src": "/art/optimized/workflow-verify-384.22a8508197c6.webp",
+        "bytes": 13236
+      }
+    ]
+  },
+  "readme": {
+    "width": 1024,
+    "src": "/art/optimized/readme-overview-1024.034b816d9e5b.webp",
+    "bytes": 59598
+  }
+}

@@ -1,6 +1,6 @@
 # Aaron Skills
 
-[English](README.md) | [简体中文](README.zh-CN.md)
+[English](README.md) | [简体中文](README.zh-CN.md) | [Website](https://skills.aaronguo.com/)
 
 Reusable agent skills and executable tools for solving software problems with
 the care of a senior engineer—from understanding an unfamiliar project to
@@ -11,6 +11,12 @@ collection. The aim is to make it easier to pick up a project, understand the
 problem, make a focused change, verify the behavior, and explain the result.
 Each skill captures a repeatable part of that process; related skills can work
 together through shared tools and documented artifacts.
+
+<p align="center">
+  <a href="https://skills.aaronguo.com/">
+    <img src="https://skills.aaronguo.com/art/optimized/readme-overview-1024.034b816d9e5b.webp" width="900" alt="The Aaron Skills workshop: from an unfamiliar project to a clear handoff" />
+  </a>
+</p>
 
 ## The bigger picture
 
@@ -39,11 +45,10 @@ released skills here.
 Turn a working web feature into a guided video, screenshots, and a copyable
 update. The Demo bundle connects three skills with a shared local toolchain:
 
-| Skill | Role |
-| --- | --- |
-| [Demo Capture](skills/demo-capture/SKILL.md) | Record the real application flow and save screenshots and checked result evidence. |
-| [Walkthrough Video](skills/walkthrough-video/SKILL.md) | Render a passed capture into a guided MP4; refine captions, highlights, and optional narration. |
-| [Paste Ready Update](skills/paste-ready-update/SKILL.md) | Prepare a reviewable update page with text, screenshots, and an optional video. |
+| [Demo Capture](skills/demo-capture/SKILL.md) | [Walkthrough Video](skills/walkthrough-video/SKILL.md) | [Paste Ready Update](skills/paste-ready-update/SKILL.md) |
+| :---: | :---: | :---: |
+| <img src="https://skills.aaronguo.com/art/optimized/demo-capture-384.f4d6e043ee50.webp" width="180" alt="Camera and screenshot workshop" /> | <img src="https://skills.aaronguo.com/art/optimized/walkthrough-video-384.46860ec7a03c.webp" width="180" alt="Film and guided-video workshop" /> | <img src="https://skills.aaronguo.com/art/optimized/paste-ready-update-384.c3bf816ed3ae.webp" width="180" alt="Document and update workshop" /> |
+| **Record the real flow.** Save screenshots and checked result evidence. | **Make the result easy to follow.** Turn a passed capture into a guided MP4. | **Bring the work into the conversation.** Prepare text, screenshots and optional video for review and sharing. |
 
 For example, after changing a feature in a project you have taken over, ask your
 agent to show the starting state, walk through the change, check the visible

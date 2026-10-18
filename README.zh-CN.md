@@ -1,10 +1,16 @@
 # Aaron Skills
 
-[English](README.md) | [简体中文](README.zh-CN.md)
+[English](README.md) | [简体中文](README.zh-CN.md) | [官网](https://skills.aaronguo.com/?lang=zh)
 
 把资深工程师解决软件问题的工作方法，沉淀成可复用的 Agent Skills 和可执行工具：从理解一个陌生项目，到交付经过验证、别人看得见也用得上的成果。
 
 Aaron Skills 将工作流与执行工作流所需的工具放在同一个集合里。目标是让你更容易接手一个项目、理解问题、完成有明确范围的改动、验证实际行为，再把结果讲清楚。每个 Skill 承载其中一段可重复的方法；相关的 Skills 通过共享工具和明确的产物格式协作。
+
+<p align="center">
+  <a href="https://skills.aaronguo.com/?lang=zh">
+    <img src="https://skills.aaronguo.com/art/optimized/readme-overview-1024.034b816d9e5b.webp" width="900" alt="Aaron Skills 官网：从陌生项目到清楚交付的悬浮工作室" />
+  </a>
+</p>
 
 ## 整体方向
 
@@ -26,11 +32,10 @@ Aaron Skills 将工作流与执行工作流所需的工具放在同一个集合�
 
 将一个已经能运行的 Web 功能，变成有引导的视频、截图和可复制的更新说明。Demo 通过一套共享的本地工具，串起三个 Skills：
 
-| Skill | 作用 |
-| --- | --- |
-| [Demo Capture](skills/demo-capture/SKILL.md) | 录制真实应用流程，保存截图和经过断言检查的结果证据。 |
-| [Walkthrough Video](skills/walkthrough-video/SKILL.md) | 将通过检查的录制渲染为带引导的 MP4，并调整字幕、高亮和可选旁白。 |
-| [Paste Ready Update](skills/paste-ready-update/SKILL.md) | 将文字、截图和可选视频整理成供你审阅的更新页面。 |
+| [Demo Capture](skills/demo-capture/SKILL.md) | [Walkthrough Video](skills/walkthrough-video/SKILL.md) | [Paste Ready Update](skills/paste-ready-update/SKILL.md) |
+| :---: | :---: | :---: |
+| <img src="https://skills.aaronguo.com/art/optimized/demo-capture-384.f4d6e043ee50.webp" width="180" alt="相机与截图工作台" /> | <img src="https://skills.aaronguo.com/art/optimized/walkthrough-video-384.46860ec7a03c.webp" width="180" alt="胶片与演示视频工作台" /> | <img src="https://skills.aaronguo.com/art/optimized/paste-ready-update-384.c3bf816ed3ae.webp" width="180" alt="文档与更新说明工作台" /> |
+| **录制真实流程。** 保存截图与经过检查的结果证据。 | **让结果容易看懂。** 将通过检查的录制制作成带引导的 MP4。 | **把工作带进对话。** 整理文字、截图与可选视频，供你审阅和分享。 |
 
 例如，你接手一个项目并完成某个功能改动后，可以让 Agent 展示起始状态、操作变化后的流程、检查界面结果，再准备给客户或团队的更新说明。Demo 提供的就是这一段能力。下面的安装步骤针对 Demo；未来其他能力组合可以有各自的依赖和安装路径。
 
