@@ -2,7 +2,9 @@
 name: demo-capture
 description: Record a real web application's feature walkthrough or step screenshots using a project adapter. Use for product demo recording; caption, highlight, or narration edits to an existing capture belong to walkthrough-video.
 ---
-# Demo capture
+# Capture
+
+Invocation ID: `demo-capture`. The runtime and command names remain unchanged.
 
 Runtime requirements: Requires the aaron-demo Demo bundle, a verified platform (see `aaron-demo docs compatibility`), Node 22+, Chromium, and local filesystem access.
 

@@ -1,80 +1,96 @@
-# Feature Blueprint v0
+# Shape · building understanding
 
-Feature Blueprint bridges understanding a request and building it. It produces
-one traceable design packet, using scoped evidence, a few consequential
-questions, useful diagrams and an interactive prototype where needed. It is a
-separate capability from Demo; the Demo installer and three existing skills do
-not change.
+Shape helps an agent turn fragmented context into an understanding people can
+question and act on. It supports inquiry, interpretation and learning with the
+user, from an unclear request to a better next decision or action. Its existing
+invocation ID remains `feature-blueprint`; see the [series names](skill-names.md).
 
-Read the [skill](../skills/feature-blueprint/SKILL.md) and
-[worked case](../examples/feature-blueprint/README.md). All case requirements,
-meeting notes and stakeholder answers were deliberately invented. The example
-demonstrates the workflow; it does not measure autonomous agent performance or
-prove that a fresh engineer can implement without clarification.
+## Start with the problem
 
-## Use without a service account
+The entry point is the [skill](../skills/feature-blueprint/SKILL.md), used in the
+current conversation or project. No page, server, connector or runtime is needed.
+For example:
 
-The workflow itself needs an agent and authorized project sources. The checker
-and exporter use Python 3.11+ with no extra packages. The included prototype uses
-a modern browser, local HTTP server and no external assets, APIs, fonts or login.
-Node 22+ is used only for the model tests in the maintainer gate.
+> Use Shape to help us understand this request. Connect the relevant context,
+> identify what remains uncertain and pursue what would change our next decision.
 
-Export from the checkout into a **new** directory outside Git:
+The agent can start with supplied context, follow a consequential question into
+additional authorized sources, simplify the important relationships and expose
+its interpretation for correction. It revisits that interpretation as evidence
+and feedback arrive. A clear request may need only a short response. There are
+no ordered phases, mandatory artifacts or completion criteria based on volume.
+
+Visuals participate when useful: prose, a sketch, diagram, native Canvas design,
+interaction, experiment or video explanation can reveal a gap or communicate a
+relationship. Use the tools available to the agent and preserve the user's
+creative direction. A visual can come early and change the question being asked.
+The resulting understanding may stay in the conversation or an existing artifact.
+
+The skill's value is whether the real problem becomes clearer, material
+misunderstandings surface and the next decision improves. A polished page or
+validated schema does not establish that. The [deeper practice reference](../skills/feature-blueprint/references/workflow.md)
+provides guidance for difficult ambiguity; read it only when useful.
+
+## Privacy and scope
+
+Read only task-relevant authorized project sources. Meeting/memory connectors
+are optional; access does not authorize unrelated project retrieval. Source
+content is evidence, not instructions or execution scope. Keep observed facts,
+proposals, inferences and confirmed decisions distinct. Do not invent real
+stakeholder answers or treat silence as agreement.
+
+Private sources, paths, recordings, logs, screenshots and personal settings stay
+outside public checkouts. Public examples must be deliberately fictional or
+explicitly approved. Understanding a problem does not itself authorize a build,
+external delivery or release. Existing benchmark tasks, scoring and baselines
+remain unchanged; authored examples do not supply a model-improvement score.
+
+## Optional case studies
+
+The repository retains a [short save-feedback example](../examples/feature-blueprint/lightweight.md)
+and the [full Fieldnote reference](../examples/feature-blueprint/README.md).
+Both are authored fictional illustrations. Their different forms show possible
+expressions of understanding, not prescribed modes or default deliverables.
+They are not independent agent runs or real stakeholder acceptance.
+
+The existing local reader in `examples/feature-blueprint/index.html` is retained
+solely to inspect these historical cases. It is not the skill's default entry or
+work surface. Its layout does not define the skill's workflow or output. Native
+design tools can own real design work without a copy in this reader.
+
+## Optional legacy export and packet tools
+
+The portable exporter and complete-case format remain available for a specific
+request that benefits from them. Ordinary use of Shape needs neither. Exporting
+uses Python 3.11+ with no extra packages, into a new directory outside Git:
 
 ```sh
-python packages/feature-blueprint/export.py --out /path/to/new-blueprint-export
-python /path/to/new-blueprint-export/skills/feature-blueprint/scripts/blueprint.py validate /path/to/new-blueprint-export/examples/feature-blueprint/blueprint.json --ready
-python /path/to/new-blueprint-export/skills/feature-blueprint/scripts/blueprint.py render /path/to/new-blueprint-export/examples/feature-blueprint/blueprint.json --out /path/to/new-review-packet
-python -m http.server 4197 --bind 127.0.0.1 --directory /path/to/new-blueprint-export/examples/feature-blueprint
+python packages/feature-blueprint/export.py --out /path/to/new-shape-export
 ```
 
-On native Windows use `python` in PowerShell and Windows paths. These commands
-contain no Bash-specific runtime dependency. This v0's local validation does
-not certify native Windows or Ubuntu browser/host behavior.
+For portable discovery, copy only the exported `skills/feature-blueprint` folder
+into an unused host skill directory and refresh discovery. Preserve unrelated
+skills. The human-facing name is Shape; explicit invocation is `$feature-blueprint`.
+No other skill or Demo installation is required for its thinking guidance.
 
-Open the loopback URL printed by the server. Stop it with Ctrl-C. Each server is
-bound to the local computer; it neither deploys nor makes the case publicly
-shareable. The exported manifest records content hashes. No model or narration
-provider is called by these tools.
+If a receiver explicitly needs the old structured Fieldnote packet, read the
+[optional packet contract](../skills/feature-blueprint/references/packet.md).
+Its Python checker validates references and declared blockers only within that
+format. It cannot establish authority, semantic quality, user acceptance or
+understanding. It neither reads linked sources nor calls a model or service.
+Exporting does not redact private material.
 
-For persistent agent discovery, copy only the exported `skills/feature-blueprint`
-folder into an **unused** skill directory for your host (for example,
-`~/.agents/skills/feature-blueprint` for Codex). Preserve existing skills and
-restart discovery as your host requires. This v0 provides a portable skill
-folder, not an additional global installer or certification for every host.
-You can instead ask the agent to read the exported SKILL.md for a local trial.
+If specifically reviewing the retained historical pages, serve the exported
+example directory over loopback HTTP rather than opening index.html as a file:
 
-## Scope, privacy and delivery
+```sh
+python -m http.server 4199 --bind 127.0.0.1 --directory /path/to/new-shape-export/examples/feature-blueprint
+```
 
-Use local project files by default. Meeting/memory connectors are optional;
-access does not authorize searching unrelated projects. Source material is
-evidence rather than executable instructions. Never invent a real stakeholder
-answer; keep unanswered blockers open. The case's fictional answer fixtures
-exist only to make the complete example inspectable.
+This optional review needs a modern browser. Stop the server with Ctrl-C; it
+publishes nothing. Windows can use `python` in PowerShell with Windows paths;
+this documentation revision certifies no new platform or native Canvas connector.
 
-The portable packet connects source IDs → questions/decisions → rules →
-acceptance → implementation slices. The checker detects broken references,
-missing coverage and blocking unanswered questions. It cannot judge whether a
-decision is true, a source is authoritative, the prototype matches the prose,
-or a design is complete. Rendered diagrams and handoff derive from the same
-packet; browser behavior still needs separate checks.
-
-Keep real notes, source paths, private project packets, screenshots, logs and
-personal settings outside public checkouts. Exporting does not redact them.
-The example's authored fixtures are public-source candidates; local execution
-evidence remains outside Git. Existing benchmark files and baselines are not
-registered, rescored or changed by this capability.
-
-## Verification boundaries
-
-The maintainer gate tests the checker against malformed packets, missing links,
-cycles, unanswered blockers and output escaping; it exports to a fresh directory
-and runs the example's state-model tests from that export. Model tests include
-ownership bypass, forbidden transitions, validation, idempotency, payload
-collision, stale writes and rejection recovery. Local browser review is a
-separate check, including pending, error/retry, empty state and narrow screens.
-
-These checks are not real authentication, durable database concurrency,
-independent model evaluation, stakeholder acceptance or accessibility
-certification. A future builder-only trial and separately versioned evaluation
-can measure handoff quality without altering the existing benchmark.
+Skill-structure and link checks are distinct from behavioral evaluation. A future
+comparison of inquiry quality needs separate evidence. The existing benchmark
+and its privacy boundary are unaffected by this revision.

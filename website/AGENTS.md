@@ -18,3 +18,9 @@ The user requested lightweight image delivery and richer bilingual READMEs using
 the existing website art. Preserve the accepted artwork, use responsive WebP
 variants and keep README image payload small. Published illustration URLs must
 remain valid when regenerating content-hashed assets.
+
+The local naming preview uses Capture, Film and Share for the
+three existing Demo skills. Keep their existing slugs, documentation paths,
+artwork names and published image URLs intact. Shape (invocation ID
+feature-blueprint) is a separate source-checkout preview; this naming pass does
+not add it to the released Demo bundle or authorize a production release.

@@ -101,3 +101,18 @@ test('packet matches model states/transitions and all rule IDs exist',async()=>{
   for(const transition of packet.transitions)assert.ok(actual.some(([a,b])=>a===transition.from&&b===transition.to));
   assert.deepEqual(packet.rules.map(r=>r.id),['R1','R2','R3','R4','R5','R6','R7']);
 });
+
+test('small-case navigation excludes unrelated full-case views; full reference remains reachable',async()=>{
+  const {navigationFor,fieldnoteViews,caseStudies}=await import(pathToFileURL(path.join(example,'cases.mjs')).href);
+  for(const page of ['compare','lightweight']){
+    const links=navigationFor(page).map(([id])=>id);
+    assert.ok(links.includes('compare')&&links.includes('lightweight'));
+    assert.equal(links.some(id=>['workflow','model','prototype','handoff'].includes(id)),false);
+  }
+  for(const [page] of fieldnoteViews){
+    const links=navigationFor(page).map(([id])=>id);
+    assert.ok(links.includes('compare'));
+    assert.ok(links.includes('prototype')&&links.includes('handoff'));
+  }
+  for(const study of caseStudies) await readFile(path.join(example,study.source),'utf8');
+});

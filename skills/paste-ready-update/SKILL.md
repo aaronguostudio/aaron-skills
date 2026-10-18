@@ -2,7 +2,9 @@
 name: paste-ready-update
 description: Prepare a customer or teammate update, release note, handoff, or how-to as a copyable HTML page with screenshots. Use for paste-ready communication; record a demo only when the user requests or accepts it.
 ---
-# Paste ready update
+# Share
+
+Invocation ID: `paste-ready-update`. The runtime and command names remain unchanged.
 
 Runtime requirements: Requires the aaron-demo Demo bundle, a verified platform (see `aaron-demo docs compatibility`), Python 3.11+, and Pillow. The generated page is a local HTML file.
 

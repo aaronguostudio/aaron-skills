@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export only the allowlisted Feature Blueprint skill and fictional example."""
+"""Export only the allowlisted Shape skill and fictional examples."""
 import argparse
 import hashlib
 import json
@@ -43,6 +43,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
     try:
         result = export(args.out)
-        print(f'Exported {len(result["files"])} files; Feature Blueprint {result["version"]}. No registration or publishing performed.')
+        print(f'Exported {len(result["files"])} files; Shape {result["version"]} (feature-blueprint). No registration or publishing performed.')
     except (OSError, ValueError) as error:
         sys.exit(f'blueprint-export: {error}')

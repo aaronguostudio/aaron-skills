@@ -2,7 +2,9 @@
 name: walkthrough-video
 description: Draft walkthrough scripts from a brief or existing capture, and render passed application captures into guided MP4s with captions, highlights, chapters, and optional narration. Reuse the capture for presentation-only revisions.
 ---
-# Walkthrough video
+# Film
+
+Invocation ID: `walkthrough-video`. The runtime and command names remain unchanged.
 
 Runtime requirements: Requires the aaron-demo Demo bundle, a verified platform (see `aaron-demo docs compatibility`), FFmpeg, and the installed Bun and Remotion runtime. Generated provider narration needs a user-owned account; silent and imported-audio rendering do not.
 

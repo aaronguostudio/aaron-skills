@@ -24,6 +24,10 @@
     "examples/feature-blueprint/sources/02-meeting.md",
     "examples/feature-blueprint/sources/03-answers-round-1.md",
     "examples/feature-blueprint/sources/04-answers-round-2.md",
-    "examples/feature-blueprint/styles.css"
+    "examples/feature-blueprint/styles.css",
+    "examples/feature-blueprint/lightweight.md",
+    "examples/feature-blueprint/cases.mjs",
+    "examples/feature-blueprint/save-feedback.mjs",
+    "docs/skill-names.md"
   ]
 }

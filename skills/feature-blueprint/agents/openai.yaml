@@ -1,4 +1,4 @@
 interface:
-  display_name: "Feature Blueprint"
-  short_description: "Turn requirements into a buildable design packet"
-  default_prompt: "Use $feature-blueprint to clarify this request and produce a traceable design and implementation handoff."
+  display_name: "Shape"
+  short_description: "Build understanding and move the thinking forward"
+  default_prompt: "Use $feature-blueprint to connect the relevant context, question what matters and help us reach a clear understanding of this request."

@@ -45,7 +45,7 @@ const copy = {
         intro:
           "Make the result easy to follow. Add captions and highlights to a passed capture, then refine the presentation without repeating business actions.",
         input:
-          "A passed Demo Capture recording with its saved result evidence.",
+          "A passed Capture recording with its saved result evidence.",
         output:
           "A guided MP4 and review stills. Silent by default, with optional narration.",
       },
@@ -99,7 +99,7 @@ const copy = {
       {
         intro:
           "让结果更容易理解。为通过检查的录制添加字幕和高亮，修改呈现时不必重复执行业务操作。",
-        input: "Demo Capture 已通过检查的录制与保存的结果证据。",
+        input: "Capture 已通过检查的录制与保存的结果证据。",
         output: "有引导的 MP4 与供审阅的静帧。默认静音，也可选配旁白。",
       },
       {
@@ -117,19 +117,19 @@ const copy = {
 };
 const skills = [
   {
-    name: "Demo Capture",
+    name: "Capture",
     slug: "demo-capture",
     image: "demo-capture",
     alt: "A miniature camera and glass screenshots on a ceramic platform",
   },
   {
-    name: "Walkthrough Video",
+    name: "Film",
     slug: "walkthrough-video",
     image: "walkthrough-video",
     alt: "A copper film reel and a ribbon of walkthrough frames",
   },
   {
-    name: "Paste Ready Update",
+    name: "Share",
     slug: "paste-ready-update",
     image: "paste-ready-update",
     alt: "An upright update document with screenshots, copper clips and plants",

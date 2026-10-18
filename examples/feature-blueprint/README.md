@@ -1,8 +1,15 @@
-# Fieldnote: a complete fictional Feature Blueprint case
+# Fieldnote: the complete Shape reference
 
 Fieldnote Studio and every person, meeting, requirement and answer here are
 invented. No private project material was used. This is an authored worked
 example, not an agent benchmark or a claim of real product acceptance.
+
+This comprehensive case is retained as one useful response to a request with
+several interacting uncertainties. It is not a required output checklist.
+Compare it with the [small save-feedback request](lightweight.md), which uses a
+short response instead of the packet, diagrams and full application prototype.
+The local [reader](index.html) opens on that comparison. Actual design work can
+remain in the agent's available native Canvas/design tool or existing project.
 
 ## Follow the case
 
@@ -20,7 +27,7 @@ example, not an agent benchmark or a claim of real product acceptance.
    [local instructions](../../docs/feature-blueprint.md). The generated handoff,
    flowchart and entity model are derived from this packet without copying a
    real transcript into the repository.
-6. Open the local [interactive case](index.html) via HTTP, then use its six views
+6. Open the local [interactive case](index.html) via HTTP, choose the full Fieldnote reference, then use its six views
    to trace the evidence, clarification, workflow, model, prototype and handoff.
 
 The [model](model.mjs) owns simulated transitions. The UI reads the packet for the

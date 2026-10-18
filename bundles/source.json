@@ -208,6 +208,10 @@
     "examples/feature-blueprint/sources/04-answers-round-2.md",
     "examples/feature-blueprint/styles.css",
     "packages/feature-blueprint/model.test.mjs",
-    "packages/feature-blueprint/test_blueprint.py"
+    "packages/feature-blueprint/test_blueprint.py",
+    "examples/feature-blueprint/lightweight.md",
+    "examples/feature-blueprint/cases.mjs",
+    "examples/feature-blueprint/save-feedback.mjs",
+    "docs/skill-names.md"
   ]
 }

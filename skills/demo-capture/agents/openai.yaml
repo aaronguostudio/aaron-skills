@@ -1,4 +1,4 @@
 interface:
-  display_name: "Demo Capture"
+  display_name: "Capture"
   short_description: "Record real web feature walkthroughs"
   default_prompt: "Use $demo-capture to record a short walkthrough of this feature in the local environment."
