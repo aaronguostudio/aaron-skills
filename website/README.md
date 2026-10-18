@@ -15,6 +15,8 @@ emits `dist/server` and `dist/.openai`; it does not publish anything. The
 Vercel project uses `website` as its root and `dist/client` as its static
 output, with build settings recorded in `vercel.json`. Production must come from a Git-triggered committed `main` revision,
 following the repository deployment policy.
+The Vite configuration refuses Vercel production builds without a `main` Git
+commit, including accidental first-deployment classification of a feature branch.
 
 The build emits `release.json` with Vercel's Git commit and branch, so the
 production domain can be checked against the deployed revision. Local builds
