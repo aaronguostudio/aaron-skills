@@ -2,9 +2,9 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md) | [Website](https://skills.aaronguo.com/)
 
-Reusable agent skills and executable tools for solving software problems with
-the care of a senior engineer—from understanding an unfamiliar project to
-delivering a verified result that others can see and use.
+Reusable skills and executable tools for working with AI agents—from
+understanding an unfamiliar project to delivering a checked result that others
+can see and use. **Demo is available today: Capture → Film → Share.**
 
 Aaron Skills brings working methods and the tools that carry them out into one
 collection. The aim is to make it easier to pick up a project, understand the
@@ -14,7 +14,7 @@ together through shared tools and documented artifacts.
 
 <p align="center">
   <a href="https://skills.aaronguo.com/">
-    <img src="https://skills.aaronguo.com/art/optimized/readme-overview-1024.034b816d9e5b.webp" width="900" alt="The Aaron Skills workshop: from an unfamiliar project to a clear handoff" />
+    <img src="https://skills.aaronguo.com/art/optimized/workflow-overview.07ee3e92c535.webp" width="760" alt="Aaron Skills workflow: Capture records the real flow, Film creates a guided video, and Share prepares a clear update" />
   </a>
 </p>
 
@@ -60,7 +60,6 @@ update. The Demo bundle connects three skills with a shared local toolchain:
 
 | [Capture](skills/demo-capture/SKILL.md) | [Film](skills/walkthrough-video/SKILL.md) | [Share](skills/paste-ready-update/SKILL.md) |
 | :---: | :---: | :---: |
-| <img src="https://skills.aaronguo.com/art/optimized/demo-capture-384.f4d6e043ee50.webp" width="180" alt="Camera and screenshot workshop" /> | <img src="https://skills.aaronguo.com/art/optimized/walkthrough-video-384.46860ec7a03c.webp" width="180" alt="Film and guided-video workshop" /> | <img src="https://skills.aaronguo.com/art/optimized/paste-ready-update-384.c3bf816ed3ae.webp" width="180" alt="Document and update workshop" /> |
 | **Record the real flow.** Save screenshots and checked result evidence. | **Make the result easy to follow.** Turn a passed capture into a guided MP4. | **Bring the work into the conversation.** Prepare text, screenshots and optional video for review and sharing. |
 
 For example, after changing a feature in a project you have taken over, ask your
@@ -68,6 +67,24 @@ agent to show the starting state, walk through the change, check the visible
 result, and prepare an update for the customer or team. Demo supplies this part
 of the workflow. The following setup installs the Demo bundle; future bundles
 can have their own dependencies and installation paths.
+
+## See what it produces
+
+[Meet Aaron Skills](https://skills.aaronguo.com/) in Aaron's short, conversational
+welcome, then compare [eight narrated examples](https://skills.aaronguo.com/#examples).
+Each case reuses one passed recording. The website also includes an expandable,
+fictional script example to show how a brief becomes an explanation.
+
+| Fictional signed-in product | Public blog · No sign-in |
+| :--- | :--- |
+| [<img src="https://skills.aaronguo.com/art/optimized/ledgerlane-example.5a31757c6ee6.webp" width="360" alt="Ledgerlane product-demo cover in the Aaron Skills blue and white identity" />](https://skills.aaronguo.com/#example-ledgerlane) | [<img src="https://skills.aaronguo.com/art/optimized/blog-example.02465ed700ac.webp" width="360" alt="Builder Notes content-walkthrough cover in the Aaron Skills blue and white identity" />](https://skills.aaronguo.com/#example-blog) |
+| **Two invoices. One checked decision.** Six explanations: Official Product Demo, Quick Demo, Release Update, Stakeholder Walkthrough, Task Tutorial and Training Lesson. | **A reading journey through Builder Notes.** Two content walkthroughs: Task Tutorial and Stakeholder Walkthrough. |
+
+These are curated showcases, separate from the benchmark. The current eight cuts
+use the Professional visual template so their explanations are easy to compare;
+voice, visual template and communication goal are independent choices.
+Read the [reusable recipes](https://github.com/aaronguostudio/aaron-skills/blob/main/docs/video-showcases.md).
+
 
 ## Install
 
@@ -137,14 +154,17 @@ aaron-demo page /path/to/message.md --out /path/to/message.html
 
 Checked result fields use exact assertions and saved named highlight geometry.
 Presentation-only revisions preserve the source recording and avoid replaying
-business writes. Rendering is silent by default; optional narration uses your
-own ElevenLabs account. `render --dry-run` plans without creating files or
-calling a provider. See [presentation revisions](docs/presentation-revisions.md)
-and [narration](docs/narration.md).
+business writes. Choose a visual template—Minimal, Professional or Showcase—and
+an explanation style independently. Film can draft a script from your brief and
+the recorded evidence; you do not need to arrive with a finished script.
 
-See [short video examples](https://skills.aaronguo.com/#examples) and their
-[reusable recipes](https://github.com/aaronguostudio/aaron-skills/blob/main/docs/video-showcases.md): one public blog, one fictional
-signed-in workflow, and two narrated ways to explain each recording.
+Rendering is silent by default. Import your own audio or explicitly choose your
+ElevenLabs account and permitted voice for narration. Qwen TTS is a reserved
+interface; independently generated audio can be imported today. Videos and covers
+omit process labels by default. `render --dry-run` plans without creating files
+or calling a provider. See [presentation revisions](docs/presentation-revisions.md),
+[visual templates](docs/video-presentation.md),
+[script drafting](docs/narrative-styles.md) and [narration](docs/narration.md).
 
 ## Privacy and scope
 

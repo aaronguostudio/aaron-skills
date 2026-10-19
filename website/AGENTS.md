@@ -34,3 +34,9 @@ The user selected Liam (generic American male voice) for the demonstration examp
 For the personal homepage welcome, speech should begin almost immediately after playback (about 0.2 seconds). Do not add a two-second silent lead-in when there is no opening sequence. Move captions and scene timing together while retaining the selected narration take.
 
 Keep introduction and demonstration videos free of AI Narration, Local Review, draft and other process labels by default. Add a visible label only when the user explicitly requests it. Keep provenance and review status in external QA records.
+
+The English and Chinese GitHub READMEs should share the current Workflow Canvas
+visual identity: flat white/blue workflow art, a compact text directory of the
+three released skills, and the approved branded showcase covers. Keep example
+counts and voice/script capabilities aligned with the released website. Retain
+older published art URLs for existing links.

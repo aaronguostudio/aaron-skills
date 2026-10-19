@@ -2,13 +2,13 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md) | [官网](https://skills.aaronguo.com/?lang=zh)
 
-把资深工程师解决软件问题的工作方法，沉淀成可复用的 Agent Skills 和可执行工具：从理解一个陌生项目，到交付经过验证、别人看得见也用得上的成果。
+把与 AI Agent 协作的方法和执行工具放在一起：从理解陌生项目，到交付经过检查、别人看得见也用得上的成果。**当前已发布 Demo：Capture → Film → Share。**
 
 Aaron Skills 将工作流与执行工作流所需的工具放在同一个集合里。目标是让你更容易接手一个项目、理解问题、完成有明确范围的改动、验证实际行为，再把结果讲清楚。每个 Skill 承载其中一段可重复的方法；相关的 Skills 通过共享工具和明确的产物格式协作。
 
 <p align="center">
   <a href="https://skills.aaronguo.com/?lang=zh">
-    <img src="https://skills.aaronguo.com/art/optimized/readme-overview-1024.034b816d9e5b.webp" width="900" alt="Aaron Skills 官网：从陌生项目到清楚交付的悬浮工作室" />
+    <img src="https://skills.aaronguo.com/art/optimized/workflow-overview.07ee3e92c535.webp" width="760" alt="Aaron Skills 工作流：Capture 录制真实流程，Film 制作讲解视频，Share 整理清楚的更新" />
   </a>
 </p>
 
@@ -38,10 +38,21 @@ Aaron Skills 将工作流与执行工作流所需的工具放在同一个集合�
 
 | [Capture](skills/demo-capture/SKILL.md) | [Film](skills/walkthrough-video/SKILL.md) | [Share](skills/paste-ready-update/SKILL.md) |
 | :---: | :---: | :---: |
-| <img src="https://skills.aaronguo.com/art/optimized/demo-capture-384.f4d6e043ee50.webp" width="180" alt="相机与截图工作台" /> | <img src="https://skills.aaronguo.com/art/optimized/walkthrough-video-384.46860ec7a03c.webp" width="180" alt="胶片与演示视频工作台" /> | <img src="https://skills.aaronguo.com/art/optimized/paste-ready-update-384.c3bf816ed3ae.webp" width="180" alt="文档与更新说明工作台" /> |
 | **录制真实流程。** 保存截图与经过检查的结果证据。 | **让结果容易看懂。** 将通过检查的录制制作成带引导的 MP4。 | **把工作带进对话。** 整理文字、截图与可选视频，供你审阅和分享。 |
 
 例如，你接手一个项目并完成某个功能改动后，可以让 Agent 展示起始状态、操作变化后的流程、检查界面结果，再准备给客户或团队的更新说明。Demo 提供的就是这一段能力。下面的安装步骤针对 Demo；未来其他能力组合可以有各自的依赖和安装路径。
+
+## 看看实际产物
+
+先听 Aaron 用自己的声音[介绍 Aaron Skills](https://skills.aaronguo.com/?lang=zh)，再比较[八条配音示例](https://skills.aaronguo.com/?lang=zh#examples)。每个案例复用同一份通过检查的录制。网站还提供可展开的虚构脚本示例，说明如何从一个简报写出讲解。
+
+| 虚构登录应用 | 公开博客 · 无需登录 |
+| :--- | :--- |
+| [<img src="https://skills.aaronguo.com/art/optimized/ledgerlane-example.5a31757c6ee6.webp" width="360" alt="蓝白 Aaron Skills 品牌下的 Ledgerlane 产品演示封面" />](https://skills.aaronguo.com/?lang=zh#example-ledgerlane) | [<img src="https://skills.aaronguo.com/art/optimized/blog-example.02465ed700ac.webp" width="360" alt="蓝白 Aaron Skills 品牌下的 Builder Notes 内容导览封面" />](https://skills.aaronguo.com/?lang=zh#example-blog) |
+| **两张发票，一次有依据的决定。** 六种讲解：Official Product Demo、Quick Demo、Release Update、Stakeholder Walkthrough、Task Tutorial、Training Lesson。 | **一次有内容的 Builder Notes 导览。** 两种内容讲解：Task Tutorial、Stakeholder Walkthrough。 |
+
+这些是经过挑选的展示案例，与 benchmark 分开。当前八条样片统一使用 Professional 视觉模板，方便比较讲解方式；声音、视觉模板和沟通目标可以独立组合。详见[制作配方](https://github.com/aaronguostudio/aaron-skills/blob/main/docs/video-showcases.md)。
+
 
 ## 安装
 
@@ -92,9 +103,9 @@ aaron-demo revise /path/to/passed-run /path/to/patch.json --out /path/to/revisio
 aaron-demo page /path/to/message.md --out /path/to/message.html
 ```
 
-结果字段通过精确断言检查，并保存命名高亮区域的位置。仅调整呈现方式时，保留原始录制，避免重复执行业务写入。默认生成静音视频；可选旁白使用你自己的 ElevenLabs 账号。`render --dry-run` 只生成计划，不创建文件或调用服务。详见[呈现修改](docs/presentation-revisions.md)和[旁白](docs/narration.md)。
+结果字段通过精确断言检查，并保存命名高亮区域的位置。仅调整呈现方式时，保留原始录制，避免重复执行业务写入。视觉模板可选择 Minimal、Professional 或 Showcase；讲解风格可以独立选择。Film 可以根据你的简报和录制证据起草脚本，不需要你先写好一整份稿子。
 
-也可以先看[短视频案例](https://skills.aaronguo.com/#examples)和[制作配方](https://github.com/aaronguostudio/aaron-skills/blob/main/docs/video-showcases.md)：一个公开博客、一个虚构登录应用，同一份录制分别采用两种英文讲解。
+默认生成静音视频。需要旁白时，可以导入自己的音频，或明确选择自己的 ElevenLabs 账号和有权使用的声音。Qwen TTS 仍是预留接口；目前可以导入通过其他工具生成的音频。视频和封面默认不添加制作过程标签。`render --dry-run` 只生成计划，不创建文件或调用服务。详见[呈现修改](docs/presentation-revisions.md)、[视觉模板](docs/video-presentation.md)、[脚本起草](docs/narrative-styles.md)和[旁白](docs/narration.md)。
 
 ## 隐私与适用范围
 
