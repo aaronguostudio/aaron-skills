@@ -144,7 +144,7 @@ and [narration](docs/narration.md).
 
 See [short video examples](https://skills.aaronguo.com/#examples) and their
 [reusable recipes](https://github.com/aaronguostudio/aaron-skills/blob/main/docs/video-showcases.md): one public blog, one fictional
-signed-in workflow, and three ways to explain each recording.
+signed-in workflow, and two narrated ways to explain each recording.
 
 ## Privacy and scope
 

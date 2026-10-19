@@ -9,8 +9,9 @@ test("every published recipe has a short playable export and accessible delivery
   assert.deepEqual(cases.map(item => item.kind).sort(), ["public", "synthetic"]);
   const uniqueVideos = new Set();
   for (const item of cases) {
-    assert.equal(item.variants.length, 3);
-    assert.equal(new Set(item.variants.map(cut => cut.id)).size, 3);
+    assert.equal(item.variants.length, 2);
+    assert.equal(new Set(item.variants.map(cut => cut.id)).size, 2);
+    assert.deepEqual(item.variants.map(cut => cut.id), ["professional", "showcase"]);
     for (const cut of item.variants) {
       assert.ok(cut.seconds >= 30 && cut.seconds <= 60, `${item.id}/${cut.id}: duration must be 30–60s`);
       assert.ok(cut.bytes > 0 && cut.bytes < 15_000_000, "short clips must keep a modest delivery size");

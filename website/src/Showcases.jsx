@@ -6,7 +6,7 @@ const labels = {
   en: {
     eyebrow: "FROM A REAL CAPTURE TO A CLEAR STORY",
     title: ["Same screen.", "A different conversation."],
-    intro: "Two small stories. Three ways to tell each one. Switch the recipe to see what changes — the recording stays the same.",
+    intro: "Two small stories. Two narrated ways to tell each one. Switch the recipe to see what changes — the recording stays the same.",
     public: "Public website · No sign-in",
     synthetic: "Signed-in app · Fictional data",
     choose: "Choose a video recipe",
@@ -27,7 +27,7 @@ const labels = {
   zh: {
     eyebrow: "从真实录制，到清楚讲解",
     title: ["同一份画面，", "不同的表达。"],
-    intro: "两个小故事，各有三种讲法。切换配方，看看呈现如何变化——底层录制始终相同。",
+    intro: "两个小故事，各有两种英文讲解。切换配方，看看呈现如何变化——底层录制始终相同。",
     public: "公开网站 · 无需登录",
     synthetic: "登录后应用 · 虚构数据",
     choose: "选择视频配方",
