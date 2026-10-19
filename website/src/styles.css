@@ -213,7 +213,7 @@ body:has(.skill-dialog[open]) { overflow: hidden; }
 
 /* The introduction is a deliberate first step, with examples further below. */
 .hero-description { font-size: clamp(19px, 1.6vw, 23px); letter-spacing: -.4px; }
-.hero-actions { gap: 26px; }
+.hero-actions { flex-wrap: wrap; gap: 20px 26px; }
 .hero-actions .button { border: 0; padding-inline: 24px; gap: 18px; }
 .hero-scope { margin-top: 22px; max-width: 470px; font-size: 12px; color: var(--muted); line-height: 1.7; }
 .hero-art { position: relative; }
