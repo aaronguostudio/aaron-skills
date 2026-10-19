@@ -94,7 +94,7 @@ aaron-demo page /path/to/message.md --out /path/to/message.html
 
 结果字段通过精确断言检查，并保存命名高亮区域的位置。仅调整呈现方式时，保留原始录制，避免重复执行业务写入。默认生成静音视频；可选旁白使用你自己的 ElevenLabs 账号。`render --dry-run` 只生成计划，不创建文件或调用服务。详见[呈现修改](docs/presentation-revisions.md)和[旁白](docs/narration.md)。
 
-也可以先看[短视频案例](https://skills.aaronguo.com/#examples)和[制作配方](https://github.com/aaronguostudio/aaron-skills/blob/main/docs/video-showcases.md)：一个公开博客、一个虚构登录应用，同一份录制分别采用三种讲法。
+也可以先看[短视频案例](https://skills.aaronguo.com/#examples)和[制作配方](https://github.com/aaronguostudio/aaron-skills/blob/main/docs/video-showcases.md)：一个公开博客、一个虚构登录应用，同一份录制分别采用两种英文讲解。
 
 ## 隐私与适用范围
 

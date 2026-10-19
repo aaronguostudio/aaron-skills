@@ -10,7 +10,7 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Aaron Skills visual direction
 
-The user selected the first homepage mock on 2026-10-17: warm ivory, copper/coral ribbons, floating ceramic engineering workstations, pale-blue glass, generous editorial typography. Preserve that source rather than substituting a generic SaaS layout. Show the five-stage workflow while labelling Understand/Build/Verify as future direction; only the three Demo skills are available today. Default English with a working Chinese switch.
+On 2026-10-18 the user found the original floating ceramic islands and copper ribbons excessive and selected the second redesign mock: `exec-1fe16696-d2c1-42f2-bf16-ac2f112fb4b3.png` (Workflow Canvas). This supersedes the original 2026-10-17 art direction for the homepage. Use a white surface, near-black Inter typography, cobalt blue accents, a single flat workflow illustration, and a compact three-column Capture / Film / Share directory. Keep the page useful and restrained. Preserve the original published illustration files and URLs because README assets still depend on them; do not display them as homepage decoration. The five-stage method remains, with Understand/Build/Verify labelled as future direction. Default English with a working Chinese switch. The user approved this implementation and authorized publication on 2026-10-18.
 
 The user accepted the implemented preview and authorized committing, merging and deploying it to Vercel, with `skills.aaronguo.com` as the intended custom domain. Production must use the connected repository's committed `main` revision through Git deployment. Keep the website independent of the Demo runtime.
 
@@ -24,3 +24,5 @@ three existing Demo skills. Keep their existing slugs, documentation paths,
 artwork names and published image URLs intact. Shape (invocation ID
 feature-blueprint) is a separate source-checkout preview; this naming pass does
 not add it to the released Demo bundle or authorize a production release.
+
+Website video examples should demonstrate finished narrated work. Do not feature silent cuts as showcase choices. Keep the current example layout; improve poster branding to match the restrained Aaron Skills identity. Voice exploration should use generic North American male/female voices, with local comparison before replacing the published voice.

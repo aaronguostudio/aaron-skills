@@ -2,14 +2,15 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ArrowRightIcon } from "@phosphor-icons/react/dist/csr/ArrowRight";
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/csr/ArrowUpRight";
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
-import artwork from "./art.json";
+import workflowDiagram from "./assets/workflow-canvas/workflow-diagram.webp";
+import workflowDiagramSmall from "./assets/workflow-canvas/workflow-diagram-768.webp";
 import { Showcases } from "./Showcases";
 
 const REPO = "https://github.com/aaronguostudio/aaron-skills";
 const copy = {
   en: {
     nav: ["Workflow", "Skills"],
-    eyebrow: "THE ENGINEER’S EXPLORATION STUDIO",
+    eyebrow: "METHODS FOR WORKING WITH AGENTS",
     headline: ["From unfamiliar", "project to a", "clear handoff."],
     intro: "Reusable skills and tools for thoughtful software work.",
     explore: "Explore the skills",
@@ -18,7 +19,7 @@ const copy = {
     future: "Future direction",
     available: "Demo bundle · Available now",
     stages: ["Understand", "Build", "Verify", "Demonstrate", "Deliver"],
-    bundle: "AVAILABLE TODAY: THE DEMO BUNDLE.",
+    bundle: "AVAILABLE TODAY / THE DEMO BUNDLE",
     skillsHeadline: ["Three skills.", "One clear handoff."],
     descriptions: [
       "Record the real flow. Save screenshots and checked results.",
@@ -65,7 +66,7 @@ const copy = {
   },
   zh: {
     nav: ["工作流程", "Skills"],
-    eyebrow: "工程师的探索工作室",
+    eyebrow: "与 AGENT 协作的工作方法",
     headline: ["从陌生项目，", "到清楚交付。"],
     intro: "将资深工程师的工作方法，沉淀成可复用的 Skills 与工具。",
     explore: "探索这些 Skills",
@@ -120,33 +121,15 @@ const skills = [
   {
     name: "Capture",
     slug: "demo-capture",
-    image: "demo-capture",
-    alt: "A miniature camera and glass screenshots on a ceramic platform",
   },
   {
     name: "Film",
     slug: "walkthrough-video",
-    image: "walkthrough-video",
-    alt: "A copper film reel and a ribbon of walkthrough frames",
   },
   {
     name: "Share",
     slug: "paste-ready-update",
-    image: "paste-ready-update",
-    alt: "An upright update document with screenshots, copper clips and plants",
   },
-];
-const chineseSkillAlts = [
-  "陶瓷平台上的微型相机和玻璃截图",
-  "铜色胶片盘和演示画面组成的胶片带",
-  "带有截图、铜色夹子和植物的更新文档",
-];
-const stageImages = [
-  "workflow-understand",
-  "workflow-build",
-  "workflow-verify",
-  "walkthrough-video",
-  "paste-ready-update",
 ];
 function Arrow({ size = 23, ...props }) {
   return (
@@ -210,18 +193,6 @@ function SkillDetails({ selected, onClose, text }) {
         >
           <XIcon size={24} weight="light" />
         </button>
-        {selected !== null && (
-          <img
-            className="detail-art"
-            src={artwork[skill.image].src}
-            srcSet={artwork[skill.image].srcSet}
-            sizes="(max-width: 600px) 200px, 300px"
-            decoding="async"
-            alt=""
-            width="300"
-            height="230"
-          />
-        )}
         <p className="eyebrow">{text.detailLabel}</p>
         <h2 id="detail-title">{skill.name}</h2>
         <p className="detail-intro">{detail.intro}</p>
@@ -290,7 +261,7 @@ export function App() {
             language === "zh" ? "Aaron Skills 首页" : "Aaron Skills home"
           }
         >
-          AARON SKILLS
+          Aaron Skills
         </a>
         <nav aria-label={language === "zh" ? "主导航" : "Main navigation"}>
           <a href="#workflow">{text.nav[0]}</a>
@@ -348,108 +319,53 @@ export function App() {
           </div>
           <figure className="hero-art">
             <img
-              src={artwork["workshop-hero"].src}
-              srcSet={artwork["workshop-hero"].srcSet}
-              sizes={artwork["workshop-hero"].sizes}
+              src={workflowDiagram}
+              srcSet={`${workflowDiagramSmall} 768w, ${workflowDiagram} 1475w`}
+              sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1440px) 48vw, 683px"
               decoding="async"
-              width="1254"
-              height="1254"
-              alt={
-                language === "zh"
-                  ? "由铜色缎带连接的悬浮陶瓷工作室，将零散想法变成清楚的视频和交付文档"
-                  : "Floating ceramic workshops connected by copper ribbons, turning scattered ideas into a clear video and document"
-              }
+              width="1475"
+              height="1066"
+              alt={language === "zh"
+                ? "项目通过 Capture 录制真实流程、Film 制作讲解视频、Share 整理清楚的更新说明。"
+                : "A project moves through Capture to record the real flow, Film to create a guided video, and Share to prepare a clear update."}
               fetchPriority="high"
             />
           </figure>
         </section>
-        <section
-          className="workflow wrap"
-          id="workflow"
-          aria-labelledby="workflow-title"
-        >
-          <h2 className="eyebrow" id="workflow-title">
-            {text.workflow}
-          </h2>
-          <ol className="workflow-steps">
-            {text.stages.map((stage, index) => (
-              <li
-                className={`workflow-step ${index < 3 ? "future" : "available"}`}
-                key={stage}
-              >
-                <img
-                  src={
-                    artwork[stageImages[index]].variants.find(
-                      (v) => v.width === 384,
-                    ).src
-                  }
-                  srcSet={artwork[stageImages[index]].variants
-                    .filter((v) => v.width <= 384)
-                    .map((v) => `${v.src} ${v.width}w`)
-                    .join(", ")}
-                  sizes="(max-width: 900px) 160px, 200px"
-                  decoding="async"
-                  width="200"
-                  height="170"
-                  alt=""
-                  loading="lazy"
-                />
-                <h3>{stage}</h3>
-                <p className="stage-status">
-                  {index < 3 ? text.future : text.available}
-                </p>
-                {index < 4 && (
-                  <Arrow
-                    className={`flow-arrow ${index >= 2 ? "is-copper" : ""}`}
-                    size={31}
-                  />
-                )}
-              </li>
-            ))}
-          </ol>
-        </section>
-        <section
-          className="skills wrap"
-          id="skills"
-          aria-labelledby="skills-title"
-        >
+        <section className="skills wrap" id="skills" aria-labelledby="skills-title">
           <p className="eyebrow">{text.bundle}</p>
-          <h2 className="skills-title" id="skills-title">
-            {text.skillsHeadline[0]}{" "}
-            <span className="accent">{text.skillsHeadline[1]}</span>
+          <h2 className="sr-only" id="skills-title">
+            {text.skillsHeadline.join(" ")}
           </h2>
           <div className="skills-grid">
             {skills.map((skill, index) => (
               <article key={skill.slug} className="skill">
-                <button
-                  className="skill-button"
-                  onClick={() => setSelected(index)}
-                  aria-haspopup="dialog"
-                  aria-label={`${text.skillAction} ${skill.name}`}
-                >
-                  <figure className="skill-art">
-                    <img
-                      src={artwork[skill.image].src}
-                      srcSet={artwork[skill.image].srcSet}
-                      sizes={artwork[skill.image].sizes}
-                      decoding="async"
-                      width="430"
-                      height="360"
-                      alt={
-                        language === "zh" ? chineseSkillAlts[index] : skill.alt
-                      }
-                      loading="lazy"
-                    />
-                  </figure>
-                  <div className="skill-heading">
-                    <h3>{skill.name}</h3>
-                    <Arrow className="skill-arrow" size={23} />
+                <button className="skill-button" onClick={() => setSelected(index)}
+                  aria-haspopup="dialog" aria-label={`${text.skillAction} ${skill.name}`}>
+                  <span className="skill-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                  <div className="skill-content">
+                    <div className="skill-heading">
+                      <h3>{skill.name}</h3>
+                      <Arrow className="skill-arrow" size={22} />
+                    </div>
+                    <p>{text.descriptions[index]}</p>
                   </div>
-                  <p>{text.descriptions[index]}</p>
                 </button>
               </article>
             ))}
           </div>
+        </section>
+        <section className="workflow wrap" id="workflow" aria-labelledby="workflow-title">
+          <h2 className="eyebrow" id="workflow-title">{text.workflow}</h2>
+          <ol className="workflow-steps">
+            {text.stages.map((stage, index) => (
+              <li className={`workflow-step ${index < 3 ? "future" : "available"}`} key={stage}>
+                <h3>{stage}</h3>
+                <p className="stage-status">{index < 3 ? text.future : text.available}</p>
+                {index < 4 && <Arrow className="flow-arrow" size={22} />}
+              </li>
+            ))}
+          </ol>
         </section>
         <Showcases language={language} />
       </main>

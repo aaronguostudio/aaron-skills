@@ -20,13 +20,15 @@ batch, reload, and verify the saved count, total and status. Its local cookie ga
 uses a seeded demo reviewer. It does not demonstrate a production identity provider
 or move money. Real application sign-in remains a human step.
 
-## Three starting recipes
+## Two narrated showcase recipes
 
 | Purpose | Suggested visual template | Explanation |
 | --- | --- | --- |
-| Quick demo | Minimal | Short captions and visible checkpoints, no narration |
 | Task tutorial | Professional | Direct instructions for completing one task |
 | Stakeholder walkthrough | Showcase | Conversational explanation of why the actions and result matter |
+
+The website showcases voiced tutorials and stakeholder stories. Silent rendering
+remains available in the tool for users who need it.
 
 These pairings are editorial choices. Every explanation style can use any visual
 template. Narration, intro sound, logo and opening/closing cards are separate

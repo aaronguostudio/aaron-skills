@@ -16,32 +16,6 @@
     },
     "variants": [
       {
-        "id": "minimal",
-        "name": "Quick demo",
-        "style": "Quick demo",
-        "template": "Minimal",
-        "purpose": {
-          "en": "The useful result, with no voiceover.",
-          "zh": "用字幕和高亮，快速展示结果。"
-        },
-        "audio": {
-          "en": "No narration",
-          "zh": "无旁白"
-        },
-        "language": "English",
-        "brief": {
-          "en": "Use the passed recording for a quick demo. Keep the claims tied to visible results. Use the Minimal presentation; draft the explanation for review before adding voice.",
-          "zh": "基于通过检查的录制，制作 Quick demo。说明与画面证据对应，使用 Minimal 模板；添加旁白前先审阅草稿。"
-        },
-        "command": "aaron-demo render <passed-run> \\\n  --template minimal --cover --stills \\\n  --out <delivery>/minimal/walkthrough.mp4",
-        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/minimal/0e419d184a5f8f15/walkthrough.mp4",
-        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/minimal/8e06aca45e4f5a28/poster.webp",
-        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/minimal/18c0a57412eef698/captions.vtt",
-        "bytes": 1338319,
-        "sha256": "0e419d184a5f8f15c6bb0d20b16006ea8645471fe34d6bd1d619e368a2e49621",
-        "seconds": 34.333333333333336
-      },
-      {
         "id": "professional",
         "name": "Task tutorial",
         "style": "Task Tutorial",
@@ -111,32 +85,6 @@
       "zh": "在虚构的登录后工作台补全发票分类与审核说明，选择指定的两张发票。模拟审批前核对数量和 $2,000 总额；刷新保存的批次后，再次确认数量、总额与 Approved 状态。"
     },
     "variants": [
-      {
-        "id": "minimal",
-        "name": "Quick demo",
-        "style": "Quick demo",
-        "template": "Minimal",
-        "purpose": {
-          "en": "The useful result, with no voiceover.",
-          "zh": "用字幕和高亮，快速展示结果。"
-        },
-        "audio": {
-          "en": "No narration",
-          "zh": "无旁白"
-        },
-        "language": "English",
-        "brief": {
-          "en": "Use the passed recording for a quick demo. Keep the claims tied to visible results. Use the Minimal presentation; draft the explanation for review before adding voice.",
-          "zh": "基于通过检查的录制，制作 Quick demo。说明与画面证据对应，使用 Minimal 模板；添加旁白前先审阅草稿。"
-        },
-        "command": "aaron-demo render <passed-run> \\\n  --template minimal --cover --stills \\\n  --out <delivery>/minimal/walkthrough.mp4",
-        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/minimal/6681d2fd56df488d/walkthrough.mp4",
-        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/minimal/d5621d42b91bb6fe/poster.webp",
-        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/minimal/96423149adf66bee/captions.vtt",
-        "seconds": 38.333333333333336,
-        "bytes": 988389,
-        "sha256": "6681d2fd56df488d2047b659f32c5139109c6403d1ed6df6576ec6306eec5b5c"
-      },
       {
         "id": "professional",
         "name": "Task tutorial",

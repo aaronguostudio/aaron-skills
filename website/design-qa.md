@@ -1,132 +1,61 @@
-# Aaron Skills design QA
+# Workflow Canvas homepage — design QA
 
-Date: 2026-10-17
+## Target and evidence
 
-final result: passed
+- Source visual truth: `$CODEX_HOME/generated_images/01a14aee-5bb3-7db1-8559-467fbb14b6b1/exec-1fe16696-d2c1-42f2-bf16-ac2f112fb4b3.png` — the user's selected second mock.
+- Implementation: http://127.0.0.1:4207/ — local preview on `codex/workflow-homepage`.
+- External evidence root: `<external-evidence>/homepage-workflow-2026-10-18/`.
+- Final implementation screenshot: `homepage-final.png` under that external root.
+- Full-view comparison: `comparison-final-desktop.png`; focused illustration comparison: `comparison-final-diagram.png`.
+- Raw image generations and browser captures remain outside Git. The consumed assets are the two optimized WebP files under `src/assets/workflow-canvas/`.
 
-## Comparison target and evidence
+## Matched comparison setup
 
-- Source visual truth: `design/source-homepage.png`, the user's selected first
-  homepage concept, 1024 × 1536 pixels.
-- Implementation: `http://127.0.0.1:4183/`, English default, home route, no dialog.
-- Final browser capture: `.artifacts/desktop-final.png` (1112 × 1686 pixels).
-  Verified CSS viewport: 1024 × 900, document height 1551 CSS pixels.
-- Density: the in-app browser retained its existing 0.92 zoom and reported DPR
-  0.9200000167. Its capture painted content at one pixel per CSS pixel but added
-  empty canvas on the right and bottom. Cropping that empty canvas, without
-  resizing content, produces `.artifacts/desktop-final-css.png` (1024 × 1551).
-- Full-view comparison: `.artifacts/comparison-final.jpg`, source on the left,
-  implementation on the right at equal 1024-pixel widths. The 15-pixel document
-  height difference is acceptable: it preserves real text and interactive links.
-- Focused comparisons: `.artifacts/comparison-final-hero.jpg` and
-  `.artifacts/comparison-final-skills.jpg`; these expose the headline wrapping,
-  navigation, buttons, art crop, skill titles, descriptions and footer clearly.
-- The source and rendered implementation were opened together in these combined
-  images before assessing fidelity. A standalone rendered copy is retained at
-  `design/rendered-homepage.webp`.
+Source pixels are 1487 × 1058. The final native browser capture and CSS viewport are both 1391 × 782. The source was proportionally normalized to width 1391 and clipped to the same top 782-pixel viewport; the implementation was neither stretched nor rescaled. Source and implementation are together in each comparison image, source left, implementation right. State: English homepage, top of page, no modal, no autoplay.
 
-## Findings
-
-No actionable P0/P1/P2 findings remain. The following P3 differences are accepted
-for this preview:
-
-- Independent illustrations preserve the selected ceramic/copper/glass direction
-  but differ in individual miniature screens, props and island shapes. These are
-  intentional asset variations, not exact copies of the source's raster details.
-- The source image does not identify an exact font. Self-hosted Inter is a close
-  visual match; small weight and glyph differences remain. The real headline has
-  the same three-line wrapping and ink/copper hierarchy at the comparison width.
-- The live background is slightly cleaner and less textured than the source.
-  Adding raster grain is optional polish, not necessary for readability or style.
-
-## Required fidelity surfaces
-
-- **Fonts and typography:** checked Inter's weights, headline size, line height,
-  tight tracking, small uppercase labels, navigation and paragraph wrapping.
-  Chinese uses explicit system fallbacks. No clipped or truncated copy observed.
-- **Spacing and layout rhythm:** checked the 74-pixel header, 574-pixel hero,
-  309-pixel workflow, aligned page margins, three skill columns, image scales,
-  section dividers, and footer. Compared the full page and focused regions.
-- **Colors and tokens:** warm `#f7f4ec`, dark `#15202a`, copper `#b3462d`, subtle
-  borders, muted future labels and copper available labels preserve the source.
-  Primary actions and focus indicators remain distinct from the background.
-- **Images:** seven actual generated raster illustrations, compressed transparent
-  WebP, about 1.2 MB total. Inspected subjects, scale, sharpness, transparent edges
-  and soft shadows. No decorative illustration was replaced with CSS/SVG shapes.
-  Standard arrow/close icons come from Phosphor. All images loaded successfully.
-- **Copy/content:** hero, workflow and three card descriptions follow the mock.
-  Understand/Build/Verify are visibly labelled future direction; only the three
-  current Demo skills are marked available. Detail dialogs describe actual inputs,
-  outputs, manual sharing, silent-by-default video and optional narration.
-  English and Chinese copy and accessible labels were checked in the browser.
+A separate 1440-CSS-pixel probe exposed backend screenshot-density/canvas differences; those exploratory captures were not used as the final fidelity evidence. Temporary viewport overrides were reset. Responsive checks used measured CSS widths 320, 390 and 768; their screenshot density can differ from CSS dimensions. These were browser viewport checks, not certification on physical devices.
 
 ## Comparison history and fixes
 
-1. **Initial desktop — blocked, P2:** oversized header/hero, oversized illustration
-   and loose section spacing changed the above-the-fold proportions. Evidence:
-   `.artifacts/comparison-before-css.jpg` and `desktop-before-css.png`.
-   Fixed the intermediate desktop breakpoint's type sizes, margins, hero height,
-   workflow height, art scale and section rhythm. Post-fix:
-   `.artifacts/comparison-refined-css.jpg`; final comparison confirms the fixes.
-2. **Tablet — blocked, P2:** at 768 CSS pixels the illustration competed with the
-   headline and overlapped text. Evidence: `.artifacts/tablet-top.png`.
-   Changed the stacked-layout breakpoint to 900 pixels and kept the image below
-   the copy. Post-fix: `.artifacts/tablet-final-top.png` and `tablet-final.png`.
-3. **Narrow phone — blocked, P2:** the 320-pixel primary CTA wrapped its label.
-   Evidence: `.artifacts/narrow-en.png`. Added `white-space: nowrap` and reduced
-   action padding/gap below 380 pixels. Post-fix: `narrow-final-css.png`; both
-   actions fit and document width equals the 320-pixel viewport.
-4. **Mobile dialog — blocked, P2:** opening a skill after scrolling could obscure
-   the close button. Evidence: `.artifacts/mobile-detail.png`. Replaced background
-   scrolling with saved-position body locking in a layout effect; restore the
-   scroll position on close. Post-fix: `mobile-detail-final.png` and
-   `mobile-zh-detail-final.png`; close remains visible, Escape works, focus returns.
-5. **Final pass — passed:** combined full-view and focused desktop comparisons
-   show no remaining P0/P1/P2 differences. Phone, tablet and wide desktop checks
-   retain the same composition and readable hierarchy appropriate to each width.
+1. **Initial pass — blocked.** `comparison-initial.png`: [P2] diagram content was too short and too low; [P2] hero spacing pushed the directory divider below the intended fold; [P2] intro wrapping and primary CTA width differed.
+2. **Spacing pass.** `comparison-revised.png`: tightened copy gaps and matched CTA width. The first isolated illustration still had excess top padding and a short lower document, so the image remained actionable.
+3. **Final pass — passed.** Used the exact selected diagram crop as the built-in Image Gen edit reference. Corrected the role descriptions while preserving the reference geometry, removed the fake example duration, and exported a white-background diagram with minimal padding. Replaced the temporary negative placement with normal placement. Final same-viewport full and focused comparisons show the requested hierarchy, wrapping, proportions and alignment; no actionable P0/P1/P2 differences remain.
 
-## Interaction and technical verification
+## Required fidelity surfaces
 
-- Browser widths checked: 320, 390, 768, 1024 and 1440 CSS pixels. No horizontal
-  overflow; the 1440-pixel page is approximately 2155 pixels tall.
-- English/Chinese switch updates both visible text and document language;
-  `?lang=zh` is supported. Skill titles remain their recognizable English names.
-- Workflow and Skills section links navigate to real page sections.
-- All three skill buttons open distinct native dialogs with relevant content and
-  real repository/documentation URLs. Close button, Escape and focus restoration
-  were exercised; the native dialog provides modal keyboard focus behavior.
-- Links to GitHub, installation and Aaron's site have valid source destinations;
-  external account actions were not required for this preview.
-- Hover/focus styling, skip link, heading order, image alternatives and reduced
-  motion handling were reviewed. Formal assistive-technology certification and
-  real-device testing outside the local browser have not been performed.
-- Browser error/warning log checked after final reload: no entries.
-- Final Vite 6.4.4 build: passed. Hosting-adapter tests: 4 passed.
-- npm dependency audit: zero reported vulnerabilities after compatible patches.
-- Existing Demo runtime/package manifests are unchanged. No deployment occurred.
+- **Fonts and typography:** bundled Inter Variable; three-line English headline, weight, line height and blue final line match the target closely. Chinese uses native CJK fallbacks, with readable wrapping checked at narrow widths. Minor optical differences in generated-image lettering are P3.
+- **Spacing and layout:** slim header, open two-column hero, one diagram, primary/text CTAs, and compact three-column Skill directory. Five-stage workflow and existing examples continue below in the same restrained visual language. Narrow layouts stack cleanly without control overlap.
+- **Colors and tokens:** white, near-black, cobalt and blue-gray. No decorative gradients or floating dioramas. Existing published artwork files and URLs are preserved for README references.
+- **Image quality:** real generated raster diagram, not a CSS/SVG drawing. Full 1475 × 1066 WebP is 65,094 bytes; responsive 768 × 555 export is 26,142 bytes. No stretching. Main text and stage names remain legible; small illustration annotations are supported by accessible alt text and the visible Skill descriptions.
+- **Copy and content:** Capture records actual app flows and checks; Film renders passed captures; Share prepares a reviewed update. Unreleased Understand/Build/Verify stages retain future labels. No new availability, usage or score claims. Bilingual descriptions, source links and four voiced video variants are featured; the two silent exports remain available at their existing URLs.
+- **Icons and accessibility:** existing Phosphor icons, visible focus states, semantic links/buttons, image alt text and reduced-motion support. Native dialog keyboard dismissal returns focus to the triggering Skill button and restores page position.
 
-## Implementation checklist
+## Browser checks
 
-- [x] Reproduce the selected visual direction with real page elements and assets.
-- [x] Clearly distinguish future workflow stages and current available skills.
-- [x] Support real navigation, details, bilingual copy and responsive layouts.
-- [x] Resolve recorded P2 visual and interaction findings; compare revised output.
-- [x] Build and verify the local preview; retain browser evidence and source art.
+- All three Skill dialogs open/close and point to their original skill/install documentation.
+- Primary navigation and CTA anchors reach the Skills and Examples sections.
+- English/Chinese switching works and updates the document language and URL.
+- Measured 320px English/Chinese, 390px Chinese and 768px English layouts have no horizontal overflow or header overlap. A 390px dialog fits within the viewport; Escape returns focus correctly.
+- Both video cases render. Tutorial/Stakeholder recipe selection updates presentation, purpose and audio metadata. Actual CDN videos play with no media error; starting the second case pauses the first. Players retain `preload="none"` and no autoplay.
+- Making-guide disclosure opens correctly.
+- Browser warning/error logs checked: none.
+
+## Build and boundaries
+
+Website build, published-media metadata test and all four Sites adapter tests passed. Tracked benchmark privacy check passed. The original workspace's 111 protected files and staged/unstaged patches remain byte-identical. Existing benchmark files, hosting worker and Sites adapter sources are unchanged. After user approval, the public showcase metadata now features only the four voiced cuts, and bilingual recipe copy and the metadata gate were updated accordingly. Publication follows the repository PR and Git/main deployment checks.
 
 ## Follow-up polish
 
-Optional: fine-tune subtle paper texture and individual illustration props after
-user review. Motion is intentionally restrained and respects reduced motion.
+- [P3] Fine optical differences in generated illustration strokes, tiny labels and numeral spacing can be refined after user review; they do not change hierarchy or function.
+- Human preference for the overall direction remains the user's decision.
 
-## Image delivery follow-up (2026-10-17)
+## Implementation checklist
 
-Compared the accepted production frame with the responsive-image build at equal
-2056-pixel width and a 1112-pixel content crop (DPR 2). Full-view evidence:
-`.artifacts/performance-comparison.jpg`. The composition, font, copy and palette
-are unchanged; small workflow assets retain clean alpha edges. A 390 × 844 DPR 1
-production-build check selected the 480-pixel hero, retained readable detail,
-showed no overflow, and passed language/dialog navigation. Evidence:
-`.artifacts/performance-phone-built.png`. No actionable P0/P1/P2 differences.
-See `performance.md` for byte counts, cache scope and measurement limits.
+- [x] Resolve selected visual target.
+- [x] Generate and optimize faithful diagram assets.
+- [x] Match typography, layout and palette; compare full view and focused image regions.
+- [x] Fix all P0/P1/P2 findings and repeat the comparison.
+- [x] Verify responsive, bilingual, keyboard/dialog and video interactions.
+- [x] Pass the relevant build/privacy checks and keep the local preview open.
 
 final result: passed
