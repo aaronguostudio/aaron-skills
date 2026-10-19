@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+- Preserve npm manager shim dispatch, add Cursor skill registration and isolated
+  coexistence guidance, and distinguish an activated runtime from a failed smoke
+  check with a usable retry command.
+- Reveal and settle controls before recording clicks, including nested scrollers
+  and sticky headers; identify failing focus matches while retaining grouped
+  highlights. Keep wide wordmark logos readable within bounded presentation slots.
+- Align host validation documentation, initial UI state, telemetry exceptions and
+  one-time narration setup. Route legacy guided-demo documentation to the shared
+  recorder helpers and improve synchronization-probe diagnostics.
+
 - Add short website video showcases for a public blog and a fictional signed-in
   review flow, with three independent presentation/explanation recipes, generic
   English AI narration, captions, and read-only CDN delivery checks. Preserve
