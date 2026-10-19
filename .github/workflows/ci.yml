@@ -6,6 +6,24 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 jobs:
+  website:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Public benchmark boundary
+        run: python scripts/benchmark_privacy.py --tracked
+      - name: Website dependencies
+        run: npm ci --prefix website
+      - name: Website build and export checks
+        run: |
+          npm run build --prefix website
+          npm run test:sites --prefix website
   platform:
     strategy:
       fail-fast: false
@@ -45,6 +63,8 @@ jobs:
           node --version
           python --version
           python -c 'import platform; print(platform.platform()); print(platform.machine())'
+      - name: Synthetic showcase access and saved result
+        run: node --test examples/showcase-review/server.test.mjs
       - name: PowerShell syntax
         if: runner.os == 'Windows'
         shell: pwsh

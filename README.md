@@ -142,6 +142,10 @@ own ElevenLabs account. `render --dry-run` plans without creating files or
 calling a provider. See [presentation revisions](docs/presentation-revisions.md)
 and [narration](docs/narration.md).
 
+See [short video examples](https://skills.aaronguo.com/#examples) and their
+[reusable recipes](https://github.com/aaronguostudio/aaron-skills/blob/main/docs/video-showcases.md): one public blog, one fictional
+signed-in workflow, and three ways to explain each recording.
+
 ## Privacy and scope
 
 Sessions, recordings and generated pages stay outside Git. Outputs can contain

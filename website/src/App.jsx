@@ -3,6 +3,7 @@ import { ArrowRightIcon } from "@phosphor-icons/react/dist/csr/ArrowRight";
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/csr/ArrowUpRight";
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import artwork from "./art.json";
+import { Showcases } from "./Showcases";
 
 const REPO = "https://github.com/aaronguostudio/aaron-skills";
 const copy = {
@@ -265,6 +266,10 @@ export function App() {
   useEffect(() => {
     document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
   }, [language]);
+  useLayoutEffect(() => {
+    const anchor = window.location.hash.slice(1);
+    if (anchor) document.getElementById(anchor)?.scrollIntoView({ behavior: "instant" });
+  }, []);
   function changeLanguage(next) {
     setLanguage(next);
     const url = new URL(window.location.href);
@@ -290,6 +295,7 @@ export function App() {
         <nav aria-label={language === "zh" ? "主导航" : "Main navigation"}>
           <a href="#workflow">{text.nav[0]}</a>
           <a href="#skills">{text.nav[1]}</a>
+          <a href="#examples">{language === "zh" ? "案例" : "Examples"}</a>
           <ExternalLink href={REPO}>GitHub</ExternalLink>
           <div
             className="language-switch"
@@ -334,10 +340,10 @@ export function App() {
                 {text.explore}
                 <Arrow />
               </a>
-              <ExternalLink href={REPO} className="text-link">
-                {text.github}
+              <a href="#examples" className="text-link">
+                {language === "zh" ? "观看实例" : "Watch the examples"}
                 <Arrow />
-              </ExternalLink>
+              </a>
             </div>
           </div>
           <figure className="hero-art">
@@ -445,6 +451,7 @@ export function App() {
             ))}
           </div>
         </section>
+        <Showcases language={language} />
       </main>
       <footer className="site-footer wrap">
         <p>
