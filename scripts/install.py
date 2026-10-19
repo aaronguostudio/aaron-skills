@@ -30,7 +30,21 @@ def registration_dirs(agent, home, override=None):
             raise ValueError('--skills-dir requires a single --agent')
         return [override.expanduser().resolve()]
     return [home / folder / 'skills' for folder in
-            ({'codex': ['.agents'], 'claude': ['.claude'], 'both': ['.agents', '.claude']}[agent])]
+            ({'codex': ['.agents'], 'claude': ['.claude'], 'cursor': ['.cursor'], 'both': ['.agents', '.claude']}[agent])]
+
+
+def verify_installed_smoke(run, command):
+    """Activation already succeeded. A failed smoke must remain a failed check."""
+    try:
+        run(command)
+    except (OSError, subprocess.CalledProcessError) as error:
+        if os.name == 'nt':
+            retry = '& ' + ' '.join("'" + str(part).replace("'", "''") + "'" for part in command)
+        else:
+            retry = shlex.join([str(part) for part in command])
+        raise ValueError('Runtime installed and activated, but the smoke check failed. '
+                         'The active installation was retained; the end-to-end workflow is not verified. '
+                         f'Review the smoke output, then retry:\n{retry}\nCause: {error}') from error
 
 
 def link_conflicts(root, skills_dir, bin_dir):
@@ -87,7 +101,7 @@ def main():
     configure_console()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=default_root())
-    parser.add_argument('--agent', choices=['codex', 'claude', 'both'], default='codex')
+    parser.add_argument('--agent', choices=['codex', 'claude', 'cursor', 'both'], default='codex')
     parser.add_argument('--skills-dir', type=Path, help='Override one host registration directory.')
     parser.add_argument('--smoke', action='store_true', help='Run the public recording/rendering check after installation.')
     parser.add_argument('--uninstall', action='store_true', help='Remove managed registrations; retain runtime and all user data.')
@@ -188,7 +202,7 @@ def main():
             else:
                 print('Add to your shell profile if needed: export PATH=' + shlex.quote(str(bin_dir)) + ':"$PATH"')
         if args.smoke:
-            run([tools['python'], release / 'scripts/cli.py', 'smoke'])
+            verify_installed_smoke(run, [tools['python'], release / 'scripts/cli.py', 'smoke'])
 
 if __name__ == '__main__':
     try:

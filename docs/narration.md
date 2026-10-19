@@ -39,6 +39,14 @@ automatically. An import requires no voice profile, API key or cloud service.
 
 Silent rendering requires no API key or voice profile. Requested narration uses the user's own ElevenLabs account and a voice they have permission to use. Live provider validation incurs account usage and is separate from mocked unit tests.
 
+Configure generated narration once per owner/machine before the first provider
+call. Runtime installation does not provision an account, key or voice. The default
+profile file and Keychain service below are user-level, not tied to one runtime
+installation: side-by-side installs can use them when intentionally selected. Use
+`AARON_DEMO_VOICE_PROFILES` for an explicit external profile file; do not copy keys
+into an installation or share another person's credentials. Keep script drafting
+and `--dry-run` available before this setup.
+
 Set `ELEVENLABS_API_KEY` in the process environment. It takes precedence over the optional dedicated macOS Keychain service `aaron-demo-elevenlabs`. No repository .env files or author's personal credentials are read automatically.
 
 Set `AARON_DEMO_VOICE_PROFILES` to an absolute JSON file outside Git, or create `~/.config/aaron-skills/demo/voice-profiles.json`:

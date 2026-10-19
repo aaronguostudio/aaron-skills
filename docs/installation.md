@@ -49,6 +49,21 @@ Windows or `python3 scripts/install.py` on POSIX, with the same options.
 | Command | `~/.local/bin/aaron-demo` | `%LOCALAPPDATA%\AaronSkills\bin\aaron-demo.cmd` |
 | Codex skills | `~/.agents/skills` | `%USERPROFILE%\.agents\skills` |
 | Claude Code skills | `~/.claude/skills` | `%USERPROFILE%\.claude\skills` |
+| Cursor skills (`--agent cursor`) | `~/.cursor/skills` | `%USERPROFILE%\.cursor\skills` |
+
+Use `--agent cursor` to register in Cursor's user skills directory, or add
+`--skills-dir "/path/to/application/.cursor/skills"` for one project's registration.
+`--agent both` retains its existing meaning: Codex and Claude Code. Add Cursor
+by rerunning setup with the same runtime/bin paths and `--agent cursor`; existing
+managed registrations are retained. See [Cursor's skill directories](https://cursor.com/docs/skills).
+Registration is not certification of model routing; verify discovery in a fresh
+Cursor session and complete a local workflow.
+
+Node manager entry points (including npm symlinks) keep their dispatch names.
+Run setup from the directory where your manager selects Node 22+; `doctor` checks
+the saved npm entry point as well as Node. If a manager cannot run `npm ci`, repair
+that manager/project selection before retrying; do not replace its symlink with
+the dispatcher binary.
 
 Add the printed command directory to your user PATH yourself if needed. Start a
 new agent session to refresh discovery. Ask it to list Demo Capture, Walkthrough
@@ -59,6 +74,18 @@ and registrations, not native model routing or host behavior.
 `aaron-demo smoke` runs only a public loopback application and prints an MP4,
 held-frame stills, update page and JSON report. Inspect the page and frames.
 For your own app, use `aaron-demo docs project-adapters`.
+
+If setup reports **runtime installed and activated, but smoke failed**, installation
+is retained and the command remains available. The workflow has not passed validation.
+Inspect the smoke output and retry the printed command; reinstalling is not the first
+recovery step. A sync-marker failure distinguishes a probe/tool failure from a
+missing recorded transition. Preserve the failed capture for diagnosis; retrying a
+new capture does not establish the cause, and an unverified calibration offset can
+misalign every highlight.
+
+Capture, silent rendering, imported audio and script `--dry-run` need no narration
+account. Generated speech needs the owner's one-time key and voice-profile setup;
+see [narration](narration.md#elevenlabs).
 
 ## Isolated setup
 
@@ -78,6 +105,26 @@ python scripts/install.py --agent codex --root "$demoTest/runtime" --skills-dir 
 `--skills-dir` overrides one host directory and cannot combine with `--agent both`.
 For normal use choose durable folders in a native project/user skill path.
 Arbitrary directories are not automatically discoverable by a host.
+
+### Coexist with another Demo installation
+
+Choose **all three** independently: runtime root, host skills directory and command
+bin directory. A different `--root` alone still collides with the default skill IDs
+and `aaron-demo` command. For a durable local Cursor project install on POSIX:
+
+```sh
+python3 scripts/install.py --agent cursor --root ~/.local/share/aaron-skills-public/demo --skills-dir "/path/to/application/.cursor/skills" --bin-dir ~/.local/share/aaron-skills-public/bin --smoke
+~/.local/share/aaron-skills-public/bin/aaron-demo doctor
+```
+
+Replace `/path/to/application` with the actual project path; keep it quoted.
+On Windows use `python`, durable directories under `%LOCALAPPDATA%` and the generated
+`aaron-demo.cmd`. Use the isolated command's absolute path in the agent session; do
+not change the existing installation's launcher or global PATH. Check which skills
+Cursor discovers if another user/project installation has the same invocation IDs;
+avoid loading competing copies into the same session. Arbitrary storage folders do
+not become host discovery paths. The runtime remains local even when skills sync
+to a cloud host; that host still needs its own runtime and browser.
 
 ## Upgrade, repair and rollback
 

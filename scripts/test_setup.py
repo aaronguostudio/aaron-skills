@@ -14,6 +14,11 @@ class SetupTests(unittest.TestCase):
         self.assertIn('scripts/install.py --agent claude --smoke', log)
         self.assertNotIn('brew install', log)
 
+    def test_cursor_registration_option_reaches_the_shared_installer(self):
+        result, log = self.run_setup(['--agent', 'cursor', '--smoke'])
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('scripts/install.py --agent cursor --smoke', log)
+
     def test_missing_prerequisite_stops_before_installation_without_opt_in(self):
         result, log = self.run_setup(['--agent', 'codex'], missing_ffmpeg=True)
         self.assertEqual(result.returncode, 2)

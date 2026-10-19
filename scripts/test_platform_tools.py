@@ -61,6 +61,22 @@ class PlatformTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'npm-cli.js'):
                 npm_command(tools, 'ci')
 
+    @unittest.skipIf(os.name == 'nt', 'POSIX multi-call symlink dispatch')
+    def test_npm_symlink_preserves_the_dispatch_name_and_working_directory(self):
+        with tempfile.TemporaryDirectory(prefix='node shims ') as directory:
+            root = Path(directory)
+            for name in ('volta-shim', 'vp'):
+                dispatcher = root / name
+                dispatcher.write_text('#!/bin/sh\ncase "$0" in */npm) printf "%s" "$PWD:$1";; *) exit 126;; esac\n')
+                dispatcher.chmod(0o755)
+                npm = root / 'npm'
+                npm.symlink_to(dispatcher)
+                tools = {'node': 'unused', 'npm': str(npm)}
+                result = subprocess.run(npm_command(tools, 'ci'), cwd=root, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(result.stdout, f'{root.resolve()}:ci')
+                npm.unlink()
+
     def test_pinned_bun_is_an_executable_on_the_current_host(self):
         binary = bun_binary(bundle.ROOT / 'packages/demo/remotion')
         self.assertTrue(binary.is_file())

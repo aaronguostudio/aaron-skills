@@ -6,17 +6,41 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import bundle
-from install import atomic_link, installation_lock, link_conflicts, registration_dirs, uninstall
+from install import atomic_link, installation_lock, link_conflicts, registration_dirs, uninstall, verify_installed_smoke
 
 class BundleTests(unittest.TestCase):
     def test_host_registration_uses_native_directories_and_preserves_other_skills(self):
         home = Path('/example-home')
         self.assertEqual(registration_dirs('codex', home), [home / '.agents/skills'])
         self.assertEqual(registration_dirs('claude', home), [home / '.claude/skills'])
+        self.assertEqual(registration_dirs('cursor', home), [home / '.cursor/skills'])
+        self.assertEqual(registration_dirs('cursor', home, home / 'project/.cursor/skills'), [(home / 'project/.cursor/skills').resolve()])
         self.assertEqual(len(registration_dirs('both', home)), 2)
         with self.assertRaises(ValueError): registration_dirs('both', home, home / 'override')
+
+    def test_failed_post_activation_smoke_reports_retained_installation_and_retry(self):
+        command = [sys.executable, '/example with spaces/scripts/cli.py', 'smoke']
+        def fail(argv):
+            raise subprocess.CalledProcessError(3, argv)
+        with self.assertRaisesRegex(ValueError, 'Runtime installed and activated') as raised:
+            verify_installed_smoke(fail, command)
+        self.assertIn('not verified', str(raised.exception))
+        self.assertIn('/example with spaces/scripts/cli.py', str(raised.exception))
+        seen = []
+        verify_installed_smoke(seen.append, command)
+        self.assertEqual(seen, [command])
+
+    def test_windows_smoke_retry_is_a_quoted_powershell_invocation(self):
+        command = ['C:/Python Tools/python.exe', "C:/demo's runtime/scripts/cli.py", 'smoke']
+        def fail(argv):
+            raise subprocess.CalledProcessError(3, argv)
+        with patch('install.os.name', 'nt'):
+            with self.assertRaises(ValueError) as raised:
+                verify_installed_smoke(fail, command)
+        self.assertIn("& 'C:/Python Tools/python.exe' 'C:/demo''s runtime/scripts/cli.py' 'smoke'", str(raised.exception))
 
     @unittest.skipIf(os.name == 'nt', 'POSIX symlink layout; copy registrations have separate transaction tests')
     def test_uninstall_removes_only_our_links_and_retains_runtime(self):

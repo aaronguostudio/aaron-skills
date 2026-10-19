@@ -98,7 +98,7 @@ account or paid API.
 ```sh
 git clone https://github.com/aaronguostudio/aaron-skills.git
 cd aaron-skills
-# macOS / Ubuntu; replace codex with claude or both if needed:
+# macOS / Ubuntu; replace codex with claude, cursor or both if needed:
 bash scripts/setup.sh --agent codex --smoke
 ```
 
@@ -122,7 +122,10 @@ You can instead give your local agent this prompt from the checkout:
 > and inspect its video frames. Report manual setup still needed. Use no customer
 > application, credentials or paid narration for this installation.
 
-Codex registers under `~/.agents/skills`; Claude Code under `~/.claude/skills`.
+Codex registers under `~/.agents/skills`; Claude Code under `~/.claude/skills`;
+`--agent cursor` registers under `~/.cursor/skills`. Registration does not certify
+model routing. See [isolated coexistence](docs/installation.md#coexist-with-another-demo-installation)
+when another Demo installation is already present.
 Windows uses the corresponding user-home folders and managed copies; POSIX uses
 links. Name conflicts stop installation. Add the printed command directory to
 PATH if needed and start a new agent session to refresh discovery. Smoke prints

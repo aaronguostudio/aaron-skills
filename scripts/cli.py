@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
-from platform_tools import bun_binary, venv_python, configure_console
+from platform_tools import bun_binary, venv_python, configure_console, npm_command
 import managed_registration
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,6 +42,7 @@ def doctor(config, check_links=True):
         if path.is_symlink() or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != expected:
             failures.append(f'Bundle file changed or missing: {relative}')
     check('Node >=22', [config['tools']['node'], '-e', 'if(+process.versions.node.split(".")[0]<22)process.exit(1)'])
+    check('npm entry point (including manager shims)', npm_command(config['tools'], '--version'))
     check('Python + Pillow', [venv_python(ROOT), '-c', 'from PIL import Image'])
     for name in ('ffmpeg', 'ffprobe'):
         check(name, [config['tools'][name], '-version'])

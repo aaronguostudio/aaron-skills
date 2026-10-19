@@ -27,6 +27,7 @@ function harness() {
   let shots = 0
   const document = { activeElement: null }
   const page = {
+    viewportSize: () => ({ width: 1440, height: 900 }),
     async waitForTimeout(ms) {
       events.push(`wait ${ms}`)
       clock += ms
@@ -46,6 +47,10 @@ function harness() {
     }
   }
   const locator = (name, box, element = { tagName: 'INPUT', type: 'text' }, focuses = element) => ({
+    count: async () => 1,
+    waitFor: async () => {},
+    isVisible: async () => true,
+    nth() { return this },
     async scrollIntoViewIfNeeded() {},
     async boundingBox() {
       return box
@@ -87,16 +92,16 @@ test('steps record times from the first frame, clicks with their box, and a shot
     caption: 'Open the form',
     kind: 'action',
     startMs: 500,
-    endMs: 800,
-    clicks: [{ tMs: 700, x: 60, y: 41, box: { x: 10, y: 21, w: 100, h: 40 } }],
+    endMs: 1050,
+    clicks: [{ tMs: 950, x: 60, y: 41, box: { x: 10, y: 21, w: 100, h: 40 } }],
     shot: 'shots/01-open.png'
   })
-  assert.equal(steps[1].startMs, 800)
-  assert.equal(steps[1].endMs, 3800)
+  assert.equal(steps[1].startMs, 1050)
+  assert.equal(steps[1].endMs, 4050)
   assert.equal(steps[1].shot, 'shots/02-saving.png')
   // The kept shot is the pre-click one (the second screenshot), not the one taken at step start.
   assert.equal(await readFile(join(runDir, 'shots/01-open.png'), 'utf8'), 'shot-2')
-  assert.deepEqual(h.events.slice(0, 4), ['screenshot@1500', 'trial open@1700', 'screenshot@1700', 'click open@1700'])
+  assert.deepEqual(h.events.filter(e => !e.startsWith('wait ')), ['screenshot@1500', 'trial open@1700', 'screenshot@1950', 'click open@1950', 'screenshot@2050'])
   assert.deepEqual((await readdir(join(runDir, 'shots'))).sort(), ['01-open.png', '02-saving.png'])
 })
 
@@ -174,7 +179,7 @@ test('type clicks the field, then types at a readable pace', async () => {
   await rec.step('search', 'Search', 'action', async () => {
     await rec.type(h.locator('q', { x: 0, y: 0, width: 200, height: 30 }), 'blue')
   })
-  assert.deepEqual(h.events.filter((e) => !e.startsWith('screenshot')), ['trial q@1000', 'click q@1000', 'type blue'])
+  assert.deepEqual(h.events.filter((e) => !e.startsWith('screenshot') && !e.startsWith('wait ')), ['trial q@1000', 'click q@1250', 'type blue'])
   assert.equal(rec.steps[0].clicks.length, 1)
 })
 
@@ -251,4 +256,36 @@ test('type refuses to type when its click put the focus on a password field the 
   const search = h.locator('search label', { x: 0, y: 0, width: 80, height: 20 }, { tagName: 'LABEL' }, { tagName: 'INPUT', type: 'search' })
   await rec.step('search', 'Search', 'action', async () => rec.type(search, 'blue'))
   assert.equal(h.events.at(-1), 'type blue')
+})
+
+test('moving geometry must settle before its box is logged and duplicate actions fail before clicking', async () => {
+  const h = harness()
+  const rec = new Recorder({ page: h.page, runDir: await runFolder(), now: h.now, minClickGapMs: 0 })
+  rec.start()
+  const moving = h.locator('moving', {})
+  let movedAt = 0
+  moving.boundingBox = async () => {
+    const y = h.now() < 1150 ? h.now() - 900 : 250
+    if (h.now() <= 1150) movedAt = h.now()
+    return { x: 20, y, width: 80, height: 30 }
+  }
+  await rec.step('moving', 'Open the settled control', 'action', () => rec.click(moving))
+  const click = rec.steps[0].clicks[0]
+  assert.deepEqual(click.box, { x: 20, y: 250, w: 80, h: 30 })
+  assert.ok(click.tMs - (movedAt - 1000) >= 250, 'the pre-click hold must follow the last movement')
+  const duplicate = h.locator('duplicate', { x: 0, y: 0, width: 10, height: 10 })
+  duplicate.count = async () => 2
+  await assert.rejects(rec.step('duplicate', 'Open reports', 'action', () => rec.click(duplicate)), /exactly one element.*matched 2/)
+  assert.equal(h.events.some(e => e.startsWith('click duplicate')), false)
+})
+
+test('an endlessly moving control fails within the settling bound', async () => {
+  const h = harness()
+  const rec = new Recorder({ page: h.page, runDir: await runFolder(), now: h.now })
+  rec.start()
+  const moving = h.locator('moving', {})
+  moving.boundingBox = async () => ({ x: 0, y: (h.now() % 100) + 20, width: 10, height: 10 })
+  await assert.rejects(rec.step('moving', 'Reveal the control', 'action', () => rec.reveal(moving)), /did not settle within 5000ms/)
+  assert.ok(h.now() < 6100)
+  assert.equal(rec.steps[0].clicks.length, 0)
 })

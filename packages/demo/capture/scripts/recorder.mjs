@@ -101,15 +101,49 @@ export class Recorder {
     this.beforeStep = fn
   }
 
+  async settledTargets(targets, timeoutMs = 5000) {
+    const viewport = this.page.viewportSize()
+    if (!viewport) throw new Error('Focus needs a fixed viewport')
+    const started = this.ms()
+    let previous, stableSince = started
+    while (this.ms() - started <= timeoutMs) {
+      const measured = Object.create(null)
+      for (const [name, locator] of entries(targets)) measured[name] = await boxesFor(locator, viewport, name)
+      const current = JSON.stringify(measured)
+      if (current !== previous) stableSince = this.ms()
+      // The renderer holds 180ms before a click. Keep that frame after the last
+      // layout/scroll movement, with room for a recorded frame at 30fps.
+      if (current === previous && this.ms() - stableSince >= 250) return measured
+      previous = current
+      await this.page.waitForTimeout(50)
+    }
+    throw new Error(`Targets ${Object.keys(targets).join(', ')} did not settle within ${timeoutMs}ms`)
+  }
+
+  // Reveal one control, including inside an app's own scroll container. Already
+  // visible sticky controls stay put; scrolling them can move the whole page.
+  async prepareControl(locator) {
+    if (!this.current) throw new Error('reveal() outside a step')
+    const count = await locator.count()
+    if (count > 1) throw new Error(`reveal/click needs exactly one element; locator matched ${count}. Scope it to the intended control`)
+    await locator.waitFor({ state: 'visible', timeout: 5000 })
+    // Playwright checks intersection, including clipping by ancestor containers,
+    // and skips scrolling a fully visible element. A viewport box alone cannot
+    // tell whether the app's own scroller clips this target.
+    await locator.scrollIntoViewIfNeeded({ timeout: 5000 })
+  }
+
+  async reveal(locator) {
+    await this.prepareControl(locator)
+    return (await this.settledTargets({ control: locator })).control[0]
+  }
+
   // One settled, named target group per result step. Captured geometry is reusable offline.
   async focus(targets, { holdMs = 900 } = {}) {
     if (!this.current) throw new Error('focus() outside a step')
     if (this.current.clicks.length || this.current.targets) throw new Error('Use one focus/show group in a separate step without clicks')
     if (!Number.isFinite(holdMs) || holdMs < 1 || holdMs > 10000) throw new Error('holdMs must be between 1 and 10000')
-    const viewport = this.page.viewportSize()
-    if (!viewport) throw new Error('Focus needs a fixed viewport')
-    const measured = Object.create(null)
-    for (const [name, locator] of entries(targets)) measured[name] = await boxesFor(locator, viewport)
+    const measured = await this.settledTargets(targets)
     const fromMs = this.ms()
     this.pending.buffer = await this.page.screenshot()
     await this.page.waitForTimeout(holdMs)
@@ -146,21 +180,22 @@ export class Recorder {
   // Click a locator, logging where it is first. Works only inside step().
   async click(locator, options = {}) {
     if (!this.current) throw new Error('click() outside a step')
-    await locator.scrollIntoViewIfNeeded()
+    const gap = this.ms() - this.lastClickMs
+    if (gap < this.minClickGapMs) await this.page.waitForTimeout(this.minClickGapMs - gap)
+    await this.prepareControl(locator)
     // A trial click waits until the element can take the click (not covered by a toast or an
     // overlay) without clicking, so the shot and the logged box show it as the reader will.
     await locator.click({ ...options, trial: true })
-    const box = await locator.boundingBox()
-    if (!box) throw new Error('The element to click is not visible')
-    const gap = this.ms() - this.lastClickMs
-    if (gap < this.minClickGapMs) await this.page.waitForTimeout(this.minClickGapMs - gap)
+    // A trial can itself scroll if the layout changed. Measure again only after
+    // that movement has settled, then save the box and pre-click screenshot.
+    const box = (await this.settledTargets({ control: locator })).control[0]
     if (!this.current.shot) await this.writeShot(this.pending.path, await this.page.screenshot())
     this.lastClickMs = this.ms()
     this.current.clicks.push({
       tMs: this.lastClickMs,
-      x: round(box.x + box.width / 2),
-      y: round(box.y + box.height / 2),
-      box: { x: round(box.x), y: round(box.y), w: round(box.width), h: round(box.height) }
+      x: round(box.x + box.w / 2),
+      y: round(box.y + box.h / 2),
+      box: { x: round(box.x), y: round(box.y), w: round(box.w), h: round(box.h) }
     })
     await locator.click(options)
   }

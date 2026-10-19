@@ -397,3 +397,47 @@ test('a walk that answers its own route fails the run, which says the request we
   // It did go out: this is a tripwire, not a block.
   assert.deepEqual(receivedFrom(before).filter((request) => request.method === 'POST'), [{ method: 'POST', path: '/items', body: '' }])
 })
+
+test('scroll-container clicks hold settled geometry and visible sticky controls do not jump', async () => {
+  const { Recorder } = await import('../scripts/recorder.mjs')
+  const browser = await chromium.launch()
+  try {
+    const page = await browser.newPage({ viewport: { width: 1440, height: 900 } })
+    await page.setContent(`<style>
+      body { margin: 0 } main { width: 600px; height: 360px; overflow: auto; scroll-behavior: smooth }
+      header { position: sticky; top: 0; background: white; height: 60px; z-index: 1 }
+      button { width: 140px; height: 40px } .space { height: 500px }
+    </style><main><header><button id="sticky">Sticky action</button></header>
+      <div class="space"></div><button id="lower">Lower action</button><div class="space"></div></main>`)
+    await page.evaluate(() => {
+      window.clicks = []
+      let lastY, movedAt = performance.now()
+      const lower = document.getElementById('lower')
+      const observe = () => {
+        const y = lower.getBoundingClientRect().y
+        if (y !== lastY) movedAt = performance.now()
+        lastY = y
+        requestAnimationFrame(observe)
+      }
+      requestAnimationFrame(observe)
+      lower.addEventListener('click', () => window.clicks.push({ stableFor: performance.now() - movedAt }))
+    })
+    const rec = new Recorder({ page, runDir: outDir('scroll-container') })
+    rec.start()
+    await rec.step('reveal', 'Reveal the lower control', 'action', () => rec.reveal(page.getByRole('button', { name: 'Lower action' })))
+    assert.ok(await page.locator('main').evaluate(el => el.scrollTop) > 0, 'reveal must handle container clipping even inside the browser viewport')
+    await page.locator('main').evaluate(el => { el.style.scrollBehavior = 'auto'; el.scrollTop = 0 })
+    await rec.step('lower', 'Open the lower control', 'action', () => rec.click(page.getByRole('button', { name: 'Lower action' })))
+    const settledFor = await page.evaluate(() => window.clicks[0].stableFor)
+    assert.ok(settledFor >= 180, `recorded pre-click frame would precede settled UI: ${settledFor}ms`)
+    const scrollBefore = await page.locator('main').evaluate(el => el.scrollTop)
+    assert.ok(scrollBefore > 0, 'the app container, not window, must scroll')
+    await rec.step('sticky', 'Open the sticky control', 'action', () => rec.click(page.getByRole('button', { name: 'Sticky action' })))
+    assert.equal(await page.locator('main').evaluate(el => el.scrollTop), scrollBefore)
+    await rec.step('show', 'Show the sticky control', 'action', async () => {
+      await rec.reveal(page.getByRole('button', { name: 'Sticky action' }))
+      await rec.focus({ sticky: page.getByRole('button', { name: 'Sticky action' }) })
+    })
+    assert.equal(await page.locator('main').evaluate(el => el.scrollTop), scrollBefore)
+  } finally { await browser.close() }
+})
