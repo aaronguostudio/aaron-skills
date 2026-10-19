@@ -44,6 +44,10 @@ A separate 1440-CSS-pixel probe exposed backend screenshot-density/canvas differ
 
 Website build, published-media metadata test and all four Sites adapter tests passed. Tracked benchmark privacy check passed. The original workspace's 111 protected files and staged/unstaged patches remain byte-identical. Existing benchmark files, hosting worker and Sites adapter sources are unchanged. After user approval, the public showcase metadata now features only the four voiced cuts, and bilingual recipe copy and the metadata gate were updated accordingly. Publication follows the repository PR and Git/main deployment checks.
 
+## Branded video posters
+
+After user feedback, the two stories use a matching Aaron Skills / Film editorial cover series: white, ink, cobalt and a small yellow accent. Both were created with built-in Image Gen and exported as WebP (101,832 and 89,988 bytes). The fictional invoice illustration correctly shows $1,250 + $750 = $2,000. These are independent player posters; they do not imply a change to the existing video opening cards or voice. Raw generations remain outside Git; only reviewed final WebP exports are intentionally public.
+
 ## Follow-up polish
 
 - [P3] Fine optical differences in generated illustration strokes, tiny labels and numeral spacing can be refined after user review; they do not change hierarchy or function.
