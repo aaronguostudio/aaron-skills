@@ -4,6 +4,7 @@ import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 
 const cases = JSON.parse(await readFile(new URL("../src/showcases.json", import.meta.url), "utf8"));
+const introduction = JSON.parse(await readFile(new URL("../src/introduction.json", import.meta.url), "utf8"));
 const args = process.argv.slice(2);
 let caseId, variantId;
 for (let i = 0; i < args.length; i += 2) {
@@ -14,6 +15,7 @@ for (let i = 0; i < args.length; i += 2) {
 const selected = cases.flatMap(item => item.variants.map(cut => ({ item, cut })))
   .filter(({ item, cut }) => (!caseId || caseId === item.id) && (!variantId || variantId === cut.id));
 assert.ok(selected.length, "No matching showcase recipe.");
+if (!caseId && !variantId) selected.push({ item: { id: "aaron-skills" }, cut: { id: "introduction", ...introduction } });
 
 function checkUrl(value, extension) {
   const url = new URL(value);

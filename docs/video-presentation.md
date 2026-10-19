@@ -96,8 +96,10 @@ Presentation-only changes reuse the capture. Re-rendering the same capture also
 reuses unchanged narration cache entries, keyed by provider, model, voice, output
 format, settings and text. Intro/outro timing expands when needed for a spoken line;
 an audio clip targeting a disabled card is refused. No voice or cloud fallback is
-chosen automatically. Imported audio is labeled as AI narration only when its manifest
-explicitly says `aiGenerated: true`.
+chosen automatically. Provider/import metadata does not enable visible labels.
+Videos and covers omit AI narration, generation, local-review and draft labels by default.
+Only add them on explicit user request. `--narration-notice` enables the narration
+notice; imported audio must also declare `aiGenerated: true` to use the AI label.
 
 Use `--dry-run` to validate the plan without writing assets/covers, reading credentials
 or making provider calls. Imported clips may be read/probed to report their duration;

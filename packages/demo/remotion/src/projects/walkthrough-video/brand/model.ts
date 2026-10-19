@@ -30,9 +30,7 @@ export type Brand = {
   // Plays once over the opening card. Capture-local, like every other asset the composition
   // reads, because the capture folder is the render's public dir.
   sound?: string;
-  // Whether a narrated film prints "AI NARRATION" on the opening card. Default true. A brand
-  // whose films always carry the same voice can turn it off, and then it is the brand's choice
-  // rather than an omission.
+  // Opt-in opening notice. Omitted or false keeps the delivered film clean.
   aiNotice?: boolean;
 };
 
@@ -42,6 +40,7 @@ export function validateBrand(value: unknown): asserts value is Brand {
   const brand = value as Brand;
   if (!brand?.name?.trim() || brand.name.length > 36) throw new Error("A brand needs a name of at most 36 characters");
   if (!brand.slogan?.trim() || brand.slogan.length > 72) throw new Error("A brand needs a line of at most 72 characters");
+  if (brand.aiNotice !== undefined && typeof brand.aiNotice !== 'boolean') throw new Error('aiNotice must be boolean');
   if (!brand.primary) throw new Error("A brand needs a card colour");
   if (brand.sound && !local(brand.sound)) throw new Error("A brand's sound must be a capture-local asset");
   if (!Array.isArray(brand.parts) || brand.parts.length < 1 || brand.parts.length > MAX_PARTS) {

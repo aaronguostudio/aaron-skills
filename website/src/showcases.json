@@ -1,75 +1,5 @@
 [
   {
-    "id": "blog",
-    "kind": "public",
-    "title": {
-      "en": "One useful thought. Worth coming back to.",
-      "zh": "一个值得再读的想法。"
-    },
-    "summary": {
-      "en": "Find a Builder Note about slow iteration — and a quieter way to work with AI.",
-      "zh": "从 Builder Notes 找到“慢慢迭代”：AI 也能让人从容地打磨喜欢的事。"
-    },
-    "outline": {
-      "en": "Find the public Builder Notes archive. Open AI Taught Me a Phrase: Slow Iteration. Read the thought and inspect its illustration, then return to the archive.",
-      "zh": "从 Builder Notes 打开 Slow Iteration，关注小游戏与写小说这两个具体例子，再看插画如何表达“慢慢搭起一个世界”。最后返回列表。整个过程无需账号。"
-    },
-    "variants": [
-      {
-        "id": "professional",
-        "name": "Task tutorial",
-        "style": "Task Tutorial",
-        "template": "Professional",
-        "purpose": {
-          "en": "A concise, step-by-step explanation.",
-          "zh": "一步一步，说明如何完成任务。"
-        },
-        "audio": {
-          "en": "AI narration · soft intro sting",
-          "zh": "AI 英文旁白 · 轻柔开场音效"
-        },
-        "language": "English",
-        "brief": {
-          "en": "Use the passed recording for a task tutorial. Keep the claims tied to visible results. Use the Professional presentation; draft the explanation for review before adding voice.",
-          "zh": "基于通过检查的录制，制作 Task Tutorial。说明与画面证据对应，使用 Professional 模板；添加旁白前先审阅草稿。"
-        },
-        "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --cover --stills --out <delivery>/professional/walkthrough.mp4",
-        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/professional/b33c48e92c73605a/walkthrough.mp4",
-        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/blog/5d9d4ce8ca1614d3/poster.webp",
-        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/professional/4247c9f6b93989f6/captions.vtt",
-        "bytes": 3286624,
-        "sha256": "b33c48e92c73605a9097911b69840046a530313aa7246417b1b15793feb90ad1",
-        "seconds": 43.2
-      },
-      {
-        "id": "showcase",
-        "name": "Stakeholder story",
-        "style": "Stakeholder Walkthrough",
-        "template": "Showcase",
-        "purpose": {
-          "en": "The why, the checkpoint and the payoff.",
-          "zh": "讲清缘由、检查点和最后的收获。"
-        },
-        "audio": {
-          "en": "AI narration · bright intro sting",
-          "zh": "AI 英文旁白 · 明亮开场音效"
-        },
-        "language": "English",
-        "brief": {
-          "en": "Use the passed recording for a stakeholder walkthrough. Keep the claims tied to visible results. Use the Showcase presentation; draft the explanation for review before adding voice.",
-          "zh": "基于通过检查的录制，制作 Stakeholder Walkthrough。说明与画面证据对应，使用 Showcase 模板；添加旁白前先审阅草稿。"
-        },
-        "command": "aaron-demo render <passed-run> \\\n  --template showcase --script <external-script.json> \\\n  --cover --stills --out <delivery>/showcase/walkthrough.mp4",
-        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/showcase/e2a71813227a7288/walkthrough.mp4",
-        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/blog/5d9d4ce8ca1614d3/poster.webp",
-        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/showcase/7375da8930555637/captions.vtt",
-        "bytes": 3163373,
-        "sha256": "e2a71813227a7288cda3a24099e832e899f26577e45f7fc2fda80471a2670676",
-        "seconds": 38.53333333333333
-      }
-    ]
-  },
-  {
     "id": "ledgerlane",
     "kind": "synthetic",
     "title": {
@@ -86,56 +16,230 @@
     },
     "variants": [
       {
-        "id": "professional",
-        "name": "Task tutorial",
+        "id": "official-demo",
+        "name": "Official Product Demo",
+        "style": "Official Product Demo",
+        "template": "Professional",
+        "purpose": {
+          "en": "Explain the product and its connected capabilities.",
+          "zh": "正式产品介绍：把相连的能力和价值讲清楚。"
+        },
+        "audio": {
+          "en": "Liam",
+          "zh": "Liam（英文旁白）"
+        },
+        "language": "English",
+        "brief": {
+          "en": "Explain the product and its connected capabilities. Reuse a passed recording and ground every claim in its visible evidence.",
+          "zh": "正式产品介绍：把相连的能力和价值讲清楚。 基于同一份通过检查的录制；所有说明对应实际画面。"
+        },
+        "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/official-demo/8121af28ae701298/walkthrough.mp4",
+        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/ledgerlane/86a8694519aef2c2/poster.webp",
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/official-demo/a1510b9a7d380765/captions.vtt",
+        "bytes": 2125547,
+        "sha256": "8121af28ae701298b88611f4cf41684da367943b04dc39320c1512bbd45713f5",
+        "seconds": 46.266666666666666
+      },
+      {
+        "id": "quick-demo",
+        "name": "Quick Demo",
+        "style": "Quick Demo",
+        "template": "Professional",
+        "purpose": {
+          "en": "Show the useful capability without a full lesson.",
+          "zh": "快速看懂一条完整能力链。"
+        },
+        "audio": {
+          "en": "Liam",
+          "zh": "Liam（英文旁白）"
+        },
+        "language": "English",
+        "brief": {
+          "en": "Show the useful capability without a full lesson. Reuse a passed recording and ground every claim in its visible evidence.",
+          "zh": "快速看懂一条完整能力链。 基于同一份通过检查的录制；所有说明对应实际画面。"
+        },
+        "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/quick-demo/a7fc55f02d3c37e3/walkthrough.mp4",
+        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/ledgerlane/86a8694519aef2c2/poster.webp",
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/quick-demo/dc7d0998ff3d1bb9/captions.vtt",
+        "bytes": 1788964,
+        "sha256": "a7fc55f02d3c37e3b8ab2eb566ba116d19a0e2ec4c61acb73887d10e462a3c1c",
+        "seconds": 40.2
+      },
+      {
+        "id": "release-update",
+        "name": "Release Update",
+        "style": "Release Update",
+        "template": "Professional",
+        "purpose": {
+          "en": "A release-style summary of demonstrated capabilities.",
+          "zh": "虚构的发布式回顾；不冒充真实版本上线。"
+        },
+        "audio": {
+          "en": "Liam",
+          "zh": "Liam（英文旁白）"
+        },
+        "language": "English",
+        "brief": {
+          "en": "A release-style summary of demonstrated capabilities. Reuse a passed recording and ground every claim in its visible evidence.",
+          "zh": "虚构的发布式回顾；不冒充真实版本上线。 基于同一份通过检查的录制；所有说明对应实际画面。"
+        },
+        "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/release-update/a4b6ff20d66271a1/walkthrough.mp4",
+        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/ledgerlane/86a8694519aef2c2/poster.webp",
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/release-update/82cfb8b659b49608/captions.vtt",
+        "bytes": 2135974,
+        "sha256": "a4b6ff20d66271a1702df8ff28be94257a61fb3275f9a616d050d8c52c3c7bd4",
+        "seconds": 45.233333333333334
+      },
+      {
+        "id": "stakeholder-walkthrough",
+        "name": "Stakeholder Walkthrough",
+        "style": "Stakeholder Walkthrough",
+        "template": "Professional",
+        "purpose": {
+          "en": "Explain why the checkpoints matter, then invite feedback.",
+          "zh": "解释检查点的价值，邀请有依据的反馈。"
+        },
+        "audio": {
+          "en": "Liam",
+          "zh": "Liam（英文旁白）"
+        },
+        "language": "English",
+        "brief": {
+          "en": "Explain why the checkpoints matter, then invite feedback. Reuse a passed recording and ground every claim in its visible evidence.",
+          "zh": "解释检查点的价值，邀请有依据的反馈。 基于同一份通过检查的录制；所有说明对应实际画面。"
+        },
+        "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/stakeholder-walkthrough/d3aad8a8e43ceeba/walkthrough.mp4",
+        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/ledgerlane/86a8694519aef2c2/poster.webp",
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/stakeholder-walkthrough/f2f77a14a3797672/captions.vtt",
+        "bytes": 2142818,
+        "sha256": "d3aad8a8e43ceebab287d2d5c99c282f59deabf7566139ff9802983782420993",
+        "seconds": 47.43333333333333
+      },
+      {
+        "id": "task-tutorial",
+        "name": "Task Tutorial",
         "style": "Task Tutorial",
         "template": "Professional",
         "purpose": {
-          "en": "A concise, step-by-step explanation.",
-          "zh": "一步一步，说明如何完成任务。"
+          "en": "Help a new reviewer perform the exact task.",
+          "zh": "让新用户能按步骤完成任务。"
         },
         "audio": {
-          "en": "AI narration · soft intro sting",
-          "zh": "AI 英文旁白 · 轻柔开场音效"
+          "en": "Liam",
+          "zh": "Liam（英文旁白）"
         },
         "language": "English",
         "brief": {
-          "en": "Use the passed recording for a task tutorial. Keep the claims tied to visible results. Use the Professional presentation; draft the explanation for review before adding voice.",
-          "zh": "基于通过检查的录制，制作 Task Tutorial。说明与画面证据对应，使用 Professional 模板；添加旁白前先审阅草稿。"
+          "en": "Help a new reviewer perform the exact task. Reuse a passed recording and ground every claim in its visible evidence.",
+          "zh": "让新用户能按步骤完成任务。 基于同一份通过检查的录制；所有说明对应实际画面。"
         },
-        "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --cover --stills --out <delivery>/professional/walkthrough.mp4",
-        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/professional/47c845e65445fba1/walkthrough.mp4",
+        "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/task-tutorial/ea8acba6d8e8b71c/walkthrough.mp4",
         "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/ledgerlane/86a8694519aef2c2/poster.webp",
-        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/professional/66225fbc5df25f83/captions.vtt",
-        "bytes": 3015084,
-        "sha256": "47c845e65445fba15bda38d6436a1bef7a1713fa86f72aefdf8d7bdeb4304b4b",
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/task-tutorial/0790811d8a69c473/captions.vtt",
+        "bytes": 2007863,
+        "sha256": "ea8acba6d8e8b71c43c2751da3caf48a8c32af3aaec8ebc3f3ac4251ec221ead",
         "seconds": 43.93333333333333
       },
       {
-        "id": "showcase",
-        "name": "Stakeholder story",
-        "style": "Stakeholder Walkthrough",
-        "template": "Showcase",
+        "id": "training-lesson",
+        "name": "Training Lesson",
+        "style": "Training Lesson",
+        "template": "Professional",
         "purpose": {
-          "en": "The why, the checkpoint and the payoff.",
-          "zh": "讲清缘由、检查点和最后的收获。"
+          "en": "Teach the reasoning and give a separate practice prompt.",
+          "zh": "解释为什么这样做，再给一个单独的练习方向。"
         },
         "audio": {
-          "en": "AI narration · bright intro sting",
-          "zh": "AI 英文旁白 · 明亮开场音效"
+          "en": "Liam",
+          "zh": "Liam（英文旁白）"
         },
         "language": "English",
         "brief": {
-          "en": "Use the passed recording for a stakeholder walkthrough. Keep the claims tied to visible results. Use the Showcase presentation; draft the explanation for review before adding voice.",
-          "zh": "基于通过检查的录制，制作 Stakeholder Walkthrough。说明与画面证据对应，使用 Showcase 模板；添加旁白前先审阅草稿。"
+          "en": "Teach the reasoning and give a separate practice prompt. Reuse a passed recording and ground every claim in its visible evidence.",
+          "zh": "解释为什么这样做，再给一个单独的练习方向。 基于同一份通过检查的录制；所有说明对应实际画面。"
         },
-        "command": "aaron-demo render <passed-run> \\\n  --template showcase --script <external-script.json> \\\n  --cover --stills --out <delivery>/showcase/walkthrough.mp4",
-        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/showcase/9f16d1d6520c0546/walkthrough.mp4",
+        "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/training-lesson/71a83a0a306c9566/walkthrough.mp4",
         "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/ledgerlane/86a8694519aef2c2/poster.webp",
-        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/showcase/009ffee2eb4e76d8/captions.vtt",
-        "bytes": 2999289,
-        "sha256": "9f16d1d6520c0546a2a01a194ce4b6047e3b8a589e038486656212bef87e09e2",
-        "seconds": 41.43333333333333
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/training-lesson/ab65b4e69b9fad82/captions.vtt",
+        "bytes": 2241945,
+        "sha256": "71a83a0a306c95666665c4aa0698dec54802ac08b5296a4dd0fa7d3ce1a5849d",
+        "seconds": 51.3
+      }
+    ]
+  },
+  {
+    "id": "blog",
+    "kind": "public",
+    "title": {
+      "en": "A reading journey through Builder Notes.",
+      "zh": "一次有内容的 Builder Notes 导览。"
+    },
+    "summary": {
+      "en": "A content walkthrough: discover an idea, follow its examples and illustration, then return to the archive.",
+      "zh": "内容导览：发现一个想法，读懂具体例子与插画，再回到列表。"
+    },
+    "outline": {
+      "en": "Find the public Builder Notes archive. Open AI Taught Me a Phrase: Slow Iteration. Read the thought and inspect its illustration, then return to the archive.",
+      "zh": "从 Builder Notes 打开 Slow Iteration，关注小游戏与写小说这两个具体例子，再看插画如何表达“慢慢搭起一个世界”。最后返回列表。整个过程无需账号。"
+    },
+    "variants": [
+      {
+        "id": "blog-tutorial",
+        "name": "Task Tutorial",
+        "style": "Task Tutorial",
+        "template": "Professional",
+        "purpose": {
+          "en": "Find a note, follow its examples and return to the archive.",
+          "zh": "帮助读者发现、阅读并返回一条笔记。"
+        },
+        "audio": {
+          "en": "Liam",
+          "zh": "Liam（英文旁白）"
+        },
+        "language": "English",
+        "brief": {
+          "en": "Find a note, follow its examples and return to the archive. Reuse a passed recording and ground every claim in its visible evidence.",
+          "zh": "帮助读者发现、阅读并返回一条笔记。 基于同一份通过检查的录制；所有说明对应实际画面。"
+        },
+        "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/blog-tutorial/a24c740c168f2562/walkthrough.mp4",
+        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/blog/5d9d4ce8ca1614d3/poster.webp",
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/blog-tutorial/826e0319be8572d5/captions.vtt",
+        "bytes": 2290027,
+        "sha256": "a24c740c168f25624ad60b88c58fed94c5fbd2b1d451d7819b8fd61a273017ac",
+        "seconds": 40.166666666666664
+      },
+      {
+        "id": "blog-story",
+        "name": "Stakeholder Walkthrough",
+        "style": "Stakeholder Walkthrough",
+        "template": "Professional",
+        "purpose": {
+          "en": "How a title, examples and an illustration guide the reader.",
+          "zh": "说明内容结构如何帮助理解与探索。"
+        },
+        "audio": {
+          "en": "Liam",
+          "zh": "Liam（英文旁白）"
+        },
+        "language": "English",
+        "brief": {
+          "en": "How a title, examples and an illustration guide the reader. Reuse a passed recording and ground every claim in its visible evidence.",
+          "zh": "说明内容结构如何帮助理解与探索。 基于同一份通过检查的录制；所有说明对应实际画面。"
+        },
+        "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/blog-story/a298e4bb1919a204/walkthrough.mp4",
+        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/blog/5d9d4ce8ca1614d3/poster.webp",
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/blog-story/97ab94c07a2e6268/captions.vtt",
+        "bytes": 2363384,
+        "sha256": "a298e4bb1919a204d0644ec29a63f1dd48d6bf67782efe6c38131976105783a1",
+        "seconds": 42.46666666666667
       }
     ]
   }

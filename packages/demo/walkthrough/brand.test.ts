@@ -91,3 +91,11 @@ describe("the profiles the tile ships", () => {
     }
   });
 });
+
+ test("brand notice opt-in survives installation without enabling omitted notices", () => {
+  const dir = mkdtempSync(join(tmpdir(), "notice-brand-"));
+  expect(installBrand(brand(), dir).aiNotice).toBeUndefined();
+  expect(installBrand(brand({aiNotice:true}), dir).aiNotice).toBe(true);
+  expect(installBrand(brand({aiNotice:false}), dir).aiNotice).toBe(false);
+  expect(() => validateBrand(brand({aiNotice:"true" as never}))).toThrow(/boolean/);
+});

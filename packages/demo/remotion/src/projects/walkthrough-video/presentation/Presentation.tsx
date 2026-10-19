@@ -45,7 +45,7 @@ export const PresentationCard: React.FC<{p: Presentation; closing?: boolean; cov
       <div style={{height:3*s,width:(minimal?70:140)*s,background:accent,marginTop:44*s,transform:`scaleX(${ease})`,transformOrigin:'left'}} />
     </div>
     <div style={{position:'absolute',left:80*s,right:80*s,bottom:58*s,paddingTop:22*s,borderTop:`1px solid ${minimal?'#153F3B30':'#ffffff30'}`,display:'flex',justifyContent:'space-between',alignItems:'center',fontSize:17*s,opacity:.7}}>
-      <span>{closing ? p.outro.url || p.brand.tagline : narrated ? 'AI NARRATION' : 'GUIDED DEMONSTRATION'}</span>
+      <span>{closing ? p.outro.url || p.brand.tagline : narrated ? 'AI NARRATION' : ''}</span>
       <span style={{fontVariantNumeric:'tabular-nums',letterSpacing:2*s}}>{closing?'END':'01 — START HERE'}</span>
     </div>
   </AbsoluteFill>;

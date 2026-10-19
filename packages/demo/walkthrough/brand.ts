@@ -34,7 +34,7 @@ export function installBrand(profile: Brand & { id?: string; assetRoot?: string 
     primary: profile.primary,
     parts: profile.parts,
     ...(profile.viewBox ? { viewBox: profile.viewBox } : {}),
-    ...(profile.aiNotice === false ? { aiNotice: false } : {}),
+    ...(typeof profile.aiNotice === "boolean" ? { aiNotice: profile.aiNotice } : {}),
   };
   if (profile.sound) {
     const source = resolve(profile.assetRoot ?? TILE, profile.sound);

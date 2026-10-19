@@ -14,11 +14,12 @@ export const BrandMark: React.FC<{ brand: Brand; size: number }> = ({ brand, siz
   </svg>
 );
 
-export const BrandCard: React.FC<{ brand: Brand; total: number; closing?: boolean; narrated?: boolean }> = ({
+export const BrandCard: React.FC<{ brand: Brand; total: number; closing?: boolean; narrated?: boolean; notice?: boolean }> = ({
   brand,
   total,
   closing = false,
   narrated = false,
+  notice = brand.aiNotice === true,
 }) => {
   const frame = useCurrentFrame();
   // The line arrives after the mark has settled, so the eye reads one thing at a time.
@@ -58,8 +59,8 @@ export const BrandCard: React.FC<{ brand: Brand; total: number; closing?: boolea
           {brand.slogan}
         </div>
       </div>
-      {/* The voice is a clone, so the film says so. Said once here rather than on every frame. */}
-      {narrated && brand.aiNotice !== false ? (
+      {/* A visible notice is an explicit presentation choice, not inferred from the voice. */}
+      {narrated && notice ? (
         <div style={{ position: "absolute", bottom: 38, fontSize: 17, opacity: 0.65, letterSpacing: 1 }}>AI NARRATION</div>
       ) : null}
     </AbsoluteFill>

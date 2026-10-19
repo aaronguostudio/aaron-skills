@@ -70,7 +70,7 @@ Two styles, both in a user-configured ElevenLabs voice (the default profile unle
 - The clips are cached in `<run>/narration/`, keyed by voice, settings (speed included) and text. A re-render calls the API only for lines whose words or voice settings changed.
 - Set `ELEVENLABS_API_KEY` in the process environment, or use the dedicated macOS Keychain service `aaron-demo-elevenlabs`. Keys are never bundled or printed.
 
-- The title card and the caption band say "AI narration". The video discloses AI narration.
+- Delivered cards, caption bands and covers omit narration/process labels by default. Add `--narration-notice` only when the user explicitly requests a visible narration notice; provenance stays in the external render manifest.
 - Narrate only when requested, using a voice the user has permission to use.
 
 ## Branding
@@ -83,7 +83,7 @@ Two styles, both in a user-configured ElevenLabs voice (the default profile unle
 - `parts` are the primitives copied out of the brand's own SVG (`rect`, `path`, `polygon`, `ellipse`, `circle`), each with its own attributes and an optional `fill`. Copy them rather than redrawing the mark, so the card carries the real asset; each part is animated separately as the mark settles.
 - `sound` is relative to the profile file's directory. It is copied into `<run>/brand/` at render time, because the composition reads every asset through `staticFile()` and the capture folder is the render's public dir. Build or retune one with `scripts/walkthrough/make-brand-sound.py`.
   - A sting reads as a brand when its weight sits low: the figure in the named octave rather than above it, a sub and a fifth holding underneath, upper partials restrained, and the last note left ringing so it lands. High and bare is the failure mode — it sounds thin, bright and generic. The script's `--body`, `--brightness`, `--voicing` and `--stagger` are the knobs to turn by ear, and the honest way to choose is to render several and listen, not to reason about the numbers.
-- A branded film says "AI NARRATION" once, on its opening card, rather than on every frame: the mark has the corner. `"aiNotice": false` in the profile drops it, for a brand whose films always carry the same voice and whose audience knows it; that is the brand's standing decision, recorded in the profile, not something to leave off by accident. Without `--brand` the plain cards and the per-frame notice are unchanged.
+- Branded films also omit narration labels by default. A user-requested `--narration-notice` or explicit `"aiNotice": true` brand setting enables the opening notice; omitted/false settings keep it off. Do not add review/draft or generation labels without an explicit user request.
 - A profile that is not there, or names a sound that is not there, is refused before any voice is made or any frame is rendered.
 
 ## Folder

@@ -1,10 +1,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { readFileSync } from "node:fs";
-
-const artwork = JSON.parse(
-  readFileSync(new URL("./src/art.json", import.meta.url)),
-);
+const reviewTarget = process.env.AARON_SKILLS_REVIEW_URL;
+if (reviewTarget) {
+  const url = new URL(reviewTarget);
+  if (url.protocol !== "http:" || url.hostname !== "127.0.0.1" || url.username || url.password || url.pathname !== "/" || url.search || url.hash) {
+    throw new Error("Review media must use a credential-free loopback URL.");
+  }
+}
 
 if (
   process.env.VERCEL_ENV === "production" &&
@@ -14,7 +16,8 @@ if (
   throw new Error("Production builds require a committed main Git revision.");
 }
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  define: { "import.meta.env.AARON_SKILLS_REVIEW": JSON.stringify(command === "serve" && Boolean(reviewTarget)) },
   build: {
     outDir: "dist/client",
   },
@@ -22,7 +25,8 @@ export default defineConfig({
     include: ["react", "react-dom/client"],
   },
   server: {
-    host: "0.0.0.0",
+    host: "127.0.0.1",
+    ...(command === "serve" && reviewTarget ? { proxy: { "/__review": { target: reviewTarget, rewrite: path => path.replace(/^\/__review/, "") || "/" } } } : {}),
     allowedHosts: ["terminal.local"],
     warmup: {
       clientFiles: ["./src/main.jsx"],
@@ -30,27 +34,6 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    {
-      name: "preload-hero",
-      transformIndexHtml() {
-        const hero = artwork["workshop-hero"];
-        return [
-          {
-            tag: "link",
-            attrs: {
-              rel: "preload",
-              as: "image",
-              type: "image/webp",
-              href: hero.src,
-              imagesrcset: hero.srcSet,
-              imagesizes: hero.sizes,
-              fetchpriority: "high",
-            },
-            injectTo: "head",
-          },
-        ];
-      },
-    },
     {
       name: "release-metadata",
       generateBundle() {
@@ -65,4 +48,4 @@ export default defineConfig({
       },
     },
   ],
-});
+}));

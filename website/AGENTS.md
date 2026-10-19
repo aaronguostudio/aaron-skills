@@ -26,3 +26,11 @@ feature-blueprint) is a separate source-checkout preview; this naming pass does
 not add it to the released Demo bundle or authorize a production release.
 
 Website video examples should demonstrate finished narrated work. Do not feature silent cuts as showcase choices. Keep the current example layout; improve poster branding to match the restrained Aaron Skills identity. Voice exploration should use generic North American male/female voices, with local comparison before replacing the published voice.
+
+The next local review should explain Aaron Skills before showing output examples. Put a playable introduction behind a clear text button; keep the Guided Video illustration static, without a click overlay. State above the fold that Demo (Capture / Film / Share) is released, while other lifecycle capabilities are still in development. Product-demo examples lead; the public blog is a content walkthrough. Include Official Product Demo separately from the five documented narrative purposes. Compare other projects by their documented focus with primary links, without exclusivity or untested superiority claims. Current voice candidates should sound full, positive and energetic; Chris/Jessica were not accepted. Keep new voices and films local until reviewed.
+
+The user selected Liam (generic American male voice) for the demonstration examples. The homepage introduction instead uses Aaron's existing approved personal voice and a conversational first-person welcome: the work problem he encountered, the habits he collected, and what he is building from them. Keep the existing shared runtime voice defaults and personal/provider configuration outside Git. The illustration's Guided Video play symbol is decorative; only the text introduction button opens the video.
+
+For the personal homepage welcome, speech should begin almost immediately after playback (about 0.2 seconds). Do not add a two-second silent lead-in when there is no opening sequence. Move captions and scene timing together while retaining the selected narration take.
+
+Keep introduction and demonstration videos free of AI Narration, Local Review, draft and other process labels by default. Add a visible label only when the user explicitly requests it. Keep provenance and review status in external QA records.

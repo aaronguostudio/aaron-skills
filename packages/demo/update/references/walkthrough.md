@@ -81,7 +81,7 @@ aaron-demo render "<run>" --stills
 
 - It writes `walkthrough.mp4` and `chapters.txt` into the run folder.
 - It refuses a capture that did not pass.
-- Add a voice-over only when the user asks for one. It uses the user's configured voice (ElevenLabs), costs API credits, and labels the video "AI narration". Its key setup is in `docs/capture-contract.md`. Two styles:
+- Add a voice-over only when the user asks for one. It uses the user's configured voice (ElevenLabs), costs API credits, and keeps visible process labels off unless explicitly requested. Its key setup is in `docs/capture-contract.md`. Two styles:
   - **Concise** (`--narrate`): the voice reads the captions. Short and official.
   - **Conversational** (`--script <run>/narration.conversational.json`): it sounds like a person giving the demo. Make the script reviewable and carry forward existing narration authorization. Routine requested demo narration may use existing included credits; ask before a purchase, paid overage, increased cap, or material change outside the approved scope.
 

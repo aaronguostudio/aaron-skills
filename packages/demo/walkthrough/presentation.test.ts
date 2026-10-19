@@ -1,3 +1,5 @@
+import {createRequire} from 'node:module';
+import {PresentationCaption} from '../remotion/src/projects/walkthrough-video/presentation/Presentation';
 import {describe,expect,test} from 'bun:test';
 import {mkdtempSync,mkdirSync,readFileSync,readdirSync,writeFileSync} from 'fs';
 import {tmpdir} from 'os';
@@ -109,4 +111,15 @@ describe('provider seam',()=>{
     expect(await main([run,'--template','showcase','--cover','--narrate','--voice-profile','missing-fixture','--dry-run'])).toBe(0);
     expect(readdirSync(run,{recursive:true})).toEqual(before);
   });
+});
+
+ test('caption output keeps the result and brand while making the notice explicit-only',()=>{
+  const runtimeRequire=createRequire(new URL('../remotion/package.json',import.meta.url));
+  const React=runtimeRequire('react');
+  const {renderToStaticMarkup}=runtimeRequire('react-dom/server');
+  const props={p:presentationPreset('professional','Result'),top:900,width:1440,caption:'Two invoices verified',position:'1/2'};
+  const clean=renderToStaticMarkup(React.createElement(PresentationCaption,{...props,narrated:false}));
+  const requested=renderToStaticMarkup(React.createElement(PresentationCaption,{...props,narrated:true}));
+  expect(clean).toContain('Two invoices verified');expect(clean).toContain('Demo');
+  expect(clean).not.toContain('AI NARRATION');expect(requested).toContain('AI NARRATION');
 });
