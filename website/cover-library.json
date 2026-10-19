@@ -1,0 +1,551 @@
+{
+  "version": 1,
+  "generatedWith": "OpenAI built-in image generation",
+  "created": "2026-10-19",
+  "covers": [
+    {
+      "id": "cobalt-signal",
+      "title": {
+        "en": "Cobalt Signal",
+        "zh": "钴蓝信号"
+      },
+      "family": "graphic",
+      "familyTitle": {
+        "en": "Graphic",
+        "zh": "几何色块"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Electric cobalt, acid yellow, huge cropped circle, ivory grotesk typography, lower-left title.",
+      "description": {
+        "en": "Cobalt Signal presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "钴蓝信号风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "coral-aperture",
+      "title": {
+        "en": "Coral Aperture",
+        "zh": "珊瑚视窗"
+      },
+      "family": "graphic",
+      "familyTitle": {
+        "en": "Graphic",
+        "zh": "几何色块"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Ink black and coral, giant geometric circle cut from left block, huge warm-white title on right.",
+      "description": {
+        "en": "Coral Aperture presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "珊瑚视窗风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "vermilion-fold",
+      "title": {
+        "en": "Vermilion Fold",
+        "zh": "朱红折角"
+      },
+      "family": "graphic",
+      "familyTitle": {
+        "en": "Graphic",
+        "zh": "几何色块"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Saturated vermilion ground, one enormous folded cream triangle rising from bottom-left. Huge midnight-blue title top-right on three lines. Small brand top-left, presenter and date lower-right. Ultra-flat Swiss print poster, no texture or gradients.",
+      "description": {
+        "en": "Vermilion Fold presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "朱红折角风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "chartreuse-column",
+      "title": {
+        "en": "Chartreuse Column",
+        "zh": "青柠立柱"
+      },
+      "family": "graphic",
+      "familyTitle": {
+        "en": "Graphic",
+        "zh": "几何色块"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Acid chartreuse ground with a massive ultramarine vertical rectangle aligned just right of center and cropped beyond bottom edge. Huge dark green condensed sans title upper-left across two lines. Tiny metadata on bottom-left. Graphic architectonic precision, flat solid colors, no objects.",
+      "description": {
+        "en": "Chartreuse Column presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "青柠立柱风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "desert-editorial",
+      "title": {
+        "en": "Desert Editorial",
+        "zh": "沙漠叙事"
+      },
+      "family": "editorial",
+      "familyTitle": {
+        "en": "Editorial",
+        "zh": "摄影叙事"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Warm cream and terracotta with large monochrome desert-rock photograph on right, black serif headline on left.",
+      "description": {
+        "en": "Desert Editorial presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "沙漠叙事风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "ocean-margin",
+      "title": {
+        "en": "Ocean Margin",
+        "zh": "海岸留白"
+      },
+      "family": "editorial",
+      "familyTitle": {
+        "en": "Editorial",
+        "zh": "摄影叙事"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Single cinematic aerial ocean photograph occupies lower 65%, deep teal water and soft chalk-white surf. Upper 35% flat warm ivory band holding huge midnight serif title on a single strong line, small subtitle. Small brand upper-left, presenter date bottom over dark ocean in white. Architectural editorial precision, no gradient overlays.",
+      "description": {
+        "en": "Ocean Margin presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "海岸留白风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "alpine-silence",
+      "title": {
+        "en": "Alpine Silence",
+        "zh": "山间静默"
+      },
+      "family": "editorial",
+      "familyTitle": {
+        "en": "Editorial",
+        "zh": "摄影叙事"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Full-bleed monochrome photograph of a solitary massive alpine peak emerging from mist, image detail mostly in right half. A single flat butter-yellow vertical block on the left 43%, huge deep charcoal elegant serif title on three lines. Tiny subtitle and metadata cleanly aligned on yellow. Quiet premium art-book sensibility.",
+      "description": {
+        "en": "Alpine Silence presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "山间静默风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "botanical-shadow",
+      "title": {
+        "en": "Botanical Shadow",
+        "zh": "植物光影"
+      },
+      "family": "editorial",
+      "familyTitle": {
+        "en": "Editorial",
+        "zh": "摄影叙事"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Warm cream slide, right 58% a single beautiful macro photograph of a sculptural green tropical leaf casting a crisp shadow onto pale wall. Left title in dark forest green refined serif, split two or three lines. One narrow terracotta stripe at bottom with tiny cream presenter date. Strong sunlit editorial composition.",
+      "description": {
+        "en": "Botanical Shadow presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "植物光影风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "chrome-loop",
+      "title": {
+        "en": "Chrome Loop",
+        "zh": "镀铬回环"
+      },
+      "family": "sculptural",
+      "familyTitle": {
+        "en": "Sculptural",
+        "zh": "立体物件"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Pale lilac background, one chrome loop with orange inner face at upper-right, huge deep plum sans title lower-left.",
+      "description": {
+        "en": "Chrome Loop presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "镀铬回环风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "amber-glass",
+      "title": {
+        "en": "Amber Glass",
+        "zh": "琥珀玻璃"
+      },
+      "family": "sculptural",
+      "familyTitle": {
+        "en": "Sculptural",
+        "zh": "立体物件"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Flat warm ivory background. ONE beautifully refractive amber-glass sculptural sphere with off-center circular hole, like a pristine isolated transparent PNG, occupies right 48%. Dramatic precise caustic soft shadow. Huge near-black modern sans title stacked left, small brand upper-left, subtitle below title and metadata bottom. Product-photography quality, no other objects.",
+      "description": {
+        "en": "Amber Glass presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "琥珀玻璃风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "ceramic-ribbon",
+      "title": {
+        "en": "Ceramic Ribbon",
+        "zh": "陶瓷丝带"
+      },
+      "family": "sculptural",
+      "familyTitle": {
+        "en": "Sculptural",
+        "zh": "立体物件"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Flat pale sky-blue background. ONE matte butter-yellow ceramic ribbon making an expressive upright arch, composited like a clean isolated PNG, in left 50%. Large cobalt modern geometric title on right, tiny brand top-right, subtitle and presenter/date near bottom-right. Soft studio shadow, tactile fine ceramic material, beautifully minimal.",
+      "description": {
+        "en": "Ceramic Ribbon presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "陶瓷丝带风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "liquid-orbit",
+      "title": {
+        "en": "Liquid Orbit",
+        "zh": "液态轨道"
+      },
+      "family": "sculptural",
+      "familyTitle": {
+        "en": "Sculptural",
+        "zh": "立体物件"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Flat deep aubergine ground. ONE polished silver liquid-metal oval ring, diagonal in upper-left 50%, softly reflecting hot pink. Massive pale blush title anchored bottom-right across two lines. Tiny warm white brand upper-right and presenter/date along bottom. Surreal elegant sculpture, immense negative space, no glows or particle clutter.",
+      "description": {
+        "en": "Liquid Orbit presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "液态轨道风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "linen-emboss",
+      "title": {
+        "en": "Linen Emboss",
+        "zh": "亚麻压纹"
+      },
+      "family": "material",
+      "familyTitle": {
+        "en": "Material",
+        "zh": "材质肌理"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Warm natural linen background with subtle realistic weave, ONE large embossed debossed circular symbol right, light rakes across soft fibers. Huge charcoal serif title left, one tiny red square brand mark upper-left. Small warm-gray subtitle and presenter/date aligned bottom. Luxury stationery and quiet tactile print quality; typography crisp, no photographed page edges.",
+      "description": {
+        "en": "Linen Emboss presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "亚麻压纹风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "brushed-copper",
+      "title": {
+        "en": "Brushed Copper",
+        "zh": "拉丝铜面"
+      },
+      "family": "material",
+      "familyTitle": {
+        "en": "Material",
+        "zh": "材质肌理"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. ONE broad vertical brushed copper metallic slab takes right 45% full-height. Left matte warm charcoal 55%, huge ivory modern sans title and small copper subtitle. Tiny brand top-left and metadata bottom-left. Exquisite directional fine brushed metal texture, severe and restrained, sharp edge between two fields.",
+      "description": {
+        "en": "Brushed Copper presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "拉丝铜面风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "paper-relief",
+      "title": {
+        "en": "Paper Relief",
+        "zh": "纸雕浮层"
+      },
+      "family": "material",
+      "familyTitle": {
+        "en": "Material",
+        "zh": "材质肌理"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Off-white paper background, ONE spectacular cobalt-blue folded paper fan relief occupies upper-right, subtle realistic shadow revealing layered edges. Huge ink-black title lower-left, modern editorial serif, small subtitle. Tiny cobalt brand upper-left and metadata bottom. Minimal 3D paper craft, no scattered shapes or collage.",
+      "description": {
+        "en": "Paper Relief presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "纸雕浮层风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "black-marble",
+      "title": {
+        "en": "Black Marble",
+        "zh": "黑曜石纹"
+      },
+      "family": "material",
+      "familyTitle": {
+        "en": "Material",
+        "zh": "材质肌理"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Full bleed nearly black polished stone with sparse delicate warm white veins. ONE flat ivory square panel takes left 46% with generous margins, huge dark serif title and subtitle inside. Small brand top-left on ivory, date and presenter bottom on ivory. Beautiful genuine stone texture visible right, sophisticated luxury presentation, no frame around entire image.",
+      "description": {
+        "en": "Black Marble presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "黑曜石纹风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "sage-pebble",
+      "title": {
+        "en": "Sage Pebble",
+        "zh": "鼠尾草石"
+      },
+      "family": "organic",
+      "familyTitle": {
+        "en": "Organic",
+        "zh": "有机造型"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Dusty sage background. ONE large smooth pale limestone pebble with an oval hollow floats right, isolated PNG-style object, soft shadow. Huge deep pine-green rounded geometric sans title left. Tiny cream brand and metadata, sophisticated natural material and quiet Scandinavian art direction.",
+      "description": {
+        "en": "Sage Pebble presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "鼠尾草石风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "petal-motion",
+      "title": {
+        "en": "Petal Motion",
+        "zh": "花瓣舒展"
+      },
+      "family": "organic",
+      "familyTitle": {
+        "en": "Organic",
+        "zh": "有机造型"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Flat warm butter-yellow background. ONE enormous coral red translucent flower petal sweeping from bottom-right to upper-center like an abstract silk sculpture, isolated and exquisitely lit. Huge near-black elegant serif title upper-left, small subtitle and metadata below. Botanical but abstract, avoid full flower or floral patterns, just one expressive form.",
+      "description": {
+        "en": "Petal Motion presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "花瓣舒展风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "moss-contour",
+      "title": {
+        "en": "Moss Contour",
+        "zh": "苔绿等高"
+      },
+      "family": "organic",
+      "familyTitle": {
+        "en": "Organic",
+        "zh": "有机造型"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Full background deep forest-green. ONE broad organic cream shape with gently wavy top edge rises across lower-right half like cut paper landscape. Title in huge warm cream sans on upper-left, restrained lime brand dash. A single fine green contour line follows inside cream shape; tiny metadata bottom-left. Flat, essential and calm.",
+      "description": {
+        "en": "Moss Contour presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "苔绿等高风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "cobalt-coral",
+      "title": {
+        "en": "Cobalt Coral",
+        "zh": "蓝色珊瑚"
+      },
+      "family": "organic",
+      "familyTitle": {
+        "en": "Organic",
+        "zh": "有机造型"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Pale peach background. ONE striking sculptural cobalt-blue branching coral object in the left half, matte ceramic surface, studio-lit and isolated. Huge dark wine typography on right with elegant serif title, small subtitle, presenter and date in bottom-right. Rich restrained contrast, a museum design lecture cover, no underwater scene.",
+      "description": {
+        "en": "Cobalt Coral presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "蓝色珊瑚风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "solar-horizon",
+      "title": {
+        "en": "Solar Horizon",
+        "zh": "日落地平"
+      },
+      "family": "atmosphere",
+      "familyTitle": {
+        "en": "Atmospheric",
+        "zh": "光与氛围"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. A single large burnt-orange sun disk cropped by an immaculate midnight-blue horizon across bottom third. Flat warm cream sky upper two-thirds. Huge dark navy title upper-left in modern sans, a narrow orange brand dash and small black metadata. Very simple geometric interpretation of sunset, quiet Japanese poster balance, no extra mountains or scenery.",
+      "description": {
+        "en": "Solar Horizon presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "日落地平风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "prism-light",
+      "title": {
+        "en": "Prism Light",
+        "zh": "棱镜光线"
+      },
+      "family": "atmosphere",
+      "familyTitle": {
+        "en": "Atmospheric",
+        "zh": "光与氛围"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Deep charcoal background. ONE translucent triangular glass prism at lower-right casting a single wide refined spectral band diagonally toward upper-left. Large warm-white typography aligned upper-left but clear of bright light. Small understated brand above title and metadata bottom. Realistic restrained photographic light, no generic neon gradients or sparkle.",
+      "description": {
+        "en": "Prism Light presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "棱镜光线风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "dawn-fog",
+      "title": {
+        "en": "Dawn Fog",
+        "zh": "晨雾"
+      },
+      "family": "atmosphere",
+      "familyTitle": {
+        "en": "Atmospheric",
+        "zh": "光与氛围"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. One full-bleed atmospheric photograph of a single dark island in still lake, pale warm gray fog, island low in composition. Huge deep aubergine serif title centered in upper half, small subtitle beneath. Tiny brand top-left and metadata at bottom. Almost monochrome with a single small vermilion square accent. Serene enormous negative space, luxury editorial.",
+      "description": {
+        "en": "Dawn Fog presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "晨雾风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "electric-silk",
+      "title": {
+        "en": "Electric Silk",
+        "zh": "电光丝绸"
+      },
+      "family": "atmosphere",
+      "familyTitle": {
+        "en": "Atmospheric",
+        "zh": "光与氛围"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Flat ivory background with ONE large draped electric-blue satin cloth entering from upper-right and twisting downward to lower-right, isolated PNG cutout appearance, exquisite specular fabric texture. Huge near-black sans title on left, small subtitle, tiny orange brand line. Presenter and date bottom-left. A single tactile hero image with no other decoration.",
+      "description": {
+        "en": "Electric Silk presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "电光丝绸风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "concrete-arch",
+      "title": {
+        "en": "Concrete Arch",
+        "zh": "混凝土拱"
+      },
+      "family": "architecture",
+      "familyTitle": {
+        "en": "Architecture",
+        "zh": "建筑空间"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Monochrome photograph of a monumental minimalist concrete arch in hard sunlight occupies right 60%. Flat pale pistachio block left 40%, huge dark navy condensed title and small subtitle. Tiny metadata lower left. Single strong architectural image with exquisite texture, no people, minimal clean composition.",
+      "description": {
+        "en": "Concrete Arch presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "混凝土拱风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "orange-stair",
+      "title": {
+        "en": "Orange Stair",
+        "zh": "橙色阶梯"
+      },
+      "family": "architecture",
+      "familyTitle": {
+        "en": "Architecture",
+        "zh": "建筑空间"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Single sculptural burnt-orange staircase photographed against pale apricot wall, occupies left 52%, strong hard sunlight and diagonal shadows. Right cream field has oversized deep brown serif title across three lines, small brand top-right, subtitle and metadata at bottom-right. High-end architecture editorial, severe visual hierarchy.",
+      "description": {
+        "en": "Orange Stair presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "橙色阶梯风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "blue-portal",
+      "title": {
+        "en": "Blue Portal",
+        "zh": "蓝色门廊"
+      },
+      "family": "architecture",
+      "familyTitle": {
+        "en": "Architecture",
+        "zh": "建筑空间"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. A single massive ultramarine rectangular doorway floating in a flat pale lavender field, viewed frontally with a subtle dark interior, occupies right third, sculptural architecture and matte surface. Huge near-black sans title left. Small vivid orange square brand mark, presenter and date aligned bottom. Extremely simple spatial surrealism, only one object.",
+      "description": {
+        "en": "Blue Portal presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "蓝色门廊风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "sand-courtyard",
+      "title": {
+        "en": "Sand Courtyard",
+        "zh": "砂色庭院"
+      },
+      "family": "architecture",
+      "familyTitle": {
+        "en": "Architecture",
+        "zh": "建筑空间"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Full-height monochrome warm-sand photograph of a circular opening in a minimal plaster wall occupies upper 70%, exquisite sunlight and curved shadow. Bottom 30% flat deep oxblood band holding a large cream serif title, small subtitle and metadata with excellent readable hierarchy. Tiny brand top-left over plain plaster. Architectural cover with bold horizontal structure.",
+      "description": {
+        "en": "Sand Courtyard presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "砂色庭院风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "red-balloon",
+      "title": {
+        "en": "Red Balloon",
+        "zh": "红色气球"
+      },
+      "family": "playful",
+      "familyTitle": {
+        "en": "Playful",
+        "zh": "创意图形"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Flat saturated cherry-red background. ONE huge glossy pale pink inflated asterisk at upper-right, isolated PNG aesthetic, soft realistic shadow. Huge warm ivory heavy sans title bottom-left, tiny black brand top-left and black presenter/date lower edge. Playful but premium, dramatic scale, not childish.",
+      "description": {
+        "en": "Red Balloon presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "红色气球风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "cutout-sun",
+      "title": {
+        "en": "Cutout Sun",
+        "zh": "剪纸太阳"
+      },
+      "family": "playful",
+      "familyTitle": {
+        "en": "Playful",
+        "zh": "创意图形"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Flat sky-blue background. ONE huge orange irregular sun cut-paper disk at right, visible rough paper fiber edges and gentle shadow. Dark navy oversized warm serif title on left, small subtitle. Small cream brand tab upper-left and metadata bottom-left. Modern hand-made editorial confidence, only one sun no faces.",
+      "description": {
+        "en": "Cutout Sun presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "剪纸太阳风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "racing-stripe",
+      "title": {
+        "en": "Racing Stripe",
+        "zh": "疾速条纹"
+      },
+      "family": "playful",
+      "familyTitle": {
+        "en": "Playful",
+        "zh": "创意图形"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Warm ivory slide crossed by ONE thick cobalt-blue diagonal band from top center to bottom-right, intersecting a solid orange circle on far right. Huge dark charcoal condensed sans title on left across three lines. Tiny metadata bottom-left, brand top-left. Energetic Swiss graphic cover, flat bold shapes, no texture, no complex patterns.",
+      "description": {
+        "en": "Racing Stripe presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "疾速条纹风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    },
+    {
+      "id": "soft-grid",
+      "title": {
+        "en": "Soft Grid",
+        "zh": "柔软格构"
+      },
+      "family": "playful",
+      "familyTitle": {
+        "en": "Playful",
+        "zh": "创意图形"
+      },
+      "prompt": "Use case: productivity-visual. Create ONE single finished 16:9 landscape presentation opening slide, full bleed, 1672x941 or similar landscape proportions. Very simple but exceptionally premium graphic design: ONE commanding visual or bold block, gigantic title, small subtitle, small brand mark, presenter and date. Clear legibility and generous safe margins. Never a website, page, UI or dashboard. No navigation, buttons, cards, playback controls, chapters, frame, watermarks or extra text. Exact words: brand \"AARON SKILLS\"; title \"Ideas into impact.\"; subtitle \"A better way to show your work\"; presenter \"Presented by Aaron Guo\"; date \"19 OCT 2026\". Maintain exceptional typography and expressive color, high quality keynote design. Flat coral-peach background. ONE large lavender inflated rounded hashtag sculpture, tilted in right half, silky matte rubber material with beautiful studio light and soft shadow. Huge deep purple geometric sans title left, small subtitle, tiny brand top-left and presenter date baseline bottom. Unusual compelling color pairing, minimal artful 3D cutout.",
+      "description": {
+        "en": "Soft Grid presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+        "zh": "柔软格构风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+      }
+    }
+  ]
+}
