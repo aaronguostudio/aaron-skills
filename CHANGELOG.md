@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add short website video showcases for a public blog and a fictional signed-in
+  review flow, with three independent presentation/explanation recipes, generic
+  English AI narration, captions, and read-only CDN delivery checks. Preserve
+  frozen benchmarks and keep raw recordings, sessions and personal profiles out
+  of source control.
 - Present Aaron Skills as a collection of senior-engineer workflows and tools,
   with Demo as the first bundle; add an English/Chinese overview and setup.
 - Add a shared platform layer, Ubuntu 24.04 and native Windows x64 installation,

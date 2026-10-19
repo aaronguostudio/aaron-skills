@@ -212,6 +212,15 @@
     "examples/feature-blueprint/lightweight.md",
     "examples/feature-blueprint/cases.mjs",
     "examples/feature-blueprint/save-feedback.mjs",
-    "docs/skill-names.md"
+    "docs/skill-names.md",
+    "docs/video-showcases.md",
+    "examples/showcase-review/README.md",
+    "examples/showcase-review/app.mjs",
+    "examples/showcase-review/demo-capture/config.mjs",
+    "examples/showcase-review/demo-capture/walks/review-batch.mjs",
+    "examples/showcase-review/index.html",
+    "examples/showcase-review/server.mjs",
+    "examples/showcase-review/server.test.mjs",
+    "examples/showcase-review/styles.css"
   ]
 }

@@ -1,0 +1,194 @@
+[
+  {
+    "id": "blog",
+    "kind": "public",
+    "title": {
+      "en": "One useful thought. Worth coming back to.",
+      "zh": "一个值得再读的想法。"
+    },
+    "summary": {
+      "en": "Find a Builder Note about slow iteration — and a quieter way to work with AI.",
+      "zh": "从 Builder Notes 找到“慢慢迭代”：AI 也能让人从容地打磨喜欢的事。"
+    },
+    "outline": {
+      "en": "Find the public Builder Notes archive. Open AI Taught Me a Phrase: Slow Iteration. Read the thought and inspect its illustration, then return to the archive.",
+      "zh": "从 Builder Notes 打开 Slow Iteration，关注小游戏与写小说这两个具体例子，再看插画如何表达“慢慢搭起一个世界”。最后返回列表。整个过程无需账号。"
+    },
+    "variants": [
+      {
+        "id": "minimal",
+        "name": "Quick demo",
+        "style": "Quick demo",
+        "template": "Minimal",
+        "purpose": {
+          "en": "The useful result, with no voiceover.",
+          "zh": "用字幕和高亮，快速展示结果。"
+        },
+        "audio": {
+          "en": "No narration",
+          "zh": "无旁白"
+        },
+        "language": "English",
+        "brief": {
+          "en": "Use the passed recording for a quick demo. Keep the claims tied to visible results. Use the Minimal presentation; draft the explanation for review before adding voice.",
+          "zh": "基于通过检查的录制，制作 Quick demo。说明与画面证据对应，使用 Minimal 模板；添加旁白前先审阅草稿。"
+        },
+        "command": "aaron-demo render <passed-run> \\\n  --template minimal --cover --stills \\\n  --out <delivery>/minimal/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/minimal/0e419d184a5f8f15/walkthrough.mp4",
+        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/minimal/8e06aca45e4f5a28/poster.webp",
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/minimal/18c0a57412eef698/captions.vtt",
+        "bytes": 1338319,
+        "sha256": "0e419d184a5f8f15c6bb0d20b16006ea8645471fe34d6bd1d619e368a2e49621",
+        "seconds": 34.333333333333336
+      },
+      {
+        "id": "professional",
+        "name": "Task tutorial",
+        "style": "Task Tutorial",
+        "template": "Professional",
+        "purpose": {
+          "en": "A concise, step-by-step explanation.",
+          "zh": "一步一步，说明如何完成任务。"
+        },
+        "audio": {
+          "en": "AI narration · soft intro sting",
+          "zh": "AI 英文旁白 · 轻柔开场音效"
+        },
+        "language": "English",
+        "brief": {
+          "en": "Use the passed recording for a task tutorial. Keep the claims tied to visible results. Use the Professional presentation; draft the explanation for review before adding voice.",
+          "zh": "基于通过检查的录制，制作 Task Tutorial。说明与画面证据对应，使用 Professional 模板；添加旁白前先审阅草稿。"
+        },
+        "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --cover --stills --out <delivery>/professional/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/professional/b33c48e92c73605a/walkthrough.mp4",
+        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/professional/6ad64e375aae4677/poster.webp",
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/professional/4247c9f6b93989f6/captions.vtt",
+        "bytes": 3286624,
+        "sha256": "b33c48e92c73605a9097911b69840046a530313aa7246417b1b15793feb90ad1",
+        "seconds": 43.2
+      },
+      {
+        "id": "showcase",
+        "name": "Stakeholder story",
+        "style": "Stakeholder Walkthrough",
+        "template": "Showcase",
+        "purpose": {
+          "en": "The why, the checkpoint and the payoff.",
+          "zh": "讲清缘由、检查点和最后的收获。"
+        },
+        "audio": {
+          "en": "AI narration · bright intro sting",
+          "zh": "AI 英文旁白 · 明亮开场音效"
+        },
+        "language": "English",
+        "brief": {
+          "en": "Use the passed recording for a stakeholder walkthrough. Keep the claims tied to visible results. Use the Showcase presentation; draft the explanation for review before adding voice.",
+          "zh": "基于通过检查的录制，制作 Stakeholder Walkthrough。说明与画面证据对应，使用 Showcase 模板；添加旁白前先审阅草稿。"
+        },
+        "command": "aaron-demo render <passed-run> \\\n  --template showcase --script <external-script.json> \\\n  --cover --stills --out <delivery>/showcase/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/showcase/e2a71813227a7288/walkthrough.mp4",
+        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/showcase/d00477e4477749bc/poster.webp",
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/blog/showcase/7375da8930555637/captions.vtt",
+        "bytes": 3163373,
+        "sha256": "e2a71813227a7288cda3a24099e832e899f26577e45f7fc2fda80471a2670676",
+        "seconds": 38.53333333333333
+      }
+    ]
+  },
+  {
+    "id": "ledgerlane",
+    "kind": "synthetic",
+    "title": {
+      "en": "Two invoices. One checked decision.",
+      "zh": "两张发票，一次有依据的决定。"
+    },
+    "summary": {
+      "en": "Fix the missing coding. Check two invoices and $2,000. Then verify the approved batch after a reload.",
+      "zh": "补全分类，核对两张发票与 $2,000 总额，刷新后再次确认审批结果。"
+    },
+    "outline": {
+      "en": "In a fictional signed-in review workspace, assign the invoice category and leave a reason. Select the two intended invoices. Confirm the count and $2,000 total before the simulated approval. Reload the saved batch and verify its count, total and Approved status.",
+      "zh": "在虚构的登录后工作台补全发票分类与审核说明，选择指定的两张发票。模拟审批前核对数量和 $2,000 总额；刷新保存的批次后，再次确认数量、总额与 Approved 状态。"
+    },
+    "variants": [
+      {
+        "id": "minimal",
+        "name": "Quick demo",
+        "style": "Quick demo",
+        "template": "Minimal",
+        "purpose": {
+          "en": "The useful result, with no voiceover.",
+          "zh": "用字幕和高亮，快速展示结果。"
+        },
+        "audio": {
+          "en": "No narration",
+          "zh": "无旁白"
+        },
+        "language": "English",
+        "brief": {
+          "en": "Use the passed recording for a quick demo. Keep the claims tied to visible results. Use the Minimal presentation; draft the explanation for review before adding voice.",
+          "zh": "基于通过检查的录制，制作 Quick demo。说明与画面证据对应，使用 Minimal 模板；添加旁白前先审阅草稿。"
+        },
+        "command": "aaron-demo render <passed-run> \\\n  --template minimal --cover --stills \\\n  --out <delivery>/minimal/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/minimal/6681d2fd56df488d/walkthrough.mp4",
+        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/minimal/d5621d42b91bb6fe/poster.webp",
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/minimal/96423149adf66bee/captions.vtt",
+        "seconds": 38.333333333333336,
+        "bytes": 988389,
+        "sha256": "6681d2fd56df488d2047b659f32c5139109c6403d1ed6df6576ec6306eec5b5c"
+      },
+      {
+        "id": "professional",
+        "name": "Task tutorial",
+        "style": "Task Tutorial",
+        "template": "Professional",
+        "purpose": {
+          "en": "A concise, step-by-step explanation.",
+          "zh": "一步一步，说明如何完成任务。"
+        },
+        "audio": {
+          "en": "AI narration · soft intro sting",
+          "zh": "AI 英文旁白 · 轻柔开场音效"
+        },
+        "language": "English",
+        "brief": {
+          "en": "Use the passed recording for a task tutorial. Keep the claims tied to visible results. Use the Professional presentation; draft the explanation for review before adding voice.",
+          "zh": "基于通过检查的录制，制作 Task Tutorial。说明与画面证据对应，使用 Professional 模板；添加旁白前先审阅草稿。"
+        },
+        "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --cover --stills --out <delivery>/professional/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/professional/47c845e65445fba1/walkthrough.mp4",
+        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/professional/36ff1be55ac64a37/poster.webp",
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/professional/66225fbc5df25f83/captions.vtt",
+        "bytes": 3015084,
+        "sha256": "47c845e65445fba15bda38d6436a1bef7a1713fa86f72aefdf8d7bdeb4304b4b",
+        "seconds": 43.93333333333333
+      },
+      {
+        "id": "showcase",
+        "name": "Stakeholder story",
+        "style": "Stakeholder Walkthrough",
+        "template": "Showcase",
+        "purpose": {
+          "en": "The why, the checkpoint and the payoff.",
+          "zh": "讲清缘由、检查点和最后的收获。"
+        },
+        "audio": {
+          "en": "AI narration · bright intro sting",
+          "zh": "AI 英文旁白 · 明亮开场音效"
+        },
+        "language": "English",
+        "brief": {
+          "en": "Use the passed recording for a stakeholder walkthrough. Keep the claims tied to visible results. Use the Showcase presentation; draft the explanation for review before adding voice.",
+          "zh": "基于通过检查的录制，制作 Stakeholder Walkthrough。说明与画面证据对应，使用 Showcase 模板；添加旁白前先审阅草稿。"
+        },
+        "command": "aaron-demo render <passed-run> \\\n  --template showcase --script <external-script.json> \\\n  --cover --stills --out <delivery>/showcase/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/showcase/9f16d1d6520c0546/walkthrough.mp4",
+        "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/showcase/9c55482e794b9176/poster.webp",
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v1/ledgerlane/showcase/009ffee2eb4e76d8/captions.vtt",
+        "bytes": 2999289,
+        "sha256": "9f16d1d6520c0546a2a01a194ce4b6047e3b8a589e038486656212bef87e09e2",
+        "seconds": 41.43333333333333
+      }
+    ]
+  }
+]
