@@ -5,6 +5,8 @@ import { XIcon } from "@phosphor-icons/react/dist/csr/X";
 import workflowDiagram from "./assets/workflow-canvas/workflow-diagram.webp";
 import workflowDiagramSmall from "./assets/workflow-canvas/workflow-diagram-768.webp";
 import { Showcases } from "./Showcases";
+import { IntroVideo } from "./IntroVideo";
+import publishedIntroduction from "./introduction.json";
 
 const REPO = "https://github.com/aaronguostudio/aaron-skills";
 const copy = {
@@ -12,7 +14,7 @@ const copy = {
     nav: ["Workflow", "Skills"],
     eyebrow: "METHODS FOR WORKING WITH AGENTS",
     headline: ["From unfamiliar", "project to a", "clear handoff."],
-    intro: "Reusable skills and tools for thoughtful software work.",
+    intro: "Reusable skills and tools for working with AI agents. Start with Demo: record a real workflow, explain the checked result, and prepare a clear handoff.",
     explore: "Explore the skills",
     github: "View on GitHub",
     workflow: "A WORKING METHOD, MADE REUSABLE.",
@@ -68,7 +70,7 @@ const copy = {
     nav: ["工作流程", "Skills"],
     eyebrow: "与 AGENT 协作的工作方法",
     headline: ["从陌生项目，", "到清楚交付。"],
-    intro: "将资深工程师的工作方法，沉淀成可复用的 Skills 与工具。",
+    intro: "将 AI Agent 的工作方法与执行工具连起来。目前已发布 Demo：录制真实流程，讲清检查过的结果，再整理成可交付的更新。",
     explore: "探索这些 Skills",
     github: "在 GitHub 查看",
     workflow: "把工作方法，变成可复用的能力。",
@@ -233,7 +235,18 @@ export function App() {
       : "en",
   );
   const [selected, setSelected] = useState(null);
+  const [introductionOpen, setIntroductionOpen] = useState(false);
+  const [review, setReview] = useState(null);
+  const introduction = review?.intro ?? publishedIntroduction;
   const text = copy[language];
+  useEffect(() => {
+    if (!import.meta.env.DEV || !import.meta.env.AARON_SKILLS_REVIEW) return;
+    const controller = new AbortController();
+    fetch("/__review/catalog.json", { signal: controller.signal })
+      .then(response => { if (!response.ok) throw new Error("Review catalogue unavailable"); return response.json(); })
+      .then(setReview).catch(error => { if (error.name !== "AbortError") console.warn("Local review media unavailable; showing published examples."); });
+    return () => controller.abort();
+  }, []);
   useEffect(() => {
     document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
   }, [language]);
@@ -307,15 +320,15 @@ export function App() {
             </h1>
             <p className="hero-description">{text.intro}</p>
             <div className="hero-actions">
-              <a className="button button-dark" href="#skills">
-                {text.explore}
-                <Arrow />
-              </a>
+              {introduction?.video ? <button className="button button-dark" onClick={() => setIntroductionOpen(true)} aria-haspopup="dialog">
+                {language === "zh" ? "先看 Aaron Skills 介绍" : "What is Aaron Skills?"}<span aria-hidden="true">▶</span>
+              </button> : <a className="button button-dark" href="#skills">{text.explore}<Arrow /></a>}
               <a href="#examples" className="text-link">
                 {language === "zh" ? "观看实例" : "Watch the examples"}
                 <Arrow />
               </a>
             </div>
+            <p className="hero-scope">{language === "zh" ? "已发布：Demo · Capture / Film / Share。其他工作流能力仍在开发。" : "Released: Demo · Capture / Film / Share. Other workflow capabilities are in development."}</p>
           </div>
           <figure className="hero-art">
             <img
@@ -367,7 +380,16 @@ export function App() {
             ))}
           </ol>
         </section>
-        <Showcases language={language} />
+        <section className="positioning wrap" aria-labelledby="positioning-title">
+          <p className="eyebrow">{language === "zh" ? "如何融入你的工作流" : "HOW IT FITS YOUR WORKFLOW"}</p>
+          <h2 id="positioning-title">{language === "zh" ? "从做出来，到让人看明白。" : "Make the work reviewable."}</h2>
+          <p>{language === "zh" ? "Aaron Skills 将可复用的方法与执行工具放在一起。当前已发布的重点是 Demo：真实录制、检查过的结果、可调整的讲解，以及供人审阅的交付。" : "Aaron Skills pairs reusable working methods with executable tools. The released focus is Demo: real recordings, checked results, adaptable explanations, and a handoff someone can review."}</p>
+          <details><summary>{language === "zh" ? "与 gstack、Superpowers 的侧重点有什么不同？" : "How does this compare with gstack and Superpowers?"}</summary>
+            <p>{language === "zh" ? "gstack 的官方介绍强调产品、工程、QA 与发布等角色式工具；Superpowers 强调从澄清、计划到测试与评审的开发方法。Aaron Skills 当前发布的 Demo 聚焦把应用结果变成可观看、可审阅、可交付的材料。范围有重叠，这是一种侧重点比较，不是功能缺失或效果优劣的断言。" : "gstack documents role-based tools spanning product, engineering, QA and release. Superpowers documents a development methodology from clarification and planning through testing and review. Aaron Skills’ released Demo bundle focuses on turning application results into watchable, reviewable handoffs. These scopes overlap; this describes documented focus, not missing capabilities or comparative performance."}</p>
+            <div className="positioning-sources"><ExternalLink href="https://github.com/garrytan/gstack">gstack — official README ↗</ExternalLink><ExternalLink href="https://github.com/obra/superpowers">Superpowers — official README ↗</ExternalLink></div>
+          </details>
+        </section>
+        <Showcases language={language} cases={review?.cases} />
       </main>
       <footer className="site-footer wrap">
         <p>
@@ -381,6 +403,7 @@ export function App() {
           <Arrow size={20} />
         </ExternalLink>
       </footer>
+      <IntroVideo open={introductionOpen} onClose={() => setIntroductionOpen(false)} language={language} media={introduction} />
       <SkillDetails
         selected={selected}
         onClose={() => setSelected(null)}

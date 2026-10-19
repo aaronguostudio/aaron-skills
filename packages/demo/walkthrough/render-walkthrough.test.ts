@@ -90,6 +90,11 @@ describe("final render validation", () => {
 });
 
 describe("conversational script", () => {
+  test("narration notices require a separate opt-in", () => {
+    expect(parseArgs(["/run", "--narrate"]).narrationNotice).toBe(false);
+    expect(parseArgs(["/run", "--narrate", "--narration-notice"]).narrationNotice).toBe(true);
+    expect(() => parseArgs(["/run", "--narration-notice", "--narration-notice"])).toThrow(/Duplicate/);
+  });
   test("--script takes a path and implies --narrate", () => {
     expect(parseArgs(["/run", "--script", "/s.json"])).toMatchObject({ run: "/run", script: "/s.json", narrate: true });
     expect(parseArgs(["--script", "/s.json", "/run"])).toMatchObject({ run: "/run", narrate: true });

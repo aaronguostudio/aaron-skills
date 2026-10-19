@@ -74,6 +74,7 @@ type Props = {
   branding?: Brand;
   presentation?: Presentation;
   narrationKind?: 'ai' | 'imported';
+  narrationNotice?: boolean;
 };
 
 const fade = (frame: number, total: number) =>
@@ -88,13 +89,13 @@ const Card: React.FC<{ total: number; children: React.ReactNode }> = ({ total, c
   );
 };
 
-const TitleCard: React.FC<{ capture: Capture; total: number; narrated: boolean; imported?: boolean }> = ({ capture, total, narrated, imported }) => (
+const TitleCard: React.FC<{ capture: Capture; total: number; narrated: boolean; imported?: boolean; showNotice?: boolean }> = ({ capture, total, narrated, imported, showNotice = false }) => (
   <Card total={total}>
     <div style={{ color: C.ink, fontSize: 64, fontWeight: 650, lineHeight: 1.15 }}>{capture.title}</div>
     {capture.subtitle ? <div style={{ color: C.muted, fontSize: 30, marginTop: 22 }}>{capture.subtitle}</div> : null}
-    <div style={{ color: C.muted, fontSize: 20, marginTop: 40, letterSpacing: 1 }}>
+    {showNotice ? <div style={{ color: C.muted, fontSize: 20, marginTop: 40, letterSpacing: 1 }}>
       Recorded {capture.startedAt.slice(0, 10)} · {narrated ? imported ? 'Imported narration' : "AI narration" : "no audio"}
-    </div>
+    </div> : null}
   </Card>
 );
 
@@ -199,7 +200,7 @@ const CaptionBand: React.FC<{
   >
     <div style={{ color: C.muted, fontSize: 22, minWidth: 64, fontVariantNumeric: "tabular-nums" }}>{position}</div>
     <div style={{ color: C.ink, fontSize: 34, lineHeight: 1.2, flex: 1 }}>{caption}</div>
-    {/* A branded film wears its mark here instead; its opening card carries the narration notice. */}
+    {/* Process labels are shown only when explicitly requested. */}
     {brand ? (
       <div style={{ color: C.ink, display: "flex", alignItems: "center", opacity: 0.9 }}>
         <BrandMark brand={brand} size={34} />
@@ -229,7 +230,7 @@ const SpeedBadge: React.FC<{ speed: number; right: number }> = ({ speed, right }
   </div>
 );
 
-export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, narration = [], branding, presentation, narrationKind }) => {
+export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, narration = [], branding, presentation, narrationKind, narrationNotice = false }) => {
   const frame = useCurrentFrame();
   if (!capture || !timeline) return <AbsoluteFill style={{ background: C.bg }} />;
   const { w, h } = capture.viewport;
@@ -242,14 +243,16 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, na
   const step = stepIndex !== null ? steps[stepIndex] : undefined;
   const narrated = narration.length > 0;
   const aiNarrated = narrated && narrationKind !== 'imported';
+  const noticeRequested = narrationNotice || branding?.aiNotice === true;
+  const aiNotice = aiNarrated && noticeRequested;
 
   return (
     <AbsoluteFill style={{ background: C.bg }}>
       {timeline.titleFrames > 0 ? <Sequence durationInFrames={timeline.titleFrames}>
-        {presentation ? <PresentationCard p={presentation} total={timeline.titleFrames} narrated={aiNarrated}/> : branding ? (
-          <BrandCard brand={branding} total={timeline.titleFrames} narrated={aiNarrated} />
+        {presentation ? <PresentationCard p={presentation} total={timeline.titleFrames} narrated={aiNotice}/> : branding ? (
+          <BrandCard brand={branding} total={timeline.titleFrames} narrated={aiNarrated} notice={noticeRequested} />
         ) : (
-          <TitleCard capture={capture} total={timeline.titleFrames} narrated={narrated} imported={narrationKind === 'imported'} />
+          <TitleCard capture={capture} total={timeline.titleFrames} narrated={narrated} imported={narrationKind === 'imported'} showNotice={noticeRequested} />
         )}
       </Sequence> : null}
       {timeline.segments.map((s) => (
@@ -302,12 +305,12 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, na
           <Highlights marks={highlightsAt(timeline, steps, capture.viewport, frame)} w={w} h={h} color={presentation?.body.highlightColor} />
           <Cursor state={cursorAt(timeline, steps, capture.viewport, frame)} />
           {segment && segment.speed > 1 ? <SpeedBadge speed={segment.speed} right={24} /> : null}
-          {presentation ? <PresentationCaption p={presentation} top={h} width={w} caption={step?.caption ?? ''} position={stepIndex !== null ? `${stepIndex+1}/${steps.length}` : ''} narrated={aiNarrated}/> : <CaptionBand
+          {presentation ? <PresentationCaption p={presentation} top={h} width={w} caption={step?.caption ?? ''} position={stepIndex !== null ? `${stepIndex+1}/${steps.length}` : ''} narrated={aiNotice}/> : <CaptionBand
             top={h}
             width={w}
             caption={step?.caption ?? ""}
             position={stepIndex !== null ? `${stepIndex + 1}/${steps.length}` : ""}
-            narrated={aiNarrated}
+            narrated={aiNotice}
             brand={branding}
           />}
         </>
@@ -350,7 +353,7 @@ const calculateMetadata: CalculateMetadataFunction<Props> = async ({ props }) =>
     fps: FPS,
     width: capture.viewport.w,
     height: capture.viewport.h + CAPTION_BAND,
-    props: { capture, steps, timeline, narration: props.narration ?? [], branding: props.branding, presentation:props.presentation, narrationKind:props.narrationKind },
+    props: { capture, steps, timeline, narration: props.narration ?? [], branding: props.branding, presentation:props.presentation, narrationKind:props.narrationKind, narrationNotice:props.narrationNotice },
   };
 };
 

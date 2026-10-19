@@ -200,6 +200,7 @@ export type Args = {
   stills: boolean;
   calibrationMs?: number;
   narrate: boolean;
+  narrationNotice: boolean;
   voiceProfile?: string;
   script?: string;
   speed?: number;
@@ -212,15 +213,15 @@ export type Args = {
 };
 
 export function parseArgs(argv: string[]): Args {
-  const args: Args = { dryRun: false, stills: false, narrate: false, out: undefined, script: undefined, cover:false };
+  const args: Args = { dryRun: false, stills: false, narrate: false, narrationNotice: false, out: undefined, script: undefined, cover:false };
   const values: Record<string, keyof Args> = {
     "--out": "out", "--calibration-ms": "calibrationMs", "--voice-profile": "voiceProfile",
     "--script": "script", "--speed": "speed", "--brand": "brand",
     '--template':'template', '--presentation':'presentation', '--audio':'audio', '--voice-provider':'voiceProvider',
   };
-  const flags = new Map<string, "dryRun" | "stills" | "narrate" | 'cover'>([
+  const flags = new Map<string, "dryRun" | "stills" | "narrate" | 'cover' | 'narrationNotice'>([
     ["--dry-run", "dryRun"], ["--stills", "stills"], ["--narrate", "narrate"],
-    ['--cover','cover'],
+    ['--cover','cover'], ['--narration-notice','narrationNotice'],
   ]);
   const seen = new Set<string>();
   for (let i = 0; i < argv.length; i++) {
@@ -248,7 +249,7 @@ export function parseArgs(argv: string[]): Args {
   return args;
 }
 
-const USAGE = "usage: aaron-demo render <passed-run> [--template minimal|professional|showcase] [--presentation <external.json>] [--cover] [--audio <manifest.json> | --narrate | --voice-provider none|elevenlabs|import|qwen] [--script <script.json>] [--voice-profile <id>] [--speed <0.7-1.2>] [--brand <legacy-id>] [--out <file.mp4>] [--stills] [--dry-run]";
+const USAGE = "usage: aaron-demo render <passed-run> [--template minimal|professional|showcase] [--presentation <external.json>] [--cover] [--narration-notice] [--audio <manifest.json> | --narrate | --voice-provider none|elevenlabs|import|qwen] [--script <script.json>] [--voice-profile <id>] [--speed <0.7-1.2>] [--brand <legacy-id>] [--out <file.mp4>] [--stills] [--dry-run]";
 
 export async function main(argv: string[]): Promise<number> {
   if (argv.length === 1 && (argv[0] === '--help' || argv[0] === '-h')) { console.log(USAGE); return 0; }
@@ -280,7 +281,7 @@ export async function main(argv: string[]): Promise<number> {
     if (imported) checkCards(imported.clips);
     prepared = prepare(run,out,roots,prepared.calibrationMs,{...baseTiming,...(imported?{stepMinMs:stepMinMs(prepared.steps,imported.clips),...cardMinMs(imported.clips,p?.intro.enabled&&(p.intro.sound||p.intro.soundPreset!=='none')?BRAND_STING_LEAD_MS:0)}:{})});
     if (dryRun) {
-      console.log(JSON.stringify({dryRun:true,out:prepared.out,seconds:prepared.seconds,template:p?.template ?? 'legacy',coverRequested:parsed.cover,voiceProvider:provider,narrationRequested:provider!=='none',narrationTiming:provider==='elevenlabs'?'requires synthesis; not performed':provider==='import'?'measured imported clips':'silent',calibrationMs:prepared.calibrationMs,steps:prepared.steps.length},null,2));
+      console.log(JSON.stringify({dryRun:true,out:prepared.out,seconds:prepared.seconds,template:p?.template ?? 'legacy',coverRequested:parsed.cover,voiceProvider:provider,narrationNotice:parsed.narrationNotice,narrationRequested:provider!=='none',narrationTiming:provider==='elevenlabs'?'requires synthesis; not performed':provider==='import'?'measured imported clips':'silent',calibrationMs:prepared.calibrationMs,steps:prepared.steps.length},null,2));
       return 0;
     }
     process.umask(0o077);
@@ -305,7 +306,7 @@ export async function main(argv: string[]): Promise<number> {
     const timing={...baseTiming,...(clips.length?{stepMinMs:stepMinMs(prepared.steps,clips),...cardMinMs(clips,(presentation?.intro.sound||branding?.sound)?BRAND_STING_LEAD_MS:0)}:{})};
     prepared=prepare(run,out,roots,prepared.calibrationMs,timing);
     writeFileSync(prepared.chaptersPath,prepared.chaptersText);
-    const props=`--props=${JSON.stringify({calibrationMs:prepared.calibrationMs,stepMinMs:prepared.stepMinMs,titleMs:prepared.titleMs,endMs:prepared.endMs,narration:clips.map(({at,file,ms})=>({at,file,ms})),narrationKind,branding,presentation})}`;
+    const props=`--props=${JSON.stringify({calibrationMs:prepared.calibrationMs,stepMinMs:prepared.stepMinMs,titleMs:prepared.titleMs,endMs:prepared.endMs,narration:clips.map(({at,file,ms})=>({at,file,ms})),narrationKind,narrationNotice:parsed.narrationNotice,branding,presentation})}`;
     const cli=join(REMOTION_DIR,'node_modules','@remotion','cli','remotion-cli.js');
     const invoke=(args:string[])=>{
       const result=spawnSync('node',[cli,...args],{cwd:REMOTION_DIR,stdio:'inherit'});
@@ -321,7 +322,7 @@ export async function main(argv: string[]): Promise<number> {
       execFileSync(python,['-c','from PIL import Image; import sys; Image.open(sys.argv[1]).convert("RGB").save(sys.argv[2],"WEBP",quality=85,method=6)',png,join(dirname(prepared.out),'cover.webp')]);
     }
     if (stills) writeStills(prepared);
-    writeFileSync(join(dirname(prepared.out),'render-manifest.json'),JSON.stringify({version:1,template:p?.template??'legacy',presentation,voiceProvider:provider,narrationKind:clips.length?narrationKind:'none',seconds:prepared.seconds,sourceCaptureSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'capture.json')),'hex'),sourceVideoSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'video.webm')),'hex'),narration:clips},null,2)+'\n');
+    writeFileSync(join(dirname(prepared.out),'render-manifest.json'),JSON.stringify({version:1,template:p?.template??'legacy',presentation,voiceProvider:provider,narrationKind:clips.length?narrationKind:'none',narrationNotice:parsed.narrationNotice,seconds:prepared.seconds,sourceCaptureSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'capture.json')),'hex'),sourceVideoSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'video.webm')),'hex'),narration:clips},null,2)+'\n');
     console.log(`video: ${prepared.out} (${prepared.seconds.toFixed(2)}s); template: ${p?.template??'legacy'}; voice: ${provider}`);
     return 0;
   } catch (error) {

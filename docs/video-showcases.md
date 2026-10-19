@@ -20,15 +20,19 @@ batch, reload, and verify the saved count, total and status. Its local cookie ga
 uses a seeded demo reviewer. It does not demonstrate a production identity provider
 or move money. Real application sign-in remains a human step.
 
-## Two narrated showcase recipes
+## Eight narrated examples
 
-| Purpose | Suggested visual template | Explanation |
-| --- | --- | --- |
-| Task tutorial | Professional | Direct instructions for completing one task |
-| Stakeholder walkthrough | Showcase | Conversational explanation of why the actions and result matter |
+The fictional product recording is presented as Official Product Demo, Quick Demo,
+Release Update, Stakeholder Walkthrough, Task Tutorial and Training Lesson. The
+blog has a Task Tutorial and Stakeholder Walkthrough. All eight use the same
+Professional visual template to make their different explanations easier to compare.
+Official Product Demo is an editorial framing, separate from the five documented
+narrative purposes. The welcome film is a separately authored introduction.
 
-The website showcases voiced tutorials and stakeholder stories. Silent rendering
-remains available in the tool for users who need it.
+The website features finished narrated cuts. Silent rendering remains available
+in the tool for users who need it. An expandable, fictional reference-library
+script illustrates how to draft a short explanation; it is not a transcript of
+these recordings. Real run scripts stay outside Git.
 
 These pairings are editorial choices. Every explanation style can use any visual
 template. Narration, intro sound, logo and opening/closing cards are separate

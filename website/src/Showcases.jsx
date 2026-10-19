@@ -1,12 +1,13 @@
 import { useRef, useState } from "react";
 import showcases from "./showcases.json";
+import { ScriptExample } from "./ScriptExample";
 import "./showcases.css";
 
 const labels = {
   en: {
-    eyebrow: "FROM A REAL CAPTURE TO A CLEAR STORY",
+    eyebrow: "RELEASED TODAY / DEMONSTRATE WITH DEMO",
     title: ["Same screen.", "A different conversation."],
-    intro: "Two small stories. Two narrated ways to tell each one. Switch the recipe to see what changes — the recording stays the same.",
+    intro: "These examples show the released Demo bundle: Capture records and checks a real flow, Film explains it, and Share prepares the handoff. Start with the fictional product demo; the blog shows a different, content-led use.",
     public: "Public website · No sign-in",
     synthetic: "Signed-in app · Fictional data",
     choose: "Choose a video recipe",
@@ -25,9 +26,9 @@ const labels = {
     safety: "A local synthetic app with a real session gate. Every identity, invoice and approval is fictional.",
   },
   zh: {
-    eyebrow: "从真实录制，到清楚讲解",
+    eyebrow: "当前已发布 / DEMO 演示能力",
     title: ["同一份画面，", "不同的表达。"],
-    intro: "两个小故事，各有两种英文讲解。切换配方，看看呈现如何变化——底层录制始终相同。",
+    intro: "下面展示的是已经发布的 Demo 能力：Capture 录下并检查真实流程，Film 制作讲解，Share 整理交付。先看虚构产品的功能演示，再看博客的内容导览。",
     public: "公开网站 · 无需登录",
     synthetic: "登录后应用 · 虚构数据",
     choose: "选择视频配方",
@@ -52,7 +53,7 @@ function ShowcaseCase({ item, language, number }) {
   const [failed, setFailed] = useState(false);
   const player = useRef(null);
   const text = labels[language];
-  const variant = item.variants.find((cut) => cut.id === selected);
+  const variant = item.variants.find((cut) => cut.id === selected) || item.variants[0];
   const changeCut = (id) => {
     player.current?.pause();
     setFailed(false);
@@ -104,7 +105,7 @@ function ShowcaseCase({ item, language, number }) {
           <p className="eyebrow">{text.choose}</p>
           <div className="showcase-options" role="group" aria-label={`${item.title[language]}: ${text.choose}`}>
             {item.variants.map((cut, i) => (
-              <button key={cut.id} onClick={() => changeCut(cut.id)} aria-pressed={selected === cut.id}>
+              <button key={cut.id} onClick={() => changeCut(cut.id)} aria-pressed={variant.id === cut.id}>
                 <span className="showcase-option-index">0{i + 1}</span>
                 <span><strong>{cut.name}</strong><small>{cut.purpose[language]}</small></span>
                 <span className="showcase-option-arrow" aria-hidden="true">↗</span>
@@ -136,7 +137,7 @@ function ShowcaseCase({ item, language, number }) {
   );
 }
 
-export function Showcases({ language }) {
+export function Showcases({ language, cases = showcases }) {
   const text = labels[language];
   return (
     <section className="showcases wrap" id="examples" aria-labelledby="examples-title">
@@ -145,11 +146,12 @@ export function Showcases({ language }) {
         <h2 id="examples-title">{text.title[0]}<br /><span className="accent">{text.title[1]}</span></h2>
         <p>{text.intro}</p>
       </div>
-      {showcases.map((item, i) => <ShowcaseCase key={item.id} item={item} language={language} number={i + 1} />)}
+      {cases.map((item, i) => <ShowcaseCase key={item.id} item={item} language={language} number={i + 1} />)}
       <aside className="showcase-method">
         <h3>{text.how}</h3>
         <ol>{text.steps.map((step) => <li key={step}>{step}</li>)}</ol>
       </aside>
+      <ScriptExample language={language} />
     </section>
   );
 }

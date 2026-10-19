@@ -1,6 +1,6 @@
 # Aaron Skills website
 
-A local, responsive implementation of the selected Orbital Workshop homepage.
+A local, responsive implementation of the selected Workflow Canvas homepage.
 The website is independent of the Demo runtime and lives entirely in this folder.
 
 ```sh
@@ -34,27 +34,18 @@ dependencies separately from the Demo runtime checks.
 
 ## Design and art
 
-`design/source-homepage.png` is the selected visual source. Seven separate
-illustrations were generated using built-in ImageGen with that source attached,
-then encoded as transparent WebP assets under `public/art`. The shared art
-direction is warm ivory ceramic, copper/coral ribbons, pale-blue glass,
-miniature architectural detail, and soft studio light. No UI screenshot is used
-as the website itself; text, navigation and interactions are real HTML.
-
-| Asset | Generation brief |
-| --- | --- |
-| `workshop-hero.webp` | Five floating ceramic workshop islands connected by copper ribbons, with a central camera/film/screen platform and glass/document satellites. |
-| `demo-capture.webp` | Camera and tripod, glass screenshot panes, small copper lamp and plants on a ceramic plinth. |
-| `walkthrough-video.webp` | Copper film reel and curling strip of walkthrough frames on an ivory oval plinth. |
-| `paste-ready-update.webp` | Upright update document, screenshot panes, copper clips and small plants. |
-| `workflow-understand.webp` | Quiet ivory square plinth with floating pale glass panes and cubes. |
-| `workflow-build.webp` | Ivory plinth with assembled and hovering geometric ceramic blocks. |
-| `workflow-verify.webp` | Ivory plinth, ceramic blocks and a pale-blue glass panel with an embedded white check. |
-
-All generated originals are retained locally; ignored `.artifacts/source-art`
-contains this project's PNG copies. The seven original illustrations total about 1.2 MB. The browser now selects
-smaller, fingerprinted WebP variants for each display size; see
+The current homepage follows the approved Workflow Canvas direction: white,
+ink and cobalt, a flat workflow illustration and a compact skill directory.
+Earlier Orbital Workshop artwork remains available for existing README links.
+The website uses responsive WebP assets and a self-hosted font; see
 [image delivery and measured sizes](performance.md).
+
+The introduction and eight narrated examples load on demand. Reviewed final
+MP4, WebP and VTT exports live in the dedicated public media store; source
+recordings, real scripts, personal voice profiles and QA logs stay outside Git.
+The expandable fictional script example is authored specifically for public
+documentation, rather than copied from a real run. The introduction uses Aaron's
+approved voice; the application and blog examples use Liam.
 
 See `design-qa.md` for visual comparison and browser verification. Local captures
 and audit output remain in ignored `.artifacts/`.
