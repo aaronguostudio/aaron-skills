@@ -150,6 +150,17 @@ describe("sync flash", () => {
     expect(prepare(run, undefined, repoRoots(), 0).calibrationSource).toBe("argument");
   }, 30_000); // Real encoding/probing can exceed Bun's 5-second default under CPU load.
 
+  test.skipIf(!hasFfmpeg)("sync diagnostics distinguish unreadable media from absent recorded marker", () => {
+    const reasons: string[] = [];
+    expect(detectSyncOffset('/nonexistent/video.webm', 400, reason => reasons.push(reason))).toBeNull();
+    expect(reasons[0]).toContain('ffprobe could not inspect');
+    const run = makeFixture(mkdtempSync(join(tmpdir(), 'walkthrough-no-marker-')));
+    const blank = join(run, 'blank.webm');
+    require('child_process').execFileSync('ffmpeg', ['-v', 'error', '-f', 'lavfi', '-i', 'color=white:s=64x64:d=1', '-c:v', 'libvpx', blank]);
+    expect(detectSyncOffset(blank, 400, reason => reasons.push(reason))).toBeNull();
+    expect(reasons[1]).toContain('ffprobe completed');
+  }, 30_000);
+
   test("no flash, no offset", () => {
     expect(detectSyncOffset("/nonexistent/video.webm", 400)).toBeNull();
   });

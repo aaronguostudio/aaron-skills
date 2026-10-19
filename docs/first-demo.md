@@ -4,6 +4,11 @@ Run `aaron-demo smoke` after installation. It creates an isolated public fixture
 
 For an application, inspect `demo-capture/config.mjs` and `walks/*.mjs` in that application's repository. Use `aaron-demo capture --project <project> --list`, choose the actual environment and walk, and record. A user signs in in the visible browser when needed. Run `aaron-demo docs project-adapters` to author a new adapter.
 
+Before capture, ensure `setup` establishes and checks the actual initial view:
+apps may remember a tab, filter or theme from a previous session. Use `rec.click`
+for recorded actions and `rec.reveal` when a result needs scrolling; see
+[adapter setup and telemetry](project-adapters.md#starting-state-and-telemetry).
+
 Render a passed capture with `aaron-demo render <run> --stills`. Review every held frame and the end of each wait. Then prepare `message.md` with screenshots and an optional video line; run `aaron-demo page <message.md> --out <message.html>`. Review locally before sending.
 
 When that first review finds a caption or highlight issue but the UI evidence/actions are

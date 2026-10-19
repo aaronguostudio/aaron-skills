@@ -61,7 +61,7 @@ Call these helpers last in a separate showing step; keep clicks in their own ste
 
 The renderer holds a clicking step just before its click, and a showing step on its last frame. Make those frames finished:
 
-- **Before a click:** the control is visible and settled. No spinner, skeleton or toast covers it.
+- **Before a click:** use `rec.click`, which reveals the control and waits for stable geometry long enough for the renderer's pre-click hold. No spinner, skeleton or toast covers it. For a showing step, use `rec.reveal(locator)` before `rec.show`/`rec.focus` if scrolling is needed. `window.scrollTo` does not move an app's internal scroll container; avoid unconditional `scrollIntoView` on an already visible sticky control. Use locators scoped to the intended navigation/content region when labels repeat. Multi-target focus intentionally includes every match, so a stray offscreen duplicate must be scoped out rather than silently ignored.
 - **At the end of a showing step:** the data has loaded. Never end on a blank page, a "Loading…" splash, skeleton rows, an "Empty" placeholder that is still loading, or an error. Wait for the app's finished signal in a `'wait'` step before it.
   - Check first that the new page is showing (its heading or badge), then that its rows have appeared, then that the progress bar is gone. Before the new page renders, "no progress bar" is already true.
   - When a caption states a number, have the walk read it from the page and fail if it differs.

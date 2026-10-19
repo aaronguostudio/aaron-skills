@@ -5,7 +5,7 @@ import type {Presentation} from './model';
 const FONT = "-apple-system, 'Helvetica Neue', Arial, sans-serif";
 
 export const PresentationLogo: React.FC<{p: Presentation; size: number}> = ({p, size}) => p.brand.logo
-  ? <Img src={staticFile(p.brand.logo)} style={{width: size, height: size, objectFit: 'contain'}} />
+  ? <Img src={staticFile(p.brand.logo)} style={{width: 'auto', height: size, maxWidth: size * 4, objectFit: 'contain', objectPosition: 'left center', flexShrink: 0}} />
   : <svg width={size} height={size} viewBox="0 0 64 64" aria-label={p.brand.name}>
       <rect width="64" height="64" rx="18" fill="currentColor" opacity="0.12" />
       <path d="M16 45 29 18h7l13 27H39l-3-7H26l-3 7Zm13-15h4l-2-5Z" fill="currentColor" />

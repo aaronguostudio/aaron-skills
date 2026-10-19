@@ -64,7 +64,7 @@ Aaron Skills 将工作流与执行工作流所需的工具放在同一个集合�
 ```sh
 git clone https://github.com/aaronguostudio/aaron-skills.git
 cd aaron-skills
-# macOS / Ubuntu；也可以把 codex 改成 claude 或 both：
+# macOS / Ubuntu；也可以把 codex 改成 claude、cursor 或 both：
 bash scripts/setup.sh --agent codex --smoke
 ```
 
@@ -81,7 +81,9 @@ Windows 不需要 WSL 或管理员权限；执行策略的 Bypass 只作用于�
 
 > 阅读 README.zh-CN.md 和 docs/installation.md，检查当前平台的前置工具，再为我正在使用的 Agent 安装 Demo。保留其他 Skills 和配置。运行 doctor 和公开示例的 smoke 检查，打开生成的更新页面并检查视频帧，报告仍需手动完成的设置。此次安装不要使用客户应用、凭据或付费旁白。
 
-Codex Skills 注册在用户目录的 `.agents/skills`，Claude Code 在 `.claude/skills`。
+Codex Skills 注册在用户目录的 `.agents/skills`，Claude Code 在 `.claude/skills`；
+`--agent cursor` 注册到 `.cursor/skills`。注册成功不代表模型调用已通过验收。
+已有其他 Demo 安装时，请参阅[隔离并存说明](docs/installation.md#coexist-with-another-demo-installation)。
 Windows 使用受管理的副本，macOS/Ubuntu 使用链接；安装保留无关条目，遇到名称冲突会停止。
 如果需要，请将安装输出的命令目录加入 PATH，并开启新的 Agent 会话以刷新发现结果。
 Smoke 检查会输出 MP4、供审阅的静帧和本地 HTML 更新页面。

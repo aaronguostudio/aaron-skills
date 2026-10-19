@@ -14,6 +14,7 @@ and a completed runtime workflow. None implies the others.
 | macOS arm64 | Supported | Real Apple Silicon machine: installation, capture, revision, media/page/clipboard, headed synthetic sign-in and recovery; existing macOS behavior retained |
 | Ubuntu 24.04 x64 | Supported runtime target | Full workflow in Ubuntu 24.04.4 container under x64 emulation on an ARM Mac; native runner results are reported separately in CI |
 | Windows 11 x64, NTFS | Supported | Real Windows 11 Home laptop, ordinary user token, stock PowerShell 5.1; full workflow, private ACLs, paths with spaces/Chinese, recovery and native launcher |
+| Cursor local | Installer registration in `.cursor/skills` | Directory/launcher checks; native Cursor discovery and model-driven workflow require separate acceptance |
 | Codex local / Claude Code local | Installer registration supported | Original macOS native task results below; new Windows/Linux LLM-host invocation has not been certified |
 | macOS Intel | Unverified on hardware | Do not treat arm64 results as Intel certification |
 | Windows ARM, older Windows, WSL, other Linux distributions/filesystems | Unverified | Windows requires x64; Linux installer targets Ubuntu 24.04; private Windows state requires enforceable NTFS ACLs |

@@ -9,20 +9,21 @@ export function entries(targets) {
   if (result.some(([name]) => !NAME.test(name))) throw new Error('Target names use letters, digits, - and _ only')
   return result
 }
-export async function boxesFor(locator, viewport) {
+export async function boxesFor(locator, viewport, name = 'target') {
   if (!locator || typeof locator.count !== 'function') throw new Error('Each focus target must be a Playwright locator')
   const count = await locator.count()
-  if (!count) throw new Error('Focus target matched no elements')
+  if (!count) throw new Error(`Focus target "${name}" matched no elements`)
   const boxes = []
   // A multi-match locator means ALL its elements, not the first matching card.
   for (let i = 0; i < count; i++) {
     const item = locator.nth(i)
-    if (!await item.isVisible()) throw new Error('Every focus target must be visible')
+    const context = `Focus target "${name}" matched ${count} element(s); element ${i + 1}`
+    if (!await item.isVisible()) throw new Error(`${context} is hidden. Every focus target must be visible; scope the locator to the intended group`)
     const b = await item.boundingBox()
     if (!b || ![b.x, b.y, b.width, b.height].every(Number.isFinite)
       || b.width <= 0 || b.height <= 0 || b.x < 0 || b.y < 0
       || b.x + b.width > viewport.width || b.y + b.height > viewport.height)
-      throw new Error('Every focus target must fit entirely inside the viewport; settle/scroll the UI first')
+      throw new Error(`${context} has box ${JSON.stringify(b)} outside viewport ${viewport.width}x${viewport.height}. Every focus target must fit entirely inside the viewport; scope duplicate links/controls or reveal the intended group first`)
     boxes.push({ x: b.x, y: b.y, w: b.width, h: b.height })
   }
   return boxes

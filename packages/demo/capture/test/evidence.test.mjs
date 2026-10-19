@@ -32,7 +32,7 @@ test('one declaration verifies every metric, groups all cards without right-hand
     assert.deepEqual(step.focus[0].box, { x: 48, y: 220, w: 745, h: 94 })
     assert.deepEqual(Object.keys(step.targets), ['count', 'total', 'status'])
     assert.deepEqual(step.evidence.total, { kind: 'dollarMinor', expected: 200000 })
-    assert.equal(step.focus[0].toMs, 900)
+    assert.equal(step.focus[0].toMs - step.focus[0].fromMs, 900)
     assert.equal(await readFile(join(runDir, step.shot), 'utf8'), 'shot-2', 'kept shot is the checked result, not the step-start screenshot')
   })
 })
@@ -43,6 +43,14 @@ test('a multi-match target covers every card and hidden/offscreen/empty targets 
     for (const [id, target] of Object.entries({ hidden: locator('', [rect(48)], false), missing: locator('', []), offscreen: locator('', [rect(1300)]) })) {
       await assert.rejects(rec.step(id, 'Show target', 'action', () => rec.focus({ target })), /visible|no elements|viewport/)
     }
+  })
+})
+test('an accidental duplicate identifies the named target and failing match without banning groups', async () => {
+  await recording(async rec => {
+    await assert.rejects(rec.step('links', 'Show reports link', 'action', () => rec.focus({ reports: locator('', [rect(48), rect(1500)]) })),
+      /target "reports" matched 2 element\(s\); element 2.*outside viewport 1440x900/)
+    await rec.step('cards', 'Show both cards', 'action', () => rec.focus({ cards: locator('', [rect(48), rect(303)]) }))
+    assert.equal(rec.steps[1].targets.cards.boxes.length, 2)
   })
 })
 test('show refuses malformed declarations and a highlight unrelated to its checked field', async () => {

@@ -62,7 +62,7 @@ aaron-demo render <passed-run> --presentation <external-directory>/presentation.
 Omit fields to use the selected template's defaults. `--template` can override the
 file's template; explicit settings in the file remain overrides. Unknown fields fail
 validation. Text lengths and color formats are checked. A missing logo uses a neutral
-mark; raster logos support PNG, JPEG and WebP. Existing SVG-part profiles remain
+mark; raster logos support PNG, JPEG and WebP. Square marks and horizontal wordmarks keep their intrinsic aspect ratio. Logo height is bounded by its slot and width by four times that height, keeping a wide wordmark readable without displacing the caption. Crop excess transparent padding in the supplied asset; it is part of the image bounds. Existing SVG-part profiles remain
 available through legacy `--brand`; do not combine that flag with a presentation.
 
 `intro.soundPreset` accepts `none`, `soft` or `bright`. To use your own sound, set

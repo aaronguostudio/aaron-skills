@@ -93,7 +93,7 @@ export type Timing = { stepMinMs?: number[]; titleMs?: number; endMs?: number; t
 // screencast starts after the page does). A capture can mark the moment its page turned from
 // black to white (capture.json `sync.tMs`); this finds that frame and returns the offset to add
 // to every capture time. Null when there is no such transition or ffprobe is missing.
-export function detectSyncOffset(video: string, syncMs: number): number | null {
+export function detectSyncOffset(video: string, syncMs: number, diagnose?: (reason: string) => void): number | null {
   // Resolve the directory through cwd, outside FFmpeg's filter grammar. Windows
   // drive colons/backslashes and apostrophes in directory names are not filters.
   const movie = `movie='${basename(video).replace(/'/g, "'\\''")}',signalstats`;
@@ -105,7 +105,8 @@ export function detectSyncOffset(video: string, syncMs: number): number | null {
         "-show_entries", "frame=pts_time:frame_tags=lavfi.signalstats.YAVG", "-of", "csv=p=0"],
       { cwd: dirname(resolve(video)), encoding: "utf8", maxBuffer: 16 * 1024 * 1024 },
     );
-  } catch {
+  } catch (error) {
+    diagnose?.(`ffprobe could not inspect the recording: ${error instanceof Error ? error.message : String(error)}`);
     return null;
   }
   let sawBlack = false;
@@ -115,6 +116,7 @@ export function detectSyncOffset(video: string, syncMs: number): number | null {
     if (yavg < 40) sawBlack = true;
     else if (sawBlack && yavg > 200) return Math.round(pts * 1000 - syncMs);
   }
+  diagnose?.('ffprobe completed, but no black-to-white marker was found in the inspected frames.');
   return null;
 }
 
@@ -145,8 +147,9 @@ export function prepare(
   if (calibrationArg !== undefined) [calibrationMs, calibrationSource] = [calibrationArg, "argument"];
   else if (capture.calibrationMs !== undefined) [calibrationMs, calibrationSource] = [capture.calibrationMs, "capture.json"];
   else if (capture.sync) {
-    const detected = detectSyncOffset(join(run, "video.webm"), capture.sync.tMs);
-    if (detected === null) throw new RenderRefusal("Could not find the recorded sync marker. Record again or supply a verified --calibration-ms offset.");
+    let reason = '';
+    const detected = detectSyncOffset(join(run, "video.webm"), capture.sync.tMs, detail => { reason = detail; });
+    if (detected === null) throw new RenderRefusal(`Could not find the recorded sync marker. ${reason} Preserve this capture for diagnosis; verify ffprobe and the original recording before recording again or supplying a verified --calibration-ms offset.`);
     [calibrationMs, calibrationSource] = [detected, "sync flash"];
   }
   const steps = calibrate(raw, calibrationMs);

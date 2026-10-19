@@ -54,7 +54,7 @@ aaron-demo render "<run folder>" --stills
   - `--learn-hosts` is refused on a production environment and for a walk that writes.
 - **Hosts.** Every request must go to a host in the environment's `hosts`; any other request fails the run.
   - Outside learning runs, the browser's resolver refuses every name that is not in `hosts`. That includes IP literals such as `127.0.0.1` and `localhost`. The list must hold every host the app uses, exactly as it appears in URLs: the app's own, its API, its asset and font hosts, its identity provider. Propose a missing host to the person, and add it to the config only after they approve it.
-  - In contract 1, `hosts` entries can name a host or a host and port. A bare name matches any port. An explicit host:port entry restricts matching to that port.
+  - In contract 1, `hosts` entries are lowercase host names only, without scheme, port or path (for example `127.0.0.1` or `app.example.com`). A listed host matches any port; port-restricted host entries are not supported. The environment URL and full-URL request rules may still include a port.
   - A redirect to an unlisted identity-provider host fails the run as a host-lock violation, and the failure names the host (`<host> is not in this environment's hosts`). Propose the provider's host to the person, and add it only after they approve it. `--learn-hosts` also finds it when the walk passes through the provider during the recording. If the provider only shows up because the saved session expired, the session is signed in again before the walk is recorded, and the learning run then never visits the provider, so it cannot list it. The sign-in window itself is not host-locked, so a sign-in that works does not show that the provider is listed.
   - `--learn-hosts` runs a read-only walk with the lock lifted for reads. It lists the hosts the walk used that are not in `hosts`, and the requests it refused because the walk is read-only. Its `capture.json` says `failed` ("Learning run, no video."), so there is nothing to render. For its exit code, see Exit codes.
   - Add a host to the config only after the person approves it.
@@ -126,7 +126,8 @@ export default {
 
 - `title` and `run` are required. `writes` defaults to `false` and `startPath` to `/`. A field not shown above is refused.
 - `rec.step(id, caption, 'action' | 'wait', fn)` defines a step. Ids are unique within a walk and use letters, digits, `-` and `_` only (they name the screenshot files). Steps do not nest. A `wait` step is fast-forwarded in the video.
-- `rec.click(locator)` and `rec.type(locator, text)` log the click for the drawn cursor and work only inside a step. `rec.type` refuses a password field, also one its click puts the focus on (a label's field, or one inside a component).
+- `rec.reveal(locator)` reveals one target through its actual scroll container and waits for stable viewport geometry. Already visible sticky controls stay in place. Use it before `rec.show`/`rec.focus` when a target needs revealing; those methods never scroll a multi-target group one item at a time. Groups must fit together in the viewport.
+- `rec.click(locator)` and `rec.type(locator, text)` log the click for the drawn cursor and work only inside a step. Clicks reveal the control and wait for stable geometry before saving its box and the pre-click frame; use these helpers instead of a raw page click. A locator for reveal/click must match one control; scope repeated navigation links to their intended region. `rec.type` refuses a password field, also one its click puts the focus on (a label's field, or one inside a component).
 - The engine accepts leave-this-page prompts and dismisses other dialogs, unless the walk handles `page.on('dialog')` itself.
 - Walks, `setup` and `beforeStep` act through the page only. They never use `page.route`, `context.route`, `routeFromHAR`, `unroute*`, `page.request`, `context.request`, Node `fetch`, or a new context or browser: what those send skips the engine's guard (see Read-only walks). `revision` runs in Node and stays a GET to a host in `hosts`. Read-only judges HTTP requests, not WebSocket messages.
 - Find elements by their visible labels (`getByRole`, `getByText`). Set data up through the app's own UI, inside steps.
@@ -168,6 +169,33 @@ After **the first passed capture**, presentation fixes already use `aaron-demo i
 `revise` + `render`. Named geometry eliminates a new UI probe just to measure those targets.
 See [presentation revisions](presentation-revisions.md). A new recording is appropriate when
 UI evidence, action order or business correctness must change.
+
+## Starting state and telemetry
+
+`setup` must establish and assert the intended starting state, including remembered
+tabs, filters and theme. Reusing a browser session may restore the last-used view;
+a fresh page load does not prove the default tab is active. Prefer idempotent UI
+actions and wait for the intended view's own loaded signal before returning. A
+server-saved preference change is a write and needs the same authorization as any
+other write; do not use setup to hide it outside the rendered steps.
+
+A page view may send a POST telemetry beacon even in a read-only walk. Keep the
+HTTP guard enabled; inspect the actual endpoint and payload. Only after the owner
+confirms that this specific request makes no business-data changes, add a narrow
+rule such as this fictional local example:
+
+```js
+readOnlyAllowed: [{
+  method: 'POST',
+  url: /http:\/\/127\.0\.0\.1:4311\/telemetry\/page-view/,
+  body: /\{"event":"page_view","page":"overview"\}/,
+}],
+```
+
+This is an example to adapt and approve, not a preapproved exception. Rules match
+the whole URL/body; use the app's actual serialization and constrain the body when
+needed. A telemetry label or endpoint name is not proof of harmlessness. Do not
+set `writes: true` or allow all POST requests merely to bypass this diagnostic.
 
 ## Develop
 

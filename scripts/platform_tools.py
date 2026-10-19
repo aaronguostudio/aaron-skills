@@ -26,12 +26,14 @@ def bun_binary(render):
 
 
 def npm_command(tools, *args):
-    npm = Path(tools['npm']).resolve()
+    # Volta and other multi-call shims dispatch on argv[0]. Dereferencing their
+    # npm symlink changes the command into volta-shim/vp and loses that dispatch.
+    npm = Path(tools['npm']).absolute()
     if npm.suffix.lower() == '.cmd':
         cli = npm.parent / 'node_modules/npm/bin/npm-cli.js'
         if not cli.is_file():
             raise ValueError('Cannot locate npm-cli.js beside npm.cmd. Install the standard Node.js distribution.')
-        return [tools['node'], str(cli), *args]
+        return [tools['node'], str(cli.resolve()), *args]
     return [str(npm), *args]
 
 

@@ -1,3 +1,40 @@
+# Demo field-feedback maintenance verification
+
+Date: 2026-10-19. Local checks used macOS arm64, Node 24.18.0, Python 3.14.5
+and the pinned runtime dependencies. This record covers the maintenance changes
+below; prior platform and host-task evidence remains dated separately.
+
+- Shared source gate passed: 256 capture units, 84 renderer/timeline/narration
+  tests, Python tooling/page/benchmark/Shape suites and 20 real Chromium tests.
+  The Windows-only DACL test was skipped on macOS. The final installer regressions
+  were rerun after PowerShell retry quoting changed (11 tests passed).
+- An isolated exported installation registered all three skills for Cursor and
+  passed doctor and the real Capture -> silent H.264 MP4 -> HTML smoke. Injecting
+  a post-activation smoke failure retained the active runtime/registrations,
+  reported the workflow as unverified and left doctor passing.
+- Synthetic browser cases covered nested scrolling, a control clipped by its
+  scroll container while inside the browser viewport, visible sticky controls,
+  settling bounds and duplicate locators. An installed recording/render passed
+  full MP4 decode and visual review of all four held frames.
+- Professional, minimal and showcase renders used synthetic wide, square and
+  tall logos. Covers, held frames and full video decode passed review. The wide
+  logo retained a 152 by 26 pixel caption mark rather than a tiny square slot.
+  The generated Share page was reviewed at desktop and mobile widths.
+- Bundle import/document closure, public-source privacy, staged benchmark
+  boundaries and skill structure validation passed. Raw evidence stays outside
+  Git; no private adapters, customer recordings or live narration calls were used.
+
+Native Cursor discovery/Auto-model behavior and actual Volta/vite-plus installations
+were not certified by this run; npm dispatch regressions used synthetic shims.
+Windows/Linux native execution was not repeated locally. Consult the current
+[three-platform CI run](https://github.com/aaronguostudio/aaron-skills/actions/workflows/ci.yml)
+for the exact revision's runner results. The original other-machine sync-marker
+failure was not reproduced: diagnostics now distinguish an ffprobe inspection
+failure from an inspected recording without the marker. Marker validation remains
+required; this is not a claim that the original root cause was resolved.
+
+---
+
 # Platform verification — current checkout
 
 Date: 2026-10-17. These checks extend the original macOS-only v0.1.0 acceptance.
