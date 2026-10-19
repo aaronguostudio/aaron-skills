@@ -7,6 +7,7 @@ import workflowDiagramSmall from "./assets/workflow-canvas/workflow-diagram-768.
 import { Showcases } from "./Showcases";
 import { IntroVideo } from "./IntroVideo";
 import publishedIntroduction from "./introduction.json";
+import { CoverLibrary } from "./CoverLibrary";
 
 const REPO = "https://github.com/aaronguostudio/aaron-skills";
 const copy = {
@@ -261,6 +262,8 @@ export function App() {
     else url.searchParams.set("lang", "zh");
     window.history.replaceState(null, "", url);
   }
+  const isCoversPage = window.location.pathname.replace(/\/$/, "") === "/covers";
+  const home = isCoversPage ? (language === "zh" ? "/?lang=zh" : "/") : "";
   return (
     <div className={`site ${language === "zh" ? "is-chinese" : ""}`}>
       <a href="#main" className="skip-link">
@@ -269,7 +272,7 @@ export function App() {
       <header className="site-header wrap">
         <a
           className="wordmark"
-          href="#"
+          href={home || "#"}
           aria-label={
             language === "zh" ? "Aaron Skills 首页" : "Aaron Skills home"
           }
@@ -277,10 +280,11 @@ export function App() {
           Aaron Skills
         </a>
         <nav aria-label={language === "zh" ? "主导航" : "Main navigation"}>
-          <a href="#workflow">{text.nav[0]}</a>
-          <a href="#skills">{text.nav[1]}</a>
-          <a href="#examples">{language === "zh" ? "案例" : "Examples"}</a>
+          <a href={`${home}#workflow`}>{text.nav[0]}</a>
+          <a href={`${home}#skills`}>{text.nav[1]}</a>
+          <a href={`${home}#examples`}>{language === "zh" ? "案例" : "Examples"}</a>
           <ExternalLink href={REPO}>GitHub</ExternalLink>
+          <a href={`/covers${language === "zh" ? "?lang=zh" : ""}`} aria-current={isCoversPage ? "page" : undefined}>{language === "zh" ? "封面" : "Covers"}</a>
           <div
             className="language-switch"
             role="group"
@@ -305,6 +309,7 @@ export function App() {
         </nav>
       </header>
       <main id="main">
+        {isCoversPage ? <CoverLibrary language={language} /> : <>
         <section className="hero wrap" aria-labelledby="hero-title">
           <div className="hero-copy">
             <p className="eyebrow">{text.eyebrow}</p>
@@ -390,6 +395,8 @@ export function App() {
           </details>
         </section>
         <Showcases language={language} cases={review?.cases} />
+        <CoverLibrary language={language} teaser />
+        </>}
       </main>
       <footer className="site-footer wrap">
         <p>

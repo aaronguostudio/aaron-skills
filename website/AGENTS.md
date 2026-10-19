@@ -40,3 +40,7 @@ visual identity: flat white/blue workflow art, a compact text directory of the
 three released skills, and the approved branded showcase covers. Keep example
 counts and voice/script capabilities aligned with the released website. Retain
 older published art URLs for existing links.
+
+## Presentation cover library
+
+On 2026-10-19 Aaron accepted the simple presentation-cover direction and requested a few dozen examples published on this website. Covers use one large image or color block, a strong title, restrained brand mark/subtitle, presenter and date. Keep them as presentation opening slides; do not turn them into website layouts with navigation, content cards or chapters. Extend the accepted geometric, photographic and sculptural styles with confident color and tactile materials. Preserve original generated PNGs and serve responsive WebP previews. The bilingual `/covers` gallery contains image samples; do not describe those images as editable slide templates or integrated runtime presets without implementing and verifying that capability.

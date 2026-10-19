@@ -1,0 +1,866 @@
+[
+  {
+    "id": "cobalt-signal",
+    "title": {
+      "en": "Cobalt Signal",
+      "zh": "钴蓝信号"
+    },
+    "family": "graphic",
+    "familyTitle": {
+      "en": "Graphic",
+      "zh": "几何色块"
+    },
+    "description": {
+      "en": "Cobalt Signal presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "钴蓝信号风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/cobalt-signal.png",
+    "webp": "/covers/previews/cobalt-signal.webp",
+    "thumbnail": "/covers/previews/cobalt-signal-640.webp",
+    "sha256": "ced3eca67e0d50ba9646c45e3fa983e62767705b3552d64fa3df771a0a164639",
+    "bytes": {
+      "png": 1312502,
+      "webp": 53176,
+      "thumbnail": 14748
+    }
+  },
+  {
+    "id": "coral-aperture",
+    "title": {
+      "en": "Coral Aperture",
+      "zh": "珊瑚视窗"
+    },
+    "family": "graphic",
+    "familyTitle": {
+      "en": "Graphic",
+      "zh": "几何色块"
+    },
+    "description": {
+      "en": "Coral Aperture presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "珊瑚视窗风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/coral-aperture.png",
+    "webp": "/covers/previews/coral-aperture.webp",
+    "thumbnail": "/covers/previews/coral-aperture-640.webp",
+    "sha256": "0c48153f0458b308a78aba225e4490e70a92b7574604bbf3045bb9015b3e3593",
+    "bytes": {
+      "png": 1266619,
+      "webp": 37138,
+      "thumbnail": 9858
+    }
+  },
+  {
+    "id": "vermilion-fold",
+    "title": {
+      "en": "Vermilion Fold",
+      "zh": "朱红折角"
+    },
+    "family": "graphic",
+    "familyTitle": {
+      "en": "Graphic",
+      "zh": "几何色块"
+    },
+    "description": {
+      "en": "Vermilion Fold presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "朱红折角风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/vermilion-fold.png",
+    "webp": "/covers/previews/vermilion-fold.webp",
+    "thumbnail": "/covers/previews/vermilion-fold-640.webp",
+    "sha256": "78bb87f679b6544d81684032678b040e26f6c5c39491e744485a7aaa1be941cd",
+    "bytes": {
+      "png": 1283378,
+      "webp": 51830,
+      "thumbnail": 14228
+    }
+  },
+  {
+    "id": "chartreuse-column",
+    "title": {
+      "en": "Chartreuse Column",
+      "zh": "青柠立柱"
+    },
+    "family": "graphic",
+    "familyTitle": {
+      "en": "Graphic",
+      "zh": "几何色块"
+    },
+    "description": {
+      "en": "Chartreuse Column presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "青柠立柱风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/chartreuse-column.png",
+    "webp": "/covers/previews/chartreuse-column.webp",
+    "thumbnail": "/covers/previews/chartreuse-column-640.webp",
+    "sha256": "77e7df745e73e5d5cf76b0c97951a056270a079aeaabe8b06d93b82b6ab1fe09",
+    "bytes": {
+      "png": 1232060,
+      "webp": 44702,
+      "thumbnail": 10880
+    }
+  },
+  {
+    "id": "desert-editorial",
+    "title": {
+      "en": "Desert Editorial",
+      "zh": "沙漠叙事"
+    },
+    "family": "editorial",
+    "familyTitle": {
+      "en": "Editorial",
+      "zh": "摄影叙事"
+    },
+    "description": {
+      "en": "Desert Editorial presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "沙漠叙事风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/desert-editorial.png",
+    "webp": "/covers/previews/desert-editorial.webp",
+    "thumbnail": "/covers/previews/desert-editorial-640.webp",
+    "sha256": "0b2558d590eb714f47e609f8a29cb5ac8e574a67e2858638cd8c06832b56e52a",
+    "bytes": {
+      "png": 2129588,
+      "webp": 158816,
+      "thumbnail": 24598
+    }
+  },
+  {
+    "id": "ocean-margin",
+    "title": {
+      "en": "Ocean Margin",
+      "zh": "海岸留白"
+    },
+    "family": "editorial",
+    "familyTitle": {
+      "en": "Editorial",
+      "zh": "摄影叙事"
+    },
+    "description": {
+      "en": "Ocean Margin presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "海岸留白风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/ocean-margin.png",
+    "webp": "/covers/previews/ocean-margin.webp",
+    "thumbnail": "/covers/previews/ocean-margin-640.webp",
+    "sha256": "3feb3afe08467b885e7f175e87a7a9fe2cc40a1def5260af2be1e4f331476d94",
+    "bytes": {
+      "png": 2534382,
+      "webp": 304510,
+      "thumbnail": 50120
+    }
+  },
+  {
+    "id": "alpine-silence",
+    "title": {
+      "en": "Alpine Silence",
+      "zh": "山间静默"
+    },
+    "family": "editorial",
+    "familyTitle": {
+      "en": "Editorial",
+      "zh": "摄影叙事"
+    },
+    "description": {
+      "en": "Alpine Silence presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "山间静默风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/alpine-silence.png",
+    "webp": "/covers/previews/alpine-silence.webp",
+    "thumbnail": "/covers/previews/alpine-silence-640.webp",
+    "sha256": "ae6b4b1b5445bfbb4251dc68009d27a891cda4f3c3df2b46ca7475623c1c537e",
+    "bytes": {
+      "png": 1874153,
+      "webp": 126074,
+      "thumbnail": 26708
+    }
+  },
+  {
+    "id": "botanical-shadow",
+    "title": {
+      "en": "Botanical Shadow",
+      "zh": "植物光影"
+    },
+    "family": "editorial",
+    "familyTitle": {
+      "en": "Editorial",
+      "zh": "摄影叙事"
+    },
+    "description": {
+      "en": "Botanical Shadow presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "植物光影风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/botanical-shadow.png",
+    "webp": "/covers/previews/botanical-shadow.webp",
+    "thumbnail": "/covers/previews/botanical-shadow-640.webp",
+    "sha256": "b75f20942db4a6f0674b752b833c040dd41630a5eeec5cb17f9bc674a7f6d805",
+    "bytes": {
+      "png": 1983599,
+      "webp": 150968,
+      "thumbnail": 30424
+    }
+  },
+  {
+    "id": "chrome-loop",
+    "title": {
+      "en": "Chrome Loop",
+      "zh": "镀铬回环"
+    },
+    "family": "sculptural",
+    "familyTitle": {
+      "en": "Sculptural",
+      "zh": "立体物件"
+    },
+    "description": {
+      "en": "Chrome Loop presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "镀铬回环风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/chrome-loop.png",
+    "webp": "/covers/previews/chrome-loop.webp",
+    "thumbnail": "/covers/previews/chrome-loop-640.webp",
+    "sha256": "d2618cd1a2374841979c07df5c330bcb5a5c63d9e762781b0c5c007401f2705b",
+    "bytes": {
+      "png": 1539000,
+      "webp": 70982,
+      "thumbnail": 17244
+    }
+  },
+  {
+    "id": "amber-glass",
+    "title": {
+      "en": "Amber Glass",
+      "zh": "琥珀玻璃"
+    },
+    "family": "sculptural",
+    "familyTitle": {
+      "en": "Sculptural",
+      "zh": "立体物件"
+    },
+    "description": {
+      "en": "Amber Glass presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "琥珀玻璃风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/amber-glass.png",
+    "webp": "/covers/previews/amber-glass.webp",
+    "thumbnail": "/covers/previews/amber-glass-640.webp",
+    "sha256": "88694e27585c840fe9d84ca76a4cd91c693bb8bac6f38d49052d9b451ca1f676",
+    "bytes": {
+      "png": 1586725,
+      "webp": 112580,
+      "thumbnail": 25162
+    }
+  },
+  {
+    "id": "ceramic-ribbon",
+    "title": {
+      "en": "Ceramic Ribbon",
+      "zh": "陶瓷丝带"
+    },
+    "family": "sculptural",
+    "familyTitle": {
+      "en": "Sculptural",
+      "zh": "立体物件"
+    },
+    "description": {
+      "en": "Ceramic Ribbon presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "陶瓷丝带风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/ceramic-ribbon.png",
+    "webp": "/covers/previews/ceramic-ribbon.webp",
+    "thumbnail": "/covers/previews/ceramic-ribbon-640.webp",
+    "sha256": "efbd7aa4f3a20fed879aad2ddb0c45530f2a0304f41c09b1d6383f0a9a0096d4",
+    "bytes": {
+      "png": 1579630,
+      "webp": 59450,
+      "thumbnail": 13866
+    }
+  },
+  {
+    "id": "liquid-orbit",
+    "title": {
+      "en": "Liquid Orbit",
+      "zh": "液态轨道"
+    },
+    "family": "sculptural",
+    "familyTitle": {
+      "en": "Sculptural",
+      "zh": "立体物件"
+    },
+    "description": {
+      "en": "Liquid Orbit presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "液态轨道风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/liquid-orbit.png",
+    "webp": "/covers/previews/liquid-orbit.webp",
+    "thumbnail": "/covers/previews/liquid-orbit-640.webp",
+    "sha256": "001464f19fd76951e7a75f2c1150d95af2f78efd52d2b9e618f8ad35c625909b",
+    "bytes": {
+      "png": 1587054,
+      "webp": 77484,
+      "thumbnail": 19058
+    }
+  },
+  {
+    "id": "linen-emboss",
+    "title": {
+      "en": "Linen Emboss",
+      "zh": "亚麻压纹"
+    },
+    "family": "material",
+    "familyTitle": {
+      "en": "Material",
+      "zh": "材质肌理"
+    },
+    "description": {
+      "en": "Linen Emboss presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "亚麻压纹风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/linen-emboss.png",
+    "webp": "/covers/previews/linen-emboss.webp",
+    "thumbnail": "/covers/previews/linen-emboss-640.webp",
+    "sha256": "383f3360aeb82ade2b1e4d68712b74e3d6683af65f094b98fededa10c933ecad",
+    "bytes": {
+      "png": 3297543,
+      "webp": 382234,
+      "thumbnail": 20770
+    }
+  },
+  {
+    "id": "brushed-copper",
+    "title": {
+      "en": "Brushed Copper",
+      "zh": "拉丝铜面"
+    },
+    "family": "material",
+    "familyTitle": {
+      "en": "Material",
+      "zh": "材质肌理"
+    },
+    "description": {
+      "en": "Brushed Copper presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "拉丝铜面风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/brushed-copper.png",
+    "webp": "/covers/previews/brushed-copper.webp",
+    "thumbnail": "/covers/previews/brushed-copper-640.webp",
+    "sha256": "998302bdb25af4cc52dfe5800ea120e0a9c83163080da65a7ee3499e6fe52f70",
+    "bytes": {
+      "png": 2259046,
+      "webp": 175432,
+      "thumbnail": 18966
+    }
+  },
+  {
+    "id": "paper-relief",
+    "title": {
+      "en": "Paper Relief",
+      "zh": "纸雕浮层"
+    },
+    "family": "material",
+    "familyTitle": {
+      "en": "Material",
+      "zh": "材质肌理"
+    },
+    "description": {
+      "en": "Paper Relief presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "纸雕浮层风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/paper-relief.png",
+    "webp": "/covers/previews/paper-relief.webp",
+    "thumbnail": "/covers/previews/paper-relief-640.webp",
+    "sha256": "899c80087649af984bc1c597c372780ebf611f3003d36cc36ad6e421beea75e3",
+    "bytes": {
+      "png": 1924183,
+      "webp": 106268,
+      "thumbnail": 19826
+    }
+  },
+  {
+    "id": "black-marble",
+    "title": {
+      "en": "Black Marble",
+      "zh": "黑曜石纹"
+    },
+    "family": "material",
+    "familyTitle": {
+      "en": "Material",
+      "zh": "材质肌理"
+    },
+    "description": {
+      "en": "Black Marble presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "黑曜石纹风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/black-marble.png",
+    "webp": "/covers/previews/black-marble.webp",
+    "thumbnail": "/covers/previews/black-marble-640.webp",
+    "sha256": "7b858018af53be43a7d42d8c55e3cd0f2939d9b365799059baeaf22a9faaa057",
+    "bytes": {
+      "png": 2230383,
+      "webp": 202430,
+      "thumbnail": 32758
+    }
+  },
+  {
+    "id": "sage-pebble",
+    "title": {
+      "en": "Sage Pebble",
+      "zh": "鼠尾草石"
+    },
+    "family": "organic",
+    "familyTitle": {
+      "en": "Organic",
+      "zh": "有机造型"
+    },
+    "description": {
+      "en": "Sage Pebble presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "鼠尾草石风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/sage-pebble.png",
+    "webp": "/covers/previews/sage-pebble.webp",
+    "thumbnail": "/covers/previews/sage-pebble-640.webp",
+    "sha256": "e0d7d90d4613a673a58348edc2b4fb48f95456a646b1c6ee8c1dd5d8d8f5f548",
+    "bytes": {
+      "png": 1729878,
+      "webp": 76046,
+      "thumbnail": 12534
+    }
+  },
+  {
+    "id": "petal-motion",
+    "title": {
+      "en": "Petal Motion",
+      "zh": "花瓣舒展"
+    },
+    "family": "organic",
+    "familyTitle": {
+      "en": "Organic",
+      "zh": "有机造型"
+    },
+    "description": {
+      "en": "Petal Motion presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "花瓣舒展风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/petal-motion.png",
+    "webp": "/covers/previews/petal-motion.webp",
+    "thumbnail": "/covers/previews/petal-motion-640.webp",
+    "sha256": "0939e06d548c9cfa8e0ab9d09e31a85d96c1d62bd64267d4b48d41ee04ebd118",
+    "bytes": {
+      "png": 1819894,
+      "webp": 136574,
+      "thumbnail": 26034
+    }
+  },
+  {
+    "id": "moss-contour",
+    "title": {
+      "en": "Moss Contour",
+      "zh": "苔绿等高"
+    },
+    "family": "organic",
+    "familyTitle": {
+      "en": "Organic",
+      "zh": "有机造型"
+    },
+    "description": {
+      "en": "Moss Contour presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "苔绿等高风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/moss-contour.png",
+    "webp": "/covers/previews/moss-contour.webp",
+    "thumbnail": "/covers/previews/moss-contour-640.webp",
+    "sha256": "9495d9eabebb9189fb27708b623818d4bbb224c639112c6afe24438861c3ad6a",
+    "bytes": {
+      "png": 1502492,
+      "webp": 50846,
+      "thumbnail": 12586
+    }
+  },
+  {
+    "id": "cobalt-coral",
+    "title": {
+      "en": "Cobalt Coral",
+      "zh": "蓝色珊瑚"
+    },
+    "family": "organic",
+    "familyTitle": {
+      "en": "Organic",
+      "zh": "有机造型"
+    },
+    "description": {
+      "en": "Cobalt Coral presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "蓝色珊瑚风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/cobalt-coral.png",
+    "webp": "/covers/previews/cobalt-coral.webp",
+    "thumbnail": "/covers/previews/cobalt-coral-640.webp",
+    "sha256": "ee45cef551b7c40dd810c716b0747b7bc9796a00aec6bbbab16dcd00f07283a6",
+    "bytes": {
+      "png": 1728659,
+      "webp": 116564,
+      "thumbnail": 22432
+    }
+  },
+  {
+    "id": "solar-horizon",
+    "title": {
+      "en": "Solar Horizon",
+      "zh": "日落地平"
+    },
+    "family": "atmosphere",
+    "familyTitle": {
+      "en": "Atmospheric",
+      "zh": "光与氛围"
+    },
+    "description": {
+      "en": "Solar Horizon presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "日落地平风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/solar-horizon.png",
+    "webp": "/covers/previews/solar-horizon.webp",
+    "thumbnail": "/covers/previews/solar-horizon-640.webp",
+    "sha256": "674def0f94414019de76c437787fa4ecb2d0912eb9c5db274e098060e3ff6418",
+    "bytes": {
+      "png": 1504757,
+      "webp": 85630,
+      "thumbnail": 17140
+    }
+  },
+  {
+    "id": "prism-light",
+    "title": {
+      "en": "Prism Light",
+      "zh": "棱镜光线"
+    },
+    "family": "atmosphere",
+    "familyTitle": {
+      "en": "Atmospheric",
+      "zh": "光与氛围"
+    },
+    "description": {
+      "en": "Prism Light presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "棱镜光线风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/prism-light.png",
+    "webp": "/covers/previews/prism-light.webp",
+    "thumbnail": "/covers/previews/prism-light-640.webp",
+    "sha256": "1132ca994f1f843333f26c85a7df2c6c21d3558ca15a2273da7572dd1b822cf9",
+    "bytes": {
+      "png": 1704125,
+      "webp": 76012,
+      "thumbnail": 16362
+    }
+  },
+  {
+    "id": "dawn-fog",
+    "title": {
+      "en": "Dawn Fog",
+      "zh": "晨雾"
+    },
+    "family": "atmosphere",
+    "familyTitle": {
+      "en": "Atmospheric",
+      "zh": "光与氛围"
+    },
+    "description": {
+      "en": "Dawn Fog presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "晨雾风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/dawn-fog.png",
+    "webp": "/covers/previews/dawn-fog.webp",
+    "thumbnail": "/covers/previews/dawn-fog-640.webp",
+    "sha256": "189cc16e23809fea30dbc815fbda60f5068363bd0e0d35a9cc0a7e8a6fe7b4fe",
+    "bytes": {
+      "png": 1726531,
+      "webp": 75854,
+      "thumbnail": 14856
+    }
+  },
+  {
+    "id": "electric-silk",
+    "title": {
+      "en": "Electric Silk",
+      "zh": "电光丝绸"
+    },
+    "family": "atmosphere",
+    "familyTitle": {
+      "en": "Atmospheric",
+      "zh": "光与氛围"
+    },
+    "description": {
+      "en": "Electric Silk presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "电光丝绸风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/electric-silk.png",
+    "webp": "/covers/previews/electric-silk.webp",
+    "thumbnail": "/covers/previews/electric-silk-640.webp",
+    "sha256": "b2e80caf7f41a09547b573b10cabc49bbf8f05fafaa3f05af4c13a00a528ebd6",
+    "bytes": {
+      "png": 1654332,
+      "webp": 117366,
+      "thumbnail": 23014
+    }
+  },
+  {
+    "id": "concrete-arch",
+    "title": {
+      "en": "Concrete Arch",
+      "zh": "混凝土拱"
+    },
+    "family": "architecture",
+    "familyTitle": {
+      "en": "Architecture",
+      "zh": "建筑空间"
+    },
+    "description": {
+      "en": "Concrete Arch presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "混凝土拱风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/concrete-arch.png",
+    "webp": "/covers/previews/concrete-arch.webp",
+    "thumbnail": "/covers/previews/concrete-arch-640.webp",
+    "sha256": "8d6eb5f9ba18d56b7d6855332433c0b1495909a622162d55419a98960ef76343",
+    "bytes": {
+      "png": 1977866,
+      "webp": 142438,
+      "thumbnail": 23110
+    }
+  },
+  {
+    "id": "orange-stair",
+    "title": {
+      "en": "Orange Stair",
+      "zh": "橙色阶梯"
+    },
+    "family": "architecture",
+    "familyTitle": {
+      "en": "Architecture",
+      "zh": "建筑空间"
+    },
+    "description": {
+      "en": "Orange Stair presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "橙色阶梯风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/orange-stair.png",
+    "webp": "/covers/previews/orange-stair.webp",
+    "thumbnail": "/covers/previews/orange-stair-640.webp",
+    "sha256": "407ebac68200411c030a6e39f05229c16089f8c18a9156a74735124dc106975c",
+    "bytes": {
+      "png": 1814451,
+      "webp": 108146,
+      "thumbnail": 19886
+    }
+  },
+  {
+    "id": "blue-portal",
+    "title": {
+      "en": "Blue Portal",
+      "zh": "蓝色门廊"
+    },
+    "family": "architecture",
+    "familyTitle": {
+      "en": "Architecture",
+      "zh": "建筑空间"
+    },
+    "description": {
+      "en": "Blue Portal presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "蓝色门廊风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/blue-portal.png",
+    "webp": "/covers/previews/blue-portal.webp",
+    "thumbnail": "/covers/previews/blue-portal-640.webp",
+    "sha256": "2474d15bffb11d1d036c58a63bce9046d68a2e7e5e30c7011d28d3287e50d75a",
+    "bytes": {
+      "png": 1509522,
+      "webp": 55206,
+      "thumbnail": 12270
+    }
+  },
+  {
+    "id": "sand-courtyard",
+    "title": {
+      "en": "Sand Courtyard",
+      "zh": "砂色庭院"
+    },
+    "family": "architecture",
+    "familyTitle": {
+      "en": "Architecture",
+      "zh": "建筑空间"
+    },
+    "description": {
+      "en": "Sand Courtyard presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "砂色庭院风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/sand-courtyard.png",
+    "webp": "/covers/previews/sand-courtyard.webp",
+    "thumbnail": "/covers/previews/sand-courtyard-640.webp",
+    "sha256": "2063e0a2622ec3fc0e742c8d7fcb5a4022a8440163154603254d42fbee5d509b",
+    "bytes": {
+      "png": 2027679,
+      "webp": 147256,
+      "thumbnail": 20652
+    }
+  },
+  {
+    "id": "red-balloon",
+    "title": {
+      "en": "Red Balloon",
+      "zh": "红色气球"
+    },
+    "family": "playful",
+    "familyTitle": {
+      "en": "Playful",
+      "zh": "创意图形"
+    },
+    "description": {
+      "en": "Red Balloon presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "红色气球风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/red-balloon.png",
+    "webp": "/covers/previews/red-balloon.webp",
+    "thumbnail": "/covers/previews/red-balloon-640.webp",
+    "sha256": "e4fb917a907e8d7928b92a8b28a50dcce3656a0873b0e7512d4ee1edb7ce9c19",
+    "bytes": {
+      "png": 1411383,
+      "webp": 64254,
+      "thumbnail": 16548
+    }
+  },
+  {
+    "id": "cutout-sun",
+    "title": {
+      "en": "Cutout Sun",
+      "zh": "剪纸太阳"
+    },
+    "family": "playful",
+    "familyTitle": {
+      "en": "Playful",
+      "zh": "创意图形"
+    },
+    "description": {
+      "en": "Cutout Sun presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "剪纸太阳风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/cutout-sun.png",
+    "webp": "/covers/previews/cutout-sun.webp",
+    "thumbnail": "/covers/previews/cutout-sun-640.webp",
+    "sha256": "a8dddd623cdf7043f5ed74191788d7186a46dc594b9ec8db09c634e485b71786",
+    "bytes": {
+      "png": 1983596,
+      "webp": 148614,
+      "thumbnail": 20110
+    }
+  },
+  {
+    "id": "racing-stripe",
+    "title": {
+      "en": "Racing Stripe",
+      "zh": "疾速条纹"
+    },
+    "family": "playful",
+    "familyTitle": {
+      "en": "Playful",
+      "zh": "创意图形"
+    },
+    "description": {
+      "en": "Racing Stripe presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "疾速条纹风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/racing-stripe.png",
+    "webp": "/covers/previews/racing-stripe.webp",
+    "thumbnail": "/covers/previews/racing-stripe-640.webp",
+    "sha256": "33aab4504e3e8921f3ac4f4e7d2be889aafef23e7136e9ba57eb2ff94969fd90",
+    "bytes": {
+      "png": 1235264,
+      "webp": 49684,
+      "thumbnail": 13626
+    }
+  },
+  {
+    "id": "soft-grid",
+    "title": {
+      "en": "Soft Grid",
+      "zh": "柔软格构"
+    },
+    "family": "playful",
+    "familyTitle": {
+      "en": "Playful",
+      "zh": "创意图形"
+    },
+    "description": {
+      "en": "Soft Grid presentation cover. Ideas into impact. A better way to show your work. Presented by Aaron Guo, 19 Oct 2026.",
+      "zh": "柔软格构风格的演示封面。示例标题 Ideas into impact，副标题 A better way to show your work，演讲者 Aaron Guo，日期 2026 年 10 月 19 日。"
+    },
+    "width": 1672,
+    "height": 941,
+    "png": "/covers/originals/soft-grid.png",
+    "webp": "/covers/previews/soft-grid.webp",
+    "thumbnail": "/covers/previews/soft-grid-640.webp",
+    "sha256": "fa967616fa7d3728364a0d5cb53f233dd1f479bcf08eeba7ac4f5850eb305311",
+    "bytes": {
+      "png": 1555299,
+      "webp": 71570,
+      "thumbnail": 17156
+    }
+  }
+]
