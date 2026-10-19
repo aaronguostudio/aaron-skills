@@ -19,7 +19,10 @@ by launch-readiness.md. Do not expand platform support while closing that releas
    python3 scripts/release.py --out /path/to/new-public-candidate --author-name 'Your public name' --author-email 'ID+USERNAME@users.noreply.github.com'
    ```
 
-   Use the exact noreply address from GitHub Settings -> Emails. The exporter
+   Choose the author name and commit email you want to publish; a GitHub noreply
+   address is optional. This exporter is only for creating a new public source
+   repository from private sources. Update the existing public repository through
+   ordinary PRs and merges, preserving its history. The exporter
    creates one new main commit and no remote. It does not rewrite or delete the
    original development repository. It disables commit hooks for that candidate
    and explicitly applies the supplied public identity.

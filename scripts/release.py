@@ -55,18 +55,11 @@ def scan_public(files):
     check_documents(files)
 
 
-def scan_history(root, *, identity_refs=None):
+def scan_history(root):
     def git(*args):
         return subprocess.check_output(['git', '-C', str(root), *args])
-    # PR CI also checks GitHub's disposable merge commit. Its generated identity
-    # is outside our control; validate identities on both actual PR histories,
-    # while still scanning every reachable blob, including the merged tree.
-    refs = identity_refs or ['--all']
-    if identity_refs and any(not re.fullmatch(r'[a-fA-F0-9]{40}', ref) for ref in identity_refs):
-        raise ValueError('History identity refs must be full commit hashes')
-    emails = git('log', '--format=%ae%n%ce', *refs).decode().splitlines()
-    if not emails or any(not re.fullmatch(r'[A-Za-z0-9+_-]+@users\.noreply\.github\.com', email) for email in emails):
-        raise ValueError('Public history must use GitHub noreply author/committer identities; values withheld')
+    # Commit email is an author's preference, not a content/privacy gate. Scan
+    # all reachable blobs equally on PRs, main pushes and source exports.
     # Publication carries deleted files too. Inspect every reachable text blob.
     for entry in git('rev-list', '--objects', '--all').decode().splitlines():
         sha, _, name = entry.partition(' ')
@@ -81,8 +74,8 @@ def export(destination, *, author_name, author_email, root=ROOT):
     destination = Path(destination).expanduser().absolute()
     if destination.resolve().is_relative_to(root.resolve()):
         raise ValueError('Export outside the private source checkout')
-    if not author_name.strip() or not re.fullmatch(r'[A-Za-z0-9+_-]+@users\.noreply\.github\.com', author_email):
-        raise ValueError('Use an explicit public author name and GitHub noreply email')
+    if not author_name.strip() or any(c in author_name for c in '\r\n') or not re.fullmatch(r'[^@\s<>]+@[^@\s<>]+', author_email):
+        raise ValueError('Use an explicit public author name and valid commit email; GitHub noreply is optional')
     files = public_files(root)
     scan_public(files)
     destination.mkdir(parents=True, exist_ok=False)

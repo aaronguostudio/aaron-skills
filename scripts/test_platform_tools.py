@@ -9,10 +9,37 @@ import unittest
 from unittest.mock import patch
 
 import bundle
-from platform_tools import check_system, npm_command, bun_binary, private_path
+from platform_tools import check_media_tools, check_system, npm_command, bun_binary, private_path
 
 
 class PlatformTests(unittest.TestCase):
+    def test_media_preflight_requires_both_working_tools(self):
+        with patch('platform_tools.subprocess.run') as run:
+            with self.assertRaisesRegex(ValueError, 'ffprobe is required'):
+                check_media_tools({'ffmpeg': 'ffmpeg'})
+            run.side_effect = [subprocess.CompletedProcess(['ffmpeg'], 0), subprocess.CalledProcessError(1, ['ffprobe'])]
+            with self.assertRaisesRegex(ValueError, 'could not run'):
+                check_media_tools({'ffmpeg': 'ffmpeg', 'ffprobe': 'ffprobe'})
+            run.side_effect = None
+            self.assertEqual(check_media_tools({'ffmpeg': 'ffmpeg', 'ffprobe': 'ffprobe'})['ffprobe'], 'ffprobe')
+
+    @unittest.skipUnless(os.name == 'nt', 'Native Windows dependency setup')
+    def test_windows_media_setup_retries_false_success_and_refuses_exhaustion(self):
+        script = str(bundle.ROOT / 'scripts/install-ci-media.ps1').replace("'", "''")
+        for ready_after, installer_exit, expected_attempts, success in ((2, 0, 2, True), (99, 0, 3, False), (1, 1, 3, False)):
+            command = f"""
+$global:attempt = 0
+function choco {{ $global:attempt++; Write-Output "INSTALL_ATTEMPT_$global:attempt"; $global:LASTEXITCODE = {installer_exit} }}
+function ffmpeg {{ $global:LASTEXITCODE = 0 }}
+function ffprobe {{ if ($global:attempt -ge {ready_after}) {{ $global:LASTEXITCODE = 0 }} else {{ $global:LASTEXITCODE = 1 }} }}
+& '{script}' -RetrySeconds 0
+"""
+            encoded = base64.b64encode(command.encode('utf-16le')).decode()
+            result = subprocess.run(['powershell.exe', '-NoProfile', '-NonInteractive', '-EncodedCommand', encoded], capture_output=True, text=True)
+            self.assertEqual(result.returncode == 0, success, result.stdout + result.stderr)
+            self.assertEqual(result.stdout.count('INSTALL_ATTEMPT_'), expected_attempts)
+            self.assertIn('FFmpeg and ffprobe are ready.' if success else 'Windows media setup failed', result.stdout + result.stderr)
+
     @unittest.skipUnless(os.name == 'nt', 'Windows DACL contract')
     def test_private_acl_removes_explicit_public_access_and_can_be_reapplied(self):
         with tempfile.TemporaryDirectory(prefix='private 中文 ') as directory:

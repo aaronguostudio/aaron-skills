@@ -3,6 +3,7 @@ from contextlib import contextmanager
 import os
 from pathlib import Path
 import platform
+import shutil
 import subprocess
 import sys
 
@@ -35,6 +36,20 @@ def npm_command(tools, *args):
             raise ValueError('Cannot locate npm-cli.js beside npm.cmd. Install the standard Node.js distribution.')
         return [tools['node'], str(cli.resolve()), *args]
     return [str(npm), *args]
+
+
+def check_media_tools(tools=None):
+    """Both tools must actually launch; a package-manager success is insufficient."""
+    paths = tools if tools is not None else {name: shutil.which(name) for name in ('ffmpeg', 'ffprobe')}
+    for name in ('ffmpeg', 'ffprobe'):
+        path = paths.get(name)
+        if not path:
+            raise ValueError(f'{name} is required. Install FFmpeg including ffprobe and verify both tools are on PATH.')
+        try:
+            subprocess.run([str(path), '-version'], check=True, capture_output=True)
+        except (OSError, subprocess.CalledProcessError) as error:
+            raise ValueError(f'{name} could not run. Repair FFmpeg including ffprobe before running media checks.') from error
+    return paths
 
 
 def check_system():

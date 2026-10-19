@@ -124,23 +124,14 @@ describe("conversational script", () => {
   });
 });
 
-const hasFfmpeg = (() => {
-  try {
-    require("child_process").execFileSync("ffprobe", ["-version"], { stdio: "ignore" });
-    return true;
-  } catch {
-    return false;
-  }
-})();
-
 describe("sync flash", () => {
   test("a capture declaring a sync marker cannot silently render with an unknown offset", () => {
     const run = captureFolder({ sync: { tMs: 500 } });
-    expect(() => prepare(run)).toThrow(/Could not find the recorded sync marker/);
+    expect(() => prepare(run)).toThrow(/ffprobe could not decode/);
     expect(prepare(run, undefined, repoRoots(), 0).calibrationSource).toBe("argument");
   });
 
-  test.skipIf(!hasFfmpeg)("the skew between the capture clock and the recording is measured and taken off", () => {
+  test("the skew between the capture clock and the recording is measured and taken off", () => {
     const run = makeFixture(mkdtempSync(join(tmpdir(), "walkthrough sync 中文 ' -")));
     const offset = detectSyncOffset(join(run, "video.webm"), SKEW_MS + 400)!;
     expect(Math.abs(offset + SKEW_MS)).toBeLessThanOrEqual(40); // one frame at 25 fps
@@ -150,18 +141,29 @@ describe("sync flash", () => {
     expect(prepare(run, undefined, repoRoots(), 0).calibrationSource).toBe("argument");
   }, 30_000); // Real encoding/probing can exceed Bun's 5-second default under CPU load.
 
-  test.skipIf(!hasFfmpeg)("sync diagnostics distinguish unreadable media from absent recorded marker", () => {
+  test("sync diagnostics distinguish unreadable media from absent recorded marker", () => {
     const reasons: string[] = [];
-    expect(detectSyncOffset('/nonexistent/video.webm', 400, reason => reasons.push(reason))).toBeNull();
-    expect(reasons[0]).toContain('ffprobe could not inspect');
-    const run = makeFixture(mkdtempSync(join(tmpdir(), 'walkthrough-no-marker-')));
+    expect(() => detectSyncOffset('/nonexistent/video.webm', 400, reason => reasons.push(reason))).toThrow(RenderRefusal);
+    expect(reasons[0]).toContain('ffprobe could not decode');
+    const run = captureFolder({ sync: { tMs: 400 } });
     const blank = join(run, 'blank.webm');
     require('child_process').execFileSync('ffmpeg', ['-v', 'error', '-f', 'lavfi', '-i', 'color=white:s=64x64:d=1', '-c:v', 'libvpx', blank]);
     expect(detectSyncOffset(blank, 400, reason => reasons.push(reason))).toBeNull();
     expect(reasons[1]).toContain('ffprobe completed');
+    require('fs').copyFileSync(blank, join(run, 'video.webm'));
+    expect(() => prepare(run)).toThrow(/Could not find the recorded sync marker/);
   }, 30_000);
 
-  test("no flash, no offset", () => {
-    expect(detectSyncOffset("/nonexistent/video.webm", 400)).toBeNull();
+  test("missing ffprobe fails explicitly instead of looking like a missing marker", () => {
+    const emptyPath = mkdtempSync(join(tmpdir(), "walkthrough-no-tools-"));
+    const modulePath = join(import.meta.dir, "render-walkthrough.ts");
+    const source = `import { detectSyncOffset } from ${JSON.stringify(modulePath)};
+      try { detectSyncOffset("fixture.webm", 400); process.exit(1); }
+      catch (error) { console.log(error.message); process.exit(error.message.includes("ffprobe could not start") ? 0 : 2); }`;
+    const result = require("child_process").spawnSync(process.execPath, ["-e", source], {
+      env: { ...process.env, PATH: emptyPath }, encoding: "utf8",
+    });
+    expect(result.status).toBe(0);
+    expect(result.stdout).toContain("Install FFmpeg including ffprobe");
   });
 });

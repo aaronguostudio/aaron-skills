@@ -221,6 +221,7 @@
     "examples/showcase-review/index.html",
     "examples/showcase-review/server.mjs",
     "examples/showcase-review/server.test.mjs",
-    "examples/showcase-review/styles.css"
+    "examples/showcase-review/styles.css",
+    "scripts/install-ci-media.ps1"
   ]
 }

@@ -47,11 +47,14 @@ jobs:
           python-version: '3.11'
       - name: Public benchmark boundary
         run: python scripts/benchmark_privacy.py --tracked
+      - name: Windows FFmpeg and ffprobe
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./scripts/install-ci-media.ps1
       - name: Dependencies
         run: |
           if [ "$RUNNER_OS" = macOS ]; then brew install ffmpeg; fi
           if [ "$RUNNER_OS" = Linux ]; then sudo apt-get update && sudo apt-get install -y ffmpeg python3-venv fonts-noto-cjk xvfb; fi
-          if [ "$RUNNER_OS" = Windows ]; then choco install ffmpeg -y --no-progress; fi
           npm ci
           npm ci --prefix packages/demo/capture
           npm ci --prefix packages/demo/remotion
@@ -63,6 +66,8 @@ jobs:
           node --version
           python --version
           python -c 'import platform; print(platform.platform()); print(platform.machine())'
+      - name: Media prerequisites
+        run: python -c 'import sys;sys.path.insert(0,"scripts");from platform_tools import check_media_tools;check_media_tools()'
       - name: Synthetic showcase access and saved result
         run: node --test examples/showcase-review/server.test.mjs
       - name: PowerShell syntax
@@ -75,15 +80,7 @@ jobs:
             if ($parseErrors.Count) { throw ($parseErrors | Out-String) }
           }
       - name: Deterministic checks and public history
-        env:
-          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-        run: |
-          if [ "$GITHUB_EVENT_NAME" = pull_request ]; then
-            python scripts/check.py --public-history --python python --history-identity-ref "$PR_BASE_SHA" --history-identity-ref "$PR_HEAD_SHA"
-          else
-            python scripts/check.py --public-history --python python
-          fi
+        run: python scripts/check.py --public-history --python python
       - name: Dependency audit
         run: |
           npm audit --omit=dev --audit-level=high
