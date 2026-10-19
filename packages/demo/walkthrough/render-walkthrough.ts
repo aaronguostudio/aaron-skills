@@ -92,7 +92,8 @@ export type Timing = { stepMinMs?: number[]; titleMs?: number; endMs?: number; t
 // The capture clock and the recording's first frame drift apart by a few hundred ms (the
 // screencast starts after the page does). A capture can mark the moment its page turned from
 // black to white (capture.json `sync.tMs`); this finds that frame and returns the offset to add
-// to every capture time. Null when there is no such transition or ffprobe is missing.
+// to every capture time. Null means inspection succeeded but found no transition;
+// a missing/broken probe is a prerequisite failure, never a missing marker.
 export function detectSyncOffset(video: string, syncMs: number, diagnose?: (reason: string) => void): number | null {
   // Resolve the directory through cwd, outside FFmpeg's filter grammar. Windows
   // drive colons/backslashes and apostrophes in directory names are not filters.
@@ -106,8 +107,12 @@ export function detectSyncOffset(video: string, syncMs: number, diagnose?: (reas
       { cwd: dirname(resolve(video)), encoding: "utf8", maxBuffer: 16 * 1024 * 1024 },
     );
   } catch (error) {
-    diagnose?.(`ffprobe could not inspect the recording: ${error instanceof Error ? error.message : String(error)}`);
-    return null;
+    const missing = (error as NodeJS.ErrnoException).code === 'ENOENT' && existsSync(dirname(resolve(video)));
+    const reason = missing
+      ? 'ffprobe could not start. Install FFmpeg including ffprobe, verify PATH and run aaron-demo doctor.'
+      : 'ffprobe could not decode the recording for synchronization. Verify FFmpeg and the original video.webm; run aaron-demo doctor.';
+    diagnose?.(reason);
+    throw new RenderRefusal(reason);
   }
   let sawBlack = false;
   for (const line of csv.split("\n")) {

@@ -1,3 +1,31 @@
+# CI identity and Windows media prerequisite repair
+
+Date: 2026-10-19. This repair preserves existing Git history and accepts ordinary
+commit emails and GitHub-generated merge identities. Public-source/reachable-blob
+privacy checks and the independent Gitleaks history scan remain required.
+
+The earlier Windows main run [39271773720](https://github.com/aaronguostudio/aaron-skills/actions/runs/39271773720)
+reported a Chocolatey feed HTTP 503 and installed 0/0 packages, but continued.
+Its sync-fixture test skipped because ffprobe could not run; real capture then
+failed with a misleading missing-marker error. Windows setup now retries bounded
+installation attempts and requires both FFmpeg executables to launch before tests.
+A package-manager success alone is insufficient. Required media tests do not skip.
+
+Local macOS checks cover ordinary-email/GitHub-merge acceptance, deleted private
+history rejection, secret tripwires, missing ffprobe, invalid media and a valid
+recording without a marker. Genuine sync-offset detection remains mandatory.
+The complete shared source gate passed, including 256 capture units, 84 renderer
+tests, Python suites and 20 real Chromium tests. Fresh isolated installation,
+doctor, real capture/render smoke, MP4 decode, playback and clipboard checks passed.
+The smoke frame was visually reviewed. Source
+and Git-history Gitleaks scans and all three dependency audits found no issues.
+Native Windows setup retry/exhaustion tests run in the Windows CI job. Consult
+[the current CI matrix](https://github.com/aaronguostudio/aaron-skills/actions/workflows/ci.yml)
+for each exact revision. This dependency failure does not establish the cause of
+any separate other-machine recording failure.
+
+---
+
 # Demo field-feedback maintenance verification
 
 Date: 2026-10-19. Local checks used macOS arm64, Node 24.18.0, Python 3.14.5

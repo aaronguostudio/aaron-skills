@@ -20,6 +20,9 @@ export/install to a new directory outside Git, then run doctor and smoke. Inspec
 the generated video and page. Model evaluations are separate, explicit operations;
 ordinary tests must not call paid providers.
 
+Both `ffmpeg` and `ffprobe` must launch from PATH before running the shared
+source gate. Missing tools fail before recording; required media tests do not skip.
+
 The CI matrix covers macOS 15, Ubuntu 24.04 and Windows Server 2022 with Node 22
 and Python 3.11. It checks the exported install, revision/media/clipboard flow,
 headed synthetic sign-in and isolated recovery. `scripts/verify-windows.ps1`
@@ -45,10 +48,10 @@ Submit a focused change with the problem, resulting behavior and relevant checks
 Follow SECURITY.md for sensitive findings. Keep publishing and customer delivery
 out of tests; release actions require the maintainer's explicit authorization.
 
-Public-history checks require GitHub noreply author and committer emails. Set
-that identity for this repository without changing your global Git configuration.
+Commit email is the contributor's choice. GitHub-provided noreply addresses,
+ordinary author addresses and GitHub-generated merge identities are accepted.
+No history rewrite is needed to satisfy an email-domain rule.
 
-PR CI validates identities on the actual base and head histories; GitHub's
-disposable test-merge identity is outside the repository's control. Every
-reachable blob, including merged and deleted content, is still scanned. Push and
-release checks require noreply identities across all reachable history.
+PR, push and release checks scan every reachable blob, including merged and
+deleted content, for private material. Gitleaks continues scanning history for
+secrets. These content checks are independent of author/committer metadata.

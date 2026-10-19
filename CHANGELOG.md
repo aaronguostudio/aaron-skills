@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Accept ordinary commit emails and GitHub merge identities without rewriting
+  history; retain reachable-history privacy checks and independent secret scans.
+- Verify both FFmpeg tools before CI media tests, retry incomplete Windows
+  dependency installation, and refuse missing/broken ffprobe explicitly instead
+  of reporting a missing sync marker. Required sync tests no longer silently skip.
+
 - Preserve npm manager shim dispatch, add Cursor skill registration and isolated
   coexistence guidance, and distinguish an activated runtime from a failed smoke
   check with a usable retry command.

@@ -9,28 +9,37 @@ from release import export, public_files, scan_public, scan_history
 
 
 class ReleaseTests(unittest.TestCase):
-    def test_pr_identity_refs_do_not_exclude_merged_or_deleted_blobs(self):
+    def test_normal_merge_emails_are_accepted_but_deleted_private_content_is_not(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / 'public'
-            result = export(root, author_name='Fixture Maintainer', author_email='1+fixture@users.noreply.github.com')
+            export(root, author_name='Fixture Maintainer', author_email='fixture@example.invalid')
             def git(*args):
                 return subprocess.check_output(['git', '-C', str(root), *args], stderr=subprocess.PIPE)
-            def commit():
-                git('add', '.')
-                git('-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid', 'commit', '-m', 'Synthetic CI merge identity')
+            def commit(message='Synthetic public change'):
+                git('add', '--all')
+                git('commit', '-m', message)
+            git('checkout', '-b', 'fixture-change')
             (root / 'synthetic.txt').write_text('public fixture', encoding='utf-8')
             commit()
-            with self.assertRaisesRegex(ValueError, 'noreply'):
-                scan_history(root)
-            scan_history(root, identity_refs=[result['revision']])
-            with self.assertRaisesRegex(ValueError, 'full commit hashes'):
-                scan_history(root, identity_refs=['--all'])
+            git('checkout', 'main')
+            git('-c', 'user.email=noreply@github.com', 'merge', '--no-ff', 'fixture-change', '-m', 'Synthetic GitHub merge')
+            scan_history(root)
+            self.assertEqual(git('show', '-s', '--format=%ce', 'HEAD').strip(), b'noreply@github.com')
             (root / 'synthetic.txt').write_text('/' + 'Users' + '/' + 'private-fixture/deleted', encoding='utf-8')
             commit()
             (root / 'synthetic.txt').unlink()
             commit()
             with self.assertRaisesRegex(ValueError, 'Personal path in reachable history blob'):
-                scan_history(root, identity_refs=[result['revision']])
+                scan_history(root)
+
+    def test_secret_tripwires_still_reject_content_without_echoing_values(self):
+        with tempfile.TemporaryDirectory() as directory:
+            file = Path(directory) / 'notes.md'
+            for sensitive in ('sk-' + 'x' * 30, '-----BEGIN ' + 'PRIVATE KEY-----'):
+                file.write_text(sensitive)
+                with self.assertRaisesRegex(ValueError, 'potential (secret|credential)') as error:
+                    scan_public({'notes.md': file})
+                self.assertNotIn(sensitive, str(error.exception))
 
     def test_public_candidate_has_one_noreply_commit_and_no_internal_provenance(self):
         with tempfile.TemporaryDirectory() as directory:
