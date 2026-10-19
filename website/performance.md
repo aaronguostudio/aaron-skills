@@ -1,6 +1,30 @@
 # Website image delivery
 
-Measured 2026-10-17. The accepted artwork and layout are preserved.
+## Current Workflow Canvas assets (2026-10-19)
+
+The bilingual GitHub READMEs now use the same flat workflow illustration and
+blue/white branded example covers as the current website. The old ceramic artwork
+and its published URLs remain available for existing external links.
+
+| README asset | Bytes |
+| --- | ---: |
+| Workflow overview, unchanged website illustration | 65,094 |
+| Fictional product cover, 600 px WebP | 25,226 |
+| Public blog cover, 600 px WebP | 28,262 |
+| Total | 118,582 |
+
+The current three-image README payload is 18.5% smaller than the previous
+four-image set (145,540 bytes). These are compressed static pictures, with no
+embedded video downloads. Video examples open on the website on demand.
+
+The overview is a byte-identical copy of `src/assets/workflow-canvas/workflow-diagram.webp`.
+The cover derivatives reuse the approved public showcase posters. Encode them with
+`cwebp -resize 600 0 -q 84 -m 6`; name each output with the first 12 characters
+of its SHA-256. Do not replace or delete older published image paths.
+
+## Historical Orbital Workshop measurement (2026-10-17)
+
+The following describes the earlier homepage, rather than the current layout.
 
 ## What changed
 
