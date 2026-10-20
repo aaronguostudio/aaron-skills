@@ -42,7 +42,7 @@ export async function main(argv:string[]):Promise<number> {
     // Cover-only authoring never creates a sound or reads narration credentials.
     p.intro={...p.intro,enabled:false,sound:undefined,soundPreset:'none'};
     p.outro.enabled=false;
-    validatePresentationMedia(p,loaded.assetRoot);
+    const logoChecks=validatePresentationMedia(p,loaded.assetRoot);
     const out=resolve(output),webp=out.slice(0,-4)+'.webp';
     const manifest=out.slice(0,-4)+'.manifest.json';
     if([out,webp,manifest].some(existsSync)) throw Error('Cover output already exists. Choose a new filename or revision directory to preserve the previous cover.');
@@ -57,7 +57,7 @@ export async function main(argv:string[]):Promise<number> {
     if(result.status!==0) throw Error('Cover render failed');
     const python=join(resolve(import.meta.dir,'../../..'),'.venv',process.platform==='win32'?'Scripts':'bin',process.platform==='win32'?'python.exe':'python3');
     execFileSync(python,['-c','from PIL import Image;import sys;Image.open(sys.argv[1]).convert("RGB").save(sys.argv[2],"WEBP",quality=88,method=6)',out,webp]);
-    writeFileSync(manifest,JSON.stringify({version:1,preset:p.cover.preset,width:1600,height:900,presentation,colors:coverColors(p.cover),providerCalls:0},null,2)+'\n');
+    writeFileSync(manifest,JSON.stringify({version:1,preset:p.cover.preset,width:1600,height:900,presentation,logoChecks,colors:coverColors(p.cover),providerCalls:0},null,2)+'\n');
     console.log(JSON.stringify({png:out,webp,preset:p.cover.preset,width:1600,height:900,providerCalls:0},null,2));
     return 0;
   } catch(error) {console.error(error instanceof Error?error.message:String(error));return 3;}

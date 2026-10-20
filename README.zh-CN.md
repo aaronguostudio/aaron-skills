@@ -1,5 +1,8 @@
 # Aaron Skills
 
+当前源码中的 Film 增强支持 Logo 来源与素材检查、统一配色，以及应用画面与字幕或全文讲稿面板的上下左右布局。可先预览封面和内容帧，再渲染视频；现有 v1 配置保持兼容。参见[视频布局说明](docs/video-layouts.md)。
+
+
 [English](README.md) | [简体中文](README.zh-CN.md) | [官网](https://skills.aaronguo.com/?lang=zh)
 
 把与 AI Agent 协作的方法和执行工具放在一起：从理解陌生项目，到交付经过检查、别人看得见也用得上的成果。**当前已发布 Demo：Capture → Film → Share。**

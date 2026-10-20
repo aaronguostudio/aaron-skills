@@ -1,5 +1,9 @@
 # Video presentation templates
 
+For authentic-logo preflight, one coherent theme, above/below/left/right screen
+placement and full transcript panels, see [presentation v2](video-layouts.md).
+Version 1 below remains supported unchanged. Use v2 deliberately for new layouts.
+
 For the 32 selectable presentation-cover styles, editable title/subtitle,
 Logo, presenter, date and colors, see [cover library](cover-library.md).
 `aaron-demo cover` can preview a cover without recording an application.

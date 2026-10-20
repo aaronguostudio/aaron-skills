@@ -1,3 +1,44 @@
+# Brand and layout v2 — local implementation verification
+
+Date: 2026-10-19. This is a local candidate, not a published release. Tests use
+entirely synthetic Northstar artwork and a generated form recording. No client
+assets, documents, adapters, credentials or browser state enter public source.
+Raw media and logs stay in the external `video-layouts-v2-2026-10-19` archive.
+
+- Presentation v1/plain/legacy defaults remain compatible. V2 adds explicit logo
+  provenance/fallbacks, raster decode and visibility checks, light/dark variants,
+  wordmark handling, shared palettes, page-level transcripts and four screen placements.
+- The full source gate passed: strict TypeScript, 256 capture units, 106 renderer
+  tests (including 12 new v2 cases), Python/privacy/import/document checks and
+  20 real Chromium capture integration tests. The Windows-only ACL assertion
+  remains skipped on macOS. The final branding/theme changes also passed focused
+  tests. Website build/cover tests and Sites checks passed for the shared cover view.
+- An isolated exported installation passed doctor and Capture -> H.264 -> HTML
+  smoke. Identical pinned browser binaries were copied into the isolated cache;
+  the ordinary user's active installation was not replaced or modified in place.
+- Installed media acceptance renders top/bottom/left/right layouts in native and
+  fixed canvases, with transparent wide wordmarks, imported local tone/transcript,
+  waits and multiple focus boxes. Videos fully decode. Pixel assertions verify
+  actual logos on cover/body/outro and scaled/translated focus borders. Input
+  recording, capture/steps and imported audio hashes remain unchanged.
+- Cover/content previews render without an MP4 or provider synthesis. Existing
+  template/covers/imported-tone and mocked-provider acceptance also passed.
+  Mock requests and tones are plumbing checks, not voice quality acceptance.
+- The first real smoke recording started white and lacked the required black-to-white
+  sync transition. The renderer refused it. It was retained and inspected; a separate
+  fresh smoke passed without a calibration override or guard change. This retry does
+  not establish the cause of the missing initial marker or claim a capture fix.
+
+V2 has local macOS arm64 evidence. The CI matrix is configured to repeat the new
+installed verifier; its Windows/Linux results have not run for this local branch.
+Brand-source metadata records agent/user evidence, not automatic identity detection;
+contrast pixels are a heuristic, not human brand acceptance. Transcript pages use
+measured clip duration, not inferred word timestamps. Agent coverage instructions
+are not evidence that every host/model will follow them on an unseen task.
+No provider spending, global runtime upgrade, push, merge, tag or deployment occurred.
+
+---
+
 # Presentation cover presets — v0.2.0 candidate
 
 Date: 2026-10-19. The local release checks ran on macOS arm64 with the pinned

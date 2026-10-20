@@ -255,7 +255,12 @@
     "packages/demo/covers/art/cutout-sun.webp",
     "packages/demo/covers/art/soft-grid.webp",
     "packages/demo/walkthrough/cover.test.ts",
-    "packages/demo/covers/art-sources.json"
+    "packages/demo/covers/art-sources.json",
+    "docs/video-layouts.md",
+    "packages/demo/remotion/src/projects/walkthrough-video/presentation/layout.ts",
+    "packages/demo/remotion/src/projects/walkthrough-video/presentation/theme.ts",
+    "packages/demo/walkthrough/layout.test.ts",
+    "scripts/verify-video-layouts.mjs"
   ],
   "reviewedBinaryAssets": {
     "packages/demo/covers/art/alpine-silence.webp": {

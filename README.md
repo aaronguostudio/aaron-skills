@@ -1,5 +1,8 @@
 # Aaron Skills
 
+Current-source Film enhancements add verified logo provenance and media checks, coherent themes, and application-screen placement above/below/left/right with caption or transcript panels. Preview the cover and content together before rendering; existing v1 configurations remain compatible. See [video layouts](docs/video-layouts.md).
+
+
 [English](README.md) | [简体中文](README.zh-CN.md) | [Website](https://skills.aaronguo.com/)
 
 Reusable skills and executable tools for working with AI agents—from

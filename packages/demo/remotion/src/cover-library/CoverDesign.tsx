@@ -2,7 +2,7 @@ import React, {type CSSProperties, type ReactNode} from 'react';
 import {coverColors,getCoverPreset,type CoverSettings} from '../../../covers/catalog';
 
 type ImageProps={src:string;alt:string;style:CSSProperties};
-type Props={cover:CoverSettings;title:string;subtitle?:string;brandName?:string;logoSrc?:string;artSrc?:string;width:number;height:number;renderImage?:(props:ImageProps)=>ReactNode};
+type Props={cover:CoverSettings;title:string;subtitle?:string;brandName?:string;logoSrc?:string;logoBackground?:string;logoContainsName?:boolean;omitFallback?:boolean;artSrc?:string;width:number;height:number;renderImage?:(props:ImageProps)=>ReactNode};
 type Box=[number,number,number,number];
 const SANS="Arial, 'Helvetica Neue', 'Noto Sans CJK SC', sans-serif";
 const SERIF="Georgia, 'Times New Roman', 'Noto Serif CJK SC', serif";
@@ -48,7 +48,7 @@ function geometry(layout:string):{title:Box;subtitle:Box;brand:Box;footer:Box;da
   }
 }
 
-export function CoverDesign({cover,title,subtitle='',brandName='',logoSrc,artSrc,width,height,renderImage}:Props) {
+export function CoverDesign({cover,title,subtitle='',brandName='',logoSrc,logoBackground,logoContainsName=false,omitFallback=false,artSrc,width,height,renderImage}:Props) {
   const preset=getCoverPreset(cover.preset), colors=coverColors(cover),g=geometry(preset.layout);
   if(['chrome-loop','red-balloon'].includes(preset.id)) {g.title[2]=740;g.subtitle[2]=760;}
   if(['ceramic-ribbon','orange-stair','cobalt-coral'].includes(preset.id)) {
@@ -76,8 +76,8 @@ export function CoverDesign({cover,title,subtitle='',brandName='',logoSrc,artSrc
       {footerOnAccent?<div style={{position:'absolute',left:0,top:preset.id==='desert-editorial'?720:845,width:preset.id==='desert-editorial'?675:1600,height:180,background:colors.accent}}/>:null}
       {artSrc?image({src:artSrc,alt:'',style:{position:'absolute',inset:0,width:1600,height:900,objectFit:'fill'}}):null}
       <div style={{...box(g.brand),display:'flex',alignItems:'center',gap:18,color:preset.id==='sand-courtyard'?'#f5f0e7':colors.foreground}}>
-        {logoSrc?image({src:logoSrc,alt:brandName||'Logo',style:{width:'auto',height:48,maxWidth:190,objectFit:'contain',flexShrink:0}}):brandName?<span style={{display:'inline-block',width:18,height:18,background:colors.accent,flexShrink:0}}/>:null}
-        {brandName?<span data-cover-field="brand" style={{fontSize:fitCoverText(brandName.toUpperCase(),[0,0,g.brand[2]-210,48],SANS,24,1.2,.08),fontWeight:600,letterSpacing:'.08em',textTransform:'uppercase',overflowWrap:'anywhere'}}>{brandName}</span>:null}
+        {logoSrc?<span style={{display:'inline-flex',alignItems:'center',background:logoBackground,padding:logoBackground?6:0,borderRadius:5}}>{image({src:logoSrc,alt:brandName||'Logo',style:{width:'auto',height:48,maxWidth:190,objectFit:'contain',flexShrink:0}})}</span>:brandName&&!omitFallback?<span style={{display:'inline-block',width:18,height:18,background:colors.accent,flexShrink:0}}/>:null}
+        {brandName&&!logoContainsName?<span data-cover-field="brand" style={{fontSize:fitCoverText(brandName.toUpperCase(),[0,0,g.brand[2]-210,48],SANS,24,1.2,.08),fontWeight:600,letterSpacing:'.08em',textTransform:'uppercase',overflowWrap:'anywhere'}}>{brandName}</span>:null}
       </div>
       <div style={{...box(g.title),display:'flex',alignItems:'flex-end',paddingBottom:12}}><div data-cover-field="title" style={{width:'100%',maxHeight:'100%',fontFamily:font,fontSize:fitCoverText(title,[g.title[0],g.title[1],g.title[2],g.title[3]-12],font,g.size,1.02,-.035),fontWeight:700,lineHeight:1.02,letterSpacing:'-.035em',whiteSpace:'pre-wrap',overflowWrap:'anywhere',textAlign:g.align}}>{title}</div></div>
       {subtitle?<div data-cover-field="subtitle" style={{...box(g.subtitle),fontSize:fitCoverText(subtitle,g.subtitle,SANS,34,1.2),lineHeight:1.2,whiteSpace:'pre-wrap',overflowWrap:'anywhere',textAlign:g.align}}>{subtitle}</div>:null}
