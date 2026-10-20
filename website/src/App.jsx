@@ -271,45 +271,47 @@ export function App() {
       <a href="#main" className="skip-link">
         {text.skip}
       </a>
-      <header className="site-header wrap">
-        <a
-          className="wordmark"
-          href={home || "#"}
-          aria-label={
-            language === "zh" ? "Aaron Skills 首页" : "Aaron Skills home"
-          }
-        >
-          Aaron Skills
-        </a>
-        <nav aria-label={language === "zh" ? "主导航" : "Main navigation"}>
-          <a href={`${home}#workflow`}>{text.nav[0]}</a>
-          <a href={`${home}#skills`}>{text.nav[1]}</a>
-          <a href={`${home}#examples`}>{language === "zh" ? "案例" : "Examples"}</a>
-          <ExternalLink href={REPO}>GitHub</ExternalLink>
-          <a href={`/covers${language === "zh" ? "?lang=zh" : ""}`} aria-current={isCoversPage ? "page" : undefined}>{language === "zh" ? "封面" : "Covers"}</a>
-          <a href={`/layouts${language === "zh" ? "?lang=zh" : ""}`} aria-current={isLayoutsPage ? "page" : undefined}>{language === "zh" ? "视频版式" : "Video layouts"}</a>
-          <div
-            className="language-switch"
-            role="group"
-            aria-label={text.locale}
+      <header className="site-header">
+        <div className="site-header-inner wrap">
+          <a
+            className="wordmark"
+            href={home || "#"}
+            aria-label={
+              language === "zh" ? "Aaron Skills 首页" : "Aaron Skills home"
+            }
           >
-            <button
-              onClick={() => changeLanguage("en")}
-              aria-pressed={language === "en"}
-              lang="en"
+            Aaron Skills
+          </a>
+          <nav aria-label={language === "zh" ? "主导航" : "Main navigation"}>
+            <a href={`${home}#workflow`}>{text.nav[0]}</a>
+            <a href={`${home}#skills`}>{text.nav[1]}</a>
+            <a href={`${home}#examples`}>{language === "zh" ? "案例" : "Examples"}</a>
+            <ExternalLink href={REPO}>GitHub</ExternalLink>
+            <a href={`/covers${language === "zh" ? "?lang=zh" : ""}`} aria-current={isCoversPage ? "page" : undefined}>{language === "zh" ? "封面" : "Covers"}</a>
+            <a href={`/layouts${language === "zh" ? "?lang=zh" : ""}`} aria-current={isLayoutsPage ? "page" : undefined}>{language === "zh" ? "视频版式" : "Video layouts"}</a>
+            <div
+              className="language-switch"
+              role="group"
+              aria-label={text.locale}
             >
-              EN
-            </button>
-            <span aria-hidden="true">/</span>
-            <button
-              onClick={() => changeLanguage("zh")}
-              aria-pressed={language === "zh"}
-              lang="zh-CN"
-            >
-              中文
-            </button>
-          </div>
-        </nav>
+              <button
+                onClick={() => changeLanguage("en")}
+                aria-pressed={language === "en"}
+                lang="en"
+              >
+                EN
+              </button>
+              <span aria-hidden="true">/</span>
+              <button
+                onClick={() => changeLanguage("zh")}
+                aria-pressed={language === "zh"}
+                lang="zh-CN"
+              >
+                中文
+              </button>
+            </div>
+          </nav>
+        </div>
       </header>
       <main id="main">
         {isLayoutsPage ? <VideoLayouts language={language} /> : isCoversPage ? <CoverLibrary language={language} /> : <>

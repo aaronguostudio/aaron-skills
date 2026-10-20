@@ -59,6 +59,11 @@ switch sections after scrolling. Its white surface must keep links legible;
 anchor targets need clearance below the current header height on desktop/mobile.
 Dialogs and the keyboard skip link remain above the sticky navigation.
 
+On 2026-10-20 Aaron requested a full-width sticky header. Keep its white surface
+and bottom rule edge to edge across the viewport on every page, with only the
+inner navigation constrained to the shared content width. The cream background
+on Video layouts may remain; it must sit beneath a continuous full-width header.
+
 On 2026-10-20 Aaron approved the Forma collection and authorized publishing it.
 Keep the six cover/body treatments visually consistent with the accepted cream
 and olive editorial preview. Also offer two first-class unframed options: native
