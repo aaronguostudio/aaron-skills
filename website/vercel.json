@@ -4,7 +4,20 @@
   "installCommand": "npm ci",
   "buildCommand": "npm run build",
   "outputDirectory": "dist/client",
-  "rewrites": [{ "source": "/covers", "destination": "/index.html" }],
+  "rewrites": [
+    {
+      "source": "/covers",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/layouts",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/layouts/",
+      "destination": "/index.html"
+    }
+  ],
   "headers": [
     {
       "source": "/art/optimized/(.*)",
@@ -26,7 +39,12 @@
     },
     {
       "source": "/release.json",
-      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
     }
   ]
 }

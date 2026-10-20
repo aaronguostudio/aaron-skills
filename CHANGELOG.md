@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.0 — 2026-10-20
+
+- Add six matched cover/video treatments and two unframed options: native video
+  with a short bottom caption, or a modest transcript band. Keep the application
+  large and reuse the passed capture for presentation changes.
+- Publish a bilingual video-layout collection with playable fictional Forma
+  examples, scene previews, matched opening covers and copyable agent briefs.
+- Add explicit v2 brand provenance, light/dark logo variants, theme inheritance,
+  readable text contrast and media validation before rendering. Preserve v1
+  defaults and the eight additional composition presets for training and notes.
+- Preview a body frame and cover without synthesizing narration; map highlights
+  and cursor positions through the same uncropped recording geometry.
+
 ## 0.2.0 — 2026-10-19
 
 - Add 32 reusable presentation-cover presets with clean artwork and editable

@@ -20,7 +20,13 @@ For script drafting or a requested explanation style, read `aaron-demo docs narr
 
 Rendering is silent by default. When narration is requested, use `--narrate` for saved narration/captions or `--script <external-script.json>` for a drafted or supplied script in any mode. Read `aaron-demo docs narration` for user-owned key and voice configuration. Confirm any missing voice or spending authorization before a provider call; never use an author's personal voice or account by default. Script drafting itself requires no voice account or provider request.
 
-For branded packaging, read `aaron-demo docs video-presentation`. Choose `--template minimal|professional|showcase` or an external `--presentation` configuration and add `--cover` for PNG/WebP share images. Keep the app viewport intact and brand within the caption band. Use a separate output directory per variation. For supplied narration use `--audio <external-manifest.json>`; do not request a provider account for an import. Qwen TTS is a reserved interface, not a working backend. Never silently substitute a voice/provider. Review imported/generated audio as well as the picture.
+For branded packaging, read `aaron-demo docs video-presentation` and `aaron-demo docs video-layouts`. Resolve approved corporate/product assets from the supplied pack, owning app/design system or a confirmed visible mark; distinguish tenant/user avatars and tool branding. Never redraw a logo. Record source/role/verification outside Git. If unresolved, explain the gap and make omission or a monogram explicit. Review identity, proportions, clear space and contrast on cover, body, outro and share image; select light/dark variants and suppress duplicate brand text for a wordmark.
+
+Choose `--template minimal|professional|showcase` or an external `--presentation` configuration and add `--cover` for PNG/WebP share images. New version-2 configurations provide a shared theme and top/bottom/left/right screen layouts with complementary caption or full-transcript panels. Keep existing version-1 choices compatible. Recommend a layout conversationally, then use `--preview --cover` to inspect both cover and content before the full render. Reconcile the palette across cards, annotations, focus fill and cursor; do not recolor the application. Preserve native evidence and use only uniform containment. Use a separate output directory per variation. For supplied narration use `--audio <external-manifest.json>`; do not request a provider account for an import. Qwen TTS is a reserved interface, not a working backend. Never silently substitute a voice/provider. Review imported/generated audio as well as the picture.
+
+For a new branded video, author a version-2 configuration unless the user needs legacy behavior. A cover-only v1 file from the gallery can seed it: retain the chosen cover/content and intentional overrides, resolve logo provenance and one palette, then preview both surfaces. Do not let an unrelated template default supply the body color. Keep an existing v1 video's behavior until its presentation is deliberately revised.
+
+Choose video-page composition separately from the cover. Read `video-layouts`; recommend roughly three visual treatments by audience and brand, with the best fit first. For an ordinary product demo, favor the compact `studio-*` frames, a matching cover palette/material, a dominant application screen and one short caption. Do not reserve a large empty text panel or default to showing the full transcript. The six studio treatments share one compact structure; palette/material variants are not additional geometry layouts. The earlier utility layouts remain available: `screen-first` favors application detail, `lesson-notes` explicitly adds transcript notes for training, and `native-detail` retains source pixels with a flexible aspect ratio. Use the same settled, attractive, permitted product workflow to compare choices, show dimensions and application scale, and allow fullscreen viewing. Empty test blocks are not design previews. Keep an accepted choice; when design is delegated, choose and proceed. Explicit layout fields can override a named preset.
 
 Keep delivered videos and covers free of process labels such as "AI Narration", "AI-generated", "Local Review", "Draft" or tool watermarks by default. Add such text only when the user explicitly requests it; `--narration-notice` enables the narration notice. Keep provider provenance and review status in external manifests/QA notes, not burned into the film.
 
@@ -28,4 +34,24 @@ Reuse the passed capture for caption, highlight, narration, script, or language-
 
 Inspect every held-frame still and the end of every wait. Captions must match visible evidence; reject loading, error, obscured, or unintended personal-data frames. Report the MP4, chapters, and any remaining limitations. Quality changes belong in the common renderer so later videos inherit them.
 
+Before delivery, reconcile every must-show scene with capture step/evidence IDs or an explicit exception. A signed-result screen is not evidence of a recipient signing journey; a confirmation preview is not submission or sealing. Do not narrate around missing footage. Layout/theme-only revisions reuse passed evidence and unchanged audio, without repeating application writes or voice synthesis.
+
 Use paste-ready-update for an optional update page if installed. The user sends or publishes the result unless they explicitly authorize delivery.
+
+### Plain video is a first-class choice
+
+Offer the same simple presentation quality without decorative artwork. When the
+user asks for plain/original/no-background video, use `plain-caption` (native
+recording plus one short bottom caption) or `plain-transcript` (native recording
+plus a compact bottom transcript band). No padding, stage art or forced opening
+cover. Transcript text comes from saved/imported narration, with caption fallback
+when no narration exists. Paginate long text over time; do not reserve a large
+blank panel or invent spoken wording/timestamps.
+
+For designed combinations, `studio-cobalt`, `studio-sand`, `studio-chrome`,
+`studio-midnight`, `studio-paper`, `studio-vermilion` load matched cover and body
+palettes automatically; explicit brand/theme/cover fields override defaults.
+The gallery at https://skills.aaronguo.com/layouts shows six art directions plus
+two plain choices, using a fictional product. Recommend about three relevant
+options, including a plain choice when useful. Accept a name/number or delegated
+selection; the browser and CLI are optional, not a required user step.

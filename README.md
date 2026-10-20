@@ -1,5 +1,8 @@
 # Aaron Skills
 
+Current-source Film enhancements add verified logo provenance and media checks, coherent themes, and application-screen placement above/below/left/right with caption or transcript panels. Preview the cover and content together before rendering; existing v1 configurations remain compatible. See [video layouts](docs/video-layouts.md).
+
+
 [English](README.md) | [简体中文](README.zh-CN.md) | [Website](https://skills.aaronguo.com/)
 
 Reusable skills and executable tools for working with AI agents—from
@@ -52,6 +55,9 @@ is not required. The Demo setup below continues to install only the Demo bundle.
 
 The family uses short action names: **Shape → Capture → Film
 → Share**. See [names and existing invocation IDs](docs/skill-names.md).
+
+
+Explore [six matched cover/video treatments and two unframed choices](https://skills.aaronguo.com/layouts), or ask Film to recommend three combinations for your content and brand. Plain video with a short caption or a compact transcript band is a first-class option.
 
 ## Available now: Demo
 

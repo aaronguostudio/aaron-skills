@@ -1,5 +1,8 @@
 # Aaron Skills
 
+当前源码中的 Film 增强支持 Logo 来源与素材检查、统一配色，以及应用画面与字幕或全文讲稿面板的上下左右布局。可先预览封面和内容帧，再渲染视频；现有 v1 配置保持兼容。参见[视频布局说明](docs/video-layouts.md)。
+
+
 [English](README.md) | [简体中文](README.zh-CN.md) | [官网](https://skills.aaronguo.com/?lang=zh)
 
 把与 AI Agent 协作的方法和执行工具放在一起：从理解陌生项目，到交付经过检查、别人看得见也用得上的成果。**当前已发布 Demo：Capture → Film → Share。**
@@ -31,6 +34,9 @@ Aaron Skills 将工作流与执行工作流所需的工具放在同一个集合�
 **Shape 已提供源码预览**，保留调用标识 `feature-blueprint`。它帮助 Agent 连接相关上下文、从复杂信息中提炼关系、追问会改变判断的问题，并在反馈中不断校正理解。入口是当前对话里的需求本身，一次简短交流也可以形成完整结果；视觉表达和 Agent 原生设计能力按理解问题的需要参与。请先读 `skills/feature-blueprint/SKILL.md`；`docs/feature-blueprint.md` 提供深入指引和可选历史案例。页面、数据包或固定的输出结构都不是必要条件。下面的安装流程仍只安装 Demo。
 
 系列名称统一为 **Shape → Capture → Film → Share**。请看[名称与现有调用标识](docs/skill-names.md)。
+
+
+浏览 [6 组封面与视频页搭配，以及 2 种无装饰背景的简洁版](https://skills.aaronguo.com/layouts)，也可以直接让 Film 根据内容与品牌推荐三组。原始视频下方只放短字幕或少量 transcript，同样是正式选项。
 
 ## 当前可用：Demo
 

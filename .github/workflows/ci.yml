@@ -97,6 +97,7 @@ jobs:
           release=$(python -c 'import os,sys;from pathlib import Path;sys.path.insert(0,"scripts");from managed_registration import active_release;root=Path(os.environ["RUNNER_TEMP"])/"demo install/runtime";print(active_release(root) if os.name=="nt" else root/"current")')
           node scripts/verify-installed.mjs "$release"
           python -c 'import sys,subprocess;from pathlib import Path;sys.path.insert(0,"scripts");from platform_tools import bun_binary;subprocess.run([str(bun_binary(Path(sys.argv[1])/"packages/demo/remotion")),"scripts/verify-presentation.mjs",sys.argv[1]],check=True)' "$release"
+          python -c 'import sys,subprocess;from pathlib import Path;sys.path.insert(0,"scripts");from platform_tools import bun_binary;subprocess.run([str(bun_binary(Path(sys.argv[1])/"packages/demo/remotion")),"scripts/verify-video-layouts.mjs",sys.argv[1]],check=True)' "$release"
       - name: Installed sign-in and recovery
         run: |
           release=$(python -c 'import os,sys;from pathlib import Path;sys.path.insert(0,"scripts");from managed_registration import active_release;root=Path(os.environ["RUNNER_TEMP"])/"demo install/runtime";print(active_release(root) if os.name=="nt" else root/"current")')

@@ -40,8 +40,10 @@ import {
 } from "./timeline";
 import { BrandCard, BrandMark } from "./brand/BrandCard";
 import { validateBrand, type Brand } from "./brand/model";
-import {PresentationCard, PresentationCaption} from './presentation/Presentation';
+import {PresentationCard, PresentationCaption, PresentationAnnotation, PresentationBackdrop} from './presentation/Presentation';
 import {validatePresentation, type Presentation} from './presentation/model';
+import {annotationAt, layoutGeometry, resolveLayout} from './presentation/layout';
+import {alphaColor, paletteFor} from './presentation/theme';
 
 const C = {
   bg: "#11151c",
@@ -56,7 +58,7 @@ const C = {
 
 // A voice clip in the capture folder (written by the render CLI): over a step, or over the title
 // or end card.
-type Clip = { at: number | "intro" | "outro"; file: string; ms: number };
+type Clip = { at: number | "intro" | "outro"; file: string; ms: number; text?:string };
 
 // calibrationMs comes from the render CLI, which measured it from the capture's sync flash;
 // stepMinMs and narration come from it too when the walkthrough is narrated.
@@ -107,12 +109,12 @@ const EndCard: React.FC<{ capture: Capture; total: number }> = ({ capture, total
 );
 
 // A rounded amber outline with a faint fill. Its stroke draws itself on as `draw` goes 0 → 1.
-const Highlights: React.FC<{ marks: Highlight[]; w: number; h: number; color?: string }> = ({ marks, w, h, color }) =>
+const Highlights: React.FC<{ marks: Highlight[]; w: number; h: number; color?: string; themed?:boolean }> = ({ marks, w, h, color,themed }) =>
   marks.length === 0 ? null : (
     <svg width={w} height={h} style={{ position: "absolute", left: 0, top: 0, pointerEvents: "none" }}>
       {marks.map(({ kind, box, draw, opacity }, i) => (
         <g key={i} opacity={opacity}>
-          <rect x={box.x} y={box.y} width={box.w} height={box.h} rx={8} fill={kind === "click" ? "rgba(255, 206, 55, 0.12)" : "rgba(255, 214, 77, 0.09)"} />
+          <rect x={box.x} y={box.y} width={box.w} height={box.h} rx={8} fill={themed&&color?alphaColor(color,kind==='click'?.12:.09):kind === "click" ? "rgba(255, 206, 55, 0.12)" : "rgba(255, 214, 77, 0.09)"} />
           <rect
             x={box.x}
             y={box.y}
@@ -132,7 +134,7 @@ const Highlights: React.FC<{ marks: Highlight[]; w: number; h: number; color?: s
     </svg>
   );
 
-const Cursor: React.FC<{ state: CursorState }> = ({ state }) => {
+const Cursor: React.FC<{ state: CursorState; color?:string }> = ({ state,color }) => {
   if (!state.visible) return null;
   const ring = state.ripple;
   return (
@@ -146,8 +148,8 @@ const Cursor: React.FC<{ state: CursorState }> = ({ state }) => {
           width: 50,
           height: 50,
           borderRadius: "50%",
-          background: "rgba(255, 218, 92, 0.22)",
-          border: "2px solid rgba(227, 169, 0, 0.7)",
+          background: color?alphaColor(color,.22):"rgba(255, 218, 92, 0.22)",
+          border: `2px solid ${color?alphaColor(color,.7):'rgba(227, 169, 0, 0.7)'}`,
           boxSizing: "border-box",
         }}
       />
@@ -162,7 +164,7 @@ const Cursor: React.FC<{ state: CursorState }> = ({ state }) => {
             marginLeft: -interpolate(ring, [0, 1], [10, 38]),
             marginTop: -interpolate(ring, [0, 1], [10, 38]),
             borderRadius: "50%",
-            border: `4px solid ${C.accent}`,
+            border: `4px solid ${color??C.accent}`,
             opacity: 1 - ring,
           }}
         />
@@ -234,6 +236,10 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, na
   const frame = useCurrentFrame();
   if (!capture || !timeline) return <AbsoluteFill style={{ background: C.bg }} />;
   const { w, h } = capture.viewport;
+  const geometry=layoutGeometry(capture.viewport,presentation);
+  const stage=presentation?.layout?resolveLayout(presentation.layout).stageStyle:undefined;
+  // Video, stills and every evidence overlay share exactly this capture-space transform.
+  const screenStyle:React.CSSProperties={position:'absolute',left:geometry.screen.x,top:geometry.screen.y,width:w,height:h,transform:`scale(${geometry.screen.scale})`,transformOrigin:'top left',overflow:'hidden'};
   const videoEnd = timeline.titleFrames + timeline.videoFrames;
   const inVideo = frame >= timeline.titleFrames && frame < videoEnd;
   const segment = stepAtFrame(timeline, frame);
@@ -245,9 +251,11 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, na
   const aiNarrated = narrated && narrationKind !== 'imported';
   const noticeRequested = narrationNotice || branding?.aiNotice === true;
   const aiNotice = aiNarrated && noticeRequested;
+  const annotation=annotationAt(timeline,narration,stepIndex,frame,step?.caption??'');
 
   return (
-    <AbsoluteFill style={{ background: C.bg }}>
+    <AbsoluteFill style={{ background: presentation?.version===2?paletteFor(presentation,'body').background:C.bg }}>
+      {presentation?<PresentationBackdrop p={presentation}/>:null}
       {timeline.titleFrames > 0 ? <Sequence durationInFrames={timeline.titleFrames}>
         {presentation ? <PresentationCard p={presentation} total={timeline.titleFrames} narrated={aiNotice}/> : branding ? (
           <BrandCard brand={branding} total={timeline.titleFrames} narrated={aiNarrated} notice={noticeRequested} />
@@ -257,7 +265,7 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, na
       </Sequence> : null}
       {timeline.segments.map((s) => (
         <Sequence key={`${s.fromFrame}`} from={s.fromFrame} durationInFrames={s.frames}>
-          <div style={{ position: "absolute", left: 0, top: 0, width: w, height: h, overflow: "hidden" }}>
+          <div style={{...screenStyle,...(stage?{boxShadow:stage==='paper'?'0 12px 45px #1d29251c':'0 20px 80px #10131f40',outline:'1px solid #ffffff30'}:{})}}>
             {s.still ? (
               <Img src={staticFile(s.still)} style={{ width: w, height: h }} />
             ) : s.freeze ? (
@@ -302,10 +310,12 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, na
       })}
       {inVideo ? (
         <>
-          <Highlights marks={highlightsAt(timeline, steps, capture.viewport, frame)} w={w} h={h} color={presentation?.body.highlightColor} />
-          <Cursor state={cursorAt(timeline, steps, capture.viewport, frame)} />
+          <div style={screenStyle}>
+          <Highlights marks={highlightsAt(timeline, steps, capture.viewport, frame)} w={w} h={h} color={presentation?.body.highlightColor} themed={presentation?.version===2}/>
+          <Cursor state={cursorAt(timeline, steps, capture.viewport, frame)} color={presentation?.version===2?paletteFor(presentation,'body').cursor:undefined} />
           {segment && segment.speed > 1 ? <SpeedBadge speed={segment.speed} right={24} /> : null}
-          {presentation ? <PresentationCaption p={presentation} top={h} width={w} caption={step?.caption ?? ''} position={stepIndex !== null ? `${stepIndex+1}/${steps.length}` : ''} narrated={aiNotice}/> : <CaptionBand
+          </div>
+          {presentation&&!geometry.legacy?<PresentationAnnotation p={presentation} box={geometry.annotation} caption={step?.caption??''} transcript={annotation.text} position={stepIndex!==null?`${stepIndex+1}/${steps.length}`:''} progress={annotation.progress} narrated={aiNotice}/>:presentation ? <PresentationCaption p={presentation} top={h} width={w} caption={step?.caption ?? ''} position={stepIndex !== null ? `${stepIndex+1}/${steps.length}` : ''} narrated={aiNotice}/> : <CaptionBand
             top={h}
             width={w}
             caption={step?.caption ?? ""}
@@ -348,11 +358,12 @@ const calculateMetadata: CalculateMetadataFunction<Props> = async ({ props }) =>
     endMs: props.endMs,
     ...(props.presentation ? {titleBaseMs:props.presentation.intro.enabled?props.presentation.intro.durationMs:0, endBaseMs:props.presentation.outro.enabled?props.presentation.outro.durationMs:0} : {}),
   });
+  const geometry=layoutGeometry(capture.viewport,props.presentation);
   return {
     durationInFrames: timeline.durationInFrames,
     fps: FPS,
-    width: capture.viewport.w,
-    height: capture.viewport.h + CAPTION_BAND,
+    width: geometry.width,
+    height: geometry.height,
     props: { capture, steps, timeline, narration: props.narration ?? [], branding: props.branding, presentation:props.presentation, narrationKind:props.narrationKind, narrationNotice:props.narrationNotice },
   };
 };

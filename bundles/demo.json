@@ -116,7 +116,10 @@
     "packages/demo/covers/art/sand-courtyard.webp",
     "packages/demo/covers/art/red-balloon.webp",
     "packages/demo/covers/art/cutout-sun.webp",
-    "packages/demo/covers/art/soft-grid.webp"
+    "packages/demo/covers/art/soft-grid.webp",
+    "docs/video-layouts.md",
+    "packages/demo/remotion/src/projects/walkthrough-video/presentation/layout.ts",
+    "packages/demo/remotion/src/projects/walkthrough-video/presentation/theme.ts"
   ],
-  "version": "0.2.0"
+  "version": "0.3.0"
 }

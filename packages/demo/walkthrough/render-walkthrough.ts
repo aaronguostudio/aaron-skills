@@ -25,6 +25,8 @@ import {
 import {loadPresentation, installPresentation, validatePresentationMedia} from './presentation';
 import {outsideGit, readImportedAudio, installImportedAudio} from './import-audio';
 import {speechProvider} from './voice-providers';
+import {annotationPages, layoutGeometry} from '../remotion/src/projects/walkthrough-video/presentation/layout';
+import {paletteFor} from '../remotion/src/projects/walkthrough-video/presentation/theme';
 import { installBrand, loadBrandProfile } from "./brand";
 import type { Brand } from "../remotion/src/projects/walkthrough-video/brand/model";
 import {
@@ -219,18 +221,20 @@ export type Args = {
   audio?: string;
   voiceProvider?: string;
   cover: boolean;
+  preview: boolean;
 };
 
 export function parseArgs(argv: string[]): Args {
-  const args: Args = { dryRun: false, stills: false, narrate: false, narrationNotice: false, out: undefined, script: undefined, cover:false };
+  const args: Args = { dryRun: false, stills: false, narrate: false, narrationNotice: false, out: undefined, script: undefined, cover:false, preview:false };
   const values: Record<string, keyof Args> = {
     "--out": "out", "--calibration-ms": "calibrationMs", "--voice-profile": "voiceProfile",
     "--script": "script", "--speed": "speed", "--brand": "brand",
     '--template':'template', '--presentation':'presentation', '--cover-preset':'coverPreset', '--audio':'audio', '--voice-provider':'voiceProvider',
   };
-  const flags = new Map<string, "dryRun" | "stills" | "narrate" | 'cover' | 'narrationNotice'>([
+  const flags = new Map<string, "dryRun" | "stills" | "narrate" | 'cover' | 'narrationNotice' | 'preview'>([
     ["--dry-run", "dryRun"], ["--stills", "stills"], ["--narrate", "narrate"],
     ['--cover','cover'], ['--narration-notice','narrationNotice'],
+    ['--preview','preview'],
   ]);
   const seen = new Set<string>();
   for (let i = 0; i < argv.length; i++) {
@@ -258,7 +262,7 @@ export function parseArgs(argv: string[]): Args {
   return args;
 }
 
-const USAGE = "usage: aaron-demo render <passed-run> [--template minimal|professional|showcase] [--presentation <external.json>] [--cover-preset <id>] [--cover] [--narration-notice] [--audio <manifest.json> | --narrate | --voice-provider none|elevenlabs|import|qwen] [--script <script.json>] [--voice-profile <id>] [--speed <0.7-1.2>] [--brand <legacy-id>] [--out <file.mp4>] [--stills] [--dry-run]";
+const USAGE = "usage: aaron-demo render <passed-run> [--template minimal|professional|showcase] [--presentation <external.json>] [--cover-preset <id>] [--cover] [--preview] [--narration-notice] [--audio <manifest.json> | --narrate | --voice-provider none|elevenlabs|import|qwen] [--script <script.json>] [--voice-profile <id>] [--speed <0.7-1.2>] [--brand <legacy-id>] [--out <file.mp4>] [--stills] [--dry-run]";
 
 export async function main(argv: string[]): Promise<number> {
   if (argv.length === 1 && (argv[0] === '--help' || argv[0] === '-h')) { console.log(USAGE); return 0; }
@@ -269,6 +273,7 @@ export async function main(argv: string[]): Promise<number> {
     if (!run) {console.error(USAGE); return 2;}
     const provider = parsed.voiceProvider ?? (parsed.audio ? 'import' : parsed.narrate ? 'elevenlabs' : 'none');
     if (!['none','import','elevenlabs','qwen'].includes(provider)) throw new RenderRefusal('Unknown voice provider');
+    if(parsed.preview&&provider==='elevenlabs')throw new RenderRefusal('Preview never synthesizes narration; use none or --audio with existing clips');
     if (provider === 'qwen') throw new RenderRefusal('Qwen TTS adapter is reserved, not implemented or validated. Use --audio with output from your local TTS. No provider call was made.');
     if ((provider === 'import') !== !!parsed.audio || (parsed.audio && parsed.narrate) || (provider !== 'elevenlabs' && (parsed.narrate || scriptArg || voiceProfile || speed !== undefined))) throw new RenderRefusal('Conflicting audio options: choose none, imported manifest, or ElevenLabs narration');
     if (brandArg && (parsed.template || parsed.presentation || parsed.coverPreset)) throw new RenderRefusal('Use the presentation brand configuration or legacy --brand, not both');
@@ -281,16 +286,21 @@ export async function main(argv: string[]): Promise<number> {
     const config = loadPresentation(parsed.template, parsed.presentation, capture.title, capture.subtitle ?? '',parsed.coverPreset);
     if (parsed.cover && !config) throw new RenderRefusal('--cover requires --template or --presentation');
     const p = config?.presentation;
-    if(p) validatePresentationMedia(p,config?.assetRoot);
+    const logoChecks=p?validatePresentationMedia(p,config?.assetRoot):[];
+    const geometry=layoutGeometry(capture.viewport,p);
+    const resolvedPalette=p?{intro:paletteFor(p,'intro'),body:paletteFor(p,'body'),outro:paletteFor(p,'outro')}:undefined;
     const baseTiming = p ? {titleBaseMs:p.intro.enabled?p.intro.durationMs:0, endBaseMs:p.outro.enabled?p.outro.durationMs:0} : {};
     const imported = parsed.audio ? readImportedAudio(parsed.audio,prepared.steps) : undefined;
+    const script=scriptArg?readScript(scriptArg,prepared.steps,roots):undefined;
+    if(script&&p&&((!p.intro.enabled&&script.intro)||(!p.outro.enabled&&script.outro)))throw new RenderRefusal('Narration script targets a disabled card');
+    if(p?.layout)prepared.steps.forEach((step,i)=>annotationPages(p,geometry.annotation,step.caption,imported?.clips.find(c=>c.at===i)?.text??script?.steps[step.id]??step.narration));
     const checkCards = (clips:NarrationClip[]) => {
       if (p && ((!p.intro.enabled && clips.some(c=>c.at==='intro')) || (!p.outro.enabled && clips.some(c=>c.at==='outro')))) throw new RenderRefusal('Audio targets a disabled intro or outro card');
     };
     if (imported) checkCards(imported.clips);
     prepared = prepare(run,out,roots,prepared.calibrationMs,{...baseTiming,...(imported?{stepMinMs:stepMinMs(prepared.steps,imported.clips),...cardMinMs(imported.clips,p?.intro.enabled&&(p.intro.sound||p.intro.soundPreset!=='none')?BRAND_STING_LEAD_MS:0)}:{})});
     if (dryRun) {
-      console.log(JSON.stringify({dryRun:true,out:prepared.out,seconds:prepared.seconds,template:p?.template ?? 'legacy',coverPreset:p?.cover?.preset,coverRequested:parsed.cover,voiceProvider:provider,narrationNotice:parsed.narrationNotice,narrationRequested:provider!=='none',narrationTiming:provider==='elevenlabs'?'requires synthesis; not performed':provider==='import'?'measured imported clips':'silent',calibrationMs:prepared.calibrationMs,steps:prepared.steps.length},null,2));
+      console.log(JSON.stringify({dryRun:true,out:prepared.out,seconds:prepared.seconds,template:p?.template ?? 'legacy',coverPreset:p?.cover?.preset,coverRequested:parsed.cover,voiceProvider:provider,narrationNotice:parsed.narrationNotice,narrationRequested:provider!=='none',narrationTiming:provider==='elevenlabs'?'requires synthesis; not performed':provider==='import'?'measured imported clips':'silent',calibrationMs:prepared.calibrationMs,steps:prepared.steps.length,geometry,resolvedPalette,logoChecks,logoFallback:!logoChecks.length?p?.brand.fallback??'legacy monogram':undefined},null,2));
       return 0;
     }
     process.umask(0o077);
@@ -305,8 +315,6 @@ export async function main(argv: string[]): Promise<number> {
       clips=installImportedAudio(imported,prepared.run);
       narrationKind=imported.aiGenerated?'ai':'imported';
     } else if (provider==='elevenlabs') {
-      const script=scriptArg?readScript(scriptArg,prepared.steps,roots):undefined;
-      if (script && p && ((!p.intro.enabled && script.intro) || (!p.outro.enabled && script.outro))) throw new RenderRefusal('Narration script targets a disabled card');
       const profile=withSpeed(loadVoiceProfile(voiceProfile),speed??WALKTHROUGH_SPEED);
       const adapter=speechProvider(provider,()=>loadApiKey([]));
       clips=await narrate(prepared.run,prepared.steps,profile,(text,voice)=>adapter.synthesizeMp3({text,voice:voice.voice_id,model:voice.model_id,outputFormat:voice.output_format,settings:voice.voice_settings}),undefined,script);
@@ -315,13 +323,14 @@ export async function main(argv: string[]): Promise<number> {
     const timing={...baseTiming,...(clips.length?{stepMinMs:stepMinMs(prepared.steps,clips),...cardMinMs(clips,(presentation?.intro.sound||branding?.sound)?BRAND_STING_LEAD_MS:0)}:{})};
     prepared=prepare(run,out,roots,prepared.calibrationMs,timing);
     writeFileSync(prepared.chaptersPath,prepared.chaptersText);
-    const props=`--props=${JSON.stringify({calibrationMs:prepared.calibrationMs,stepMinMs:prepared.stepMinMs,titleMs:prepared.titleMs,endMs:prepared.endMs,narration:clips.map(({at,file,ms})=>({at,file,ms})),narrationKind,narrationNotice:parsed.narrationNotice,branding,presentation})}`;
+    const props=`--props=${JSON.stringify({calibrationMs:prepared.calibrationMs,stepMinMs:prepared.stepMinMs,titleMs:prepared.titleMs,endMs:prepared.endMs,narration:clips.map(({at,file,ms,text})=>({at,file,ms,text})),narrationKind,narrationNotice:parsed.narrationNotice,branding,presentation})}`;
     const cli=join(REMOTION_DIR,'node_modules','@remotion','cli','remotion-cli.js');
     const invoke=(args:string[])=>{
       const result=spawnSync('node',[cli,...args],{cwd:REMOTION_DIR,stdio:'inherit'});
       if (result.status!==0) throw new RenderRefusal('Remotion render failed');
     };
-    invoke(['render',ENTRY,'WalkthroughVideo',prepared.out,`--public-dir=${prepared.run}`,props,'--codec=h264','--crf=20','--pixel-format=yuv420p',...(clips.length||presentation?.intro.sound||branding?.sound?['--audio-codec=aac']:['--muted']),'--log=error']);
+    if(parsed.preview)invoke(['still',ENTRY,'WalkthroughVideo',join(dirname(prepared.out),'body-preview.png'),`--frame=${prepared.stills[0].frame}`,`--public-dir=${prepared.run}`,props,'--log=error']);
+    else invoke(['render',ENTRY,'WalkthroughVideo',prepared.out,`--public-dir=${prepared.run}`,props,'--codec=h264','--crf=20','--pixel-format=yuv420p',...(clips.length||presentation?.intro.sound||branding?.sound?['--audio-codec=aac']:['--muted']),'--log=error']);
     if (parsed.cover) {
       const png=join(dirname(prepared.out),'cover.png');
       invoke(['still',ENTRY,'WalkthroughCover',png,`--public-dir=${prepared.run}`,props,'--log=error']);
@@ -330,9 +339,9 @@ export async function main(argv: string[]): Promise<number> {
       const python=join(resolve(import.meta.dir,'../../..'),'.venv',process.platform==='win32'?'Scripts':'bin',process.platform==='win32'?'python.exe':'python3');
       execFileSync(python,['-c','from PIL import Image; import sys; Image.open(sys.argv[1]).convert("RGB").save(sys.argv[2],"WEBP",quality=85,method=6)',png,join(dirname(prepared.out),'cover.webp')]);
     }
-    if (stills) writeStills(prepared);
-    writeFileSync(join(dirname(prepared.out),'render-manifest.json'),JSON.stringify({version:1,template:p?.template??'legacy',presentation,voiceProvider:provider,narrationKind:clips.length?narrationKind:'none',narrationNotice:parsed.narrationNotice,seconds:prepared.seconds,sourceCaptureSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'capture.json')),'hex'),sourceVideoSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'video.webm')),'hex'),narration:clips},null,2)+'\n');
-    console.log(`video: ${prepared.out} (${prepared.seconds.toFixed(2)}s); template: ${p?.template??'legacy'}; voice: ${provider}`);
+    if (stills&&!parsed.preview) writeStills(prepared);
+    writeFileSync(join(dirname(prepared.out),parsed.preview?'preview-manifest.json':'render-manifest.json'),JSON.stringify({version:1,preview:parsed.preview,template:p?.template??'legacy',presentation,geometry,resolvedPalette,logoChecks,voiceProvider:provider,narrationKind:clips.length?narrationKind:'none',narrationNotice:parsed.narrationNotice,seconds:prepared.seconds,sourceCaptureSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'capture.json')),'hex'),sourceVideoSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'video.webm')),'hex'),narration:clips},null,2)+'\n');
+    console.log(`${parsed.preview?'preview':'video'}: ${parsed.preview?join(dirname(prepared.out),'body-preview.png'):prepared.out} (${prepared.seconds.toFixed(2)}s); template: ${p?.template??'legacy'}; voice: ${provider}`);
     return 0;
   } catch (error) {
     console.error(error instanceof Error?error.message:String(error));
