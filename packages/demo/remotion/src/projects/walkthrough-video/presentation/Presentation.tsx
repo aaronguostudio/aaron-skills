@@ -1,6 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, Audio, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import type {Presentation} from './model';
+import {CoverDesign} from '../../../cover-library/CoverDesign';
 
 const FONT = "-apple-system, 'Helvetica Neue', Arial, sans-serif";
 
@@ -25,6 +26,12 @@ export const PresentationCard: React.FC<{p: Presentation; closing?: boolean; cov
   const accent = minimal ? p.brand.primary : p.brand.accent;
   const title = closing ? p.outro.title : p.title;
   const subtitle = closing ? p.outro.subtitle : p.subtitle;
+  if (p.cover && !closing) return <AbsoluteFill style={{opacity:exit}}>
+    {!cover && p.intro.sound ? <Audio src={staticFile(p.intro.sound)} volume={p.intro.volume}/> : null}
+    <CoverDesign cover={p.cover} title={title} subtitle={subtitle} brandName={p.brand.name}
+      logoSrc={p.brand.logo?staticFile(p.brand.logo):undefined} artSrc={p.cover.art?staticFile(p.cover.art):undefined}
+      width={width} height={height} renderImage={props=><Img {...props}/>}/>
+  </AbsoluteFill>;
   return <AbsoluteFill style={{fontFamily:FONT, background:minimal?'#F1F1E9':showcase?'#101C29':p.brand.primary, color:ink, opacity:exit, overflow:'hidden'}}>
     {!cover && !closing && p.intro.sound ? <Audio src={staticFile(p.intro.sound)} volume={p.intro.volume} /> : null}
     {showcase ? <>

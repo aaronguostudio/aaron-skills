@@ -1,3 +1,42 @@
+# Presentation cover presets — v0.2.0 candidate
+
+Date: 2026-10-19. The local release checks ran on macOS arm64 with the pinned
+runtime. Synthetic content and logos were used; raw media and QA logs stay
+outside Git. No live narration or new image-generation calls were used for these
+checks.
+
+- Shared source checks passed, including strict TypeScript, 94 renderer tests,
+  capture units, Python suites, privacy/import/document closure and 20 real
+  Chromium capture integration tests. Skill structure validation passed.
+- An isolated exported installation passed doctor and the real capture-to-video
+  smoke. The installed presentation verifier renders the three existing video
+  templates and two standalone library presets, fully decodes the videos and
+  checks PNG/WebP dimensions and custom background colors. Imported tone and
+  mocked narration remain separate from live provider acceptance.
+- All 32 presets were reviewed in the browser with English, long titles and CJK,
+  maximum optional field lengths, square/wide logos and palette changes.
+  Independent cover and video-opening renders were visually reviewed. Reusing
+  the presentation retained the original capture/evidence hashes.
+- Website build, cover asset/handoff tests and Sites export checks passed.
+  Browser acceptance covered 32 styles, bilingual search, family filters,
+  modal Escape/focus, direct style links, retained content and Logo across
+  styles, clipboard brief, configuration download and 390px mobile layout.
+  No browser errors, field overflow or network writes were observed. A downloaded
+  website configuration was rendered by the exported runtime to 1600x900
+  PNG/WebP, confirming the browser-to-agent handoff.
+- The 32 original gallery PNGs remain byte-identical. Runtime WebP artwork is
+  explicitly hash-reviewed; unknown/changed binary assets and secret-bearing
+  metadata still fail the source scanner. Root/runtime/website dependency audits
+  and the independent website-source secret scan reported no findings.
+
+The exact commit's remote CI results are available in the
+[three-platform matrix](https://github.com/aaronguostudio/aaron-skills/actions/workflows/ci.yml).
+This local record does not certify new native LLM-host combinations or the quality
+of an agent's recommendations for an unseen brief. Human brand/style acceptance
+and live narration remain separate from deterministic and fixture checks.
+
+---
+
 # CI identity and Windows media prerequisite repair
 
 Date: 2026-10-19. This repair preserves existing Git history and accepts ordinary

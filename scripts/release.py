@@ -31,16 +31,34 @@ def scan_public(files):
     """Privacy tripwires, alongside a required independent secret scanner at release."""
     check_benchmark_boundary({name: path.read_bytes() for name, path in files.items()})
     failures = []
+    spec = json.loads(files['bundles/source.json'].read_text(encoding='utf-8')) if 'bundles/source.json' in files else {}
+    reviewed_assets = spec.get('reviewedBinaryAssets', {})
+    if not isinstance(reviewed_assets, dict):
+        raise ValueError('Invalid reviewed binary asset registry')
+    for name, record in reviewed_assets.items():
+        if name not in files or not name.endswith('.webp') or not isinstance(record, dict):
+            failures.append(f'{name}: reviewed binary source is missing')
     home = re.compile(r'/(?:Users|home)/([^/\s\x22\x27`]+)')
     # Deliberate generic fixtures; no developer-specific username is allowlisted.
     generic_users = {'a', 'me', 'test', 'tester', 'user', 'example'}
     private_key = re.compile(r'-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----')
     token = re.compile(r'\b(?:sk-(?:proj-|ant-)?[A-Za-z0-9_-]{24,}|gh[pousr]_[A-Za-z0-9]{24,}|AKIA[0-9A-Z]{16})\b')
     for name, path in files.items():
+        data = path.read_bytes()
         try:
-            lines = path.read_text(encoding='utf-8').splitlines()
+            lines = data.decode('utf-8').splitlines()
         except UnicodeDecodeError:
-            failures.append(f'{name}: unreviewed binary source'); continue
+            lines = None
+        if lines is None or path.suffix.lower() == '.webp':
+            record = reviewed_assets.get(name, {})
+            if (not isinstance(record, dict) or record.get('sourceType') != 'generated'
+                    or record.get('mediaType') != 'image/webp' or not name.endswith('.webp')
+                    or data[:4] != b'RIFF' or data[8:12] != b'WEBP'
+                    or record.get('sha256') != hashlib.sha256(data).hexdigest()):
+                failures.append(f'{name}: unreviewed binary source'); continue
+            # A reviewed image hash permits that specific asset, not secret-bearing
+            # metadata. Keep scanning its raw bytes for the same privacy tripwires.
+            lines = data.decode('latin-1').splitlines()
         for number, line in enumerate(lines, 1):
             if any(m[1] not in generic_users for m in home.finditer(line)):
                 failures.append(f'{name}:{number}: personal home path')

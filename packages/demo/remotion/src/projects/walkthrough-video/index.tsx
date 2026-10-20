@@ -358,6 +358,15 @@ const calculateMetadata: CalculateMetadataFunction<Props> = async ({ props }) =>
 };
 
 const Cover: React.FC<Props> = ({presentation}) => presentation ? <PresentationCard p={presentation} cover/> : <AbsoluteFill style={{background:C.bg}}/>;
+const calculateCoverMetadata:CalculateMetadataFunction<Props>=async args=>{
+  const metadata=await calculateMetadata(args);
+  return args.props.presentation?.cover?{...metadata,width:1600,height:900}:metadata;
+};
+const standaloneCoverMetadata:CalculateMetadataFunction<Props>=async({props})=>{
+  if(!props.presentation?.cover) throw Error('A standalone cover needs a library preset');
+  validatePresentation(props.presentation);
+  return {props,width:1600,height:900,durationInFrames:1};
+};
 
 const Root: React.FC = () => (<>
   <Composition
@@ -371,7 +380,9 @@ const Root: React.FC = () => (<>
     calculateMetadata={calculateMetadata}
   />
   <Composition id="WalkthroughCover" component={Cover} durationInFrames={FPS} fps={FPS} width={1440} height={996}
-    defaultProps={{capture:null,steps:[],timeline:null,narration:[]} as Props} calculateMetadata={calculateMetadata}/>
+    defaultProps={{capture:null,steps:[],timeline:null,narration:[]} as Props} calculateMetadata={calculateCoverMetadata}/>
+  <Composition id="StandaloneCover" component={Cover} durationInFrames={1} fps={FPS} width={1600} height={900}
+    defaultProps={{capture:null,steps:[],timeline:null,narration:[]} as Props} calculateMetadata={standaloneCoverMetadata}/>
   </>
 );
 

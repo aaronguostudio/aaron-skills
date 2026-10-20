@@ -1,0 +1,366 @@
+[
+  {
+    "id": "desert-editorial",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "5b79a369ac0f63e709a6a6696e540efb1e862f1bf4a975d475839807deb2b86a",
+    "referencePngSha256": "0b2558d590eb714f47e609f8a29cb5ac8e574a67e2858638cd8c06832b56e52a",
+    "webpSha256": "7ffab9e3bfa7a81d61fee4bda56ad1bdad86e4eb4c1f5d134dbbc9ff9a6bcf8f",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep the black-and-white desert photograph in the right 58% exactly as placed. Make the whole cream left panel AND terracotta bottom-left panel transparent; they will be drawn in code. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "ocean-margin",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "d8ad72585ceeea1e425f070ce371593515b82a110ee09ce35e7746c76d89e1d5",
+    "referencePngSha256": "3feb3afe08467b885e7f175e87a7a9fe2cc40a1def5260af2be1e4f331476d94",
+    "webpSha256": "a4bd374b8bf0ef61ffc2a3a6833de2f0996726df7c8aa2ceb32f2b80eb491fd1",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      254
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep the ocean photo in the lower 65% exactly as placed. Make the upper plain cream band transparent. Preserve the photo's rectangular edge and clean all tiny bottom photo captions. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "alpine-silence",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "6cf1f2bb278e95e4b9a4cdea0165aaab44e0e54731ff7cea2884f20486984975",
+    "referencePngSha256": "ae6b4b1b5445bfbb4251dc68009d27a891cda4f3c3df2b46ca7475623c1c537e",
+    "webpSha256": "a9f45aa34d540f5482baa559483b155dc61b6dfe057b6d40141414449463f2f6",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      254
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the monochrome mountain photograph on the right 58%. Make the yellow left panel transparent. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "botanical-shadow",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "824398be9b63f817aa0e2ace1bf2721b88704e0a8d7adc3835fde1c46a2b46cf",
+    "referencePngSha256": "b75f20942db4a6f0674b752b833c040dd41630a5eeec5cb17f9bc674a7f6d805",
+    "webpSha256": "e09c04579b9893f93a8a06533f37ef3073c71c56a5d560119cb7ff074c17e726",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep the beautiful leaf photograph on the right 55%. Make the plain cream left half and the terracotta strip at the bottom entirely transparent. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "chrome-loop",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "21eef933d1a521ac32dec96492fda57a95652578b7b7c6961102cbb17f1a8fe3",
+    "referencePngSha256": "d2618cd1a2374841979c07df5c330bcb5a5c63d9e762781b0c5c007401f2705b",
+    "webpSha256": "422652cdac668080b6babc0875f585cc1353353d213ea54593da3cc4e4e408bc",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Remove all text and logos; isolate the chrome loop and its translucent shadow on transparent canvas, preserving the original position and materials."
+  },
+  {
+    "id": "amber-glass",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "e2d7688ebcd4688eda05d113d79f3e0002b52a034ec0b031bab637eeb185512a",
+    "referencePngSha256": "88694e27585c840fe9d84ca76a4cd91c693bb8bac6f38d49052d9b451ca1f676",
+    "webpSha256": "9f80d03604b68ca519f6f81480082c4f922bfe17eb2292bbc6dc10aec35df8a0",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the amber glass sculptural object and its subtle caustic/shadow on the right, transparent everywhere else. Remove the cream backdrop completely, preserve fine glass edges. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "ceramic-ribbon",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "e6c2ada1da015f945bdfe124b2db3acbf822fc9aaf0daf82d411eb3faf5fc832",
+    "referencePngSha256": "efbd7aa4f3a20fed879aad2ddb0c45530f2a0304f41c09b1d6383f0a9a0096d4",
+    "webpSha256": "2d58ba15785c8948c40ac35c04a965f86562548629a8b98f2a6d2bd22ba5cdaf",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the yellow ceramic ribbon and its soft shadow in the left half. Remove the blue background entirely to transparency. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "liquid-orbit",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "8f4e5eb71b56faf9966ccdb90c2534a42b0622647c9b006454c2c835a7445f7e",
+    "referencePngSha256": "001464f19fd76951e7a75f2c1150d95af2f78efd52d2b9e618f8ad35c625909b",
+    "webpSha256": "4ce42b491ae1ebcc8cd887d5b7c2e665de962f8d21b222e188207d336ba63a78",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the chrome oval ring with pink reflections in the upper left. Remove the dark purple background entirely to transparency. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "linen-emboss",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "b83f11754afcd4a5b8473e52ff9e06717e3225196d392521f628370dacbe6e31",
+    "referencePngSha256": "383f3360aeb82ade2b1e4d68712b74e3d6683af65f094b98fededa10c933ecad",
+    "webpSha256": "dd5d1bdc81d104d937e3a0e5b167a982287ec44a0965843461b80a266d2fa3b9",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep the large circular embossed linen relief on the right, with its lovely texture and subtle shadow, isolated as one linen disk. Remove the flat surrounding linen background, especially the whole left text area, to transparency. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "brushed-copper",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "e6e60f646dc6019c3ea79cf5cfd509e4723f9a8e5a0f8b27340f1fbc29af37c4",
+    "referencePngSha256": "998302bdb25af4cc52dfe5800ea120e0a9c83163080da65a7ee3499e6fe52f70",
+    "webpSha256": "b63ed0d2b5f8c6a0f078d99255103b93d0810c8fd5b4db4176e2ddfe6f681b88",
+    "width": 1671,
+    "height": 941,
+    "alphaRange": [
+      0,
+      254
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the broad brushed copper panel at right exactly where it is. Make the whole left dark charcoal panel transparent. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "paper-relief",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "167b7cab3340bf45d37107c1f8822e9a6de27f11ff3527b41eadb26353db8ff3",
+    "referencePngSha256": "899c80087649af984bc1c597c372780ebf611f3003d36cc36ad6e421beea75e3",
+    "webpSha256": "aa266f07fa3377287965a269d04c7b6ca4e15f28c14b970e2a382096e60b8b1d",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the blue folded paper fan and its subtle cast shadow at upper right. Remove the off-white backdrop entirely to transparency. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "black-marble",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "900492379b864fb02b0feb5243d524b2a29fe2f83466c07a3fe3b07cc015a005",
+    "referencePngSha256": "7b858018af53be43a7d42d8c55e3cd0f2939d9b365799059baeaf22a9faaa057",
+    "webpSha256": "741e16d155ad99ef8c343ce75251856d51dc5aa21518e64d7024085c15b84491",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the black marble texture on the right half. The whole ivory left text panel and any marble behind that left panel should become transparent. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "sage-pebble",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "0373ca3c03d1ba551293c4f1e68085929a78693bda96b0cd946ff762d595b2bd",
+    "referencePngSha256": "e0d7d90d4613a673a58348edc2b4fb48f95456a646b1c6ee8c1dd5d8d8f5f548",
+    "webpSha256": "99d33111162c01f5c6841295c7bb187a83ec5c48f662554d42a80398bb9f2937",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the hollow limestone pebble and its subtle soft shadow on the right. Remove the sage background entirely to transparency. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "petal-motion",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "c846ade39d3a1fd64015a214a54fd068996382c6569d56abe39fa305f639ee3c",
+    "referencePngSha256": "0939e06d548c9cfa8e0ab9d09e31a85d96c1d62bd64267d4b48d41ee04ebd118",
+    "webpSha256": "3c899041f1497eb1eec1d59351dd97d1d77086b29938ae449167801df24f3fa9",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the coral silk-like petal at right, with its fine translucent folds. Remove the yellow background to transparency. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "cobalt-coral",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "58648005f3ccce29a44abec2c7cc7ff62dcf13046df381f41ccd1838d37fe1b9",
+    "referencePngSha256": "ee45cef551b7c40dd810c716b0747b7bc9796a00aec6bbbab16dcd00f07283a6",
+    "webpSha256": "13359f49b095eb7dc935c5f6c994441034958c2c10acb3fdf23af4fa1157decd",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the sculptural blue coral and subtle shadow on the left half. Remove the peach backdrop entirely to transparency. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "solar-horizon",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "a70c7232d3886fe7bc12f6f00c42179ce0f177adbfd5fa1332066385a5cfbf9a",
+    "referencePngSha256": "674def0f94414019de76c437787fa4ecb2d0912eb9c5db274e098060e3ff6418",
+    "webpSha256": "15091e8139dde4737ebb3ddda25f29f448a1097b303d47302cfbc0dbb5e08294",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep the orange sun disk and the dark ocean photo in the lower 42%, in their exact positions. Make all of the plain cream sky transparent. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "prism-light",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "50941ff581288f59201deee3aa6c75cc3be15b3919d4df862bd3f0b3c1b88cda",
+    "referencePngSha256": "1132ca994f1f843333f26c85a7df2c6c21d3558ca15a2273da7572dd1b822cf9",
+    "webpSha256": "0d6fc0f8a810b9533b8c50ee94a4652d62e4251e6b8f276f0a9cb147219fdf65",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the glass prism and the rainbow light band, with their translucent colors. Remove the flat black background to transparency so this optical layer can sit on a user-selected dark canvas. Preserve darkness within the actual prism as needed. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "dawn-fog",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "ac849d3e96003e330fb17f919bf1d6c39cba811f6e39d2da9cdbc1026d607d6b",
+    "referencePngSha256": "189cc16e23809fea30dbc815fbda60f5068363bd0e0d35a9cc0a7e8a6fe7b4fe",
+    "webpSha256": "a65e4209dc63ed9fbdd95aa0903b304bf50404da60810114e46b9d3d49242435",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep the island and reflection photograph in the lower 55%, fading naturally up into transparency with mist. Make the plain upper fog/sky text area transparent. Remove all small words over the lake. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "electric-silk",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "ec839c0665584fd5a7024e4a902ed1f3a30c89ca330f1536c7cd09169a62a82d",
+    "referencePngSha256": "b2e80caf7f41a09547b573b10cabc49bbf8f05fafaa3f05af4c13a00a528ebd6",
+    "webpSha256": "4832a200d87691106c8d7714ff35728551747fd6d49c246979353cf11536f05b",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the blue satin cloth on the right in the same exact position. Remove the ivory backdrop entirely to transparency. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "concrete-arch",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "4998b27eb7abfd132837818b8cb4ad2bf03d840e43ee0d0d0d16ed4253d48a21",
+    "referencePngSha256": "8d6eb5f9ba18d56b7d6855332433c0b1495909a622162d55419a98960ef76343",
+    "webpSha256": "de963e55896570b5d6195cd074b74b34a756cf38a82d727656bc6aaacc6fbd22",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the concrete arch photograph on the right 58%. Make the pale green left panel transparent. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "orange-stair",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "0f7d5e2cb3ff1c5fee210b701a2f13f100ed9261ee7cdb9c44851fa42ac96759",
+    "referencePngSha256": "407ebac68200411c030a6e39f05229c16089f8c18a9156a74735124dc106975c",
+    "webpSha256": "ed6f20fb657ec73e46001ec30bc08d0852b2b3a13f88f22fc17948eb621869bb",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the orange stair and wall photo on the left 52%. Make the cream right text panel transparent. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "blue-portal",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "1683ddb9520db04d14d4986f04a0cc699b34709caa57644b11d068180219c9bf",
+    "referencePngSha256": "2474d15bffb11d1d036c58a63bce9046d68a2e7e5e30c7011d28d3287e50d75a",
+    "webpSha256": "d98fb60949c7e2b5dc8d46d665ecd065cf9c22d6cd8db003e5ca16c4fe99ba0a",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the beautiful blue architectural portal in the right third and its tiny shadow. Remove the lavender backdrop entirely to transparency. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "sand-courtyard",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "ef4c999e7417d0cb10f7767fa91cd8fc6b62d2f8b2aec27860525c3cd43a2591",
+    "referencePngSha256": "2063e0a2622ec3fc0e742c8d7fcb5a4022a8440163154603254d42fbee5d509b",
+    "webpSha256": "cf31ca95160e0639b06b4b47312649e44ae2dfe12a57a8246ca0113b50bfa855",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep the courtyard architecture photograph in the upper 73% exactly as placed. Make the entire oxblood lower text band transparent. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "red-balloon",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "adee599de3e1c7c8b44664254b20c66310c9e37e4c4edb82ebb675b0cc0276e6",
+    "referencePngSha256": "e4fb917a907e8d7928b92a8b28a50dcce3656a0873b0e7512d4ee1edb7ce9c19",
+    "webpSha256": "491107ab36fd05bfdffbe2eb724c95ba14934fa4bb35ef068939b0aa264d8449",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the pale-pink inflated asterisk at upper right and its subtle cast shadow. Remove the cherry-red background entirely to transparency. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "cutout-sun",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "43389bf2ea1618212bd9fea1ad8eb74ef00e6af95cc58236b31ff044fefe15d4",
+    "referencePngSha256": "a8dddd623cdf7043f5ed74191788d7186a46dc594b9ec8db09c634e485b71786",
+    "webpSha256": "7d1e90524db62629cf7bfe9ab4cb83e78431c03b20fb506fd94630ab667ff6a0",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the orange cut-paper sun disk at right with its tactile edge and subtle shadow. Remove the blue backdrop entirely to transparency. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  },
+  {
+    "id": "soft-grid",
+    "tool": "OpenAI built-in image generation",
+    "sourcePngSha256": "7f8dade097c508f01f38aeff05e4e6936a6262aeb79460c6edb1af01b185cf9d",
+    "referencePngSha256": "fa967616fa7d3728364a0d5cb53f233dd1f479bcf08eeba7ac4f5850eb305311",
+    "webpSha256": "fc2f83542f891a2ae56589429d67f4884d3f9e1fb2bdae44f4af9ffa587e7194",
+    "width": 1672,
+    "height": 941,
+    "alphaRange": [
+      0,
+      255
+    ],
+    "prompt": "Use case: precise-object-edit. Edit target: the supplied presentation cover. Produce ONLY its reusable artwork layer on a genuinely transparent 16:9 canvas with the same aspect ratio. Remove ALL title, subtitle, brand name, logo, tiny marks, presenter and date completely; no words, glyphs, icons, labels, borders or watermarks may remain. Preserve the accepted art's shape, placement, scale, colors, photographic details and lighting. Do not redesign or add objects. Keep only the lavender inflated hashtag and its subtle shadow in the right half. Remove the peach backdrop entirely to transparency. All typography will be recreated as separate editable text on top; all removed flat canvas areas must have actual alpha transparency, never solid white or a checkerboard drawing. Keep the artwork in its ORIGINAL composition position, do not recenter it."
+  }
+]

@@ -9,7 +9,7 @@ skills needed for the task.
 | --- | --- | --- |
 | **Shape** | Clarify and design at the depth the request needs | `feature-blueprint` |
 | **Capture** | Record a real application's flow and checked evidence | `demo-capture` |
-| **Film** | Script and render an explanatory walkthrough video | `walkthrough-video` |
+| **Film** | Customize a presentation cover, or script and render a walkthrough video | `walkthrough-video` |
 | **Share** | Prepare a copyable update for delivery | `paste-ready-update` |
 
 Under Aaron Skills, the short names form **Shape → Capture → Film → Share**. Shape bridges

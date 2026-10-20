@@ -44,6 +44,12 @@ release must contain enough code to reproduce checks, not private history or log
 Add new capabilities as packages and bundle declarations when there is an actual
 use case; avoid prematurely generalizing the installer.
 
+Generated WebP runtime assets need an explicit SHA-256 entry in
+`bundles/source.json` under `reviewedBinaryAssets` after visual/privacy review.
+Changed hashes, unregistered binaries and secret-bearing image metadata still
+fail the public-source gate. Keep original generation files and QA runs outside
+the checkout; include reusable delivery artwork only.
+
 Submit a focused change with the problem, resulting behavior and relevant checks.
 Follow SECURITY.md for sensitive findings. Keep publishing and customer delivery
 out of tests; release actions require the maintainer's explicit authorization.

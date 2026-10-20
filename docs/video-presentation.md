@@ -1,5 +1,9 @@
 # Video presentation templates
 
+For the 32 selectable presentation-cover styles, editable title/subtitle,
+Logo, presenter, date and colors, see [cover library](cover-library.md).
+`aaron-demo cover` can preview a cover without recording an application.
+
 Use a passed capture once, then render its packaging without visiting the app again.
 The default command keeps the existing plain/silent style. These options are opt-in:
 
