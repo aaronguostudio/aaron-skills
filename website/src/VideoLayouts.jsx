@@ -38,7 +38,7 @@ export function VideoLayouts({language}){
       <div className="vc-grid">{visible.map(x=><button key={x.id} className="vc-card" aria-pressed={x.id===selected} onClick={()=>{choose(x.id);stage.current?.scrollIntoView({block:'start',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});}}><img src={x.stills[0]} alt="" width={x.width} height={x.height} loading="lazy"/><strong>{x.name}</strong><small>{x.description[language]}</small></button>)}</div>
       <div className="vc-handoff"><div><h3>{item.name}</h3><p>{item.cover?item.description[language]:t.plainNote}</p></div><button className="button button-dark" onClick={useStyle}>{copied===language?t.copied:t.use}<span aria-hidden="true">↗</span></button></div>
       {brief?<div className="vc-brief"><label>{t.fallback}<textarea readOnly value={layoutBrief(item,language)} rows={10} onFocus={e=>e.target.select()}/></label><button onClick={()=>setBrief(false)}>{t.close}</button></div>:null}
-      <p className="vc-agent">{t.agent}</p><div className="vc-note"><p>{t.note}</p><a href="/layouts/forma/" target="_blank" rel="noreferrer">{t.try} ↗</a></div>
+      <p className="vc-agent">{t.agent}</p><div className="vc-note"><p>{t.note}</p><a href="/layouts/forma/index.html" target="_blank" rel="noreferrer">{t.try} ↗</a></div>
     </section>
   </div>;
 }
