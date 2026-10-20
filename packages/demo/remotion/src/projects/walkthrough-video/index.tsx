@@ -40,9 +40,9 @@ import {
 } from "./timeline";
 import { BrandCard, BrandMark } from "./brand/BrandCard";
 import { validateBrand, type Brand } from "./brand/model";
-import {PresentationCard, PresentationCaption, PresentationAnnotation} from './presentation/Presentation';
+import {PresentationCard, PresentationCaption, PresentationAnnotation, PresentationBackdrop} from './presentation/Presentation';
 import {validatePresentation, type Presentation} from './presentation/model';
-import {annotationAt, layoutGeometry} from './presentation/layout';
+import {annotationAt, layoutGeometry, resolveLayout} from './presentation/layout';
 import {alphaColor, paletteFor} from './presentation/theme';
 
 const C = {
@@ -237,6 +237,7 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, na
   if (!capture || !timeline) return <AbsoluteFill style={{ background: C.bg }} />;
   const { w, h } = capture.viewport;
   const geometry=layoutGeometry(capture.viewport,presentation);
+  const stage=presentation?.layout?resolveLayout(presentation.layout).stageStyle:undefined;
   // Video, stills and every evidence overlay share exactly this capture-space transform.
   const screenStyle:React.CSSProperties={position:'absolute',left:geometry.screen.x,top:geometry.screen.y,width:w,height:h,transform:`scale(${geometry.screen.scale})`,transformOrigin:'top left',overflow:'hidden'};
   const videoEnd = timeline.titleFrames + timeline.videoFrames;
@@ -254,6 +255,7 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, na
 
   return (
     <AbsoluteFill style={{ background: presentation?.version===2?paletteFor(presentation,'body').background:C.bg }}>
+      {presentation?<PresentationBackdrop p={presentation}/>:null}
       {timeline.titleFrames > 0 ? <Sequence durationInFrames={timeline.titleFrames}>
         {presentation ? <PresentationCard p={presentation} total={timeline.titleFrames} narrated={aiNotice}/> : branding ? (
           <BrandCard brand={branding} total={timeline.titleFrames} narrated={aiNarrated} notice={noticeRequested} />
@@ -263,7 +265,7 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, na
       </Sequence> : null}
       {timeline.segments.map((s) => (
         <Sequence key={`${s.fromFrame}`} from={s.fromFrame} durationInFrames={s.frames}>
-          <div style={screenStyle}>
+          <div style={{...screenStyle,...(stage?{boxShadow:stage==='paper'?'0 12px 45px #1d29251c':'0 20px 80px #10131f40',outline:'1px solid #ffffff30'}:{})}}>
             {s.still ? (
               <Img src={staticFile(s.still)} style={{ width: w, height: h }} />
             ) : s.freeze ? (

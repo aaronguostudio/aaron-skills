@@ -56,6 +56,9 @@ is not required. The Demo setup below continues to install only the Demo bundle.
 The family uses short action names: **Shape → Capture → Film
 → Share**. See [names and existing invocation IDs](docs/skill-names.md).
 
+
+Explore [six matched cover/video treatments and two unframed choices](https://skills.aaronguo.com/layouts), or ask Film to recommend three combinations for your content and brand. Plain video with a short caption or a compact transcript band is a first-class option.
+
 ## Available now: Demo
 
 Turn a working web feature into a guided video, screenshots, and a copyable

@@ -6,12 +6,16 @@ import {presentationPreset, validatePresentation, validatePresentationFields, ty
 import {contrastRatio, inheritedPalette, logoFor, logoSurfaceBackground, THEMES} from '../remotion/src/projects/walkthrough-video/presentation/theme';
 import {getCoverPreset,validateCover} from '../covers/catalog';
 
+import {VIDEO_TREATMENTS} from '../remotion/src/projects/walkthrough-video/presentation/layout';
+
 const COVER_ROOT=resolve(import.meta.dir,'../covers');
 
 export function loadPresentation(template: string | undefined, file: string | undefined, title: string, subtitle: string, coverPreset?:string): {presentation: Presentation; assetRoot?: string} | undefined {
   if (!template && !file && !coverPreset) return undefined;
-  const raw = file ? JSON.parse(readFileSync(file, 'utf8')) : {};
+  let raw = file ? JSON.parse(readFileSync(file, 'utf8')) : {};
   if(!raw || typeof raw!=='object' || Array.isArray(raw)) throw Error('Presentation configuration must be an object');
+  const treatment=raw.version===2?VIDEO_TREATMENTS[raw.layout?.preset]:undefined;
+  if(treatment)raw={...raw,cover:raw.cover??(raw.theme?.preset&&treatment.cover?{preset:treatment.cover.preset}:treatment.cover),theme:{...(!raw.theme?.preset?treatment.theme:{}),...raw.theme},body:{...treatment.body,...raw.body},intro:{...treatment.intro,...raw.intro},outro:{...treatment.outro,...raw.outro}};
   const preset = presentationPreset((template ?? raw.template ?? 'professional') as Template, title, subtitle);
   validatePresentationFields(raw);
   if(raw.cover!==undefined) validateCover(raw.cover,false);

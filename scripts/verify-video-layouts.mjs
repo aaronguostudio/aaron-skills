@@ -91,6 +91,22 @@ assert n>b['w']*.3,('transformed focus outline is misaligned',n,b)
 `,join(dir,'qa-focus.png'),JSON.stringify(box)]);
   evidence.push({layout:name,dimensions:[video.width,video.height],seconds:Number(probe.format.duration),preview:true,fullDecode:true,logoPixels:true,geometry:m.geometry});
 }
-const report={passed:true,platform:process.platform,scope:'Installed synthetic fixture; four layouts, transparent wide wordmark variants, uniform geometry, multiple focus boxes, waits, imported tone and transcript; no live voice/provider or platform certification',root,release,originals,evidence};
+// Exercise the two plain treatments through the exported entry point too.
+for(const id of ['plain-caption','plain-transcript']){
+  const file=join(root,id+'.json'),dir=join(root,id);mkdirSync(dir,{recursive:true});
+  writeFileSync(file,JSON.stringify({version:2,title:'Review the synthetic form',brand:{fallback:'omit'},layout:{preset:id}}));
+  const out=join(dir,'walkthrough.mp4');
+  assert.equal(await main([run,'--presentation',file,'--audio',audio,'--stills','--out',out]),0);
+  const m=JSON.parse(readFileSync(join(dir,'render-manifest.json'),'utf8'));
+  const capture=JSON.parse(readFileSync(join(run,'capture.json'),'utf8'));
+  assert.equal(m.geometry.screen.x,0);assert.equal(m.geometry.screen.y,0);
+  assert.equal(m.geometry.screen.w,capture.viewport.w);assert.equal(m.geometry.screen.scale,1);
+  assert.equal(m.geometry.annotation.y,capture.viewport.h);
+  assert.ok(m.geometry.annotation.h/m.geometry.height<.16);
+  assert.equal(m.resolvedPalette.body.background,'#FFFFFF');assert.deepEqual(m.logoChecks,[]);
+  execFileSync(config.tools.ffmpeg,['-v','error','-i',out,'-f','null','-']);
+  evidence.push({layout:id,geometry:m.geometry,fullDecode:true,importedTranscript:true});
+}
+const report={passed:true,platform:process.platform,scope:'Installed synthetic fixture; four directional layouts plus two unframed treatments, transparent wide wordmark variants, uniform geometry, multiple focus boxes, waits, imported tone and transcript; no live voice/provider or platform certification',root,release,originals,evidence};
 writeFileSync(join(root,'acceptance.json'),JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify(report,null,2));

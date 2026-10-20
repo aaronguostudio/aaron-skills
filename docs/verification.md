@@ -285,3 +285,25 @@ style acceptance and clipboard behavior in untested browsers are separate.
 Private vulnerability reporting is enabled on the public repository. Each release
 requires a successful remote CI run for its tagged revision; the release notes
 link to that run.
+
+## v0.3.0 video collection
+
+The macOS local candidate adds six matched cover/body art directions and two
+unframed treatments. Unit checks exercise all sixteen composition presets at
+three recording aspect ratios, uncropped geometry, short captions, transcript
+pagination, palette precedence and verified logo variants. Version-1 defaults
+remain unchanged. The installed synthetic media verifier also exercises the two
+plain treatments with imported tone/text, without calling a voice provider.
+
+The public Forma examples use synthetic people, projects and activity in a
+frontend-only prototype. Six approved studio cuts and two plain cuts were fully
+decoded; the eight seekable MP4s and thirty image assets were delivered with
+reviewed hashes. The gallery was checked in English/Chinese on desktop and
+visually at 390px in a browser frame; this is not a physical-phone certification.
+The previews are silent; transcript mode demonstrates saved step notes, with
+actual narration text supported by the imported-audio contract. No client screens,
+raw capture, session or provider configuration is included in public source.
+
+Shared deterministic checks, website build/Sites checks, dependency audits and
+independent secret scanning passed locally. Remote CI and production provenance
+are separate release gates; the local evidence does not claim their outcome.

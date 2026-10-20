@@ -11,3 +11,7 @@ The original website code follows the repository MIT license. Website artwork wa
 created with built-in ImageGen using the selected generated homepage as a reference.
 The miniature screens in the illustrations are conceptual artwork, not customer
 screens or claims about a live integration.
+
+- **Lucide 0.468.0** supplies icons inside the fictional Forma prototype. The
+  pinned UMD bundle retains its notice; the complete ISC license is included at
+  `public/layouts/forma/assets/LUCIDE-LICENSE.txt`.

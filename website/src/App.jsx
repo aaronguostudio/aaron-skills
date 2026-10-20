@@ -7,6 +7,7 @@ import workflowDiagramSmall from "./assets/workflow-canvas/workflow-diagram-768.
 import { Showcases } from "./Showcases";
 import { IntroVideo } from "./IntroVideo";
 import publishedIntroduction from "./introduction.json";
+import { VideoLayouts } from "./VideoLayouts";
 import { CoverLibrary } from "./CoverLibrary";
 
 const REPO = "https://github.com/aaronguostudio/aaron-skills";
@@ -263,7 +264,8 @@ export function App() {
     window.history.replaceState(null, "", url);
   }
   const isCoversPage = window.location.pathname.replace(/\/$/, "") === "/covers";
-  const home = isCoversPage ? (language === "zh" ? "/?lang=zh" : "/") : "";
+  const isLayoutsPage = window.location.pathname.replace(/\/$/, "") === "/layouts";
+  const home = isCoversPage || isLayoutsPage ? (language === "zh" ? "/?lang=zh" : "/") : "";
   return (
     <div className={`site ${language === "zh" ? "is-chinese" : ""}`}>
       <a href="#main" className="skip-link">
@@ -285,6 +287,7 @@ export function App() {
           <a href={`${home}#examples`}>{language === "zh" ? "案例" : "Examples"}</a>
           <ExternalLink href={REPO}>GitHub</ExternalLink>
           <a href={`/covers${language === "zh" ? "?lang=zh" : ""}`} aria-current={isCoversPage ? "page" : undefined}>{language === "zh" ? "封面" : "Covers"}</a>
+          <a href={`/layouts${language === "zh" ? "?lang=zh" : ""}`} aria-current={isLayoutsPage ? "page" : undefined}>{language === "zh" ? "视频版式" : "Video layouts"}</a>
           <div
             className="language-switch"
             role="group"
@@ -309,7 +312,7 @@ export function App() {
         </nav>
       </header>
       <main id="main">
-        {isCoversPage ? <CoverLibrary language={language} /> : <>
+        {isLayoutsPage ? <VideoLayouts language={language} /> : isCoversPage ? <CoverLibrary language={language} /> : <>
         <section className="hero wrap" aria-labelledby="hero-title">
           <div className="hero-copy">
             <p className="eyebrow">{text.eyebrow}</p>
@@ -395,6 +398,7 @@ export function App() {
           </details>
         </section>
         <Showcases language={language} cases={review?.cases} />
+        <section className="layout-teaser wrap"><p className="eyebrow">{language === "zh" ? "让产品成为主角" : "LET THE PRODUCT LEAD"}</p><h2>{language === "zh" ? "从开场，到每一帧。" : "From the opening to every frame."}</h2><p>{language === "zh" ? "6 组封面与视频页搭配，另加 2 种无装饰背景的简洁版。" : "Six cover and video treatments. Two unframed options. One clear story."}</p><a className="text-link" href={`/layouts${language === "zh" ? "?lang=zh" : ""}`}>{language === "zh" ? "探索视频版式" : "Explore the video collection"}<Arrow /></a></section>
         <CoverLibrary language={language} teaser />
         </>}
       </main>

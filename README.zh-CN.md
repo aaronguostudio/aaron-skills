@@ -35,6 +35,9 @@ Aaron Skills 将工作流与执行工作流所需的工具放在同一个集合�
 
 系列名称统一为 **Shape → Capture → Film → Share**。请看[名称与现有调用标识](docs/skill-names.md)。
 
+
+浏览 [6 组封面与视频页搭配，以及 2 种无装饰背景的简洁版](https://skills.aaronguo.com/layouts)，也可以直接让 Film 根据内容与品牌推荐三组。原始视频下方只放短字幕或少量 transcript，同样是正式选项。
+
 ## 当前可用：Demo
 
 将一个已经能运行的 Web 功能，变成有引导的视频、截图和可复制的更新说明。Demo 通过一套共享的本地工具，串起三个 Skills：

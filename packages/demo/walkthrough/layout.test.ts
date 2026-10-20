@@ -9,7 +9,7 @@ import {main,parseArgs} from './render-walkthrough';
 import {buildTimeline, calibrate} from '../remotion/src/projects/walkthrough-video/timeline';
 import {fixtureSteps} from './make-fixture';
 import {presentationPreset, validatePresentation} from '../remotion/src/projects/walkthrough-video/presentation/model';
-import {annotationAt, layoutGeometry, mapBox, textPages} from '../remotion/src/projects/walkthrough-video/presentation/layout';
+import {annotationAt, annotationPages, layoutGeometry, mapBox, resolveLayout, textPages, VIDEO_LAYOUTS} from '../remotion/src/projects/walkthrough-video/presentation/layout';
 import {paletteFor, contrastRatio, logoFor} from '../remotion/src/projects/walkthrough-video/presentation/theme';
 import {PresentationLogo, PresentationAnnotation} from '../remotion/src/projects/walkthrough-video/presentation/Presentation';
 
@@ -21,6 +21,61 @@ const load=(raw:unknown)=>{
 const v2=(patch:Record<string,unknown>={})=>load({version:2,brand:{fallback:'omit'},...patch});
 
 describe('versioned layout and theme',()=>{
+  test('curated compositions retain evidence at several capture aspect ratios',()=>{
+    expect(new Set(VIDEO_LAYOUTS.map(p=>p.id)).size).toBe(16);
+    for(const preset of VIDEO_LAYOUTS)for(const viewport of [{w:1440,h:900},{w:1920,h:1080},{w:900,h:1200}]){
+      const p=v2({layout:{preset:preset.id}}),g=layoutGeometry(viewport,p);
+      expect(g.screen.w/g.screen.h).toBeCloseTo(viewport.w/viewport.h);
+      expect(g.screen.x).toBeGreaterThanOrEqual(0);expect(g.screen.y).toBeGreaterThanOrEqual(0);
+      expect(g.screen.x+g.screen.w).toBeLessThanOrEqual(g.width+.001);
+      expect(g.screen.y+g.screen.h).toBeLessThanOrEqual(g.height+.001);
+      const text='Review both invoices before confirming. Check the amount and coding against the source records.';
+      expect(annotationPages(p,g.annotation,'Review the invoice queue',text).pages.join(' ')).toBe(resolveLayout(p.layout!).annotationMode==='transcript'?text:'Review the invoice queue');
+      if(preset.id==='native-detail')expect(g.screen.scale).toBe(1);
+    }
+    const custom=v2({layout:{preset:'lesson-notes',annotationRatio:.35,canvas:{width:1600,height:1000}}});
+    expect(resolveLayout(custom.layout!).annotationRatio).toBe(.35);
+    expect(layoutGeometry({w:1440,h:900},custom).width).toBe(1600);
+    expect(()=>v2({layout:{preset:'unknown'}})).toThrow('Unknown video layout');
+    expect(()=>v2({layout:{preset:'screen-first',annotationMode:'transcript'}})).toThrow('Compact');
+    expect(()=>v2({layout:{preset:'screen-first',screenPlacement:'left'}})).toThrow('Compact');
+    expect(()=>v2({layout:{preset:'lesson-notes',annotationStyle:'unknown'}})).toThrow('annotationStyle');
+  });
+  test('studio frames reserve only a short ribbon and keep the whole product visible',()=>{
+    for(const item of VIDEO_LAYOUTS.filter(p=>p.id.startsWith('studio-'))){
+      const p=v2({layout:{preset:item.id}}),g=layoutGeometry({w:1440,h:900},p);
+      expect(g.annotation.h/g.height).toBeLessThan(.08);
+      expect(g.screen.w*g.screen.h/(g.width*g.height)).toBeGreaterThan(.70);
+      expect(g.screen.y+g.screen.h).toBeLessThanOrEqual(g.annotation.y);
+      expect(annotationPages(p,g.annotation,'Bring the work into focus').pages).toEqual(['Bring the work into focus']);
+      expect(()=>v2({layout:{preset:item.id,annotationMode:'transcript'}})).toThrow('Compact');
+    }
+    expect(()=>v2({layout:{preset:'studio-cobalt',stageStyle:'unknown'}})).toThrow('stageStyle');
+  });
+  test('plain choices fill native width, omit artwork and paginate small transcript bands',()=>{
+    for(const id of ['plain-caption','plain-transcript']){
+      const p=v2({layout:{preset:id}}),g=layoutGeometry({w:1440,h:900},p);
+      expect(g.screen).toEqual({x:0,y:0,w:1440,h:900,scale:1});
+      expect(g.annotation.y).toBe(900);
+      expect(g.annotation.h/g.height).toBeLessThanOrEqual(.151);
+      expect(resolveLayout(p.layout!).stageStyle).toBeUndefined();
+      expect(p.cover).toBeUndefined();expect(p.body.logoPosition).toBe('none');
+      expect(p.intro.enabled).toBe(false);expect(p.outro.enabled).toBe(false);
+      expect(paletteFor(p,'body').background).toBe('#FFFFFF');
+      const text=Array.from({length:150},(_,i)=>`word${i}`).join(' ');
+      const pages=annotationPages(p,g.annotation,'A short caption',text).pages;
+      expect(pages.join(' ')).toBe(id==='plain-transcript'?text:'A short caption');
+      if(id==='plain-transcript')expect(pages.length).toBeGreaterThan(1);
+    }
+    const sand=v2({layout:{preset:'studio-sand'}});
+    expect(sand.cover?.preset).toBe('desert-editorial');
+    expect(paletteFor(sand,'body').background).toBe('#EEE7DB');
+    const custom=v2({layout:{preset:'studio-sand'},theme:{background:'#FFFFFF',foreground:'#101010'}});
+    expect(paletteFor(custom,'body').background).toBe('#FFFFFF');
+    const themed=v2({layout:{preset:'studio-sand'},theme:{preset:'neutral'}});
+    expect(paletteFor(themed,'body').background).toBe('#172131');
+    expect(paletteFor(themed,'intro').background).toBe('#F0F3F8');
+  });
   test('v1 geometry and palette remain byte-compatible defaults',()=>{
     const p=presentationPreset('professional','Old workflow');
     expect(layoutGeometry({w:1440,h:900},p)).toEqual({width:1440,height:996,screen:{x:0,y:0,w:1440,h:900,scale:1},annotation:{x:0,y:900,w:1440,h:96},legacy:true});
@@ -94,6 +149,11 @@ describe('annotation and identity',()=>{
     const p=v2({layout:{screenPlacement:'left',annotationMode:'transcript'}});
     const html=renderToStaticMarkup(React.createElement(PresentationAnnotation,{p,box:{x:0,y:0,w:450,h:900},caption:'Short result',transcript:'Complete imported narration',position:'1/2',progress:0,narrated:false}));
     expect(html).toContain('Complete imported narration');expect(html).not.toContain('Short result');
+    const editorial=v2({layout:{preset:'lesson-notes'}});
+    const markup=renderToStaticMarkup(React.createElement(PresentationAnnotation,{p:editorial,box:{x:0,y:0,w:500,h:1000},caption:'Review the invoice queue',transcript:'Confirm the amount and coding before continuing.',position:'1/3',progress:0,narrated:false}));
+    expect(markup).toContain('Review the invoice queue');expect(markup).toContain('Confirm the amount and coding');
+    const compact=v2({layout:{preset:'screen-first'}});
+    expect(renderToStaticMarkup(React.createElement(PresentationAnnotation,{p:compact,box:{x:0,y:0,w:1920,h:162},caption:'Review the invoice queue',position:'1/3',progress:0,narrated:false}))).toContain('data-annotation-style="compact"');
   });
   test('v2 never silently invents an identity and requires approved logo provenance',()=>{
     expect(()=>load({version:2,brand:{name:'Northstar'}})).toThrow('fallback');

@@ -1,0 +1,194 @@
+[
+  {
+    "id": "studio-cobalt",
+    "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/e18414600f8e68f329bb.mp4",
+    "stills": [
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/d6bf9053bd74eb3aeb1a.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/76db79c6b78615c6a807.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/b3b7d4767e2024675f99.webp"
+    ],
+    "width": 1920,
+    "height": 1200,
+    "seconds": 16.233333,
+    "sceneTimes": [
+      0,
+      4,
+      13
+    ],
+    "name": "Cobalt Studio",
+    "description": {
+      "en": "Confident color. Quiet details.",
+      "zh": "\u9c9c\u660e\u7684\u8272\u5f69\uff0c\u514b\u5236\u7684\u7ec6\u8282\u3002"
+    },
+    "cover": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/74b1e194869865c7b952.webp",
+    "color": "#1648ed"
+  },
+  {
+    "id": "studio-sand",
+    "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/0ff6bee8fa3c1a3b68e6.mp4",
+    "stills": [
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/888cea902032bfc0781e.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/902374d5da6c27457aa0.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/4557ab1865268e2697e9.webp"
+    ],
+    "width": 1920,
+    "height": 1200,
+    "seconds": 16.233333,
+    "sceneTimes": [
+      0,
+      4,
+      13
+    ],
+    "name": "Sand Editorial",
+    "description": {
+      "en": "Warm material. An editorial point of view.",
+      "zh": "\u6e29\u6696\u6750\u8d28\uff0c\u6742\u5fd7\u6c14\u8d28\u3002"
+    },
+    "cover": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/976997736ab191d7199c.webp",
+    "color": "#eee7db"
+  },
+  {
+    "id": "studio-chrome",
+    "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/41ef18242b0488861bb4.mp4",
+    "stills": [
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/a7a3bf3d41b65a18dced.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/35128124b6cccc0f6065.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/ceae0e5f0e1649c3aee8.webp"
+    ],
+    "width": 1920,
+    "height": 1200,
+    "seconds": 16.233333,
+    "sceneTimes": [
+      0,
+      4,
+      13
+    ],
+    "name": "Chrome Atelier",
+    "description": {
+      "en": "A little sculpture. A lot of clarity.",
+      "zh": "\u96d5\u5851\u611f\u4e3b\u89c6\u89c9\uff0c\u6e05\u6670\u7684\u4ea7\u54c1\u3002"
+    },
+    "cover": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/5f7a129e0aa7e3245a54.webp",
+    "color": "#ddd4f3"
+  },
+  {
+    "id": "studio-midnight",
+    "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/41a94ae97bc4cc7e9f9f.mp4",
+    "stills": [
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/a1ece0eeb8eba8c49705.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/7da8f4f0daf8d45d3470.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/e5a6bff2b2993a6547ca.webp"
+    ],
+    "width": 1920,
+    "height": 1200,
+    "seconds": 16.233333,
+    "sceneTimes": [
+      0,
+      4,
+      13
+    ],
+    "name": "Midnight Cinema",
+    "description": {
+      "en": "Quiet drama. All eyes on the product.",
+      "zh": "\u6df1\u8272\u7535\u5f71\u611f\uff0c\u8ba9\u89c6\u7ebf\u805a\u7126\u4ea7\u54c1\u3002"
+    },
+    "cover": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/35d68e41f644f12da55f.webp",
+    "color": "#101e2c"
+  },
+  {
+    "id": "studio-paper",
+    "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/949b164d6ffcf891c463.mp4",
+    "stills": [
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/b48fd2266cf2b9001a0e.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/22bd24fcf31a7cc6b823.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/b36b71039d98d05ee118.webp"
+    ],
+    "width": 1920,
+    "height": 1200,
+    "seconds": 16.233333,
+    "sceneTimes": [
+      0,
+      4,
+      13
+    ],
+    "name": "Paper Gallery",
+    "description": {
+      "en": "Soft texture. Sharp thinking.",
+      "zh": "\u67d4\u548c\u7eb8\u827a\uff0c\u6e05\u695a\u8868\u8fbe\u3002"
+    },
+    "cover": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/de267a62014c7fdecb36.webp",
+    "color": "#ebe9de"
+  },
+  {
+    "id": "studio-vermilion",
+    "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/c5b7549d0a9136686352.mp4",
+    "stills": [
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/061620647cfd94cfb47e.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/09e839d033b65e9aec63.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/9f2750495424471808a6.webp"
+    ],
+    "width": 1920,
+    "height": 1200,
+    "seconds": 16.233333,
+    "sceneTimes": [
+      0,
+      4,
+      13
+    ],
+    "name": "Vermilion Cut",
+    "description": {
+      "en": "A confident frame for a clear story.",
+      "zh": "\u5927\u80c6\u753b\u6846\uff0c\u8bb2\u6e05\u4e00\u4e2a\u6545\u4e8b\u3002"
+    },
+    "cover": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/2ae424388c16fa9e4a10.webp",
+    "color": "#a8402c"
+  },
+  {
+    "id": "plain-caption",
+    "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/a3d1cfeeae5641f5d3e3.mp4",
+    "stills": [
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/0fc77d2eb6a1c029dbe0.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/b3b932e882b9ef3afc10.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/89671cd7595f79606ad9.webp"
+    ],
+    "width": 1440,
+    "height": 990,
+    "sceneTimes": [
+      0,
+      4,
+      13
+    ],
+    "name": "Just the video",
+    "description": {
+      "en": "The original view, with a short caption below.",
+      "zh": "\u539f\u59cb\u89c6\u9891\uff0c\u4e0b\u65b9\u4e00\u884c\u77ed\u5b57\u5e55\u3002"
+    },
+    "cover": null,
+    "seconds": 16.233333,
+    "color": "#ffffff"
+  },
+  {
+    "id": "plain-transcript",
+    "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/d3f4938c3c04ed7c90a5.mp4",
+    "stills": [
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/eab4cc28c5e103cf1f11.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/a3cbfd6fd60aad933c8f.webp",
+      "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/layouts/v0.3.0/6def9c6901944b9d44f8.webp"
+    ],
+    "width": 1440,
+    "height": 1060,
+    "sceneTimes": [
+      0,
+      10,
+      28
+    ],
+    "name": "Video + transcript",
+    "description": {
+      "en": "A few lines of explanation. No decorative frame.",
+      "zh": "\u89c6\u9891\u4e0b\u65b9\u51e0\u53e5\u8bb2\u89e3\uff0c\u65e0\u88c5\u9970\u753b\u6846\u3002"
+    },
+    "cover": null,
+    "seconds": 34.966667,
+    "color": "#ffffff"
+  }
+]

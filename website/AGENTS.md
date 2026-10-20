@@ -58,3 +58,11 @@ Keep the top navigation sticky on the homepage and cover gallery so visitors can
 switch sections after scrolling. Its white surface must keep links legible;
 anchor targets need clearance below the current header height on desktop/mobile.
 Dialogs and the keyboard skip link remain above the sticky navigation.
+
+On 2026-10-20 Aaron approved the Forma collection and authorized publishing it.
+Keep the six cover/body treatments visually consistent with the accepted cream
+and olive editorial preview. Also offer two first-class unframed options: native
+video with a short bottom caption, and native video with a modest transcript
+band. Keep the product large; do not reserve a large blank panel by default.
+These silent layout previews belong to /layouts, separately from the narrated
+finished examples. Forma is a fictional, frontend-only demo, not an ERP screen.
