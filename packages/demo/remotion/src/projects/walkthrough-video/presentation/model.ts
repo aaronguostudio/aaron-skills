@@ -1,3 +1,4 @@
+import {validateCover,type CoverSettings} from '../../../../../covers/catalog';
 export const TEMPLATES = ['minimal', 'professional', 'showcase'] as const;
 export type Template = typeof TEMPLATES[number];
 export type Presentation = {
@@ -5,6 +6,7 @@ export type Presentation = {
   template: Template;
   title: string;
   subtitle: string;
+  cover?: CoverSettings;
   brand: {name: string; tagline: string; primary: string; accent: string; logo?: string};
   intro: {enabled: boolean; durationMs: number; sound?: string; soundPreset:'none'|'soft'|'bright'; volume: number};
   outro: {enabled: boolean; durationMs: number; title: string; subtitle: string; url: string};
@@ -27,7 +29,8 @@ export function validatePresentation(value: unknown, localAssets = true): assert
   const text = (s: unknown, max: number, required = false) => typeof s === 'string' && s.length <= max && (!required || !!s.trim());
   const color = (s: unknown) => typeof s === 'string' && /^#[0-9a-f]{6}$/i.test(s);
   if (p?.version !== 1 || !TEMPLATES.includes(p.template)) throw Error('Presentation version/template is invalid');
-  if (!text(p.title, 100, true) || !text(p.subtitle, 160) || !text(p.brand?.name, 40, true) || !text(p.brand?.tagline, 100)) throw Error('Presentation title/brand text is invalid or too long');
+  if (p.cover !== undefined) validateCover(p.cover);
+  if (!text(p.title, 100, true) || !text(p.subtitle, 160) || !text(p.brand?.name, 40, !p.cover) || !text(p.brand?.tagline, 100)) throw Error('Presentation title/brand text is invalid or too long');
   if (!color(p.brand.primary) || !color(p.brand.accent) || !color(p.body?.highlightColor)) throw Error('Presentation colors must be six-digit hex colors');
   if (!['left', 'right', 'none'].includes(p.body.logoPosition)) throw Error('Body logoPosition must be left, right or none');
   for (const card of [p.intro, p.outro]) {

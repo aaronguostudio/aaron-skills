@@ -3,17 +3,24 @@ import {createHash} from 'crypto';
 import {execFileSync} from 'child_process';
 import {dirname, extname, isAbsolute, join, resolve, sep} from 'path';
 import {presentationPreset, validatePresentation, type Presentation, type Template} from '../remotion/src/projects/walkthrough-video/presentation/model';
+import {getCoverPreset,validateCover} from '../covers/catalog';
 
-export function loadPresentation(template: string | undefined, file: string | undefined, title: string, subtitle: string): {presentation: Presentation; assetRoot?: string} | undefined {
-  if (!template && !file) return undefined;
+const COVER_ROOT=resolve(import.meta.dir,'../covers');
+
+export function loadPresentation(template: string | undefined, file: string | undefined, title: string, subtitle: string, coverPreset?:string): {presentation: Presentation; assetRoot?: string} | undefined {
+  if (!template && !file && !coverPreset) return undefined;
   const raw = file ? JSON.parse(readFileSync(file, 'utf8')) : {};
+  if(!raw || typeof raw!=='object' || Array.isArray(raw)) throw Error('Presentation configuration must be an object');
   const preset = presentationPreset((template ?? raw.template ?? 'professional') as Template, title, subtitle);
-  const known = ['version', 'template', 'title', 'subtitle', 'brand', 'intro', 'outro', 'body'];
+  const known = ['version', 'template', 'title', 'subtitle', 'brand', 'intro', 'outro', 'body', 'cover'];
   if (Object.keys(raw).some(k => !known.includes(k))) throw Error('Unknown presentation configuration field');
   const fields:Record<string,string[]>={brand:['name','tagline','primary','accent','logo'],intro:['enabled','durationMs','sound','soundPreset','volume'],outro:['enabled','durationMs','title','subtitle','url'],body:['logoPosition','highlightColor']};
   for(const [key,allowed] of Object.entries(fields)) if(raw[key]!==undefined && (!raw[key] || typeof raw[key]!=='object' || Array.isArray(raw[key]) || Object.keys(raw[key]).some(k=>!allowed.includes(k)))) throw Error(`Unknown or invalid presentation ${key} field`);
+  if(raw.cover!==undefined) validateCover(raw.cover,false);
+  const cover=(raw.cover || coverPreset)?{...raw.cover,preset:coverPreset??raw.cover.preset}:undefined;
   const presentation: Presentation = {...preset, ...raw, template: template ?? raw.template ?? preset.template,
-    brand: {...preset.brand, ...raw.brand}, intro: {...preset.intro, ...raw.intro},
+    ...(cover?{cover}:{}),
+    brand: {...preset.brand,...(cover?{name:'',tagline:''}:{}), ...raw.brand}, intro: {...preset.intro, ...raw.intro},
     outro: {...preset.outro, ...raw.outro}, body: {...preset.body, ...raw.body}};
   validatePresentation(presentation);
   const assetRoot = file ? dirname(realpathSync(file)) : undefined;
@@ -27,8 +34,9 @@ export function loadPresentation(template: string | undefined, file: string | un
 
 // Read/probe assets before any provider usage. A file extension alone is not media validation.
 export function validatePresentationMedia(p:Presentation, root:string|undefined):void {
-  for(const [kind,asset] of [['video',p.brand.logo],['audio',p.intro.sound]] as const) if(asset){
-    const source=resolve(root!,asset);
+  const art=p.cover?getCoverPreset(p.cover.preset).art:undefined;
+  for(const [kind,asset,assetRoot] of [['video',p.brand.logo,root],['audio',p.intro.sound,root],['video',art,COVER_ROOT]] as const) if(asset){
+    const source=resolve(assetRoot!,asset);
     const info=JSON.parse(execFileSync('ffprobe',['-v','error','-show_streams','-show_format','-of','json',source],{encoding:'utf8',stdio:['ignore','pipe','pipe']}));
     if(!info.streams?.some((s:{codec_type:string;width?:number;height?:number})=>s.codec_type===kind&&(kind!=='video'||(s.width!>0&&s.height!>0)))) throw Error('Presentation logo/sound is not valid media');
     if(kind==='audio'){
@@ -41,10 +49,10 @@ export function validatePresentationMedia(p:Presentation, root:string|undefined)
 
 export function installPresentation(p: Presentation, root: string | undefined, run: string): Presentation {
   const result = structuredClone(p);
-  const install = (asset: string) => {
-    if (!root || isAbsolute(asset)) throw Error('Presentation asset needs a local configuration directory');
-    const source = realpathSync(resolve(root, asset));
-    if (!source.startsWith(realpathSync(root) + sep)) throw Error('Presentation asset leaves its configuration directory');
+  const install = (asset: string,assetRoot=root) => {
+    if (!assetRoot || isAbsolute(asset)) throw Error('Presentation asset needs a local configuration directory');
+    const source = realpathSync(resolve(assetRoot, asset));
+    if (!source.startsWith(realpathSync(assetRoot) + sep)) throw Error('Presentation asset leaves its configuration directory');
     const hash = createHash('sha256').update(readFileSync(source)).digest('hex').slice(0, 16);
     const local = `presentation-assets/${hash}${extname(source).toLowerCase()}`;
     mkdirSync(join(run, 'presentation-assets'), {recursive: true});
@@ -52,6 +60,10 @@ export function installPresentation(p: Presentation, root: string | undefined, r
     return local;
   };
   if (result.brand.logo) result.brand.logo = install(result.brand.logo);
+  if (result.cover) {
+    const art=getCoverPreset(result.cover.preset).art;
+    if(art) result.cover.art=install(art,COVER_ROOT);
+  }
   if (result.intro.sound) result.intro.sound = install(result.intro.sound);
   else if (result.intro.enabled && result.intro.soundPreset!=='none') {
     const seconds=Math.min(2.8,result.intro.durationMs/1000);

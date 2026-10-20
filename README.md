@@ -161,6 +161,12 @@ business writes. Choose a visual template—Minimal, Professional or Showcase—
 an explanation style independently. Film can draft a script from your brief and
 the recorded evidence; you do not need to arrive with a finished script.
 
+For a presentation cover, choose from the [32 cover styles](https://skills.aaronguo.com/covers)
+with `aaron-demo cover --list`, then customize the title, subtitle, logo, presenter,
+date and colors. `aaron-demo cover --presentation /path/to/presentation.json --out /path/to/revision/cover.png`
+exports PNG/WebP without recording an app. The same configuration can supply a
+walkthrough's opening and cover. See the [cover workflow](docs/cover-library.md).
+
 Rendering is silent by default. Import your own audio or explicitly choose your
 ElevenLabs account and permitted voice for narration. Qwen TTS is a reserved
 interface; independently generated audio can be imported today. Videos and covers

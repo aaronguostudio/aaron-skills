@@ -13,6 +13,7 @@ const root=mkdtempSync(join(tmpdir(),'aaron-presentation-acceptance-'));
 const run=join(root,'capture');mkdirSync(run);
 const {makeFixture}=await import(pathToFileURL(join(release,'packages/demo/walkthrough/make-fixture.ts')).href);
 const {main}=await import(pathToFileURL(join(release,'packages/demo/walkthrough/render-walkthrough.ts')).href);
+const {main:coverMain}=await import(pathToFileURL(join(release,'packages/demo/walkthrough/render-cover.ts')).href);
 makeFixture(run);
 const python=join(release,'.venv',process.platform==='win32'?'Scripts':'bin',process.platform==='win32'?'python.exe':'python3');
 execFileSync(python,['-c','import math,struct,sys,wave; w=wave.open(sys.argv[1],"wb"); w.setparams((1,2,44100,0,"NONE","not compressed")); w.writeframes(b"".join(struct.pack("<h",int(4000*math.sin(i*2*math.pi*440/44100))) for i in range(22050))); w.close()',join(root,'tone.wav')]);
@@ -35,6 +36,15 @@ for(const template of ['minimal','professional','showcase']){
   execFileSync(python,['-c','from PIL import Image; import sys; i=Image.open(sys.argv[1]); assert i.format=="WEBP"; assert i.width>0; i.verify()',join(root,template,'cover.webp')]);
   evidence.push({template,fullDecode:true,coverWebp:true,seconds:Number(probe.format.duration)});
 }
+// Covers must also work before an application has been captured. Exercise both
+// native graphics and bundled alpha artwork through the installed public API.
+for(const preset of ['cobalt-signal','chrome-loop']){
+  const file=join(root,`cover-${preset}.json`),png=join(root,`cover-${preset}`,'cover.png');
+  writeFileSync(file,JSON.stringify({version:1,title:'A clearer workflow',subtitle:'A fictional cover acceptance example',brand:{name:'Fictional fixture',logo:'logo.png'},cover:{preset,presenter:'Fixture Presenter',date:'Fixture date',colors:{background:'#E7F0FF',foreground:'#15324B'}}}));
+  if(await coverMain(['--presentation',file,'--out',png]))throw Error(`Installed cover ${preset} failed`);
+  execFileSync(python,['-c','from PIL import Image;import sys; p=Image.open(sys.argv[1]);w=Image.open(sys.argv[2]);assert p.size==w.size==(1600,900);assert p.format=="PNG" and w.format=="WEBP";assert p.convert("RGB").getpixel((0,0))==(231,240,255)',png,png.replace(/\.png$/,'.webp')]);
+  evidence.push({preset,standaloneCover:true,width:1600,height:900,customBackground:true});
+}
 const profiles=join(root,'voices.json');
 writeFileSync(profiles,JSON.stringify({default_profile:'fixture',profiles:{fixture:{provider:'elevenlabs',voice_id:'fixture-voice',model_id:'fixture-model',output_format:'mp3_44100_192',voice_settings:{stability:.5}}}}));
 process.env.AARON_DEMO_VOICE_PROFILES=profiles;
@@ -53,6 +63,6 @@ if(requests!==${steps.length})throw Error('Dry run synthesized audio');
 console.log('MOCK_ELEVENLABS_PASSED '+requests);`);
 const output=execFileSync(process.execPath,[child],{encoding:'utf8',env:process.env});
 if(!output.includes('MOCK_ELEVENLABS_PASSED'))throw Error('Mock provider acceptance missing');
-const report={passed:true,scope:'Installed fictional fixture; three presets/covers, imported tone, mocked ElevenLabs; no live provider/voice-quality acceptance',root,evidence};
+const report={passed:true,scope:'Installed fictional fixture; three video templates/covers, two standalone library covers, imported tone, mocked ElevenLabs; no live provider/voice-quality acceptance',root,evidence};
 writeFileSync(join(root,'acceptance.json'),JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify(report,null,2));

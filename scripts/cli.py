@@ -80,7 +80,7 @@ def main():
     os.umask(0o077)
     args = sys.argv[1:]
     if not args or args[0] in ('--help', '-h'):
-        print('Usage: aaron-demo doctor | smoke | uninstall | docs [topic] | capture <args> | inspect <run> | render <run> [args] | revise <run> <patch.json> --out <new-run> | page <message.md> --out <page.html> | mark <args>')
+        print('Usage: aaron-demo doctor | smoke | uninstall | docs [topic] | capture <args> | inspect <run> | cover --list | cover --presentation <external.json> --out <cover.png> | render <run> [args] | revise <run> <patch.json> --out <new-run> | page <message.md> --out <page.html> | mark <args>')
         return 0
     if args[0] == 'docs':
         topic = args[1] if len(args) > 1 else 'first-demo'
@@ -99,6 +99,7 @@ def main():
     commands = {
         'capture': [config['tools']['node'], ENGINE / 'scripts/cli.mjs'],
         'render': [bun_binary(RENDER), ROOT / 'packages/demo/walkthrough/render-walkthrough.ts'],
+        'cover': [bun_binary(RENDER), ROOT / 'packages/demo/walkthrough/render-cover.ts'],
         'revise': [venv_python(ROOT), ROOT / 'scripts/revise_capture.py'],
         'inspect': [venv_python(ROOT), ROOT / 'scripts/capture_view.py'],
         'page': [venv_python(ROOT), ROOT / 'packages/demo/update/scripts/build_page.py'],

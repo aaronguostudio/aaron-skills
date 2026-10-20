@@ -21,6 +21,7 @@ export default defineConfig(({ command }) => ({
   build: {
     outDir: "dist/client",
   },
+  resolve: { dedupe: ["react", "react-dom"] },
   optimizeDeps: {
     include: ["react", "react-dom/client"],
   },

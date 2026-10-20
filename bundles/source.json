@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "files": [
     ".github/workflows/ci.yml",
     ".gitignore",
@@ -222,6 +222,171 @@
     "examples/showcase-review/server.mjs",
     "examples/showcase-review/server.test.mjs",
     "examples/showcase-review/styles.css",
-    "scripts/install-ci-media.ps1"
-  ]
+    "scripts/install-ci-media.ps1",
+    "docs/cover-library.md",
+    "packages/demo/covers/catalog.ts",
+    "packages/demo/remotion/src/cover-library/CoverDesign.tsx",
+    "packages/demo/covers/presets.json",
+    "packages/demo/walkthrough/render-cover.ts",
+    "packages/demo/covers/art/desert-editorial.webp",
+    "packages/demo/covers/art/ocean-margin.webp",
+    "packages/demo/covers/art/alpine-silence.webp",
+    "packages/demo/covers/art/botanical-shadow.webp",
+    "packages/demo/covers/art/chrome-loop.webp",
+    "packages/demo/covers/art/amber-glass.webp",
+    "packages/demo/covers/art/ceramic-ribbon.webp",
+    "packages/demo/covers/art/liquid-orbit.webp",
+    "packages/demo/covers/art/linen-emboss.webp",
+    "packages/demo/covers/art/brushed-copper.webp",
+    "packages/demo/covers/art/paper-relief.webp",
+    "packages/demo/covers/art/black-marble.webp",
+    "packages/demo/covers/art/sage-pebble.webp",
+    "packages/demo/covers/art/petal-motion.webp",
+    "packages/demo/covers/art/cobalt-coral.webp",
+    "packages/demo/covers/art/solar-horizon.webp",
+    "packages/demo/covers/art/prism-light.webp",
+    "packages/demo/covers/art/dawn-fog.webp",
+    "packages/demo/covers/art/electric-silk.webp",
+    "packages/demo/covers/art/concrete-arch.webp",
+    "packages/demo/covers/art/orange-stair.webp",
+    "packages/demo/covers/art/blue-portal.webp",
+    "packages/demo/covers/art/sand-courtyard.webp",
+    "packages/demo/covers/art/red-balloon.webp",
+    "packages/demo/covers/art/cutout-sun.webp",
+    "packages/demo/covers/art/soft-grid.webp",
+    "packages/demo/walkthrough/cover.test.ts",
+    "packages/demo/covers/art-sources.json"
+  ],
+  "reviewedBinaryAssets": {
+    "packages/demo/covers/art/alpine-silence.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "a9f45aa34d540f5482baa559483b155dc61b6dfe057b6d40141414449463f2f6"
+    },
+    "packages/demo/covers/art/amber-glass.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "9f80d03604b68ca519f6f81480082c4f922bfe17eb2292bbc6dc10aec35df8a0"
+    },
+    "packages/demo/covers/art/black-marble.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "741e16d155ad99ef8c343ce75251856d51dc5aa21518e64d7024085c15b84491"
+    },
+    "packages/demo/covers/art/blue-portal.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "d98fb60949c7e2b5dc8d46d665ecd065cf9c22d6cd8db003e5ca16c4fe99ba0a"
+    },
+    "packages/demo/covers/art/botanical-shadow.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "e09c04579b9893f93a8a06533f37ef3073c71c56a5d560119cb7ff074c17e726"
+    },
+    "packages/demo/covers/art/brushed-copper.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "b63ed0d2b5f8c6a0f078d99255103b93d0810c8fd5b4db4176e2ddfe6f681b88"
+    },
+    "packages/demo/covers/art/ceramic-ribbon.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "2d58ba15785c8948c40ac35c04a965f86562548629a8b98f2a6d2bd22ba5cdaf"
+    },
+    "packages/demo/covers/art/chrome-loop.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "422652cdac668080b6babc0875f585cc1353353d213ea54593da3cc4e4e408bc"
+    },
+    "packages/demo/covers/art/cobalt-coral.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "13359f49b095eb7dc935c5f6c994441034958c2c10acb3fdf23af4fa1157decd"
+    },
+    "packages/demo/covers/art/concrete-arch.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "de963e55896570b5d6195cd074b74b34a756cf38a82d727656bc6aaacc6fbd22"
+    },
+    "packages/demo/covers/art/cutout-sun.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "7d1e90524db62629cf7bfe9ab4cb83e78431c03b20fb506fd94630ab667ff6a0"
+    },
+    "packages/demo/covers/art/dawn-fog.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "a65e4209dc63ed9fbdd95aa0903b304bf50404da60810114e46b9d3d49242435"
+    },
+    "packages/demo/covers/art/desert-editorial.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "7ffab9e3bfa7a81d61fee4bda56ad1bdad86e4eb4c1f5d134dbbc9ff9a6bcf8f"
+    },
+    "packages/demo/covers/art/electric-silk.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "4832a200d87691106c8d7714ff35728551747fd6d49c246979353cf11536f05b"
+    },
+    "packages/demo/covers/art/linen-emboss.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "dd5d1bdc81d104d937e3a0e5b167a982287ec44a0965843461b80a266d2fa3b9"
+    },
+    "packages/demo/covers/art/liquid-orbit.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "4ce42b491ae1ebcc8cd887d5b7c2e665de962f8d21b222e188207d336ba63a78"
+    },
+    "packages/demo/covers/art/ocean-margin.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "a4bd374b8bf0ef61ffc2a3a6833de2f0996726df7c8aa2ceb32f2b80eb491fd1"
+    },
+    "packages/demo/covers/art/orange-stair.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "ed6f20fb657ec73e46001ec30bc08d0852b2b3a13f88f22fc17948eb621869bb"
+    },
+    "packages/demo/covers/art/paper-relief.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "aa266f07fa3377287965a269d04c7b6ca4e15f28c14b970e2a382096e60b8b1d"
+    },
+    "packages/demo/covers/art/petal-motion.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "3c899041f1497eb1eec1d59351dd97d1d77086b29938ae449167801df24f3fa9"
+    },
+    "packages/demo/covers/art/prism-light.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "0d6fc0f8a810b9533b8c50ee94a4652d62e4251e6b8f276f0a9cb147219fdf65"
+    },
+    "packages/demo/covers/art/red-balloon.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "491107ab36fd05bfdffbe2eb724c95ba14934fa4bb35ef068939b0aa264d8449"
+    },
+    "packages/demo/covers/art/sage-pebble.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "99d33111162c01f5c6841295c7bb187a83ec5c48f662554d42a80398bb9f2937"
+    },
+    "packages/demo/covers/art/sand-courtyard.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "cf31ca95160e0639b06b4b47312649e44ae2dfe12a57a8246ca0113b50bfa855"
+    },
+    "packages/demo/covers/art/soft-grid.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "fc2f83542f891a2ae56589429d67f4884d3f9e1fb2bdae44f4af9ffa587e7194"
+    },
+    "packages/demo/covers/art/solar-horizon.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "15091e8139dde4737ebb3ddda25f29f448a1097b303d47302cfbc0dbb5e08294"
+    }
+  }
 }

@@ -1,0 +1,676 @@
+[
+  {
+    "id": "cobalt-signal",
+    "title": {
+      "en": "Cobalt Signal",
+      "zh": "钴蓝信号"
+    },
+    "family": "graphic",
+    "familyTitle": {
+      "en": "Graphic",
+      "zh": "几何色块"
+    },
+    "layout": "bottom-left",
+    "colors": {
+      "background": "#1648ed",
+      "foreground": "#f5f1e9",
+      "accent": "#e8ff00"
+    },
+    "font": "sans",
+    "shape": "cobalt",
+    "preview": "https://skills.aaronguo.com/covers/previews/cobalt-signal.webp"
+  },
+  {
+    "id": "coral-aperture",
+    "title": {
+      "en": "Coral Aperture",
+      "zh": "珊瑚视窗"
+    },
+    "family": "graphic",
+    "familyTitle": {
+      "en": "Graphic",
+      "zh": "几何色块"
+    },
+    "layout": "right",
+    "colors": {
+      "background": "#181818",
+      "foreground": "#f5f1e9",
+      "accent": "#ff5d48"
+    },
+    "font": "sans",
+    "shape": "aperture",
+    "preview": "https://skills.aaronguo.com/covers/previews/coral-aperture.webp"
+  },
+  {
+    "id": "vermilion-fold",
+    "title": {
+      "en": "Vermilion Fold",
+      "zh": "朱红折角"
+    },
+    "family": "graphic",
+    "familyTitle": {
+      "en": "Graphic",
+      "zh": "几何色块"
+    },
+    "layout": "right",
+    "colors": {
+      "background": "#ff4020",
+      "foreground": "#12234e",
+      "accent": "#f4eee1"
+    },
+    "font": "sans",
+    "shape": "fold",
+    "preview": "https://skills.aaronguo.com/covers/previews/vermilion-fold.webp"
+  },
+  {
+    "id": "chartreuse-column",
+    "title": {
+      "en": "Chartreuse Column",
+      "zh": "青柠立柱"
+    },
+    "family": "graphic",
+    "familyTitle": {
+      "en": "Graphic",
+      "zh": "几何色块"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#dcff00",
+      "foreground": "#143b25",
+      "accent": "#1648ed"
+    },
+    "font": "sans",
+    "shape": "column",
+    "preview": "https://skills.aaronguo.com/covers/previews/chartreuse-column.webp"
+  },
+  {
+    "id": "desert-editorial",
+    "title": {
+      "en": "Desert Editorial",
+      "zh": "沙漠叙事"
+    },
+    "family": "editorial",
+    "familyTitle": {
+      "en": "Editorial",
+      "zh": "摄影叙事"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#f4eee4",
+      "foreground": "#161714",
+      "accent": "#b9432e"
+    },
+    "font": "serif",
+    "art": "art/desert-editorial.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/desert-editorial.webp"
+  },
+  {
+    "id": "ocean-margin",
+    "title": {
+      "en": "Ocean Margin",
+      "zh": "海岸留白"
+    },
+    "family": "editorial",
+    "familyTitle": {
+      "en": "Editorial",
+      "zh": "摄影叙事"
+    },
+    "layout": "banner-top",
+    "colors": {
+      "background": "#f5f1e9",
+      "foreground": "#10233a",
+      "accent": "#c55c37"
+    },
+    "font": "serif",
+    "art": "art/ocean-margin.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/ocean-margin.webp"
+  },
+  {
+    "id": "alpine-silence",
+    "title": {
+      "en": "Alpine Silence",
+      "zh": "山间静默"
+    },
+    "family": "editorial",
+    "familyTitle": {
+      "en": "Editorial",
+      "zh": "摄影叙事"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#f6e57c",
+      "foreground": "#181919",
+      "accent": "#b64228"
+    },
+    "font": "serif",
+    "art": "art/alpine-silence.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/alpine-silence.webp"
+  },
+  {
+    "id": "botanical-shadow",
+    "title": {
+      "en": "Botanical Shadow",
+      "zh": "植物光影"
+    },
+    "family": "editorial",
+    "familyTitle": {
+      "en": "Editorial",
+      "zh": "摄影叙事"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#f6f0df",
+      "foreground": "#1e3c29",
+      "accent": "#b85c3a"
+    },
+    "font": "serif",
+    "art": "art/botanical-shadow.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/botanical-shadow.webp"
+  },
+  {
+    "id": "chrome-loop",
+    "title": {
+      "en": "Chrome Loop",
+      "zh": "镀铬回环"
+    },
+    "family": "sculptural",
+    "familyTitle": {
+      "en": "Sculptural",
+      "zh": "立体物件"
+    },
+    "layout": "bottom-left",
+    "colors": {
+      "background": "#dcd2f8",
+      "foreground": "#291843",
+      "accent": "#ff8900"
+    },
+    "font": "sans",
+    "art": "art/chrome-loop.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/chrome-loop.webp"
+  },
+  {
+    "id": "amber-glass",
+    "title": {
+      "en": "Amber Glass",
+      "zh": "琥珀玻璃"
+    },
+    "family": "sculptural",
+    "familyTitle": {
+      "en": "Sculptural",
+      "zh": "立体物件"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#f5f0e7",
+      "foreground": "#161616",
+      "accent": "#c66d15"
+    },
+    "font": "sans",
+    "art": "art/amber-glass.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/amber-glass.webp"
+  },
+  {
+    "id": "ceramic-ribbon",
+    "title": {
+      "en": "Ceramic Ribbon",
+      "zh": "陶瓷丝带"
+    },
+    "family": "sculptural",
+    "familyTitle": {
+      "en": "Sculptural",
+      "zh": "立体物件"
+    },
+    "layout": "right",
+    "colors": {
+      "background": "#c2e5ff",
+      "foreground": "#1545ce",
+      "accent": "#ffe06d"
+    },
+    "font": "sans",
+    "art": "art/ceramic-ribbon.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/ceramic-ribbon.webp"
+  },
+  {
+    "id": "liquid-orbit",
+    "title": {
+      "en": "Liquid Orbit",
+      "zh": "液态轨道"
+    },
+    "family": "sculptural",
+    "familyTitle": {
+      "en": "Sculptural",
+      "zh": "立体物件"
+    },
+    "layout": "bottom-right",
+    "colors": {
+      "background": "#321226",
+      "foreground": "#fae7e4",
+      "accent": "#ef70b5"
+    },
+    "font": "sans",
+    "art": "art/liquid-orbit.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/liquid-orbit.webp"
+  },
+  {
+    "id": "linen-emboss",
+    "title": {
+      "en": "Linen Emboss",
+      "zh": "亚麻压纹"
+    },
+    "family": "material",
+    "familyTitle": {
+      "en": "Material",
+      "zh": "材质肌理"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#eee8db",
+      "foreground": "#34352f",
+      "accent": "#ac3e29"
+    },
+    "font": "serif",
+    "art": "art/linen-emboss.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/linen-emboss.webp"
+  },
+  {
+    "id": "brushed-copper",
+    "title": {
+      "en": "Brushed Copper",
+      "zh": "拉丝铜面"
+    },
+    "family": "material",
+    "familyTitle": {
+      "en": "Material",
+      "zh": "材质肌理"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#1c1c1b",
+      "foreground": "#f8f0e5",
+      "accent": "#b57542"
+    },
+    "font": "sans",
+    "art": "art/brushed-copper.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/brushed-copper.webp"
+  },
+  {
+    "id": "paper-relief",
+    "title": {
+      "en": "Paper Relief",
+      "zh": "纸雕浮层"
+    },
+    "family": "material",
+    "familyTitle": {
+      "en": "Material",
+      "zh": "材质肌理"
+    },
+    "layout": "bottom-left",
+    "colors": {
+      "background": "#f5f3ed",
+      "foreground": "#151515",
+      "accent": "#1648ed"
+    },
+    "font": "serif",
+    "art": "art/paper-relief.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/paper-relief.webp"
+  },
+  {
+    "id": "black-marble",
+    "title": {
+      "en": "Black Marble",
+      "zh": "黑曜石纹"
+    },
+    "family": "material",
+    "familyTitle": {
+      "en": "Material",
+      "zh": "材质肌理"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#f4f1e9",
+      "foreground": "#161616",
+      "accent": "#b99568"
+    },
+    "font": "serif",
+    "art": "art/black-marble.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/black-marble.webp"
+  },
+  {
+    "id": "sage-pebble",
+    "title": {
+      "en": "Sage Pebble",
+      "zh": "鼠尾草石"
+    },
+    "family": "organic",
+    "familyTitle": {
+      "en": "Organic",
+      "zh": "有机造型"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#a4b09b",
+      "foreground": "#193e2a",
+      "accent": "#f5f2e6"
+    },
+    "font": "sans",
+    "art": "art/sage-pebble.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/sage-pebble.webp"
+  },
+  {
+    "id": "petal-motion",
+    "title": {
+      "en": "Petal Motion",
+      "zh": "花瓣舒展"
+    },
+    "family": "organic",
+    "familyTitle": {
+      "en": "Organic",
+      "zh": "有机造型"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#ffe27b",
+      "foreground": "#1c1d18",
+      "accent": "#ec6546"
+    },
+    "font": "serif",
+    "art": "art/petal-motion.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/petal-motion.webp"
+  },
+  {
+    "id": "moss-contour",
+    "title": {
+      "en": "Moss Contour",
+      "zh": "苔绿等高"
+    },
+    "family": "organic",
+    "familyTitle": {
+      "en": "Organic",
+      "zh": "有机造型"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#103a27",
+      "foreground": "#f5f0df",
+      "accent": "#b7ca7e",
+      "secondary": "#f5f0df"
+    },
+    "font": "sans",
+    "shape": "contour",
+    "preview": "https://skills.aaronguo.com/covers/previews/moss-contour.webp"
+  },
+  {
+    "id": "cobalt-coral",
+    "title": {
+      "en": "Cobalt Coral",
+      "zh": "蓝色珊瑚"
+    },
+    "family": "organic",
+    "familyTitle": {
+      "en": "Organic",
+      "zh": "有机造型"
+    },
+    "layout": "right",
+    "colors": {
+      "background": "#f8d4bd",
+      "foreground": "#3c1928",
+      "accent": "#1f53bd"
+    },
+    "font": "serif",
+    "art": "art/cobalt-coral.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/cobalt-coral.webp"
+  },
+  {
+    "id": "solar-horizon",
+    "title": {
+      "en": "Solar Horizon",
+      "zh": "日落地平"
+    },
+    "family": "atmosphere",
+    "familyTitle": {
+      "en": "Atmospheric",
+      "zh": "光与氛围"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#f6f0dc",
+      "foreground": "#112c47",
+      "accent": "#ef6f28"
+    },
+    "font": "sans",
+    "art": "art/solar-horizon.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/solar-horizon.webp"
+  },
+  {
+    "id": "prism-light",
+    "title": {
+      "en": "Prism Light",
+      "zh": "棱镜光线"
+    },
+    "family": "atmosphere",
+    "familyTitle": {
+      "en": "Atmospheric",
+      "zh": "光与氛围"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#171819",
+      "foreground": "#f6f0e7",
+      "accent": "#eabc70"
+    },
+    "font": "sans",
+    "art": "art/prism-light.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/prism-light.webp"
+  },
+  {
+    "id": "dawn-fog",
+    "title": {
+      "en": "Dawn Fog",
+      "zh": "晨雾"
+    },
+    "family": "atmosphere",
+    "familyTitle": {
+      "en": "Atmospheric",
+      "zh": "光与氛围"
+    },
+    "layout": "center-top",
+    "colors": {
+      "background": "#f0e9df",
+      "foreground": "#321c2d",
+      "accent": "#c75039"
+    },
+    "font": "serif",
+    "art": "art/dawn-fog.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/dawn-fog.webp"
+  },
+  {
+    "id": "electric-silk",
+    "title": {
+      "en": "Electric Silk",
+      "zh": "电光丝绸"
+    },
+    "family": "atmosphere",
+    "familyTitle": {
+      "en": "Atmospheric",
+      "zh": "光与氛围"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#f5f1e8",
+      "foreground": "#171717",
+      "accent": "#174de4"
+    },
+    "font": "sans",
+    "art": "art/electric-silk.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/electric-silk.webp"
+  },
+  {
+    "id": "concrete-arch",
+    "title": {
+      "en": "Concrete Arch",
+      "zh": "混凝土拱"
+    },
+    "family": "architecture",
+    "familyTitle": {
+      "en": "Architecture",
+      "zh": "建筑空间"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#e0f1c1",
+      "foreground": "#172824",
+      "accent": "#617a4f"
+    },
+    "font": "sans",
+    "art": "art/concrete-arch.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/concrete-arch.webp"
+  },
+  {
+    "id": "orange-stair",
+    "title": {
+      "en": "Orange Stair",
+      "zh": "橙色阶梯"
+    },
+    "family": "architecture",
+    "familyTitle": {
+      "en": "Architecture",
+      "zh": "建筑空间"
+    },
+    "layout": "right",
+    "colors": {
+      "background": "#f6e9d4",
+      "foreground": "#4d2819",
+      "accent": "#c7602c"
+    },
+    "font": "serif",
+    "art": "art/orange-stair.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/orange-stair.webp"
+  },
+  {
+    "id": "blue-portal",
+    "title": {
+      "en": "Blue Portal",
+      "zh": "蓝色门廊"
+    },
+    "family": "architecture",
+    "familyTitle": {
+      "en": "Architecture",
+      "zh": "建筑空间"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#ded9fa",
+      "foreground": "#15151b",
+      "accent": "#1e47ee"
+    },
+    "font": "sans",
+    "art": "art/blue-portal.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/blue-portal.webp"
+  },
+  {
+    "id": "sand-courtyard",
+    "title": {
+      "en": "Sand Courtyard",
+      "zh": "砂色庭院"
+    },
+    "family": "architecture",
+    "familyTitle": {
+      "en": "Architecture",
+      "zh": "建筑空间"
+    },
+    "layout": "banner-bottom",
+    "colors": {
+      "background": "#5d201d",
+      "foreground": "#f7f0e3",
+      "accent": "#d2ab6b"
+    },
+    "font": "serif",
+    "art": "art/sand-courtyard.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/sand-courtyard.webp"
+  },
+  {
+    "id": "red-balloon",
+    "title": {
+      "en": "Red Balloon",
+      "zh": "红色气球"
+    },
+    "family": "playful",
+    "familyTitle": {
+      "en": "Playful",
+      "zh": "创意图形"
+    },
+    "layout": "bottom-left",
+    "colors": {
+      "background": "#ef0030",
+      "foreground": "#fff1d7",
+      "accent": "#ffbccd"
+    },
+    "font": "sans",
+    "art": "art/red-balloon.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/red-balloon.webp"
+  },
+  {
+    "id": "cutout-sun",
+    "title": {
+      "en": "Cutout Sun",
+      "zh": "剪纸太阳"
+    },
+    "family": "playful",
+    "familyTitle": {
+      "en": "Playful",
+      "zh": "创意图形"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#74c9f4",
+      "foreground": "#12324c",
+      "accent": "#ff8b18"
+    },
+    "font": "serif",
+    "art": "art/cutout-sun.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/cutout-sun.webp"
+  },
+  {
+    "id": "racing-stripe",
+    "title": {
+      "en": "Racing Stripe",
+      "zh": "疾速条纹"
+    },
+    "family": "playful",
+    "familyTitle": {
+      "en": "Playful",
+      "zh": "创意图形"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#f6f3e7",
+      "foreground": "#151715",
+      "accent": "#1648ed",
+      "secondary": "#ff7b22"
+    },
+    "font": "sans",
+    "shape": "stripe",
+    "preview": "https://skills.aaronguo.com/covers/previews/racing-stripe.webp"
+  },
+  {
+    "id": "soft-grid",
+    "title": {
+      "en": "Soft Grid",
+      "zh": "柔软格构"
+    },
+    "family": "playful",
+    "familyTitle": {
+      "en": "Playful",
+      "zh": "创意图形"
+    },
+    "layout": "left",
+    "colors": {
+      "background": "#ff9e87",
+      "foreground": "#34144b",
+      "accent": "#ba8bdd"
+    },
+    "font": "sans",
+    "art": "art/soft-grid.webp",
+    "preview": "https://skills.aaronguo.com/covers/previews/soft-grid.webp"
+  }
+]

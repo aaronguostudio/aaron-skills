@@ -1,6 +1,13 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 — 2026-10-19
+
+- Add 32 reusable presentation-cover presets with clean artwork and editable
+  title, subtitle, Logo, presenter, date and palette. Export standalone PNG/WebP
+  covers and reuse the same configuration for video openings.
+- Let Film recommend a small visual shortlist from the content and brand; users
+  choose in the conversation or browse the bilingual website gallery, customize
+  a preview and copy a brief back to their agent. Runtime rendering works offline.
 
 - Accept ordinary commit emails and GitHub merge identities without rewriting
   history; retain reachable-history privacy checks and independent secret scans.

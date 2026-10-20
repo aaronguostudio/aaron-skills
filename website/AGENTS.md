@@ -44,3 +44,12 @@ older published art URLs for existing links.
 ## Presentation cover library
 
 On 2026-10-19 Aaron accepted the simple presentation-cover direction and requested a few dozen examples published on this website. Covers use one large image or color block, a strong title, restrained brand mark/subtitle, presenter and date. Keep them as presentation opening slides; do not turn them into website layouts with navigation, content cards or chapters. Extend the accepted geometric, photographic and sculptural styles with confident color and tactile materials. Preserve original generated PNGs and serve responsive WebP previews. The bilingual `/covers` gallery contains image samples; do not describe those images as editable slide templates or integrated runtime presets without implementing and verifying that capability.
+
+On 2026-10-19 Aaron approved agent-led cover selection and authorized its website
+and skill release. Use a thumbnail gallery with family filters/search. The
+conversation is the default entry: recommend about three styles using content,
+audience and supplied brand, accept a number/name or delegated choice, then
+reuse the chosen configuration in the video. The web editor is optional and
+provides a copyable agent brief; do not require page/form/CLI use. Keep original
+PNG/WebP sample URLs. The browser may share the pure React cover view and bundled
+art with Film, but must build/run without Bun, FFmpeg or Remotion execution.

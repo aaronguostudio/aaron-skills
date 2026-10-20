@@ -1,8 +1,8 @@
 # Compatibility
 
-The current checkout extends the macOS-only v0.1.0 release with Ubuntu and native
-Windows runtime support. Use the current branch/main installation instructions;
-the existing v0.1.0 tag does not contain these changes.
+v0.2.0 extends the macOS-only v0.1.0 release with Ubuntu and native Windows
+runtime support and presentation-cover presets. Use v0.2.0 or current main for
+these capabilities; the historical v0.1.0 tag does not contain them.
 
 Compatibility has three separate gates: standard instructions, native discovery,
 and a completed runtime workflow. None implies the others.

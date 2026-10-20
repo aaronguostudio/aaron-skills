@@ -215,6 +215,7 @@ export type Args = {
   brand?: string;
   template?: string;
   presentation?: string;
+  coverPreset?: string;
   audio?: string;
   voiceProvider?: string;
   cover: boolean;
@@ -225,7 +226,7 @@ export function parseArgs(argv: string[]): Args {
   const values: Record<string, keyof Args> = {
     "--out": "out", "--calibration-ms": "calibrationMs", "--voice-profile": "voiceProfile",
     "--script": "script", "--speed": "speed", "--brand": "brand",
-    '--template':'template', '--presentation':'presentation', '--audio':'audio', '--voice-provider':'voiceProvider',
+    '--template':'template', '--presentation':'presentation', '--cover-preset':'coverPreset', '--audio':'audio', '--voice-provider':'voiceProvider',
   };
   const flags = new Map<string, "dryRun" | "stills" | "narrate" | 'cover' | 'narrationNotice'>([
     ["--dry-run", "dryRun"], ["--stills", "stills"], ["--narrate", "narrate"],
@@ -257,7 +258,7 @@ export function parseArgs(argv: string[]): Args {
   return args;
 }
 
-const USAGE = "usage: aaron-demo render <passed-run> [--template minimal|professional|showcase] [--presentation <external.json>] [--cover] [--narration-notice] [--audio <manifest.json> | --narrate | --voice-provider none|elevenlabs|import|qwen] [--script <script.json>] [--voice-profile <id>] [--speed <0.7-1.2>] [--brand <legacy-id>] [--out <file.mp4>] [--stills] [--dry-run]";
+const USAGE = "usage: aaron-demo render <passed-run> [--template minimal|professional|showcase] [--presentation <external.json>] [--cover-preset <id>] [--cover] [--narration-notice] [--audio <manifest.json> | --narrate | --voice-provider none|elevenlabs|import|qwen] [--script <script.json>] [--voice-profile <id>] [--speed <0.7-1.2>] [--brand <legacy-id>] [--out <file.mp4>] [--stills] [--dry-run]";
 
 export async function main(argv: string[]): Promise<number> {
   if (argv.length === 1 && (argv[0] === '--help' || argv[0] === '-h')) { console.log(USAGE); return 0; }
@@ -270,14 +271,14 @@ export async function main(argv: string[]): Promise<number> {
     if (!['none','import','elevenlabs','qwen'].includes(provider)) throw new RenderRefusal('Unknown voice provider');
     if (provider === 'qwen') throw new RenderRefusal('Qwen TTS adapter is reserved, not implemented or validated. Use --audio with output from your local TTS. No provider call was made.');
     if ((provider === 'import') !== !!parsed.audio || (parsed.audio && parsed.narrate) || (provider !== 'elevenlabs' && (parsed.narrate || scriptArg || voiceProfile || speed !== undefined))) throw new RenderRefusal('Conflicting audio options: choose none, imported manifest, or ElevenLabs narration');
-    if (brandArg && (parsed.template || parsed.presentation)) throw new RenderRefusal('Use the presentation brand configuration or legacy --brand, not both');
+    if (brandArg && (parsed.template || parsed.presentation || parsed.coverPreset)) throw new RenderRefusal('Use the presentation brand configuration or legacy --brand, not both');
     outsideGit(run);
     if (out) outsideGit(out);
     const roots = repoRoots();
     let prepared = prepare(run, out, roots, calibrationMs);
     const capture = JSON.parse(readFileSync(join(prepared.run,'capture.json'),'utf8'));
     if (parsed.presentation) outsideGit(parsed.presentation);
-    const config = loadPresentation(parsed.template, parsed.presentation, capture.title, capture.subtitle ?? '');
+    const config = loadPresentation(parsed.template, parsed.presentation, capture.title, capture.subtitle ?? '',parsed.coverPreset);
     if (parsed.cover && !config) throw new RenderRefusal('--cover requires --template or --presentation');
     const p = config?.presentation;
     if(p) validatePresentationMedia(p,config?.assetRoot);
@@ -289,7 +290,7 @@ export async function main(argv: string[]): Promise<number> {
     if (imported) checkCards(imported.clips);
     prepared = prepare(run,out,roots,prepared.calibrationMs,{...baseTiming,...(imported?{stepMinMs:stepMinMs(prepared.steps,imported.clips),...cardMinMs(imported.clips,p?.intro.enabled&&(p.intro.sound||p.intro.soundPreset!=='none')?BRAND_STING_LEAD_MS:0)}:{})});
     if (dryRun) {
-      console.log(JSON.stringify({dryRun:true,out:prepared.out,seconds:prepared.seconds,template:p?.template ?? 'legacy',coverRequested:parsed.cover,voiceProvider:provider,narrationNotice:parsed.narrationNotice,narrationRequested:provider!=='none',narrationTiming:provider==='elevenlabs'?'requires synthesis; not performed':provider==='import'?'measured imported clips':'silent',calibrationMs:prepared.calibrationMs,steps:prepared.steps.length},null,2));
+      console.log(JSON.stringify({dryRun:true,out:prepared.out,seconds:prepared.seconds,template:p?.template ?? 'legacy',coverPreset:p?.cover?.preset,coverRequested:parsed.cover,voiceProvider:provider,narrationNotice:parsed.narrationNotice,narrationRequested:provider!=='none',narrationTiming:provider==='elevenlabs'?'requires synthesis; not performed':provider==='import'?'measured imported clips':'silent',calibrationMs:prepared.calibrationMs,steps:prepared.steps.length},null,2));
       return 0;
     }
     process.umask(0o077);

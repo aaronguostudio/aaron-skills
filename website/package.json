@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "test:sites": "node --test tests/sites-worker.test.mjs",
     "test:showcases": "node --test tests/showcases.test.mjs",
-    "test:covers": "node --test tests/covers.test.mjs",
+    "test:covers": "node --test tests/covers.test.mjs tests/cover-handoff.test.mjs",
     "verify:showcase-media": "node scripts/verify-showcase-media.mjs"
   },
   "dependencies": {

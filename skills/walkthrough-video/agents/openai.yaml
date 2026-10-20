@@ -1,4 +1,4 @@
 interface:
   display_name: "Film"
-  short_description: "Render guided videos from passed captures"
-  default_prompt: "Use $walkthrough-video to render this passed capture with review stills."
+  short_description: "Create guided videos and customizable presentation covers"
+  default_prompt: "Use $walkthrough-video to choose a cover style, customize it with my content, or render a passed capture with review stills."

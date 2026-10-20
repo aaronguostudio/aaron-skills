@@ -54,3 +54,52 @@ body:has(.cover-dialog[open]) { overflow: hidden; }
   .cover-large { max-height: calc(100dvh - 320px); }
 }
 @media(prefers-reduced-motion:reduce) { .cover-image-action { transition: none; } }
+.cover-library [hidden] { display:none !important; }
+.cover-agent-invite { margin-top:24px; padding:20px 24px; background:var(--wash); border:1px solid var(--rule); border-radius:6px; max-width:750px; }
+.cover-agent-invite p,.cover-agent-invite span { font-size:12px; color:var(--muted); }
+.cover-agent-invite blockquote { font-size:17px; line-height:1.6; margin:8px 0; letter-spacing:-.3px; }
+.cover-search { display:flex; gap:16px; align-items:center; margin-top:20px; font-size:12px; color:var(--muted); }
+.cover-search input { min-width:0; width:260px; min-height:42px; border:1px solid var(--rule); background:var(--paper); padding:8px 12px; border-radius:4px; color:var(--ink); font:inherit; }
+.cover-use-style { border:0; background:none; color:var(--blue); padding:6px 0; min-height:36px; font:inherit; font-size:12px; margin-left:auto; }
+.cover-empty { padding:40px 0; color:var(--muted); }
+.cover-primary { background:var(--blue); color:#fff; border:1px solid var(--blue); border-radius:4px; min-height:44px; padding:10px 16px; font:inherit; font-size:13px; cursor:pointer; }
+.cover-downloads .cover-primary { display:inline-flex; align-items:center; }
+.cover-editor-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:30px; }
+.cover-editor-heading h1 { font-size:clamp(30px,4vw,46px); line-height:1.2; letter-spacing:-1.4px; margin-top:12px; }
+.cover-editor-heading h1:focus { outline:none; }
+.cover-editor-heading p:not(.eyebrow) { font-size:13px; color:var(--muted); margin-top:12px; }
+.cover-editor-heading button,.cover-config-download { background:var(--paper); border:1px solid var(--rule); border-radius:4px; padding:10px 14px; min-height:44px; font:inherit; font-size:12px; }
+.cover-editor-grid { display:grid; grid-template-columns:minmax(0,1fr) 270px; gap:30px; }
+.cover-editor-preview { min-width:0; }
+.cover-stage { position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; background:#fff; outline:1px solid var(--rule); box-shadow:0 12px 36px #1019290c; }
+.cover-canvas { position:absolute; left:0; top:0; width:1600px; height:900px; transform-origin:top left; text-align:left; }
+/* Slide typography owns its metrics; website-wide h1/p/img rules must not change it. */
+.cover-canvas p { margin:0; max-width:none; }
+.cover-editor-note { font-size:11px; line-height:1.6; color:var(--muted); margin-top:12px; }
+.cover-fields { border-left:1px solid var(--rule); padding-left:24px; display:grid; align-content:start; gap:13px; }
+.cover-fields h2,.cover-agent-handoff h2 { font-size:15px; font-weight:600; letter-spacing:-.3px; line-height:1.4; }
+.cover-fields>.cover-editor-note { margin:0; }
+.cover-fields label { display:grid; gap:6px; font-size:11px; min-width:0; }
+.cover-fields input { width:100%; min-width:0; min-height:38px; padding:8px 10px; border:1px solid var(--rule); background:var(--paper); border-radius:4px; font:inherit; color:var(--ink); }
+.cover-color-fields { display:flex; gap:10px; }
+.cover-color-fields label { flex:1; font-size:10px; }
+.cover-color-fields input { padding:3px; height:38px; }
+.cover-fields input[type=file] { font-size:10px; }
+.cover-logo-status { display:grid; gap:6px; font-size:10px; overflow-wrap:anywhere; color:var(--muted); }
+.cover-logo-status button { border:0; padding:0; background:none; text-align:left; color:var(--blue); font:inherit; min-height:32px; }
+.cover-config-download:disabled { opacity:.5; cursor:default; }
+.cover-agent-handoff { padding:22px; margin-top:26px; background:var(--wash); border:1px solid var(--rule); border-radius:5px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.cover-agent-handoff>div { flex:1; min-width:200px; }
+.cover-agent-handoff p { font-size:12px; line-height:1.6; color:var(--muted); margin-top:8px; }
+.cover-agent-handoff>textarea { width:100%; min-height:160px; border:1px solid var(--rule); padding:12px; border-radius:4px; background:var(--paper); color:var(--ink); font:inherit; font-size:12px; }
+.cover-agent-handoff>span:empty { display:none; }
+@media(max-width:900px) { .cover-editor-grid { grid-template-columns:minmax(0,1fr); } .cover-fields { border-left:0; border-top:1px solid var(--rule); padding:24px 0 0; grid-template-columns:repeat(2,minmax(0,1fr)); } .cover-fields h2,.cover-fields>.cover-editor-note,.cover-color-fields { grid-column:1/-1; } }
+@media(max-width:650px) { .cover-editor-heading { align-items:flex-start; flex-direction:column; gap:18px; } .cover-agent-invite { padding:16px 18px; } .cover-agent-invite blockquote { font-size:14px; } .cover-agent-invite p,.cover-agent-invite span { font-size:11px; } .cover-search { align-items:flex-start; flex-direction:column; gap:8px; } .cover-search input { width:100%; } .cover-agent-handoff { padding:16px; } .cover-agent-handoff>button { width:100%; } .cover-downloads .cover-primary { width:100%; justify-content:center; } }
+.cover-full { padding-top:36px; }
+.cover-gallery-hero { display:grid; grid-template-columns:minmax(0,1fr) 350px; align-items:end; gap:48px; }
+.cover-gallery-hero .cover-agent-invite { margin:0; padding:20px; }
+.cover-gallery-hero .cover-agent-invite blockquote { font-size:15px; }
+.cover-full .cover-intro { font-size:16px; }
+.site .cover-library .cover-editor-heading h1 { font-size:clamp(30px,4vw,46px); letter-spacing:-1.4px; line-height:1.2; }
+@media(max-width:1000px) { .cover-gallery-hero { grid-template-columns:minmax(0,1fr); gap:22px; } .cover-gallery-hero .cover-agent-invite { max-width:none; } }
+@media(max-width:650px) { .cover-full { padding-top:24px; } .cover-full .cover-back { margin-bottom:16px; min-height:32px; font-size:12px; } .cover-full .cover-intro { font-size:14px; margin-top:12px; } .cover-gallery-hero .cover-agent-invite { padding:14px 16px; } .cover-gallery-hero .cover-agent-invite blockquote { font-size:13px; } .cover-filters { margin-top:22px; gap:6px; } .cover-filters button { min-height:38px; padding:8px 12px; font-size:11px; } .cover-search { margin-top:16px; } }

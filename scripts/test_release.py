@@ -1,5 +1,6 @@
 """Public export must preserve reviewable source while dropping private history."""
 import json
+import hashlib
 from pathlib import Path
 import subprocess
 import tempfile
@@ -9,6 +10,31 @@ from release import export, public_files, scan_public, scan_history
 
 
 class ReleaseTests(unittest.TestCase):
+    def test_only_hash_reviewed_generated_webp_assets_are_accepted(self):
+        from PIL import Image
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            image = root / 'cover.webp'
+            Image.new('RGB', (2, 2), '#123456').save(image, 'WEBP')
+            spec = root / 'source.json'
+            files = {'cover.webp': image, 'bundles/source.json': spec}
+            spec.write_text('{}')
+            with self.assertRaisesRegex(ValueError, 'unreviewed binary'):
+                scan_public(files)
+            def approve():
+                spec.write_text(json.dumps({'reviewedBinaryAssets': {'cover.webp': {
+                    'sourceType': 'generated', 'mediaType': 'image/webp',
+                    'sha256': hashlib.sha256(image.read_bytes()).hexdigest()}}}))
+            approve()
+            scan_public(files)
+            image.write_bytes(image.read_bytes() + b'changed')
+            with self.assertRaisesRegex(ValueError, 'unreviewed binary'):
+                scan_public(files)
+            image.write_bytes(image.read_bytes() + b'\nsk-' + b'x' * 30)
+            approve()
+            with self.assertRaisesRegex(ValueError, 'potential secret'):
+                scan_public(files)
+
     def test_normal_merge_emails_are_accepted_but_deleted_private_content_is_not(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / 'public'
