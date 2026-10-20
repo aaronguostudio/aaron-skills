@@ -53,3 +53,8 @@ reuse the chosen configuration in the video. The web editor is optional and
 provides a copyable agent brief; do not require page/form/CLI use. Keep original
 PNG/WebP sample URLs. The browser may share the pure React cover view and bundled
 art with Film, but must build/run without Bun, FFmpeg or Remotion execution.
+
+Keep the top navigation sticky on the homepage and cover gallery so visitors can
+switch sections after scrolling. Its white surface must keep links legible;
+anchor targets need clearance below the current header height on desktop/mobile.
+Dialogs and the keyboard skip link remain above the sticky navigation.
