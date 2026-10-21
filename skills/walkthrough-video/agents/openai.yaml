@@ -1,4 +1,4 @@
 interface:
   display_name: "Film"
   short_description: "Create guided videos and customizable presentation covers"
-  default_prompt: "Use $walkthrough-video to choose a cover style, customize it with my content, or render a passed capture with review stills."
+  default_prompt: "Use $walkthrough-video to confirm cover, body layout and brand separately, preview the presentation, then render a passed capture with review stills. Reuse my approved choices."

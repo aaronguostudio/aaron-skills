@@ -1,6 +1,78 @@
 # Video layouts
 
-Choose a treatment in conversation or browse [the video collection](https://skills.aaronguo.com/layouts). Film can recommend three choices using the content, audience and supplied brand.
+Choose cover and video-body treatment separately in conversation, or browse [the video collection](https://skills.aaronguo.com/layouts). For internal updates and training, recommend native video with a bottom caption bar first. A designed cover does not select a decorated body.
+
+## Presentation decision and preview
+
+Before synthesis or a full render, resolve the following from the current brief
+or an explicitly approved series. Ask only for missing decisions, grouped into
+one short conversational choice; “make a video” alone leaves them open.
+
+| Decision | What the user reviews |
+| --- | --- |
+| Cover | None, an existing cover, or a short visual shortlist with the real title/brand |
+| Opening / ending | Whether the cover also opens the film; outro and sound are separate opt-ins |
+| Video body | Native video + caption bar (recommended for internal use), compact transcript, or a designed frame |
+| Identity | Actual company/product logo, palette and source; where each appears, including deliberate omissions |
+
+For example: “For this internal update I recommend the blue cover, a plain video
+with a bottom caption bar, no opening/outro, and the supplied company wordmark
+on the cover only. Here are the cover and body stills. Keep this combination or
+change any part?” If the title/assets are not yet available, resolve that brief
+first instead of making an expensive speculative film. Do not infer a company's
+identity from an ambiguous name, a tenant avatar or the author's own brand.
+
+Resolve official assets from the supplied pack or owning project's design system
+before asking for material already available. Show the mark and color swatches
+for confirmation. If branding remains unresolved, ask for assets or an explicit
+choice to omit it. A gallery palette, legacy file or template is not brand approval.
+
+Use `aaron-demo cover` for inexpensive cover candidates and `render --preview`
+for the actual body. Show both surfaces with representative settled application
+content, output dimensions and application scale before asking for selection.
+`--preview` does not synthesize narration or render a full MP4; use existing audio
+if available, otherwise saved captions for this visual decision. Keep its flags
+free of `--narrate` or a generated voice provider. The preview does not test final
+narration timing or every frame.
+
+Wait for unresolved presentation choices before new synthesis or full rendering;
+permitted evidence capture and script drafting can continue. The user may select
+by name/number, provide a complete specification, reuse an approved series, or
+explicitly delegate design/brand decisions within a supplied brand pack. Preserve
+that authorization and do not require another approval for unchanged choices.
+Delegation to choose a cover does not delegate the body or corporate identity.
+
+Record a small presentation brief outside Git beside the external configuration:
+audience/use, cover and opening/outro choices, body preset, brand asset source and
+palette, preview paths, and the user's selection or scope of delegation. Mark
+unresolved items as pending, never accepted by default. Keep the configuration
+used for the previews for rendering. Reconfirm changed brand/layout choices;
+reuse unchanged visuals for narration-only revisions. This is an agent workflow,
+not a CLI approval flag; renderer validation cannot prove user acceptance.
+
+### Designed cover with a plain body
+
+A cover can use library artwork while the film stays white with one bottom bar.
+For example, this external configuration exports a blue cover without adding an
+opening, outro, body logo or decorative body backdrop:
+
+```json
+{
+  "version": 2,
+  "title": "Review the workflow",
+  "cover": {"preset": "blue-portal"},
+  "brand": {"fallback": "omit"},
+  "intro": {"enabled": false, "soundPreset": "none"},
+  "outro": {"enabled": false},
+  "body": {"background": "#FFFFFF", "foreground": "#171717", "logoPosition": "none"},
+  "layout": {"preset": "plain-caption"}
+}
+```
+
+The example deliberately omits a brand. For company work, use the confirmed logo,
+provenance and palette described below; retain explicit body colors when cover
+and body should differ. Ask whether the logo belongs on the cover, caption bar,
+outro or a subset. Do not assume every surface needs it.
 
 ## No decorative backdrop
 
@@ -47,12 +119,12 @@ or a confirmed visible mark, in that order. Distinguish corporate/product identi
 from tenant/user avatars and recording-tool branding. Never generate a replacement
 logo. Keep its original bytes, aspect ratio, source and treatment outside Git.
 
-Recommend a layout and preview the cover **and** a content frame before the full
-render. Do not require the user to author JSON. Preserve an existing style choice.
+Follow the presentation decision and preview workflow above before the full
+render. Do not require the user to author JSON. Preserve an approved style choice.
 
 ## Product-led studio frames
 
-For an ordinary product demonstration, start with `studio-cobalt`, `studio-sand`,
+For a user-selected designed product demonstration, consider `studio-cobalt`, `studio-sand`,
 `studio-chrome`, `studio-midnight`, `studio-paper` or `studio-vermilion`. These six
 visual treatments pair the cover library's artwork and palette with a contained
 product screen and a short caption ribbon. They are six art directions on one
