@@ -25,8 +25,8 @@
           "zh": "正式产品介绍：把相连的能力和价值讲清楚。"
         },
         "audio": {
-          "en": "Liam",
-          "zh": "Liam（英文旁白）"
+          "en": "Aaron",
+          "zh": "Aaron（英文旁白）"
         },
         "language": "English",
         "brief": {
@@ -34,12 +34,12 @@
           "zh": "正式产品介绍：把相连的能力和价值讲清楚。 基于同一份通过检查的录制；所有说明对应实际画面。"
         },
         "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
-        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/official-demo/8121af28ae701298/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/official-demo/bc650d1ead9870ce/walkthrough.mp4",
         "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/ledgerlane/86a8694519aef2c2/poster.webp",
-        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/official-demo/a1510b9a7d380765/captions.vtt",
-        "bytes": 2125547,
-        "sha256": "8121af28ae701298b88611f4cf41684da367943b04dc39320c1512bbd45713f5",
-        "seconds": 46.266666666666666
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/official-demo/66ae808fa5dbf9f2/captions.vtt",
+        "bytes": 2048336,
+        "sha256": "bc650d1ead9870ce0d46251aa6e4fca19a206cfff766ddfc636da83740dca23b",
+        "seconds": 44.608
       },
       {
         "id": "quick-demo",
@@ -51,8 +51,8 @@
           "zh": "快速看懂一条完整能力链。"
         },
         "audio": {
-          "en": "Liam",
-          "zh": "Liam（英文旁白）"
+          "en": "Aaron",
+          "zh": "Aaron（英文旁白）"
         },
         "language": "English",
         "brief": {
@@ -60,12 +60,12 @@
           "zh": "快速看懂一条完整能力链。 基于同一份通过检查的录制；所有说明对应实际画面。"
         },
         "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
-        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/quick-demo/a7fc55f02d3c37e3/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/quick-demo/eff586559d2dbc27/walkthrough.mp4",
         "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/ledgerlane/86a8694519aef2c2/poster.webp",
-        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/quick-demo/dc7d0998ff3d1bb9/captions.vtt",
-        "bytes": 1788964,
-        "sha256": "a7fc55f02d3c37e3b8ab2eb566ba116d19a0e2ec4c61acb73887d10e462a3c1c",
-        "seconds": 40.2
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/quick-demo/7bff659f05613343/captions.vtt",
+        "bytes": 1750873,
+        "sha256": "eff586559d2dbc27e849146004b132514c328e3d6e8d99c2d5715f11b835b17c",
+        "seconds": 40.32
       },
       {
         "id": "release-update",
@@ -77,8 +77,8 @@
           "zh": "虚构的发布式回顾；不冒充真实版本上线。"
         },
         "audio": {
-          "en": "Liam",
-          "zh": "Liam（英文旁白）"
+          "en": "Aaron",
+          "zh": "Aaron（英文旁白）"
         },
         "language": "English",
         "brief": {
@@ -86,12 +86,12 @@
           "zh": "虚构的发布式回顾；不冒充真实版本上线。 基于同一份通过检查的录制；所有说明对应实际画面。"
         },
         "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
-        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/release-update/a4b6ff20d66271a1/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/release-update/edadf57db36eefcb/walkthrough.mp4",
         "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/ledgerlane/86a8694519aef2c2/poster.webp",
-        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/release-update/82cfb8b659b49608/captions.vtt",
-        "bytes": 2135974,
-        "sha256": "a4b6ff20d66271a1702df8ff28be94257a61fb3275f9a616d050d8c52c3c7bd4",
-        "seconds": 45.233333333333334
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/release-update/6b59e3882e2d3152/captions.vtt",
+        "bytes": 2090066,
+        "sha256": "edadf57db36eefcbadea19fd8fd5bf5c2005c75b7bdb21374779f87e63633219",
+        "seconds": 43.882
       },
       {
         "id": "stakeholder-walkthrough",
@@ -103,8 +103,8 @@
           "zh": "解释检查点的价值，邀请有依据的反馈。"
         },
         "audio": {
-          "en": "Liam",
-          "zh": "Liam（英文旁白）"
+          "en": "Aaron",
+          "zh": "Aaron（英文旁白）"
         },
         "language": "English",
         "brief": {
@@ -112,12 +112,12 @@
           "zh": "解释检查点的价值，邀请有依据的反馈。 基于同一份通过检查的录制；所有说明对应实际画面。"
         },
         "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
-        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/stakeholder-walkthrough/d3aad8a8e43ceeba/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/stakeholder-walkthrough/3bda02710ea62a53/walkthrough.mp4",
         "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/ledgerlane/86a8694519aef2c2/poster.webp",
-        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/stakeholder-walkthrough/f2f77a14a3797672/captions.vtt",
-        "bytes": 2142818,
-        "sha256": "d3aad8a8e43ceebab287d2d5c99c282f59deabf7566139ff9802983782420993",
-        "seconds": 47.43333333333333
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/stakeholder-walkthrough/db3f05e7beae1e0e/captions.vtt",
+        "bytes": 2070968,
+        "sha256": "3bda02710ea62a53eb0a685448a7190bf864f583b1ae9c8eba6f73fe7ff3aacf",
+        "seconds": 45.12
       },
       {
         "id": "task-tutorial",
@@ -129,8 +129,8 @@
           "zh": "让新用户能按步骤完成任务。"
         },
         "audio": {
-          "en": "Liam",
-          "zh": "Liam（英文旁白）"
+          "en": "Aaron",
+          "zh": "Aaron（英文旁白）"
         },
         "language": "English",
         "brief": {
@@ -138,12 +138,12 @@
           "zh": "让新用户能按步骤完成任务。 基于同一份通过检查的录制；所有说明对应实际画面。"
         },
         "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
-        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/task-tutorial/ea8acba6d8e8b71c/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/task-tutorial/6290d100b0864d1b/walkthrough.mp4",
         "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/ledgerlane/86a8694519aef2c2/poster.webp",
-        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/task-tutorial/0790811d8a69c473/captions.vtt",
-        "bytes": 2007863,
-        "sha256": "ea8acba6d8e8b71c43c2751da3caf48a8c32af3aaec8ebc3f3ac4251ec221ead",
-        "seconds": 43.93333333333333
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/task-tutorial/d4ab72068bf54ee0/captions.vtt",
+        "bytes": 1960702,
+        "sha256": "6290d100b0864d1ba6d5e441473b8d9edf182abe0126da01ba7d0815c979671b",
+        "seconds": 43.114
       },
       {
         "id": "training-lesson",
@@ -155,8 +155,8 @@
           "zh": "解释为什么这样做，再给一个单独的练习方向。"
         },
         "audio": {
-          "en": "Liam",
-          "zh": "Liam（英文旁白）"
+          "en": "Aaron",
+          "zh": "Aaron（英文旁白）"
         },
         "language": "English",
         "brief": {
@@ -164,12 +164,12 @@
           "zh": "解释为什么这样做，再给一个单独的练习方向。 基于同一份通过检查的录制；所有说明对应实际画面。"
         },
         "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
-        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/training-lesson/71a83a0a306c9566/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/training-lesson/237d7e1376ea361d/walkthrough.mp4",
         "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/ledgerlane/86a8694519aef2c2/poster.webp",
-        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/training-lesson/ab65b4e69b9fad82/captions.vtt",
-        "bytes": 2241945,
-        "sha256": "71a83a0a306c95666665c4aa0698dec54802ac08b5296a4dd0fa7d3ce1a5849d",
-        "seconds": 51.3
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/training-lesson/f03a71c9963f9f81/captions.vtt",
+        "bytes": 2208093,
+        "sha256": "237d7e1376ea361d90da6e8ccdf611fc3eb38aac6fa0bc2b5c375ea6329ca3f2",
+        "seconds": 49.77
       }
     ]
   },
@@ -199,8 +199,8 @@
           "zh": "帮助读者发现、阅读并返回一条笔记。"
         },
         "audio": {
-          "en": "Liam",
-          "zh": "Liam（英文旁白）"
+          "en": "Aaron",
+          "zh": "Aaron（英文旁白）"
         },
         "language": "English",
         "brief": {
@@ -208,12 +208,12 @@
           "zh": "帮助读者发现、阅读并返回一条笔记。 基于同一份通过检查的录制；所有说明对应实际画面。"
         },
         "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
-        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/blog-tutorial/a24c740c168f2562/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/blog-tutorial/421cd3851d01d839/walkthrough.mp4",
         "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/blog/5d9d4ce8ca1614d3/poster.webp",
-        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/blog-tutorial/826e0319be8572d5/captions.vtt",
-        "bytes": 2290027,
-        "sha256": "a24c740c168f25624ad60b88c58fed94c5fbd2b1d451d7819b8fd61a273017ac",
-        "seconds": 40.166666666666664
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/blog-tutorial/16a980317d1399fb/captions.vtt",
+        "bytes": 2306541,
+        "sha256": "421cd3851d01d8395b793ba4568622402572736c2804edaf1c1f2e5ab3d474a4",
+        "seconds": 41.237
       },
       {
         "id": "blog-story",
@@ -225,8 +225,8 @@
           "zh": "说明内容结构如何帮助理解与探索。"
         },
         "audio": {
-          "en": "Liam",
-          "zh": "Liam（英文旁白）"
+          "en": "Aaron",
+          "zh": "Aaron（英文旁白）"
         },
         "language": "English",
         "brief": {
@@ -234,12 +234,12 @@
           "zh": "说明内容结构如何帮助理解与探索。 基于同一份通过检查的录制；所有说明对应实际画面。"
         },
         "command": "aaron-demo render <passed-run> \\\n  --template professional --script <external-script.json> \\\n  --voice-profile <your-voice> --cover --stills \\\n  --out <external-delivery>/walkthrough.mp4",
-        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/blog-story/a298e4bb1919a204/walkthrough.mp4",
+        "video": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/blog-story/02d400b12a243c6a/walkthrough.mp4",
         "poster": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v2/blog/5d9d4ce8ca1614d3/poster.webp",
-        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v3/blog-story/97ab94c07a2e6268/captions.vtt",
-        "bytes": 2363384,
-        "sha256": "a298e4bb1919a204d0644ec29a63f1dd48d6bf67782efe6c38131976105783a1",
-        "seconds": 42.46666666666667
+        "captions": "https://yhghjbt7biptwjsj.public.blob.vercel-storage.com/showcases/v4/blog-story/3cf3dfad3ed6283b/captions.vtt",
+        "bytes": 2368962,
+        "sha256": "02d400b12a243c6a218ac115ba3923ca49c2ed3cc9ed14a6b41deee9437795a3",
+        "seconds": 42.453
       }
     ]
   }

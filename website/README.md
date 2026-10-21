@@ -44,8 +44,10 @@ The introduction and eight narrated examples load on demand. Reviewed final
 MP4, WebP and VTT exports live in the dedicated public media store; source
 recordings, real scripts, personal voice profiles and QA logs stay outside Git.
 The expandable fictional script example is authored specifically for public
-documentation, rather than copied from a real run. The introduction uses Aaron's
-approved voice; the application and blog examples use Liam.
+documentation, rather than copied from a real run. The introduction and eight
+application/blog examples use Aaron's approved voice with Eleven v4 and a single
+pitch-preserving 1.2× delivery pass. Captions and screen timing follow each new
+take; previous published asset URLs remain available.
 
 See `design-qa.md` for visual comparison and browser verification. Local captures
 and audit output remain in ignored `.artifacts/`.

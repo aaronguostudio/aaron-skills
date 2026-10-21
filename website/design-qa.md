@@ -113,3 +113,26 @@ The new expandable script is a separately authored fictional reference-library
 example, with approximate beats and a brief for requesting a draft. It does not
 claim to be a transcript or runnable recording adapter. Existing benchmark source
 and results are unchanged.
+
+## Approved V4 narration refresh
+
+Aaron approved the revised personal introduction and then all eight revoiced
+examples locally, and authorized publishing the complete nine-video set. They
+retain the existing scripts and presentation designs, using Aaron's approved
+voice with Eleven v4 and one pitch-preserving 1.2× pass from each raw take.
+Personal/provider configuration and raw takes remain outside Git.
+
+The introduction is 42.048 seconds with speech beginning at about 0.24 seconds.
+The eight examples total 350.504 seconds, with 148 rebuilt caption cues; their
+native Film timelines, holds, highlights and chapters follow the new audio.
+The 25 introduction cues were rebuilt separately. All 186 example review frames
+and 24 introduction scene frames were inspected. Complete decoding, caption
+bounds/order, narration overlap, one-time delivery pace, source hashes and
+fast-start checks passed. Example delivery measures about -16 LUFS, with true
+peaks below -1.5 dBTP. These are curated demonstrations, not benchmark results.
+
+The catalogue uses new content-addressed delivery URLs and updated English/Chinese
+voice labels. Existing published media URLs remain valid. This refresh changes
+website media metadata and documentation; shared runtime voice defaults and the
+separate silent layout gallery are unchanged. Production release acceptance
+requires the Git/main deployment and actual custom-domain playback checks.
