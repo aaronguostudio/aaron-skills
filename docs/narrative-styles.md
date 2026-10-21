@@ -119,7 +119,7 @@ aaron-demo render <passed-run> --script <external-script.json> --dry-run
 aaron-demo render <passed-run> --script <external-script.json> --template professional --stills --out <external-output>/walkthrough.mp4
 ```
 
-`--script` implies generated narration and uses the configured ElevenLabs route.
+`--script` implies generated narration and uses the selected voice profile (ElevenLabs, Google, company endpoint or local Kokoro).
 It is not a provider-neutral script-only command. To record a human voice or use
 another TTS tool, draft the same text without invoking generation, produce the
 clips independently, then supply the transcript and clips through `--audio`.

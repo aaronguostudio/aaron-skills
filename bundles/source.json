@@ -260,7 +260,13 @@
     "packages/demo/remotion/src/projects/walkthrough-video/presentation/layout.ts",
     "packages/demo/remotion/src/projects/walkthrough-video/presentation/theme.ts",
     "packages/demo/walkthrough/layout.test.ts",
-    "scripts/verify-video-layouts.mjs"
+    "scripts/verify-video-layouts.mjs",
+    "packages/demo/walkthrough/voice-config.ts",
+    "packages/demo/walkthrough/voice-cli.ts",
+    "packages/demo/walkthrough/kokoro-local.ts",
+    "packages/demo/walkthrough/kokoro-worker.py",
+    "packages/demo/walkthrough/voice.test.ts",
+    "docs/narration-validation.md"
   ],
   "reviewedBinaryAssets": {
     "packages/demo/covers/art/alpine-silence.webp": {

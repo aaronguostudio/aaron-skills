@@ -84,8 +84,8 @@ new capture does not establish the cause, and an unverified calibration offset c
 misalign every highlight.
 
 Capture, silent rendering, imported audio and script `--dry-run` need no narration
-account. Generated speech needs the owner's one-time key and voice-profile setup;
-see [narration](narration.md#elevenlabs).
+account. Run `aaron-demo voice setup` for guided account/voice selection, a company endpoint
+or optional free local Kokoro. No JSON editing is required; see [narration](narration.md).
 
 ## Isolated setup
 

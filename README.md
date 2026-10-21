@@ -173,9 +173,10 @@ date and colors. `aaron-demo cover --presentation /path/to/presentation.json --o
 exports PNG/WebP without recording an app. The same configuration can supply a
 walkthrough's opening and cover. See the [cover workflow](docs/cover-library.md).
 
-Rendering is silent by default. Import your own audio or explicitly choose your
-ElevenLabs account and permitted voice for narration. Qwen TTS is a reserved
-interface; independently generated audio can be imported today. Videos and covers
+Rendering is silent by default. Import your own audio, use your ElevenLabs/Google
+account or company speech endpoint, or install free local Kokoro. Run
+`aaron-demo voice setup` for guided setup and voice selection without writing JSON.
+Qwen output can use a compatible endpoint or imported audio. Videos and covers
 omit process labels by default. `render --dry-run` plans without creating files
 or calling a provider. See [presentation revisions](docs/presentation-revisions.md),
 [visual templates](docs/video-presentation.md),

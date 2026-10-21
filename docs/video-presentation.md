@@ -87,15 +87,17 @@ directory per variation to preserve its MP4, cover, chapters, stills and manifes
 
 ## Voice selection and revisions
 
-See [narration](narration.md) for the imported-audio manifest and ElevenLabs setup.
+See [narration](narration.md) for the imported-audio manifest and guided voice setup.
 Choose the explanation's purpose and draft its script with
 [narrative styles](narrative-styles.md); all five modes can use any visual template.
 
 - `--voice-provider none`: no narration/account. Optional intro sound remains separate.
 - `--audio <external-manifest.json>`: import local clips and measure their duration;
   no provider credentials or network calls.
-- `--narrate` or `--voice-provider elevenlabs`: use the user's configured account and
-  voice. Preview plans and validation do not call the provider.
+- `--narrate`: use the selected narrator profile. Run `aaron-demo voice setup` to choose
+  ElevenLabs, Google, a company endpoint or free local Kokoro. Explicit
+  `--voice-provider elevenlabs|google|custom|kokoro` must match the selected profile.
+  Preview plans and validation do not call the provider.
 - `qwen`: reserved provider interface, not an installed/validated backend. Requesting
   it fails explicitly before reading credentials or making a request. Audio generated
   by an independently installed local TTS can already be used through `--audio`.
