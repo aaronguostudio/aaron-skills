@@ -12,7 +12,6 @@ import { basename, dirname, join, resolve, sep } from "path";
 import { privateDirectory } from "../capture/scripts/platform.mjs";
 import {
   cardMinMs,
-  loadApiKey,
   loadScript,
   loadVoiceProfile,
   narrate,
@@ -24,7 +23,7 @@ import {
 } from "./narration";
 import {loadPresentation, installPresentation, validatePresentationMedia} from './presentation';
 import {outsideGit, readImportedAudio, installImportedAudio} from './import-audio';
-import {speechProvider} from './voice-providers';
+import {speechProvider,providerKey} from './voice-providers';
 import {annotationPages, layoutGeometry} from '../remotion/src/projects/walkthrough-video/presentation/layout';
 import {paletteFor} from '../remotion/src/projects/walkthrough-video/presentation/theme';
 import { installBrand, loadBrandProfile } from "./brand";
@@ -262,7 +261,7 @@ export function parseArgs(argv: string[]): Args {
   return args;
 }
 
-const USAGE = "usage: aaron-demo render <passed-run> [--template minimal|professional|showcase] [--presentation <external.json>] [--cover-preset <id>] [--cover] [--preview] [--narration-notice] [--audio <manifest.json> | --narrate | --voice-provider none|elevenlabs|import|qwen] [--script <script.json>] [--voice-profile <id>] [--speed <0.7-1.2>] [--brand <legacy-id>] [--out <file.mp4>] [--stills] [--dry-run]";
+const USAGE = "usage: aaron-demo render <passed-run> [--template minimal|professional|showcase] [--presentation <external.json>] [--cover-preset <id>] [--cover] [--preview] [--narration-notice] [--audio <manifest.json> | --narrate | --voice-provider none|elevenlabs|google|custom|kokoro|import] [--script <script.json>] [--voice-profile <id>] [--speed <0.7-1.2>] [--brand <legacy-id>] [--out <file.mp4>] [--stills] [--dry-run]. First narration: aaron-demo voice setup";
 
 export async function main(argv: string[]): Promise<number> {
   if (argv.length === 1 && (argv[0] === '--help' || argv[0] === '-h')) { console.log(USAGE); return 0; }
@@ -271,11 +270,12 @@ export async function main(argv: string[]): Promise<number> {
   try {
     const {run, out, dryRun, stills, calibrationMs, voiceProfile, script:scriptArg, speed, brand:brandArg} = parsed;
     if (!run) {console.error(USAGE); return 2;}
-    const provider = parsed.voiceProvider ?? (parsed.audio ? 'import' : parsed.narrate ? 'elevenlabs' : 'none');
-    if (!['none','import','elevenlabs','qwen'].includes(provider)) throw new RenderRefusal('Unknown voice provider');
-    if(parsed.preview&&provider==='elevenlabs')throw new RenderRefusal('Preview never synthesizes narration; use none or --audio with existing clips');
+    let provider = parsed.voiceProvider ?? (parsed.audio ? 'import' : parsed.narrate ? 'configured' : 'none');
+    if (!['none','import','configured','elevenlabs','google','custom','kokoro','qwen'].includes(provider)) throw new RenderRefusal('Unknown voice provider');
+    const generated=!['none','import'].includes(provider);
+    if(parsed.preview&&generated)throw new RenderRefusal('Preview never synthesizes narration; use none or --audio with existing clips');
     if (provider === 'qwen') throw new RenderRefusal('Qwen TTS adapter is reserved, not implemented or validated. Use --audio with output from your local TTS. No provider call was made.');
-    if ((provider === 'import') !== !!parsed.audio || (parsed.audio && parsed.narrate) || (provider !== 'elevenlabs' && (parsed.narrate || scriptArg || voiceProfile || speed !== undefined))) throw new RenderRefusal('Conflicting audio options: choose none, imported manifest, or ElevenLabs narration');
+    if ((provider === 'import') !== !!parsed.audio || (parsed.audio && parsed.narrate) || (!generated && (parsed.narrate || scriptArg || voiceProfile || speed !== undefined))) throw new RenderRefusal('Conflicting audio options: choose none, imported manifest, or configured narration');
     if (brandArg && (parsed.template || parsed.presentation || parsed.coverPreset)) throw new RenderRefusal('Use the presentation brand configuration or legacy --brand, not both');
     outsideGit(run);
     if (out) outsideGit(out);
@@ -300,8 +300,13 @@ export async function main(argv: string[]): Promise<number> {
     if (imported) checkCards(imported.clips);
     prepared = prepare(run,out,roots,prepared.calibrationMs,{...baseTiming,...(imported?{stepMinMs:stepMinMs(prepared.steps,imported.clips),...cardMinMs(imported.clips,p?.intro.enabled&&(p.intro.sound||p.intro.soundPreset!=='none')?BRAND_STING_LEAD_MS:0)}:{})});
     if (dryRun) {
-      console.log(JSON.stringify({dryRun:true,out:prepared.out,seconds:prepared.seconds,template:p?.template ?? 'legacy',coverPreset:p?.cover?.preset,coverRequested:parsed.cover,voiceProvider:provider,narrationNotice:parsed.narrationNotice,narrationRequested:provider!=='none',narrationTiming:provider==='elevenlabs'?'requires synthesis; not performed':provider==='import'?'measured imported clips':'silent',calibrationMs:prepared.calibrationMs,steps:prepared.steps.length,geometry,resolvedPalette,logoChecks,logoFallback:!logoChecks.length?p?.brand.fallback??'legacy monogram':undefined},null,2));
+      console.log(JSON.stringify({dryRun:true,out:prepared.out,seconds:prepared.seconds,template:p?.template ?? 'legacy',coverPreset:p?.cover?.preset,coverRequested:parsed.cover,voiceProvider:provider,narrationNotice:parsed.narrationNotice,narrationRequested:provider!=='none',narrationTiming:generated?'requires synthesis; not performed':provider==='import'?'measured imported clips':'silent',calibrationMs:prepared.calibrationMs,steps:prepared.steps.length,geometry,resolvedPalette,logoChecks,logoFallback:!logoChecks.length?p?.brand.fallback??'legacy monogram':undefined},null,2));
       return 0;
+    }
+    const selected=generated?loadVoiceProfile(voiceProfile):undefined;
+    if(selected){
+      if(provider!=='configured'&&provider!==selected.provider)throw new RenderRefusal('Selected voice profile belongs to another provider; use voice setup or --voice-profile to choose the intended narrator. No fallback was selected.');
+      provider=selected.provider!;
     }
     process.umask(0o077);
     mkdirSync(dirname(prepared.out),{recursive:true});
@@ -314,10 +319,9 @@ export async function main(argv: string[]): Promise<number> {
     if (imported) {
       clips=installImportedAudio(imported,prepared.run);
       narrationKind=imported.aiGenerated?'ai':'imported';
-    } else if (provider==='elevenlabs') {
-      const profile=withSpeed(loadVoiceProfile(voiceProfile),speed??WALKTHROUGH_SPEED);
-      const adapter=speechProvider(provider,()=>loadApiKey([]));
-      clips=await narrate(prepared.run,prepared.steps,profile,(text,voice)=>adapter.synthesizeMp3({text,voice:voice.voice_id,model:voice.model_id,outputFormat:voice.output_format,settings:voice.voice_settings}),undefined,script);
+    } else if (selected) {
+      const profile=withSpeed(selected,speed??(provider==='elevenlabs'?WALKTHROUGH_SPEED:Number(selected.voice_settings.speed??1)));
+      clips=await narrate(prepared.run,prepared.steps,profile,(text,voice)=>speechProvider(provider,()=>providerKey(voice),voice).synthesizeMp3({text,voice:voice.voice_id,model:voice.model_id,outputFormat:voice.output_format,settings:voice.voice_settings,language:voice.language}),undefined,script);
     }
     checkCards(clips);
     const timing={...baseTiming,...(clips.length?{stepMinMs:stepMinMs(prepared.steps,clips),...cardMinMs(clips,(presentation?.intro.sound||branding?.sound)?BRAND_STING_LEAD_MS:0)}:{})};

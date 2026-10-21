@@ -1,6 +1,5 @@
-// AI narration for WalkthroughVideo (phase 2), using a user-configured ElevenLabs voice
-// (config/voice-profiles.json). Each clip's length becomes the least time its step (or card) stays
-// on screen, so voice and picture line up without editing; the video says "AI narration" on screen.
+// Narration timing and cache shared by every user-selected speech provider.
+// Measured clip lengths determine screen holds and chapters; visible notices are opt-in.
 //
 // Two styles:
 // - concise (default): each step's `narration`, else its caption, one clip per step;
@@ -10,10 +9,11 @@
 // The CLI reads the process environment and optional dedicated macOS Keychain service.
 // It never discovers another project's credentials or a repository .env automatically.
 import { execFileSync } from "child_process";
-import { createHash } from "crypto";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
+import { createHash, randomUUID } from "crypto";
+import { existsSync, mkdirSync, readFileSync, writeFileSync, renameSync, unlinkSync } from "fs";
 import { dirname, join, resolve } from "path";
-import { homedir } from "os";
+import {profilePath, readConfig, validateProfile, type VoiceProfile} from './voice-config';
+export type {VoiceProfile} from './voice-config';
 import { readingMs, type Step } from "../remotion/src/projects/walkthrough-video/timeline";
 
 export const KEYCHAIN_SERVICE = "aaron-demo-elevenlabs";
@@ -23,15 +23,6 @@ export const NARRATION_PAD_MS = 400;
 export const WALKTHROUGH_SPEED = 1.15;
 const SPEED_MIN = 0.7;
 const SPEED_MAX = 1.2;
-const PROFILES = process.env.AARON_DEMO_VOICE_PROFILES || join(homedir(), ".config", "aaron-skills", "demo", "voice-profiles.json");
-
-export type VoiceProfile = {
-  provider?: string;
-  voice_id: string;
-  model_id: string;
-  output_format: string;
-  voice_settings: Record<string, number | boolean>;
-};
 
 // Where a clip plays: a step's index, or over the title or end card.
 export type ClipAt = number | "intro" | "outro";
@@ -43,15 +34,14 @@ export type NarrationScript = { intro?: string; steps: Record<string, string>; o
 export type Synthesize = (text: string, profile: VoiceProfile) => Promise<Uint8Array>;
 export type ProbeMs = (path: string) => number;
 
-export function loadVoiceProfile(name?: string, path = PROFILES): VoiceProfile & { name: string } {
-  if (!existsSync(path)) throw new Error(`No voice profiles at ${path}; set AARON_DEMO_VOICE_PROFILES to your own profile file. Silent rendering needs no profile.`);
-  const config = JSON.parse(readFileSync(path, "utf8"));
+export function loadVoiceProfile(name?: string, path = profilePath()): VoiceProfile & { name: string } {
+  if (!existsSync(path)) throw new Error('No voice profiles yet. Run aaron-demo voice setup: choose ElevenLabs, Google, your company endpoint or free local Kokoro. Silent/imported rendering needs no profile.');
+  const config = readConfig(path);
   const id = name ?? config.default_profile;
-  const profile = config.profiles?.[id];
+  const profile = id ? config.profiles?.[id] : undefined;
   if (!profile) throw new Error(`No voice profile "${id}" in ${path}`);
-  if (profile.provider !== "elevenlabs") throw new Error(`Voice profile "${id}" is not an ElevenLabs voice`);
-  if (![profile.voice_id,profile.model_id,profile.output_format].every(v=>typeof v==='string' && v.trim()) || !profile.output_format.startsWith('mp3_') || !profile.voice_settings || typeof profile.voice_settings!=='object' || Array.isArray(profile.voice_settings)) throw Error('ElevenLabs voice profile needs voice/model IDs, MP3 output_format and voice_settings');
-  return { name: id, ...profile };
+  validateProfile(profile);
+  return { ...profile, name: id! };
 }
 
 // The profile with another speaking speed; the profile itself is left as it is.
@@ -109,7 +99,7 @@ export function loadApiKey(envFiles: string[], keychain: () => string | null = r
     if (value) return value;
   }
   throw new Error(
-    `No ElevenLabs key: add it to the Keychain (security add-generic-password -s ${KEYCHAIN_SERVICE} -a $USER -w) or set ELEVENLABS_API_KEY in the process environment.`,
+    `No ElevenLabs key: run aaron-demo voice setup to connect your account or choose Google, your company endpoint, free local Kokoro or imported audio. Legacy setup: security add-generic-password -s ${KEYCHAIN_SERVICE} -a $USER -w, or set ELEVENLABS_API_KEY in the process environment.`,
   );
 }
 
@@ -127,13 +117,15 @@ function readKeychain(): string | null {
 export function elevenLabs(apiKey: string): Synthesize {
   return async (text, profile) => {
     const url = `https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(profile.voice_id)}?output_format=${encodeURIComponent(profile.output_format)}`;
-    const response = await fetch(url, {
+    let response:Response;
+    try {response = await fetch(url, {
       method: "POST",
       headers: { "xi-api-key": apiKey, "Content-Type": "application/json", Accept: "audio/mpeg" },
       body: JSON.stringify({ text, model_id: profile.model_id, voice_settings: profile.voice_settings }),
-    });
+      redirect:'error', signal:AbortSignal.timeout(120000),
+    });}catch{throw Error('ElevenLabs could not be reached or timed out. Script and completed clips are retained. Retry or run aaron-demo voice setup to choose another route; no fallback was selected.');}
     if (!response.ok) {
-      throw new Error(`ElevenLabs answered ${response.status}; no response body or credentials were logged`);
+      throw new Error(`ElevenLabs answered ${response.status}; check API key, voice access, quota and model. No response body or credentials were logged. Retry or run aaron-demo voice setup; completed clips are retained.`);
     }
     return new Uint8Array(await response.arrayBuffer());
   };
@@ -171,15 +163,25 @@ export async function narrate(
     : steps.map((step, i) => ({ at: i, name: stepName(i), text: narrationText(step) }));
   const clips: NarrationClip[] = [];
   for (const { at, name, text } of lines) {
+    // Preserve legacy ElevenLabs cache identities so an upgrade alone cannot incur usage.
+    const identity:unknown[]=[profile.provider??'elevenlabs',profile.voice_id,profile.model_id,profile.output_format,profile.voice_settings];
+    const scope={endpoint:profile.endpoint,credential:profile.credential_id,keyEnvironment:profile.api_key_env,auth:profile.auth,modelPath:profile.model_path,voicesPath:profile.voices_path,language:profile.language};
+    if(Object.values(scope).some(value=>value!==undefined))identity.push(scope);
+    identity.push(text);
     const key = createHash("sha256")
-      .update(JSON.stringify([profile.provider ?? 'elevenlabs', profile.voice_id, profile.model_id, profile.output_format, profile.voice_settings, text]))
+      .update(JSON.stringify(identity))
       .digest("hex")
       .slice(0, 12);
     const file = `narration/${name}-${key}.mp3`;
     const path = join(run, file);
     if (!existsSync(path)) {
       mkdirSync(dirname(path), { recursive: true });
-      writeFileSync(path, await synthesize(text, profile));
+      const pending = `${path}.${randomUUID()}.tmp`;
+      try {
+        writeFileSync(pending, await synthesize(text, profile));
+        probe(pending); // Never cache a truncated or non-audio provider response.
+        renameSync(pending, path);
+      } finally {if (existsSync(pending)) unlinkSync(pending);}
     }
     clips.push({ at, file, ms: probe(path), text });
   }

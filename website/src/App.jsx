@@ -53,7 +53,7 @@ const copy = {
         input:
           "A brief for a presentation cover, or a passed Capture recording with its saved result evidence.",
         output:
-          "A customized PNG/WebP cover, or a guided MP4 and review stills. Videos are silent by default, with optional narration.",
+          "A customized PNG/WebP cover, or a guided MP4 and review stills. Silent by default; add your audio, a cloud/company voice or optional free local narration.",
       },
       {
         intro:
@@ -106,7 +106,7 @@ const copy = {
         intro:
           "选择封面风格，换成你的内容和品牌。为通过检查的录制添加字幕和高亮，修改呈现时不必重复执行业务操作。",
         input: "封面内容需求，或 Capture 已通过检查的录制与结果证据。",
-        output: "可定制的 PNG/WebP 封面，或有引导的 MP4 与供审阅的静帧。视频默认静音，也可选配旁白。",
+        output: "可定制的 PNG/WebP 封面，或有引导的 MP4 与供审阅的静帧。视频默认静音，也可导入音频、使用云端／公司声音，或按需安装免费本地配音。",
       },
       {
         intro:

@@ -70,7 +70,7 @@ describe("loadApiKey", () => {
 });
 
 describe("loadVoiceProfile", () => {
-  test("reads the default profile, and refuses an unknown or non-ElevenLabs one", () => {
+  test("reads the default profile, and refuses an unknown or unsupported provider", () => {
     const dir = tmp();
     const path = join(dir, "profiles.json");
     writeFileSync(
@@ -82,7 +82,7 @@ describe("loadVoiceProfile", () => {
     );
     expect(loadVoiceProfile(undefined, path)).toMatchObject({ name: "me", voice_id: "voice" });
     expect(() => loadVoiceProfile("nope", path)).toThrow(/No voice profile "nope"/);
-    expect(() => loadVoiceProfile("other", path)).toThrow(/not an ElevenLabs voice/);
+    expect(() => loadVoiceProfile("other", path)).toThrow(/Unknown voice provider/);
   });
 });
 

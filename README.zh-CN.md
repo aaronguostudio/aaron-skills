@@ -115,7 +115,7 @@ aaron-demo page /path/to/message.md --out /path/to/message.html
 
 制作演示封面时，可以先浏览 [32 种封面风格](https://skills.aaronguo.com/covers?lang=zh)，用 `aaron-demo cover --list` 选择样式，再替换标题、副标题、Logo、Presenter、日期和颜色。`aaron-demo cover --presentation /path/to/presentation.json --out /path/to/revision/cover.png` 无需录制应用即可导出 PNG/WebP，同一份配置也可以用于视频开场和封面。详见[封面制作流程](docs/cover-library.md)。
 
-默认生成静音视频。需要旁白时，可以导入自己的音频，或明确选择自己的 ElevenLabs 账号和有权使用的声音。Qwen TTS 仍是预留接口；目前可以导入通过其他工具生成的音频。视频和封面默认不添加制作过程标签。`render --dry-run` 只生成计划，不创建文件或调用服务。详见[呈现修改](docs/presentation-revisions.md)、[视觉模板](docs/video-presentation.md)、[脚本起草](docs/narrative-styles.md)和[旁白](docs/narration.md)。
+默认生成静音视频。需要旁白时，可以导入自己的音频、使用自己的 ElevenLabs／Google 账号或公司语音接口，也可以按需安装免费的本地 Kokoro。运行 `aaron-demo voice setup` 引导配置和选声音，无需手写 JSON。Qwen 生成的声音可通过兼容接口或音频导入使用。视频和封面默认不添加制作过程标签。`render --dry-run` 只生成计划，不创建文件或调用服务。详见[呈现修改](docs/presentation-revisions.md)、[视觉模板](docs/video-presentation.md)、[脚本起草](docs/narrative-styles.md)和[旁白](docs/narration.md)。
 
 ## 隐私与适用范围
 

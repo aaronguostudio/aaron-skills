@@ -12,3 +12,12 @@ Dependencies are installed from pinned manifests; their upstream licenses contin
 | Chromium and FFmpeg | Installed separately | Retain their distribution-specific notices and configuration terms. |
 
 Remotion's pinned license provides free-use eligibility for individuals, certain small companies and other stated groups; other entities require a Company License. Check the upstream terms for the intended use before organizational rollout. Silent videos require no narration provider. Optional ElevenLabs calls use the user's account and its terms.
+
+Optional local narration is installed separately, only when requested. It uses
+`kokoro-onnx` 0.6.1 (MIT, https://github.com/thewh1teagle/kokoro-onnx),
+`soundfile` 0.13.1 (BSD-3-Clause and its included libsndfile notices), and their
+Python dependencies. Kokoro model/voice assets use the upstream model terms
+(Apache 2.0, https://huggingface.co/hexgrad/Kokoro-82M). Model files are downloaded
+from the upstream `model-files-v1.1` release and SHA-256 verified, not bundled
+with Aaron Skills. Keep upstream licenses and installed dependency notices.
+Google and company speech endpoints use the owner's account and service terms.
