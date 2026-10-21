@@ -40,7 +40,6 @@
 body:has(.cover-dialog[open]) { overflow: hidden; }
 @media(max-width:1000px) { .cover-grid,.cover-teaser .cover-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .cover-library-heading { align-items: flex-start; flex-direction: column; gap: 20px; } }
 @media(max-width:650px) {
-  .site-header nav > a[href$="#examples"] { display: none; }
   .cover-library { padding-block: 42px 52px; }
   .site .cover-library .cover-title { letter-spacing: -1.3px; }
   .cover-intro { font-size: 17px; }

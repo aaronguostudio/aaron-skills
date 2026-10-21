@@ -71,3 +71,7 @@ video with a short bottom caption, and native video with a modest transcript
 band. Keep the product large; do not reserve a large blank panel by default.
 These silent layout previews belong to /layouts, separately from the narrated
 finished examples. Forma is a fictional, frontend-only demo, not an ERP screen.
+
+On 2026-10-21 Aaron requested GitHub as an icon to the right of the English/Chinese language switch, separate from the content navigation. Keep its bilingual accessible label and tooltip, a 44px touch target, and the same arrangement across the homepage, covers and video layouts. On narrow screens, keep brand and utilities together above the content links so all navigation destinations remain accessible.
+
+Use the classic circular GitHub Mark (Octicons), which Aaron preferred over the standalone cat-shaped Phosphor icon on 2026-10-21.
