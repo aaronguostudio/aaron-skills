@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.3.1 — 2026-10-21
+
+- Confirm cover, opening/outro, video-body layout and company logo/colors as
+  separate choices before new narration or a full render. Recommend native video
+  with a bottom caption bar for internal updates and training.
+- Show actual cover/body still previews and preserve the accepted configuration
+  and decisions. Reuse approved series and unchanged visuals for audio-only
+  revisions without redundant questions.
+- Route passed Capture runs through Film’s presentation checkpoint, with a
+  documented designed-cover/plain-body configuration. This is an agent workflow;
+  renderer validation does not establish user acceptance.
+
 ## 0.3.0 — 2026-10-20
 
 - Add six matched cover/video treatments and two unframed options: native video
