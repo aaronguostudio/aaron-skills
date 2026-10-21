@@ -72,11 +72,29 @@ export async function privateJson(file: string, data: unknown): Promise<void> {
 export async function saveProfile(name: string, profile: VoiceProfile, options: {replace?: boolean; makeDefault?: boolean} = {}): Promise<void> {
   if (!/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$/.test(name) || ['constructor','prototype','__proto__'].includes(name)) throw Error('Profile names use 1–64 letters, numbers, hyphens or underscores; reserved object names are refused');
   validateProfile(profile);
-  const config = readConfig();
-  if (Object.hasOwn(config.profiles, name) && !options.replace) throw Error(`Profile ${name} already exists; choose a new name or explicitly use --replace`);
-  config.profiles[name] = profile;
-  if (!config.default_profile || options.makeDefault) config.default_profile = name;
-  await privateJson(profilePath(), config);
+  await updateConfig(config=>{
+    if (Object.hasOwn(config.profiles, name) && !options.replace) throw Error(`Profile ${name} already exists; choose a new name or explicitly use --replace`);
+    config.profiles[name] = profile;
+    if (!config.default_profile || options.makeDefault) config.default_profile = name;
+  });
+}
+// Serialize the entire read/modify/write, including across separate CLI processes.
+async function locked<T>(file:string,action:()=>Promise<T>):Promise<T>{
+  externalPath(file);if(!existsSync(dirname(file)))await privateDirectory(dirname(file));
+  const lock=file+'.lock',token=`${process.pid}:${randomUUID()}`;externalPath(lock);
+  const deadline=Date.now()+30000;
+  for(;;){
+    try{writeFileSync(lock,token,{flag:'wx',mode:0o600});break;}catch(error){
+      if((error as NodeJS.ErrnoException).code!=='EEXIST')throw error;
+      if(Date.now()>=deadline)throw Error(`Voice configuration is busy. Retry after the other command exits. If a command crashed, inspect and remove the stale lock: ${lock}`);
+      await new Promise(resolve=>setTimeout(resolve,25));
+    }
+  }
+  try{await privatePath(lock);return await action();}
+  finally{if(existsSync(lock)&&readFileSync(lock,'utf8')===token)unlinkSync(lock);}
+}
+export async function updateConfig(update:(config:VoiceConfig)=>void):Promise<void>{
+  const file=profilePath();await locked(file,async()=>{const config=readConfig(file);update(config);await privateJson(file,config);});
 }
 export function savedKey(id?: string): string | undefined {
   if (!id || !existsSync(credentialPath())) return undefined;
@@ -86,8 +104,10 @@ export function savedKey(id?: string): string | undefined {
 }
 export async function saveKey(key: string): Promise<string> {
   const file = credentialPath(); externalPath(file);
-  const keys = existsSync(file) ? readKeys(file) : {};
-  const id = randomUUID(); keys[id] = key; await privateJson(file, keys); return id;
+  return locked(file,async()=>{
+    const keys = existsSync(file) ? readKeys(file) : {};
+    const id = randomUUID(); keys[id] = key; await privateJson(file, keys); return id;
+  });
 }
 function readKeys(file:string):Record<string,string>{
   try {const keys=JSON.parse(readFileSync(file,'utf8'));if(!keys||typeof keys!=='object'||Array.isArray(keys))throw Error();return keys;}

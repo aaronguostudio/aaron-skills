@@ -49,7 +49,7 @@ describe('editable cover library',()=>{
       if(preset.art) expect(installed.cover?.art).toMatch(/^presentation-assets\/[a-f0-9]+\.webp$/);
       else expect(installed.cover?.art).toBeUndefined();
     }
-  });
+  },30_000); // Real ffprobe processes for the full art library can exceed 5 s under CPU load.
   test('the copied artwork remains byte-identical and independent of the configuration root',()=>{
     const loaded=loadPresentation(undefined,config({title:'Fixture',intro:{enabled:false},cover:{preset:'chrome-loop'}}),'','')!;
     const run=temp(),installed=installPresentation(loaded.presentation,loaded.assetRoot,run);

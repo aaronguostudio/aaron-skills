@@ -38,9 +38,12 @@ async function bytes(r:Response):Promise<Uint8Array>{
 }
 async function json(r:Response):Promise<any>{try{return JSON.parse(new TextDecoder().decode(await bytes(r)));}catch{throw Error('Invalid or oversized speech JSON; no response body was logged');}}
 export function normalizeMp3(data:Uint8Array,speed=1):Uint8Array{
+  const header=Buffer.from(data.subarray(0,12));
+  const format=header.toString('ascii',0,4)==='RIFF'&&header.toString('ascii',8,12)==='WAVE'?'wav':header.toString('ascii',0,3)==='ID3'||(data[0]===255&&(data[1]&224)===224)?'mp3':undefined;
+  if(!format)throw Error('Speech response could not be decoded as audio: expected WAV or MP3 bytes, not a playlist or URL.');
   const dir=mkdtempSync(join(tmpdir(),'aaron-voice-'));
   try{const input=join(dir,'source.audio'),out=join(dir,'speech.mp3');writeFileSync(input,data,{mode:0o600});
-    execFileSync('ffmpeg',['-v','error','-nostdin','-i',input,'-vn',...(speed===1?[]:['-af',`atempo=${speed}`]),'-ar','44100','-c:a','libmp3lame','-b:a','192k',out],{stdio:'pipe',timeout:120000});return readFileSync(out);
+    execFileSync('ffmpeg',['-v','error','-nostdin','-protocol_whitelist','file,pipe','-f',format,'-i',input,'-vn',...(speed===1?[]:['-af',`atempo=${speed}`]),'-ar','44100','-c:a','libmp3lame','-b:a','192k',out],{stdio:'pipe',timeout:120000});return readFileSync(out);
   }catch{throw Error('Speech response could not be decoded as audio. Check service output and FFmpeg; no invalid clip was cached.');}
   finally{rmSync(dir,{recursive:true,force:true});}
 }

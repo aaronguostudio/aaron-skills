@@ -1,4 +1,4 @@
-import {afterEach,describe,expect,test} from 'bun:test';
+import {afterEach,describe,expect,test,setDefaultTimeout} from 'bun:test';
 import {mkdtempSync,readFileSync,writeFileSync,existsSync,readdirSync,statSync,mkdirSync,symlinkSync,chmodSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
@@ -8,6 +8,9 @@ import {readConfig,saveProfile,saveKey,credentialPath,validateEndpoint,externalP
 import {loadVoiceProfile,narrate,ffprobeMs} from './narration';
 import {GOOGLE_MODEL,speechProvider,listElevenVoices,providerKey,normalizeMp3,request} from './voice-providers';
 import type {Step} from '../remotion/src/projects/walkthrough-video/timeline';
+
+// Windows privacy checks invoke native ACL tooling for each atomic write/lock.
+if(process.platform==='win32')setDefaultTimeout(60000);
 
 const temp=()=>mkdtempSync(join(tmpdir(),'voice-test-'));
 const oldEnv={...process.env};
@@ -47,6 +50,19 @@ describe('first narration setup',()=>{
     const c=context();if(process.platform!=='win32')chmodSync(c.dir,0o755);
     await saveProfile('sample',profile());await saveKey('private');
     if(process.platform!=='win32'){expect(statSync(c.dir).mode&0o777).toBe(0o755);expect(statSync(process.env.AARON_DEMO_VOICE_PROFILES!).mode&0o777).toBe(0o600);}
+  });
+  test('concurrent configuration updates retain every profile and private key',async()=>{
+    context();
+    await Promise.all(['first','second','third'].map(name=>saveProfile(name,profile())));
+    expect(Object.keys(readConfig().profiles).sort()).toEqual(['first','second','third']);
+    const ids=await Promise.all(['key-one','key-two','key-three'].map(key=>saveKey(key)));
+    expect(ids.map(credential_id=>providerKey(profile('google',{api_key_env:'TEST_UNUSED_VOICE_KEY',credential_id})))).toEqual(['key-one','key-two','key-three']);
+  });
+  test('separate CLI processes cannot overwrite each other while saving profiles',async()=>{
+    context();
+    const children=['child-one','child-two'].map(name=>Bun.spawn([process.execPath,'-e',`import {saveProfile} from ${JSON.stringify(join(import.meta.dir,'voice-config.ts'))}; await saveProfile(${JSON.stringify(name)},${JSON.stringify(profile())});`],{env:{...process.env},stdout:'pipe',stderr:'pipe'}));
+    expect(await Promise.all(children.map(child=>child.exited))).toEqual([0,0]);
+    expect(Object.keys(readConfig().profiles).sort()).toEqual(['child-one','child-two']);
   });
   test('company endpoint config needs no JSON and can explicitly disable authentication',async()=>{
     const c=context();process.env.AARON_DEMO_TTS_API_KEY='unrelated-key';
@@ -112,6 +128,9 @@ describe('provider requests and failures',()=>{
 });
 
 describe('audio integrity and narration reuse',()=>{
+  test('playlists and external references never reach FFmpeg auto-detection',()=>{
+    for(const payload of ['#EXTM3U\nhttps://speech.example/private.mp3','[playlist]\nFile1=file:///private/audio.wav','https://speech.example/audio.mp3'])expect(()=>normalizeMp3(new TextEncoder().encode(payload))).toThrow('expected WAV or MP3');
+  });
   test('legacy ElevenLabs clips remain cached after upgrading without another provider call',async()=>{
     const dir=temp(),p=profile('elevenlabs'),line='Existing narration.';
     const hash=createHash('sha256').update(JSON.stringify(['elevenlabs',p.voice_id,p.model_id,p.output_format,p.voice_settings,line])).digest('hex').slice(0,12);

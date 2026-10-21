@@ -123,7 +123,8 @@
     "packages/demo/walkthrough/voice-config.ts",
     "packages/demo/walkthrough/voice-cli.ts",
     "packages/demo/walkthrough/kokoro-local.ts",
-    "packages/demo/walkthrough/kokoro-worker.py"
+    "packages/demo/walkthrough/kokoro-worker.py",
+    "docs/narration-validation.md"
   ],
-  "version": "0.3.1"
+  "version": "0.4.0"
 }

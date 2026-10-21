@@ -5,7 +5,7 @@ import {existsSync,writeFileSync,unlinkSync,linkSync} from 'node:fs';
 import {randomUUID} from 'node:crypto';
 import {dirname,extname,join} from 'node:path';
 import {execFileSync} from 'node:child_process';
-import {PROVIDERS,profilePath,readConfig,privateJson,saveProfile,saveKey,externalPath,validateProfile,type VoiceProfile} from './voice-config';
+import {PROVIDERS,readConfig,updateConfig,saveProfile,saveKey,externalPath,validateProfile,type VoiceProfile} from './voice-config';
 import {GOOGLE_MODEL,GOOGLE_VOICES,listElevenVoices,providerKey,speechProvider,type Voice} from './voice-providers';
 import {loadVoiceProfile,ffprobeMs} from './narration';
 import {installLocal,localDirectory,localProfile,localVoices} from './kokoro-local';
@@ -111,7 +111,7 @@ export async function voiceMain(args:string[],io:VoiceIO):Promise<number>{
       const config=readConfig();for(const [name,p] of Object.entries(config.profiles))io.log(`${name===config.default_profile?'*':' '} ${clean(name)}: ${clean(p.provider??'unknown')} / ${clean(p.voice_id)}`);
       if(!Object.keys(config.profiles).length)io.log('No narrator configured. Run aaron-demo voice setup; choose an existing account, a company endpoint or free local Kokoro.');
     }else if(action==='use'){
-      const config=readConfig(),name=positionals[0];if(!name||!Object.hasOwn(config.profiles,name))throw Error('Choose an existing profile from voice list');validateProfile(config.profiles[name]);config.default_profile=name;await privateJson(profilePath(),config);io.log(`Default narrator: ${clean(name)}`);
+      const name=positionals[0];await updateConfig(config=>{if(!name||!Object.hasOwn(config.profiles,name))throw Error('Choose an existing profile from voice list');validateProfile(config.profiles[name]);config.default_profile=name;});io.log(`Default narrator: ${clean(name)}`);
     }else if(action==='voices'){
       const provider=text(o,'provider')||(text(o,'profile')?loadVoiceProfile(text(o,'profile')).provider:'');
       if(provider==='google')printVoices(GOOGLE_VOICES,io);

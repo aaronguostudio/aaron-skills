@@ -47,7 +47,8 @@ export function makeFixture(dirArg: string): string {
     box({ x: 0, y: 0, w: W, h: H }, "black", 0, FLASH_S - 0.01), // the sync flash
   ].join(",");
   const video = join(dir, "video.webm");
-  execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-f", "lavfi", "-i", `color=c=0xf4f6fa:s=${W}x${H}:d=${SECONDS}:r=25`, "-vf", filters, "-c:v", "libvpx", "-b:v", "1M", video]);
+  // This synthetic block/flash fixture needs timing fidelity, not slow offline VP8 search.
+  execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-f", "lavfi", "-i", `color=c=0xf4f6fa:s=${W}x${H}:d=${SECONDS}:r=25`, "-vf", filters, "-c:v", "libvpx", "-deadline", "realtime", "-cpu-used", "8", "-b:v", "1M", video]);
   const shotAt: Record<string, number> = { open: 2.0, save: 4.5, saving: 6.0, done: 11.5 };
   for (const step of fixtureSteps) {
     execFileSync("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-ss", String(shotAt[step.id]), "-i", video, "-frames:v", "1", join(dir, step.shot!)]);

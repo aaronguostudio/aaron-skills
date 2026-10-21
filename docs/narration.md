@@ -10,6 +10,11 @@ and write quick demos, release updates, stakeholder walkthroughs, tutorials or
 training lessons. A finished user-written script is optional; those modes guide
 the host agent's writing and do not add renderer flags or choose a voice.
 
+**Validation boundary:** Google and ElevenLabs real-account speech generation
+has not been verified. Protocol tests use mocked responses. Company integration
+has loopback contract acceptance; local Kokoro has real English/macOS arm64
+acceptance. See [validation](narration-validation.md).
+
 ## First narration: no JSON editing
 
 Tell Film what you have: an ElevenLabs account, a Google API key, a company voice,
@@ -73,7 +78,7 @@ aaron-demo voice setup --provider google --name google-narrator --voice Kore
 
 Supply the **full speech endpoint**, model name and voice name issued by the
 service owner. The supported contract is an OpenAI-compatible POST with JSON
-`{model, input, voice, response_format:"mp3", speed}` and a binary audio response.
+`{model, input, voice, response_format:"mp3", speed}` and a binary WAV or MP3 audio response.
 Bearer authentication uses `AARON_DEMO_TTS_API_KEY`, a selected `--key-env NAME`,
 or a privately saved wizard key. `--no-key` explicitly disables authentication,
 including ambient keys, for a service that needs none. HTTPS is required except
@@ -200,3 +205,9 @@ The custom adapter implements the protocol below; it does not adapt arbitrary
 vendor schemas. Qwen is not a native backend: use a compatible company/local
 endpoint or import independently generated audio. Voice IDs are provider-specific;
 a reference recording requires a backend with authorized voice replication support.
+
+Configuration updates use a short-lived private lock to preserve profiles and
+keys across concurrent CLI commands. If a previous command crashed, a busy-lock
+message identifies the lock file; confirm no voice command is running before
+removing that stale file and retrying. Existing shared parent-directory permissions
+are preserved. Provider audio is never auto-detected as a playlist or external URL.
