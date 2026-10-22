@@ -19,10 +19,8 @@ export const PresentationLogo: React.FC<{p: Presentation; size: number; backgrou
   const logo=logoFor(p,p.brand.logoBackground??background??paletteFor(p,'body').background);
   if(logo)return <span style={{display:'inline-flex',alignItems:'center',flexShrink:0,background:p.brand.logoBackground,padding:p.brand.logoBackground?size*.12:0,borderRadius:size*.1}}><Img src={staticFile(logo)} style={{width: 'auto', height: size, maxWidth: size * 4, objectFit: 'contain', objectPosition: 'left center', flexShrink: 0}} /></span>;
   if(p.version===2)return p.brand.fallback==='monogram'?<span style={{fontSize:size*.7,lineHeight:1,fontWeight:700}}>{Array.from(p.brand.name)[0]?.toUpperCase()}</span>:null;
-  return <svg width={size} height={size} viewBox="0 0 64 64" aria-label={p.brand.name}>
-      <rect width="64" height="64" rx="18" fill="currentColor" opacity="0.12" />
-      <path d="M16 45 29 18h7l13 27H39l-3-7H26l-3 7Zm13-15h4l-2-5Z" fill="currentColor" />
-    </svg>;
+  // Version 1 has no explicit monogram choice. Show only a supplied logo/name.
+  return null;
 };
 
 export const PresentationCard: React.FC<{p: Presentation; closing?: boolean; cover?: boolean; narrated?: boolean; total?: number}> = ({p, closing = false, cover = false, narrated = false, total = 90}) => {
@@ -43,7 +41,7 @@ export const PresentationCard: React.FC<{p: Presentation; closing?: boolean; cov
   if (p.cover && !closing) return <AbsoluteFill style={{opacity:exit}}>
     {!cover && p.intro.sound ? <Audio src={staticFile(p.intro.sound)} volume={p.intro.volume}/> : null}
     <CoverDesign cover={p.cover} title={title} subtitle={subtitle} brandName={p.brand.name}
-      logoSrc={logoFor(p,logoSurfaceBackground(p,'cover'))?staticFile(logoFor(p,logoSurfaceBackground(p,'cover'))!):undefined} logoBackground={p.brand.logoBackground} logoContainsName={p.brand.logoContainsName} omitFallback={p.version===2&&p.brand.fallback!=='monogram'} artSrc={p.cover.art?staticFile(p.cover.art):undefined}
+      logoSrc={logoFor(p,logoSurfaceBackground(p,'cover'))?staticFile(logoFor(p,logoSurfaceBackground(p,'cover'))!):undefined} logoBackground={p.brand.logoBackground} logoContainsName={p.brand.logoContainsName} omitFallback={p.version!==2||p.brand.fallback!=='monogram'} artSrc={p.cover.art?staticFile(p.cover.art):undefined}
       width={width} height={height} renderImage={props=><Img {...props}/>}/>
   </AbsoluteFill>;
   return <AbsoluteFill style={{fontFamily:FONT, background:palette.background, color:ink, opacity:exit, overflow:'hidden'}}>
@@ -75,7 +73,7 @@ export const PresentationCard: React.FC<{p: Presentation; closing?: boolean; cov
 export const PresentationCaption: React.FC<{p:Presentation; top:number; width:number; caption:string; position:string; narrated:boolean}> = ({p,top,width,caption,position,narrated}) => {
   const s=width/1440, minimal=p.template==='minimal';
   const palette=paletteFor(p,'body'),color=palette.foreground;
-  const mark=<div style={{color,display:'flex',alignItems:'center',gap:12*s}}><PresentationLogo p={p} size={38*s} background={palette.background}/>{!p.brand.logoContainsName?<span style={{fontSize:16*s,maxWidth:180*s}}>{p.brand.name}</span>:null}</div>;
+  const mark=(p.brand.name.trim()||logoFor(p,palette.background))?<div style={{color,display:'flex',alignItems:'center',gap:12*s}}><PresentationLogo p={p} size={38*s} background={palette.background}/>{!p.brand.logoContainsName?<span style={{fontSize:16*s,maxWidth:180*s}}>{p.brand.name}</span>:null}</div>:null;
   return <div style={{position:'absolute',top,left:0,width,height:96,fontFamily:FONT,background:palette.background,color,display:'flex',alignItems:'center',gap:24*s,padding:`0 ${32*s}px`,boxSizing:'border-box',borderTop:`2px solid ${p.brand.accent}`}}>
     {p.body.logoPosition==='left'?mark:null}
     <span style={{fontSize:20*s,opacity:.55,fontVariantNumeric:'tabular-nums'}}>{position}</span>

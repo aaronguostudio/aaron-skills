@@ -28,8 +28,21 @@ def environment(config):
 def run(command, config, **kwargs):
     return subprocess.run([str(part) for part in command], env=environment(config), **kwargs)
 
+def capture_display_warning(platform=None, environ=None):
+    platform = sys.platform if platform is None else platform
+    environ = os.environ if environ is None else environ
+    if platform == 'linux' and not any(environ.get(key, '').strip() for key in ('DISPLAY', 'WAYLAND_DISPLAY')):
+        return ('No display detected (DISPLAY/WAYLAND_DISPLAY). Sign-in and headed capture need a desktop '
+                'or xvfb-run -a -s "-screen 0 1920x1080x24" aaron-demo capture <args>. '
+                'Interactive sign-in also needs browser access; headless smoke can still pass.')
+    return None
+
+
 def doctor(config, check_links=True):
     failures = []
+    warning = capture_display_warning()
+    if warning:
+        print(f'WARN {warning}', flush=True)
     def check(label, command, **kwargs):
         result = run(command, config, capture_output=True, text=True, encoding='utf-8', errors='replace', **kwargs)
         print(f'{"PASS" if result.returncode == 0 else "FAIL"} {label}', flush=True)

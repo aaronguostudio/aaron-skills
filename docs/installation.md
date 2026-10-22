@@ -87,6 +87,29 @@ Capture, silent rendering, imported audio and script `--dry-run` need no narrati
 account. Run `aaron-demo voice setup` for guided account/voice selection, a company endpoint
 or optional free local Kokoro. No JSON editing is required; see [narration](narration.md).
 
+## Headless Ubuntu / CI
+
+Smoke and normal recording run Chromium headless, but a first capture without a
+saved session opens a headed browser for sign-in. `--headed` also needs a display.
+A passing smoke check therefore does not verify display availability. `doctor`
+warns when Linux has neither `DISPLAY` nor `WAYLAND_DISPLAY`; that warning does
+not fail the headless runtime checks.
+
+On a container or CI runner without a desktop, install `xvfb` and `xauth` through
+your system package process, then wrap capture in a virtual display:
+
+```sh
+xvfb-run -a -s "-screen 0 1920x1080x24" aaron-demo capture --project /path/to/app --env local --walk tour
+```
+
+This works for local adapters that need no human login and for environments with
+a valid saved session. Xvfb supplies a display, not an unattended login method.
+For interactive authentication, use a desktop or arrange a secure way to view and
+control the browser in the same runtime environment. Keep session state private.
+Chromium still needs its system libraries and sandbox permissions. Reinstall the
+browser only when the error says its executable is missing; other launch errors
+need diagnosis from their reported cause.
+
 ## Isolated setup
 
 Choose new paths outside source repositories. For example:

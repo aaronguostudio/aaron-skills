@@ -2,7 +2,8 @@
 
 For authentic-logo preflight, one coherent theme, above/below/left/right screen
 placement and full transcript panels, see [presentation v2](video-layouts.md).
-Version 1 below remains supported unchanged. Use v2 deliberately for new layouts.
+Version 1 below remains supported; unconfigured branding is omitted. Use v2
+deliberately for new layouts.
 
 For the 32 selectable presentation-cover styles, editable title/subtitle,
 Logo, presenter, date and colors, see [cover library](cover-library.md).
@@ -20,8 +21,11 @@ aaron-demo render <passed-run> --template showcase --cover --stills --out <deliv
 | Template | Opening and closing | Recording |
 | --- | --- | --- |
 | `minimal` | Warm light background, editorial type, short cards; no sound by default | Light caption band, no logo by default |
-| `professional` | Dark brand color, fine grid, restrained reveal, soft synthesized sting | Dark caption band and stable brand mark |
-| `showcase` | Gradient atmosphere, orbital linework, larger type, brighter synthesized sting | Dark caption band and stable brand mark |
+| `professional` | Dark brand color, fine grid, restrained reveal, soft synthesized sting | Dark caption band; configured brand only |
+| `showcase` | Gradient atmosphere, orbital linework, larger type, brighter synthesized sting | Dark caption band; configured brand only |
+
+All templates omit brand names and logos by default. Supply your own identity
+in a presentation file to show branding. No author/tool mark is inserted.
 
 The two built-in stings are generated locally using the bundled standard-library
 sound generator; no provider, download or account is involved. No narration is the
@@ -69,8 +73,9 @@ aaron-demo render <passed-run> --presentation <external-directory>/presentation.
 
 Omit fields to use the selected template's defaults. `--template` can override the
 file's template; explicit settings in the file remain overrides. Unknown fields fail
-validation. Text lengths and color formats are checked. A missing logo uses a neutral
-mark; raster logos support PNG, JPEG and WebP. Square marks and horizontal wordmarks keep their intrinsic aspect ratio. Logo height is bounded by its slot and width by four times that height, keeping a wide wordmark readable without displacing the caption. Crop excess transparent padding in the supplied asset; it is part of the image bounds. Existing SVG-part profiles remain
+validation. Text lengths and color formats are checked. A missing logo is omitted
+in version 1; version 2 can explicitly request a brand monogram with
+`brand.fallback: "monogram"`. Raster logos support PNG, JPEG and WebP. Square marks and horizontal wordmarks keep their intrinsic aspect ratio. Logo height is bounded by its slot and width by four times that height, keeping a wide wordmark readable without displacing the caption. Crop excess transparent padding in the supplied asset; it is part of the image bounds. Existing SVG-part profiles remain
 available through legacy `--brand`; do not combine that flag with a presentation.
 
 `intro.soundPreset` accepts `none`, `soft` or `bright`. To use your own sound, set

@@ -1,5 +1,5 @@
 import {createRequire} from 'node:module';
-import {PresentationCaption} from '../remotion/src/projects/walkthrough-video/presentation/Presentation';
+import {PresentationCaption,PresentationLogo} from '../remotion/src/projects/walkthrough-video/presentation/Presentation';
 import {describe,expect,test} from 'bun:test';
 import {mkdtempSync,mkdirSync,readFileSync,readdirSync,writeFileSync} from 'fs';
 import {tmpdir} from 'os';
@@ -120,6 +120,24 @@ describe('provider seam',()=>{
   const props={p:presentationPreset('professional','Result'),top:900,width:1440,caption:'Two invoices verified',position:'1/2'};
   const clean=renderToStaticMarkup(React.createElement(PresentationCaption,{...props,narrated:false}));
   const requested=renderToStaticMarkup(React.createElement(PresentationCaption,{...props,narrated:true}));
-  expect(clean).toContain('Two invoices verified');expect(clean).toContain('Demo');
+  expect(clean).toContain('Two invoices verified');expect(clean).not.toContain('Demo');expect(clean).not.toContain('<svg');
   expect(clean).not.toContain('AI NARRATION');expect(requested).toContain('AI NARRATION');
+});
+
+
+test('all templates omit default branding and preserve explicitly configured customer identity',()=>{
+  const runtimeRequire=createRequire(new URL('../remotion/package.json',import.meta.url));
+  const React=runtimeRequire('react');
+  const {renderToStaticMarkup}=runtimeRequire('react-dom/server');
+  for(const template of ['minimal','professional','showcase'] as const){
+    const p=loadPresentation(template,undefined,'Useful workflow','')!.presentation;
+    validatePresentation(p);
+    expect(p.brand.name).toBe('');
+    expect(renderToStaticMarkup(React.createElement(PresentationLogo,{p,size:40}))).toBe('');
+    const props={p,top:900,width:1440,caption:'Result verified',position:'1/2',narrated:false};
+    const clean=renderToStaticMarkup(React.createElement(PresentationCaption,props));
+    expect(clean).toContain('Result verified');expect(clean).not.toContain('Demo');expect(clean).not.toContain('<svg');
+    const customer=loadPresentation(template,config({brand:{name:'Example Company'},body:{logoPosition:'right'}}),'Title','')!.presentation;
+    expect(renderToStaticMarkup(React.createElement(PresentationCaption,{...props,p:customer}))).toContain('Example Company');
+  }
 });

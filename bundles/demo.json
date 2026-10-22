@@ -126,5 +126,5 @@
     "packages/demo/walkthrough/kokoro-worker.py",
     "docs/narration-validation.md"
   ],
-  "version": "0.4.0"
+  "version": "0.4.1"
 }

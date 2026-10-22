@@ -6,7 +6,7 @@ import { after, test } from 'node:test'
 import { fileURLToPath } from 'node:url'
 import { CaptureRefusal } from '../scripts/guards.mjs'
 import { sessionPaths } from '../scripts/session.mjs'
-import { isEntryPoint, launchArgs, loadChromium, main } from '../scripts/cli.mjs'
+import { isEntryPoint, launchArgs, launchBrowser, loadChromium, main } from '../scripts/cli.mjs'
 
 const PROJECT = join(import.meta.dirname, 'fixture')
 
@@ -308,4 +308,31 @@ test('the sign-in window opens with exactly the options signIn gives it, and no 
   })
   assert.equal(code, 2)
   assert.deepEqual(launches, [{ headless: false }])
+})
+
+
+test('browser launch recovery distinguishes missing binaries, absent displays and other failures', async () => {
+  const fail = (message) => ({ launch: async () => { throw new Error(message) } })
+  const closed = 'browserType.launch: Target page, context or browser has been closed'
+  const noDisplay = { platform: 'linux', env: {} }
+  await assert.rejects(launchBrowser(fail(closed), { headless: false }, noDisplay), (error) => {
+    assert.ok(error instanceof CaptureRefusal)
+    assert.match(error.message, /DISPLAY.*WAYLAND_DISPLAY/)
+    assert.match(error.message, /xvfb-run/)
+    assert.doesNotMatch(error.message, /installer/)
+    return true
+  })
+  await assert.rejects(launchBrowser(fail("Executable doesn't exist at chromium"), { headless: false }, noDisplay), /Demo bundle installer/)
+  for (const [options, context] of [
+    [{ headless: true }, noDisplay],
+    [{ headless: false }, { platform: 'linux', env: { DISPLAY: ':99' } }],
+    [{ headless: false }, { platform: 'linux', env: { WAYLAND_DISPLAY: 'wayland-0' } }],
+    [{ headless: false }, { platform: 'darwin', env: {} }],
+    [{ headless: false }, { platform: 'win32', env: {} }]
+  ]) await assert.rejects(launchBrowser(fail(closed), options, context), (error) => {
+    assert.equal(error.message, `The browser did not start (${closed}).`)
+    return true
+  })
+  const browser = {}
+  assert.equal(await launchBrowser({ launch: async () => browser }, { headless: true }, noDisplay), browser)
 })

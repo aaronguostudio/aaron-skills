@@ -30,6 +30,12 @@ rights are not required for the runtime. The system prerequisites must already
 be installed. POSIX installs retain their symlink registrations. See
 [installation and recovery](installation.md).
 
+On headless Ubuntu/CI, smoke and normal recording can run without a display,
+but first-session sign-in and `--headed` require one. Use a desktop or Xvfb;
+interactive login additionally requires a way to view/control the browser.
+`doctor` reports missing display variables as a warning, separately from browser
+installation/launch readiness. See [headless Ubuntu / CI setup](installation.md#headless-ubuntu--ci).
+
 Cloud sessions do not automatically inherit a local runtime or personal skill
 folders. Copying SKILL.md or configuring a model API endpoint is insufficient.
 The host needs local shell/filesystem access, permission to launch Chromium and
