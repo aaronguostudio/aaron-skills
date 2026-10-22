@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.1 — 2026-10-21
+
+- Fix the POSIX setup check rejecting installed Node 22+ because a boolean was
+  passed to `process.exit`; exercise the prerequisite check with real Node.
+- Distinguish missing Chromium executables from display-related launch failures.
+  Explain desktop/Xvfb requirements for first-session sign-in and headed capture;
+  add an advisory Linux display warning to doctor and headless/CI setup guidance.
+- Omit default presentation brand names and placeholder marks. Preserve explicitly
+  configured customer branding and the opt-in v2 monogram fallback.
+
 ## 0.3.1 — 2026-10-21
 
 - Confirm cover, opening/outro, video-body layout and company logo/colors as

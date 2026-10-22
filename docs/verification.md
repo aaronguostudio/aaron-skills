@@ -1,3 +1,27 @@
+# Ubuntu setup and capture fixes — v0.4.1 candidate
+
+Date: 2026-10-21. Local evidence uses public/synthetic fixtures only.
+
+- The complete macOS arm64 source gate passed: TypeScript, 257 capture unit tests,
+  133 renderer tests, Python/privacy/document checks and 20 real Chromium capture
+  integration tests. Windows-only checks remain platform-specific.
+- A fresh isolated exported installation passed doctor and Capture -> MP4 -> HTML
+  smoke. The installed professional template rendered with stills and a cover;
+  its H.264/AAC output fully decoded. Cover, body and delivery-page inspection
+  confirmed readable output with no default placeholder branding.
+- An Ubuntu x64 container under ARM-host emulation used Node 22.22.2 and Python
+  3.12.3. Eight setup/display tests passed. Real Chromium launch reproduced the
+  absent-display error with the new recovery message, launched headless without a
+  display, and launched headed under Xvfb. This focused probe used Playwright
+  1.62.1 with the browser supplied by the Playwright 1.61.1 container image; it
+  does not establish a full pinned-browser Ubuntu workflow or native hardware
+  certification. Exact-platform CI supplies separate release evidence.
+- No narration provider/account calls or changes to authentication policy were
+  needed. First-session sign-in and `--headed` still need a display; smoke uses
+  a private empty fixture session and does not test interactive sign-in readiness.
+
+---
+
 # Brand and layout v2 — local implementation verification
 
 Date: 2026-10-19. This is a local candidate, not a published release. Tests use
