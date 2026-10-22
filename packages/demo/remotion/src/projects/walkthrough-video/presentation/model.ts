@@ -23,7 +23,7 @@ export function presentationPreset(template: Template, title: string, subtitle =
   if (!TEMPLATES.includes(template)) throw Error(`Unknown presentation template: ${template}`);
   return {
     version: 1, template, title, subtitle,
-    brand: {name: 'Demo', tagline: 'A closer look.', primary: '#153F3B', accent: '#A7F3CE'},
+    brand: {name: '', tagline: 'A closer look.', primary: '#153F3B', accent: '#A7F3CE'},
     intro: {enabled: true, durationMs: template === 'minimal' ? 1400 : 3000, soundPreset:template==='minimal'?'none':template==='professional'?'soft':'bright', volume: 0.35},
     outro: {enabled: true, durationMs: template === 'minimal' ? 1400 : 2400, title: 'Thanks for watching.', subtitle: 'Explore the workflow at your own pace.', url: ''},
     body: {logoPosition: template === 'minimal' ? 'none' : 'right', highlightColor: '#E3A900'},
@@ -37,7 +37,7 @@ export function validatePresentation(value: unknown, localAssets = true): assert
   if (![1,2].includes(p?.version) || !TEMPLATES.includes(p.template)) throw Error('Presentation version/template is invalid');
   validatePresentationFields(p);
   if (p.cover !== undefined) validateCover(p.cover);
-  if (!text(p.title, 100, true) || !text(p.subtitle, 160) || !text(p.brand?.name, 40, (p.version===1&&!p.cover)||p.brand?.fallback==='monogram') || !text(p.brand?.tagline, 100)) throw Error('Presentation title/brand text is invalid or too long');
+  if (!text(p.title, 100, true) || !text(p.subtitle, 160) || !text(p.brand?.name, 40, p.brand?.fallback==='monogram') || !text(p.brand?.tagline, 100)) throw Error('Presentation title/brand text is invalid or too long');
   if (!color(p.brand.primary) || !color(p.brand.accent) || !color(p.body?.highlightColor)) throw Error('Presentation colors must be six-digit hex colors');
   if (!['left', 'right', 'none'].includes(p.body.logoPosition)) throw Error('Body logoPosition must be left, right or none');
   if(p.version===2){

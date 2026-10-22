@@ -2,6 +2,7 @@
 import os
 from pathlib import Path
 import subprocess
+import shutil
 import tempfile
 import unittest
 
@@ -40,7 +41,30 @@ class SetupTests(unittest.TestCase):
         self.assertIn('Ubuntu needs', result.stderr)
         self.assertNotIn('scripts/install.py', log)
 
-    def run_setup(self, args, missing_ffmpeg=False, system='Darwin'):
+    def test_node_prerequisite_uses_real_node(self):
+        node = shutil.which('node')
+        self.assertIsNotNone(node, 'The source gate requires Node 22+')
+        # Exercise the actual JS in setup.sh: stubbing node hid ERR_INVALID_ARG_TYPE.
+        result, log = self.run_setup(['--agent', 'codex'], system='Linux', real_node=node)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('scripts/install.py --agent codex', log)
+
+    def test_node_prerequisite_rejects_old_node(self):
+        result, log = self.run_setup(['--agent', 'codex'], system='Linux', old_node=True)
+        self.assertEqual(result.returncode, 2, result.stderr)
+        self.assertNotIn('scripts/install.py', log)
+
+    def test_linux_display_warning_is_advisory_and_respects_display_variables(self):
+        from cli import capture_display_warning
+        warning = capture_display_warning('linux', {})
+        self.assertIn('xvfb-run', warning)
+        self.assertIn('headless smoke can still pass', warning)
+        for env in ({'DISPLAY': ':99'}, {'WAYLAND_DISPLAY': 'wayland-0'}):
+            self.assertIsNone(capture_display_warning('linux', env))
+        for platform in ('darwin', 'win32'):
+            self.assertIsNone(capture_display_warning(platform, {}))
+
+    def run_setup(self, args, missing_ffmpeg=False, system='Darwin', real_node=None, old_node=False):
         with tempfile.TemporaryDirectory() as directory:
             bin_dir = Path(directory) / 'bin'; bin_dir.mkdir()
             log = Path(directory) / 'calls'
@@ -55,6 +79,11 @@ class SetupTests(unittest.TestCase):
                 stubs.update(ffmpeg='#!/bin/sh\nexit 0\n', ffprobe='#!/bin/sh\nexit 0\n')
             for name, text in stubs.items():
                 path = bin_dir / name; path.write_text(text); path.chmod(0o755)
+            if real_node:
+                (bin_dir / 'node').unlink()
+                (bin_dir / 'node').symlink_to(real_node)
+            elif old_node:
+                (bin_dir / 'node').write_text('#!/bin/sh\nexit 1\n')
             env = {**os.environ, 'PATH': str(bin_dir), 'SETUP_TEST_LOG': str(log)}
             result = subprocess.run(['/bin/bash', 'scripts/setup.sh', *args],
                                     cwd=Path(__file__).resolve().parents[1], env=env, capture_output=True, text=True)

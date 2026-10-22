@@ -126,12 +126,17 @@ export async function loadChromium(importPlaywright = () => import('playwright')
 const BROWSERS_FROM_CACHE = "Run the Demo bundle installer to install this Playwright version's Chromium."
 
 // chromium.launch, where a browser that will not start is a refusal (exit 2) with one plain
-// sentence, not a stack trace: the first line of why, and what not to do about it.
-async function launchBrowser(chromium, options) {
+// sentence, not a stack trace. Suggest recovery only for a recognized cause.
+export async function launchBrowser(chromium, options, { platform = process.platform, env = process.env } = {}) {
   try {
     return await chromium.launch(options)
   } catch (error) {
-    throw new CaptureRefusal(`The browser did not start (${plain(error)}). ${BROWSERS_FROM_CACHE}`)
+    const message = String(error?.message ?? error)
+    let recovery = ''
+    if (message.includes("Executable doesn't exist")) recovery = BROWSERS_FROM_CACHE
+    else if (options.headless === false && platform === 'linux' && !env.DISPLAY?.trim() && !env.WAYLAND_DISPLAY?.trim())
+      recovery = 'A display is required for sign-in or headed capture, but neither DISPLAY nor WAYLAND_DISPLAY is set. Use a desktop session or run the capture with xvfb-run -a -s "-screen 0 1920x1080x24" aaron-demo capture <args>. Interactive sign-in still needs a way to view and control the browser.'
+    throw new CaptureRefusal(`The browser did not start (${plain(error)}).${recovery ? ` ${recovery}` : ''}`)
   }
 }
 

@@ -22,7 +22,7 @@ choose_python() {
 }
 missing=()
 choose_python || missing+=(python@3.11)
-if ! command -v node >/dev/null || ! node -e 'process.exit(+process.versions.node.split(".")[0]<22)' 2>/dev/null; then missing+=(node@22); fi
+if ! command -v node >/dev/null || ! node -e 'if(+process.versions.node.split(".")[0]<22)process.exit(1)' 2>/dev/null; then missing+=(node@22); fi
 if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then missing+=(ffmpeg); fi
 command -v git >/dev/null || missing+=(git)
 if ((${#missing[@]})); then
