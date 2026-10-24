@@ -5,6 +5,9 @@
   "engines": {
     "node": ">=22"
   },
+  "overrides": {
+    "zod": "4.6.6"
+  },
   "dependencies": {
     "@remotion/cli": "4.0.536",
     "bun": "1.4.3",
