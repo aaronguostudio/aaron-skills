@@ -30,7 +30,24 @@ dependencies separately from the Demo runtime checks.
 - Working section navigation, GitHub/documentation links, and English/Chinese
   language switching. `?lang=zh` opens the Chinese page directly.
 - Desktop, tablet and phone layouts; reduced-motion preferences are respected.
-- Self-hosted font and illustrations. No sign-in, analytics or backend service.
+- Self-hosted font and illustrations. No sign-in or application backend service.
+
+## Traffic analytics
+
+Rybbit loads asynchronously only on `skills.aaronguo.com`; localhost and Preview
+deployments do not send production analytics. The shared HTML entry covers the
+homepage, `/covers` and `/layouts`, including both languages. Rybbit tracks the
+initial page view, SPA navigation and outbound links without custom user IDs.
+
+The private [Aaron Skills dashboard](https://app.rybbit.io/18081/main) belongs to
+Aaron Guo Studio. Its site settings enable bot blocking and daily user ID salting;
+query-string collection and session replay are disabled. The public tracking ID
+in `index.html` is not an API key. No analytics credentials belong in this site.
+
+These metrics describe website visits, sessions and approximate unique visitors.
+They do not measure skill installations or usage inside an agent application.
+Counts begin after the tracker is published; ad blockers may prevent collection.
+See the [Rybbit tracking documentation](https://rybbit.com/docs/script).
 
 ## Design and art
 

@@ -16,6 +16,15 @@
       content="Reusable agent skills and executable tools for thoughtful software work. Explore Demo Capture, Walkthrough Video, and Paste Ready Update."
     />
     <title>Aaron Skills — A working method, made reusable.</title>
+    <script>
+      // Keep development and preview visits out of production analytics.
+      if (window.location.hostname === "skills.aaronguo.com") {
+        const analytics = document.createElement("script");
+        analytics.src = "https://app.rybbit.io/api/script.js?siteId=5b4a592e5ea2";
+        analytics.async = true;
+        document.head.appendChild(analytics);
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
