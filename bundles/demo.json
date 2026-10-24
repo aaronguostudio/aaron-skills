@@ -124,7 +124,18 @@
     "packages/demo/walkthrough/voice-cli.ts",
     "packages/demo/walkthrough/kokoro-local.ts",
     "packages/demo/walkthrough/kokoro-worker.py",
-    "docs/narration-validation.md"
+    "docs/narration-validation.md",
+    "scripts/updates.py",
+    "scripts/runtime_activity.py",
+    "docs/updates.md"
   ],
-  "version": "0.4.1"
+  "version": "0.5.0",
+  "update": {
+    "kind": "review",
+    "compatibilityEpoch": "demo-0.5",
+    "summary": [
+      "Adds version checks, compatible patch updates, update controls and rollback.",
+      "Larger changes require review; local modified installations stay under your control."
+    ]
+  }
 }

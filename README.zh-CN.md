@@ -1,5 +1,7 @@
 # Aaron Skills
 
+使用 `aaron-demo version` 查看版本。干净的托管安装每天在后台检查更新，自动安装经过验证的兼容补丁；较大变化由用户选择升级。使用 `aaron-demo update` 查看和安装更新，`aaron-demo rollback` 回退，或用 `aaron-demo update policy notify|off` 调整策略。本地修改源码的安装保持手动管理。参见[版本与更新说明](docs/updates.md)。
+
 当前源码中的 Film 增强支持 Logo 来源与素材检查、统一配色，以及应用画面与字幕或全文讲稿面板的上下左右布局。可先预览封面和内容帧，再渲染视频；现有 v1 配置保持兼容。参见[视频布局说明](docs/video-layouts.md)。
 
 

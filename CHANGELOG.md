@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.5.0 — 2026-10-24
+
+- Add version reporting and daily background stable-release checks. Explicitly
+  compatible patches in the same major/minor series and compatibility epoch can
+  install automatically; larger changes show a summary and require acceptance.
+- Add per-installation compatible/notify/off policies, snoozed reminders, and
+  rollback to a verified retained runtime. Rollback pauses automatic installation.
+- Keep running capture/render commands on their original runtime; protect local
+  edits, custom paths and uninstall intent, and report failed checks as unknown.
+- Publish checksum-bound update assets from committed main releases and exercise
+  automatic update, review-only changes, offline checks and rollback in CI.
+- Existing installations need setup once to acquire the updater. No hosted
+  service or narration account is required for version management.
+
 ## 0.4.1 — 2026-10-21
 
 - Fix the POSIX setup check rejecting installed Node 22+ because a boolean was

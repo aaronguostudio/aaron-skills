@@ -6,4 +6,12 @@ Sessions use private local directories and files outside Git. POSIX uses owner-o
 
 Adapters and walks are trusted JavaScript executed on the user's machine. The browser guard is not a sandbox for malicious scripts. HTTP method filtering does not inspect WebSocket message contents or prove server-side read-only semantics. Retain explicit host and read exceptions, production gates, and documented redirect limitations from project-adapters.md.
 
+Clean managed installations check the official GitHub stable-release API and
+download verified update assets in the background, normally once a day. Eligible
+compatible patches may then download dependencies just as setup does. Requests
+contain no project content, captures, credentials or usage events. Use
+`aaron-demo update policy notify` for notifications without automatic installation,
+or `aaron-demo update policy off` to disable automatic checks. Locally modified
+source installations skip this automatic activity. See [updates](updates.md).
+
 No publishing, messaging, analytics collection, or upload is part of the default flow.

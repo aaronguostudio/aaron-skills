@@ -139,6 +139,12 @@ an MP4, review stills and a local HTML update page.
 
 ## Make a demo
 
+Check your version with `aaron-demo version`. Clean installations check daily in
+the background and automatically install verified compatible patches. Larger
+changes need your choice. Use `aaron-demo update`, `aaron-demo rollback`, or
+`aaron-demo update policy notify|off` to control updates. Local modified-source
+installations stay manual. See [versions and updates](docs/updates.md).
+
 Ask your agent:
 
 > Use Capture to demonstrate this feature in my local app. Show the starting

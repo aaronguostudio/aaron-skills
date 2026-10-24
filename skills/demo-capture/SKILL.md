@@ -6,6 +6,8 @@ description: Record a real web application's feature walkthrough or step screens
 
 Invocation ID: `demo-capture`. The runtime and command names remain unchanged.
 
+At the start of a new task, run `aaron-demo update --background` if the CLI is available. This starts the configured version check without waiting; continue the task. Relay any update notice once, and use `aaron-demo update` for the change summary. Larger changes need the user's choice; never add `--yes` on their behalf. Updates do not authorize publishing or provider spending.
+
 Runtime requirements: Requires the aaron-demo Demo bundle, a verified platform (see `aaron-demo docs compatibility`), Node 22+, Chromium, and local filesystem access.
 
 Use the installed `aaron-demo` CLI. If it is unavailable, explain that this skill needs the Demo runtime and follow the repository installation guide; do not invent a recording substitute. `aaron-demo docs installation` and `aaron-demo docs project-adapters` provide setup and adapter details when the CLI is installed.
