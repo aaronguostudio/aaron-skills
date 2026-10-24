@@ -14,6 +14,15 @@ mocked in ordinary tests; paid model evaluations are opt-in.
 
 ## Agent checks
 
+The [first-use onboarding case](https://github.com/aaronguostudio/aaron-skills/tree/main/benchmarks/onboarding-v0) runs the
+documented setup and full first-artifact journey with an empty child profile in
+the three-platform CI matrix. It covers silent/imported/synthetic-provider audio,
+voice-name selection, cover/body previews and repeat output without resynthesis.
+Its scripted results do not establish native discovery, live provider access or
+human ease of use. An opt-in native-agent runner and supervised novice protocol
+keep those acceptance layers separate. Raw evidence stays outside Git; new
+failures become focused regressions and are rerun against the frozen protocol.
+
 `evals/demo-cases.json` holds positive, negative and capture-reuse cases.
 `scripts/evaluate.py` measures prompted routing/decisions in isolated Codex calls;
 it does not establish native discovery or tool execution. Outputs stay outside

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.5.0",
+  "version": "0.5.1",
   "files": [
     ".github/workflows/ci.yml",
     ".gitignore",
@@ -273,7 +273,19 @@
     "scripts/test_updates.py",
     "scripts/verify-updates.py",
     "docs/updates.md",
-    ".github/workflows/update-assets.yml"
+    ".github/workflows/update-assets.yml",
+    "benchmarks/onboarding-v0/README.md",
+    "benchmarks/onboarding-v0/case.json",
+    "benchmarks/onboarding-v0/tasks.md",
+    "benchmarks/onboarding-v0/rubric.json",
+    "benchmarks/onboarding-v0/run.py",
+    "benchmarks/onboarding-v0/journey.ts",
+    "benchmarks/onboarding-v0/score.py",
+    "benchmarks/onboarding-v0/test_onboarding.py",
+    "benchmarks/onboarding-v0/native.py",
+    "packages/demo/capture/scripts/calibration.mjs",
+    "packages/demo/capture/test/calibration.test.mjs",
+    "packages/demo/capture/test/calibration.e2e.mjs"
   ],
   "reviewedBinaryAssets": {
     "packages/demo/covers/art/alpine-silence.webp": {

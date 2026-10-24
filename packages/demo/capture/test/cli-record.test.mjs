@@ -70,7 +70,16 @@ function fakeChromium({ videoSaved = true, stateError, launchError } = {}) {
     listenerCount: (event) => (listeners[event] ?? []).length,
     async setContent() {},
     async waitForTimeout() {},
-    async evaluate() {},
+    async evaluate(fn, arg) {
+      if (Array.isArray(arg)) return arg[0]
+      const code = String(fn)
+      if (code.includes("document.createElement('div')")) await fake.onFrame?.({ data: Buffer.from([0]) })
+      else if (code.includes("'#fff'")) await fake.onFrame?.({ data: Buffer.from([255]) })
+    },
+    screencast: {
+      async start({ onFrame }) { fake.onFrame = onFrame },
+      async stop() { fake.onFrame = null }
+    },
     async goto(url) {
       fake.url = url
       fake.visited?.(url)

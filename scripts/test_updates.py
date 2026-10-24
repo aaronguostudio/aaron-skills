@@ -61,6 +61,28 @@ def archive_for(source, manifest, extra=None):
 
 
 class PolicyTests(unittest.TestCase):
+    def test_empty_macos_trust_store_uses_system_ca_without_disabling_verification(self):
+        from unittest.mock import MagicMock
+        context = MagicMock()
+        context.cert_store_stats.return_value = {'x509_ca': 0}
+        response = MagicMock()
+        response.__enter__.return_value.read.return_value = b'fixture'
+        with patch('updates.sys.platform', 'darwin'), patch.dict(os.environ, {}, clear=True), \
+                patch('updates.Path.is_file', return_value=True), \
+                patch('updates.ssl.create_default_context', return_value=context) as secure_default, \
+                patch('updates.urllib.request.urlopen', return_value=response) as request:
+            self.assertEqual(updates.fetch('https://fixture.invalid', 20), b'fixture')
+            secure_default.assert_called_once_with()
+            context.load_verify_locations.assert_called_once_with(cafile='/etc/ssl/cert.pem')
+            self.assertIs(request.call_args.kwargs['context'], context)
+            context.load_verify_locations.reset_mock()
+            with patch.dict(os.environ, {'SSL_CERT_FILE': '/fixture/company.pem'}):
+                updates.fetch('https://fixture.invalid', 20)
+            context.load_verify_locations.assert_not_called()
+            context.cert_store_stats.return_value = {'x509_ca': 100}
+            updates.fetch('https://fixture.invalid', 20)
+            context.load_verify_locations.assert_not_called()
+
     def test_task_locks_allow_nested_processes_and_release_after_a_crash(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

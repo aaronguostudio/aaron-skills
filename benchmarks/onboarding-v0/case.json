@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "id": "onboarding-v0",
+  "protocolVersion": 1,
+  "sourceType": "synthetic",
+  "dataPolicy": "synthetic-only",
+  "credentials": "synthetic-only",
+  "requiredStages": [
+    "missing-prerequisite-guidance",
+    "fresh-install",
+    "empty-profile",
+    "no-account-choices",
+    "named-account-voice-contract",
+    "company-endpoint-setup",
+    "capture-and-silent-output",
+    "cover-and-body-preview",
+    "imported-audio-output",
+    "narrated-output-and-reuse"
+  ],
+  "evidenceLayers": {
+    "scripted": "Clean profile, real installed tools and artifacts; synthetic provider transport.",
+    "nativeAgent": "Separate opt-in run with only project-installed skills and a newcomer brief.",
+    "human": "Separate supervised novice/device acceptance; never inferred from scripted success."
+  },
+  "liveProviders": "Not assessed by ordinary CI. Account access, quota, cloning and voice quality require separate acceptance."
+}

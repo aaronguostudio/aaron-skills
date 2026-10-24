@@ -11,12 +11,15 @@ to produce a high score.
   separately from the three offline artifact-quality trials.
 - Authenticated read-only and write-recovery cases: planned in the blog case registry;
   not yet executed or certified.
+- [Onboarding v0](onboarding-v0/README.md): a fresh-profile installation and first
+  artifact journey with synthetic voices, cover/body previews, and repeat output.
+  Scripted CI, native-agent execution and human novice acceptance are separate.
 
 These are development resources and sanitized result records. They do not change
 the installed Demo runtime or register additional skills.
 
 Read the [public/private boundary](PRIVACY.md) before adding a case or result.
-The [public case registry](public-cases.json) currently permits only the blog case.
+The [public case registry](public-cases.json) permits the blog and synthetic onboarding cases.
 Eligible future cases use licensed open-source projects or wholly fictional test
 applications, including fictional login flows. Private project benchmarks are disabled.
 Raw execution artifacts stay outside Git, even for public cases. Enable the local

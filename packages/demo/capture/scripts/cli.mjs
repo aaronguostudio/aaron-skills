@@ -13,6 +13,7 @@ import { mkdir, mkdtemp, readFile, readdir, rm, rmdir, stat } from 'node:fs/prom
 import { tmpdir } from 'node:os'
 import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { calibrateRecording } from './calibration.mjs'
 import {
   CaptureRefusal,
   RunGuard,
@@ -318,25 +319,9 @@ export async function record({ chromium, config, env, walk, params, runDir, stat
       if (config.setup) await config.setup({ page, params, baseUrl: env.baseUrl })
       guard.assertClean()
       assertSignedIn({ atStart: true })
-      // Calibrate after real navigation: Chromium may omit all about:blank/setContent
-      // preroll from the recording. An overlay on the loaded app is present in the video.
-      await page.evaluate(() => {
-        const marker = document.createElement('div')
-        marker.id = '__aaron_demo_sync__'
-        marker.setAttribute('aria-hidden', 'true')
-        marker.style.cssText = 'all:initial;display:block!important;position:fixed!important;inset:0!important;background:#000!important;z-index:2147483647!important;pointer-events:none!important'
-        document.documentElement.appendChild(marker)
-      })
-      await page.waitForTimeout(700)
-      const before = rec.ms()
-      await page.evaluate(() => {
-        const marker = document.getElementById('__aaron_demo_sync__')
-        if (!marker) throw new Error('The application navigated during recording calibration')
-        marker.style.setProperty('background', '#fff', 'important')
-      })
-      manifest.sync = { tMs: Math.round((before + rec.ms()) / 2) }
-      await page.waitForTimeout(300)
-      await page.evaluate(() => document.getElementById('__aaron_demo_sync__')?.remove())
+      // A cold recorder can start after a fixed marker delay has already elapsed.
+      // Confirm real black/white screencast frames before proceeding to the walk.
+      manifest.sync = await calibrateRecording(page, () => rec.ms())
       guard.assertClean()
       rec.onBeforeStep(async (stepId) => {
         guard.assertClean()

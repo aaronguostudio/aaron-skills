@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "protocolVersion": 1,
+  "scriptedGate": "Every required stage must pass; failed or absent stages fail the gate.",
+  "nativeGate": [
+    "At least one real installed capture passed",
+    "A cover and representative body preview exist before final video",
+    "A playable MP4 and screenshot-bearing HTML handoff exist",
+    "Original capture evidence remains available",
+    "No real provider credentials or cloud synthesis used"
+  ],
+  "metrics": ["elapsedSeconds", "stageSeconds", "scriptedPrompts", "providerFixtureRequests", "captureFingerprint", "bundleId", "sourceRevision", "hostVersion", "requestedModel"],
+  "unassessed": ["Human ease of use", "Live provider account access and voice quality", "Operating-system provisioning before prerequisites", "Other native agent hosts"]
+}
