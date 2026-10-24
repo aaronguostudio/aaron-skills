@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.5.1 — 2026-10-24
+
+- Shrink cover titles before splitting Latin words, retaining natural CJK
+  wrapping and emergency wrapping for exceptionally long identifiers.
+- Wait for real black/white screencast frames before completing recording
+  calibration. A cold recorder can otherwise start after a fixed marker delay
+  and leave a passed capture that the renderer cannot synchronize.
+- Add a versioned synthetic first-use benchmark with a fresh child profile,
+  isolated setup, no-account choices, named voice selection, private credential
+  storage, cover/body previews, imported/narrated output and cache reuse.
+- Run the scripted onboarding gate in the three-platform CI matrix and provide
+  an opt-in native-agent task with independent artifact scoring. Keep real
+  provider access/voice quality and human novice acceptance explicitly separate.
+
 ## 0.5.0 — 2026-10-24
 
 - Add version reporting and daily background stable-release checks. Explicitly

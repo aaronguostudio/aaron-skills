@@ -16,7 +16,7 @@ Only these source types can be registered in [public-cases.json](public-cases.js
 | `open-source` | Public source URL, pinned revision and license recorded; local fixture with public/synthetic data. Publicly visible source alone is not evidence of a reuse license. |
 | `synthetic` | Entirely fictional application, people, organizations and data. Login cases use dedicated seeded test accounts and simulated side effects. No production identity provider or real customer accounts. |
 
-Currently only `blog-v0` is registered. Open-source and synthetic login cases are
+`blog-v0` and the wholly synthetic `onboarding-v0` are registered. Open-source and synthetic login cases are
 the next eligible additions, not completed benchmark results. Existing synthetic
 runtime tests do not automatically become benchmark cases.
 

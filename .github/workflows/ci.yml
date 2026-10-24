@@ -87,12 +87,10 @@ jobs:
           npm audit --omit=dev --audit-level=high
           npm audit --prefix packages/demo/capture --omit=dev --audit-level=high
           npm audit --prefix packages/demo/remotion --omit=dev --audit-level=high
-      - name: Install bundle
+      - name: Clean-profile installation and first-artifact onboarding benchmark
         run: >-
-          python scripts/install.py --agent codex
-          --root "$RUNNER_TEMP/demo install/runtime"
-          --bin-dir "$RUNNER_TEMP/demo install/bin"
-          --skills-dir "$RUNNER_TEMP/demo install/skills"
+          python benchmarks/onboarding-v0/run.py
+          --workspace "$RUNNER_TEMP/demo install"
       - name: Installed revision, playback and clipboard
         run: |
           release=$(python -c 'import os,sys;from pathlib import Path;sys.path.insert(0,"scripts");from managed_registration import active_release;root=Path(os.environ["RUNNER_TEMP"])/"demo install/runtime";print(active_release(root) if os.name=="nt" else root/"current")')

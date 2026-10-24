@@ -16,6 +16,13 @@
       "sourceUrl": "https://aaronguo.com",
       "dataPolicy": "public-only",
       "credentials": "none"
+    },
+    {
+      "id": "onboarding-v0",
+      "path": "benchmarks/onboarding-v0",
+      "sourceType": "synthetic",
+      "dataPolicy": "synthetic-only",
+      "credentials": "synthetic-only"
     }
   ]
 }

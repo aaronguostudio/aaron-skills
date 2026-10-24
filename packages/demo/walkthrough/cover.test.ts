@@ -60,6 +60,12 @@ describe('editable cover library',()=>{
     expect(fitCoverText('Short title',box,'Arial',140)).toBeGreaterThan(fitCoverText('A much longer title about making a complex customer journey understandable',box,'Arial',140));
     expect(fitCoverText('第一行\n第二行\n第三行\n第四行',box,'Arial',140)).toBeLessThan(80);
   });
+  test('cover titles shrink before breaking an ordinary Latin word',()=>{
+    const size=fitCoverText('First walkthrough',[0,0,660,378],'Georgia',138,1.02,-.035);
+    expect(size).toBeLessThan(138);
+    expect(11*size*.58-10*size*.035).toBeLessThanOrEqual(660*.97);
+    expect(fitCoverText('中文标题',[0,0,150,700],'Arial',138)).toBe(138);
+  });
 });
 
 describe('standalone cover command',()=>{

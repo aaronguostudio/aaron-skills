@@ -15,6 +15,9 @@ export function fitCoverText(text:string,box:Box,family:string,max:number,lineHe
   for(let size=max;size>=12;size-=2) {
     if(context) context.font=`700 ${size}px ${family}`;
     const measure=(word:string)=>(context?context.measureText(word).width:Array.from(word).reduce((n,c)=>n+size*(/[\u3000-\uffff]/.test(c)?1:.58),0))+Math.max(0,Array.from(word).length-1)*size*tracking;
+    // Shrink to keep Latin words intact before using the emergency character
+    // wrap. CJK still wraps naturally; unbounded identifiers may wrap at 12 px.
+    if((text.match(/[\p{Script=Latin}\p{N}][\p{Script=Latin}\p{N}'’-]*/gu)??[]).some(word=>measure(word)>box[2]*.97)) continue;
     let lines=0;
     for(const paragraph of text.split('\n')) {
       let line='';lines++;

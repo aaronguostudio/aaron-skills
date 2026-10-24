@@ -25,6 +25,26 @@ copyFileSync(join(run,steps[0].shot),join(root,'logo.png'));
 const presentation=join(root,'presentation.json');
 writeFileSync(presentation,JSON.stringify({version:1,brand:{name:'Fictional fixture',logo:'logo.png'}}));
 const evidence=[];
+// Reproduce the newcomer title in a real browser/font environment. Height-only
+// checks miss a word broken in the middle even when the title stays in bounds.
+const {fitCoverText}=await import(pathToFileURL(join(release,'packages/demo/remotion/src/cover-library/CoverDesign.tsx')).href);
+const {chromium}=await import(pathToFileURL(join(release,'packages/demo/capture/node_modules/playwright/index.mjs')).href);
+const browser=await chromium.launch();
+try {
+  const page=await browser.newPage();
+  const result=await page.evaluate(fitter=>{
+    const fit=new Function(`return (${fitter})`)();
+    const font="Georgia, 'Times New Roman', 'Noto Serif CJK SC', serif";
+    const size=fit('First walkthrough',[0,0,660,378],font,138,1.02,-.035);
+    const element=document.createElement('div');
+    element.style.cssText=`width:660px;font:700 ${size}px ${font};line-height:1.02;letter-spacing:-.035em;white-space:pre-wrap;overflow-wrap:anywhere`;
+    element.textContent='First walkthrough';document.body.appendChild(element);
+    const word=document.createRange();word.setStart(element.firstChild,6);word.setEnd(element.firstChild,17);
+    return {wordLines:word.getClientRects().length,height:element.getBoundingClientRect().height};
+  },fitCoverText.toString());
+  if(result.wordLines!==1||result.height>378)throw Error('Newcomer cover title breaks a word or exceeds its title box');
+  evidence.push({newcomerTitleWholeWord:true,realBrowserFont:true});
+} finally {await browser.close();}
 for(const template of ['minimal','professional','showcase']){
   const out=join(root,template,'walkthrough.mp4');
   const status=await main([run,'--template',template,'--cover','--out',out,...(template==='professional'?['--audio',audio,'--presentation',presentation]:[])]);
