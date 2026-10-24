@@ -6,6 +6,8 @@ description: Choose and customize presentation covers, draft walkthrough scripts
 
 Invocation ID: `walkthrough-video`. The runtime and command names remain unchanged.
 
+At the start of a new task, run `aaron-demo update --background` if the CLI is available. This starts the configured version check without waiting; continue the task. Relay any update notice once, and use `aaron-demo update` for the change summary. Larger changes need the user's choice; never add `--yes` on their behalf. Updates do not authorize publishing or provider spending.
+
 Runtime requirements: Requires the aaron-demo Demo bundle, a verified platform (see `aaron-demo docs compatibility`), FFmpeg, and the installed Bun and Remotion runtime. Cloud narration needs a user-owned account/endpoint; optional free local Kokoro, silent and imported-audio rendering do not.
 
 ## Confirm the presentation before production

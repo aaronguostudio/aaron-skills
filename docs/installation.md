@@ -151,6 +151,14 @@ to a cloud host; that host still needs its own runtime and browser.
 
 ## Upgrade, repair and rollback
 
+New installations include daily background version checks and automatic
+compatible patch updates. Larger changes require review; rollback is available
+with `aaron-demo rollback` and pauses automatic installation. Use
+`aaron-demo version`, `aaron-demo update check` and
+`aaron-demo update policy compatible|notify|off`. See [updates](updates.md) for
+eligibility, notices, offline behavior and retained versions. Existing installs
+need the updated setup once to acquire this mechanism.
+
 Run setup again with the same path options. Content hashes identify releases;
 dependencies are prepared before activation. POSIX activates a `current` symlink.
 Windows uses `active.json`, a stable Python launcher and managed copies of the

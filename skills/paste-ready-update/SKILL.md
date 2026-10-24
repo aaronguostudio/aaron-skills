@@ -6,6 +6,8 @@ description: Prepare a customer or teammate update, release note, handoff, or ho
 
 Invocation ID: `paste-ready-update`. The runtime and command names remain unchanged.
 
+At the start of a new task, run `aaron-demo update --background` if the CLI is available. This starts the configured version check without waiting; continue the task. Relay any update notice once, and use `aaron-demo update` for the change summary. Larger changes need the user's choice; never add `--yes` on their behalf. Updates do not authorize publishing or provider spending.
+
 Runtime requirements: Requires the aaron-demo Demo bundle, a verified platform (see `aaron-demo docs compatibility`), Python 3.11+, and Pillow. The generated page is a local HTML file.
 
 Prepare a message the user can review, paste, and send. Identify the reader, relevant change, destination, language, and signature from the brief. Ask only for missing information that affects the message.

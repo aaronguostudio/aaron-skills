@@ -1,0 +1,32 @@
+name: Stable update assets
+on:
+  release:
+    types: [published]
+permissions:
+  contents: write
+jobs:
+  package:
+    if: ${{ !github.event.release.prerelease && !github.event.release.draft }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          fetch-depth: 0
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Require a committed main revision
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          git fetch origin main
+          git merge-base --is-ancestor HEAD origin/main
+          python3 scripts/prepare_update.py --tag "$RELEASE_TAG" --out "$RUNNER_TEMP/update-assets"
+      - name: Attach the archive before the update descriptor
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          gh release upload "$RELEASE_TAG" "$RUNNER_TEMP"/update-assets/*.tar.gz
+          gh release upload "$RELEASE_TAG" "$RUNNER_TEMP/update-assets/aaron-skills-update.json"

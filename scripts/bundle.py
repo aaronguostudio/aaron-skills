@@ -87,7 +87,8 @@ def metadata(root=ROOT):
         revision = previous.get('sourceRevision', 'local-uncommitted')
         dirty = previous.get('sourceDirty', True) or previous.get('files') != hashes
     return {'schema': 1, 'bundle': 'demo', 'version': json.loads((root / 'bundles/demo.json').read_text(encoding='utf-8'))['version'], 'id': digest[:16],
-            'sourceRevision': revision, 'sourceDirty': dirty, 'skills': list(SKILLS), 'files': hashes}
+            'sourceRevision': revision, 'sourceDirty': dirty, 'skills': list(SKILLS), 'files': hashes,
+            'update': json.loads((root / 'bundles/demo.json').read_text(encoding='utf-8')).get('update')}
 
 
 def build(destination, root=ROOT):

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.4.1",
+  "version": "0.5.0",
   "files": [
     ".github/workflows/ci.yml",
     ".gitignore",
@@ -266,7 +266,14 @@
     "packages/demo/walkthrough/kokoro-local.ts",
     "packages/demo/walkthrough/kokoro-worker.py",
     "packages/demo/walkthrough/voice.test.ts",
-    "docs/narration-validation.md"
+    "docs/narration-validation.md",
+    "scripts/updates.py",
+    "scripts/runtime_activity.py",
+    "scripts/prepare_update.py",
+    "scripts/test_updates.py",
+    "scripts/verify-updates.py",
+    "docs/updates.md",
+    ".github/workflows/update-assets.yml"
   ],
   "reviewedBinaryAssets": {
     "packages/demo/covers/art/alpine-silence.webp": {

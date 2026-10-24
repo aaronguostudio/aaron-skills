@@ -15,6 +15,62 @@ from uuid import uuid4
 from bundle import ROOT, SKILLS, build, metadata
 from platform_tools import check_system, configure_console, default_root, default_bin, installation_lock, npm_command, venv_python
 import managed_registration
+from runtime_activity import runtime_activity
+
+
+def activate_release(root, release, config, skills, *, expected_active=None):
+    """Switch a prepared runtime without changing a running task or user edits."""
+    from updates import write_json
+    directories = [Path(p) for p in config.get('skillsDirs', [config['skillsDir']])]
+    bin_dir = Path(config['binDir'])
+    with runtime_activity(root, exclusive=True):
+        previous = managed_registration.active_release(root) if os.name == 'nt' else (root / 'current').resolve() if (root / 'current').is_symlink() else None
+        if expected_active is not None:
+            from updates import verify_bundle
+            if (root / '.updates-disabled').exists():
+                raise ValueError('This installation was uninstalled. Run setup to reinstall; automatic updates remain disabled.')
+            if previous != expected_active.resolve():
+                raise ValueError('The active version changed during update preparation. Check again before updating.')
+            verify_bundle(previous)
+        record = root / 'previous-release.json'
+        old_record = record.read_bytes() if record.is_file() else None
+        # Write the rollback pointer before activation. A full disk must not
+        # leave a newly active release without its previous-version record.
+        if previous and previous != release.resolve():
+            write_json(record, {'release': str(previous)})
+        try:
+            if os.name == 'nt':
+                managed_registration.activate(root, release, directories, bin_dir, skills, config['tools']['python'], configuration=config)
+            else:
+                _activate_posix(root, release, config, directories, bin_dir, write_json)
+        except BaseException:
+            if old_record is None:
+                record.unlink(missing_ok=True)
+            else:
+                record.write_bytes(old_record)
+            raise
+
+
+def _activate_posix(root, release, config, directories, bin_dir, write_json):
+    # Recheck just before switching; another program may have replaced a link.
+    wanted = link_conflicts(root, directories, bin_dir)
+    old = {path: path.readlink() if path.is_symlink() else None for path in [root / 'current', *wanted]}
+    previous_config = (release / 'installed.json').read_bytes()
+    try:
+        for path in (*directories, bin_dir):
+            path.mkdir(parents=True, exist_ok=True)
+        write_json(release / 'installed.json', config)
+        atomic_link(release, root / 'current')
+        for link, target in wanted.items():
+            atomic_link(target, link)
+    except BaseException:
+        (release / 'installed.json').write_bytes(previous_config)
+        for path, target in old.items():
+            if target is None:
+                path.unlink(missing_ok=True)
+            else:
+                atomic_link(target, path)
+        raise
 
 def atomic_link(target, link):
     temporary = link.with_name(link.name + f'.tmp-{os.getpid()}')
@@ -107,14 +163,21 @@ def main():
     parser.add_argument('--uninstall', action='store_true', help='Remove managed registrations; retain runtime and all user data.')
     parser.add_argument('--bin-dir', type=Path, default=default_bin())
     parser.add_argument('--repair', action='store_true', help='Build and verify a fresh release without modifying the active release.')
+    parser.add_argument('--registration-dir', type=Path, action='append', help=argparse.SUPPRESS)
+    parser.add_argument('--expected-active', type=Path, help=argparse.SUPPRESS)
     args = parser.parse_args()
     root, bin_dir = [path.expanduser().resolve() for path in (args.root, args.bin_dir)]
     if args.uninstall:
+        root.mkdir(parents=True, exist_ok=True)
+        # Stop an already-running updater from re-registering after uninstall.
+        (root / '.updates-disabled').touch()
         with installation_lock(root):
             uninstall(root)
         return
     tools = prerequisites()
-    directories = registration_dirs(args.agent, Path.home(), args.skills_dir)
+    if args.registration_dir and args.skills_dir:
+        parser.error('--registration-dir cannot combine with --skills-dir')
+    directories = [p.expanduser().resolve() for p in args.registration_dir] if args.registration_dir else registration_dirs(args.agent, Path.home(), args.skills_dir)
     skills_dir = directories[0]
     # Never mix an installation with its source tree, a project, or captured work.
     if root.resolve().is_relative_to(ROOT.resolve()):
@@ -184,18 +247,15 @@ def main():
         launcher.chmod(0o755)
         (release / 'READY').touch()
         # Check again after downloads, before any links change.
-        if os.name == 'nt':
-            managed_registration.activate(root, release, directories, bin_dir, SKILLS, tools['python'], configuration=config)
-        else:
-            link_conflicts(root, directories, bin_dir)
-            for path in (*directories, bin_dir):
-                path.mkdir(parents=True, exist_ok=True)
-            atomic_link(release, current)
-            for link, target in wanted.items():
-                atomic_link(target, link)
+        activate_release(root, release, config, SKILLS, expected_active=args.expected_active)
         if cli.doctor(config):
             raise ValueError('Installed files passed, but skill registration needs attention.')
+        if args.expected_active is None:
+            (root / '.updates-disabled').unlink(missing_ok=True)
         print(f'Installed for {args.agent}. Start a new agent session in your application project.\nCommand: {bin_dir / "aaron-demo"}\nSmoke check: {bin_dir / "aaron-demo"} smoke')
+        print('Updates: compatible stable patches install automatically after Demo commands; larger changes only notify.\n'
+              'Control: aaron-demo update policy compatible|notify|off. Rollback: aaron-demo rollback.\n'
+              'Local modified-source installations do not check or update automatically.')
         if str(bin_dir) not in os.environ.get('PATH', '').split(os.pathsep):
             if os.name == 'nt':
                 print(f'Add {bin_dir} to your user PATH, then open a new terminal. This installer does not change PATH.')

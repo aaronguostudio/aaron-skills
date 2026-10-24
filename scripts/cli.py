@@ -8,6 +8,8 @@ import subprocess
 import sys
 from platform_tools import bun_binary, venv_python, configure_console, npm_command
 import managed_registration
+import updates
+from runtime_activity import runtime_activity
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / 'packages/demo/capture'
@@ -93,7 +95,7 @@ def main():
     os.umask(0o077)
     args = sys.argv[1:]
     if not args or args[0] in ('--help', '-h'):
-        print('Usage: aaron-demo doctor | voice setup|list|voices|test|doctor|install-local | smoke | uninstall | docs [topic] | capture <args> | inspect <run> | cover --list | cover --presentation <external.json> --out <cover.png> | render <run> [args] | revise <run> <patch.json> --out <new-run> | page <message.md> --out <page.html> | mark <args>')
+        print('Usage: aaron-demo version [--json] | update [check|policy compatible|notify|off|snooze] [--yes] | rollback | doctor | voice setup|list|voices|test|doctor|install-local | smoke | uninstall | docs [topic] | capture <args> | inspect <run> | cover --list | cover --presentation <external.json> --out <cover.png> | render <run> [args] | revise <run> <patch.json> --out <new-run> | page <message.md> --out <page.html> | mark <args>')
         return 0
     if args[0] == 'docs':
         topic = args[1] if len(args) > 1 else 'first-demo'
@@ -105,6 +107,22 @@ def main():
         return 0
     config = settings()
     command, rest = args[0], args[1:]
+    install_root = Path(config.get('installRoot', ROOT.parent.parent))
+    if command == 'version':
+        manifest = updates.installed_manifest(ROOT)
+        state = updates.state_for(install_root, manifest)
+        info = {'version': manifest['version'], 'bundleId': manifest['id'], 'sourceRevision': manifest['sourceRevision'],
+                'sourceDirty': manifest['sourceDirty'], 'updatePolicy': state['policy'],
+                'lastCheck': state.get('checkedAt'), 'update': state.get('result', {'status': 'unchecked'})}
+        print(json.dumps(info, indent=2) if '--json' in rest else f'Aaron Skills Demo {info["version"]}\nSource: {info["sourceRevision"]}{" (local changes)" if info["sourceDirty"] else ""}\nUpdates: {info["updatePolicy"]}; status: {info["update"]["status"]}')
+        return 0
+    if command == 'update':
+        return updates.main(install_root, ROOT, config, rest)
+    if command == 'rollback':
+        if rest:
+            raise ValueError('Usage: aaron-demo rollback')
+        updates.rollback(install_root)
+        return 0
     if command == 'uninstall':
         return run([config['tools']['python'], ROOT / 'scripts/install.py', '--root', config.get('installRoot', ROOT.parent.parent), '--uninstall'], config).returncode
     if command == 'doctor':
@@ -123,11 +141,23 @@ def main():
     if command not in commands:
         print(f'Unknown command: {command}', file=sys.stderr)
         return 2
-    return run(commands[command] + rest, config).returncode
+    try:
+        updates.notice(install_root, updates.installed_manifest(ROOT))
+    except (OSError, ValueError, KeyError, TypeError):
+        pass
+    # Pin the subprocess to this immutable release. Only activation takes an
+    # exclusive lock; background downloads never hold up a recording/render.
+    with runtime_activity(install_root, blocking=True):
+        result = run(commands[command] + rest, config).returncode
+    try:
+        updates.start_background(install_root, ROOT, config)
+    except (OSError, ValueError, KeyError, TypeError):
+        pass
+    return result
 
 if __name__ == '__main__':
     try:
         sys.exit(main())
-    except (OSError, ValueError, KeyError, TypeError) as error:
+    except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
         print(f'aaron-demo: {error}', file=sys.stderr)
         sys.exit(1)
