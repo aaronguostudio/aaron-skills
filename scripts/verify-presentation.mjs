@@ -9,6 +9,7 @@ import {pathToFileURL} from 'node:url';
 const release=resolve(process.argv[2]??'');
 const config=JSON.parse(readFileSync(join(release,'installed.json'),'utf8'));
 process.env.PATH=[...Object.values(config.tools).map(p=>dirname(p)),process.env.PATH].join(process.platform==='win32'?';':':');
+process.env.PLAYWRIGHT_BROWSERS_PATH=config.playwrightBrowsers;
 const root=mkdtempSync(join(tmpdir(),'aaron-presentation-acceptance-'));
 const run=join(root,'capture');mkdirSync(run);
 const {makeFixture}=await import(pathToFileURL(join(release,'packages/demo/walkthrough/make-fixture.ts')).href);
