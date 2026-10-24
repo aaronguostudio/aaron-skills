@@ -2,6 +2,8 @@
 
 ## 0.5.1 — 2026-10-24
 
+- Use the macOS system PEM bundle when Python has no CA certificates, while
+  retaining TLS verification and honoring explicit organization CA settings.
 - Shrink cover titles before splitting Latin words, retaining natural CJK
   wrapping and emergency wrapping for exceptionally long identifiers.
 - Wait for real black/white screencast frames before completing recording

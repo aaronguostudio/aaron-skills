@@ -98,4 +98,8 @@ metadata such as IP and User-Agent). They send no project path, recording,
 credentials or usage events. Package installation may contact the same dependency
 registries as setup. TLS and the official release account are the trust boundary;
 checksums bind the archive to the descriptor, not to an independent signing key.
+On macOS, an empty Python CA store can use `/etc/ssl/cert.pem` without changing
+system files or disabling TLS verification. Explicit `SSL_CERT_FILE` or
+`SSL_CERT_DIR` settings take precedence. Certificate failures keep the latest
+version unknown and show certificate-recovery guidance.
 See [installation](installation.md) and [data behavior](data-and-network-behavior.md).

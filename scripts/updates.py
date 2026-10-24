@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
+import ssl
 import subprocess
 import sys
 import tarfile
@@ -81,7 +82,15 @@ def state_for(root, manifest):
 
 def fetch(url, maximum):
     request = urllib.request.Request(url, headers={'Accept': 'application/vnd.github+json', 'User-Agent': 'Aaron-Skills-Updater'})
-    with urllib.request.urlopen(request, timeout=5) as response:
+    context = ssl.create_default_context()
+    # python.org macOS builds can have an empty OpenSSL CA store until their
+    # optional certificate-install command is run. Use the OS PEM bundle only
+    # for that empty-store case; never override explicit organization CA paths.
+    if (sys.platform == 'darwin' and not context.cert_store_stats()['x509_ca']
+            and not any(key in os.environ for key in ('SSL_CERT_FILE', 'SSL_CERT_DIR'))
+            and Path('/etc/ssl/cert.pem').is_file()):
+        context.load_verify_locations(cafile='/etc/ssl/cert.pem')
+    with urllib.request.urlopen(request, timeout=5, context=context) as response:
         data = response.read(maximum + 1)
     if len(data) > maximum:
         raise ValueError('Update response exceeds the size limit')
@@ -135,6 +144,8 @@ def check(root, manifest, state, *, force=False):
         result = {'status': classify(manifest, candidate), 'candidate': candidate}
     except (OSError, ValueError, KeyError, TypeError) as error:
         result = {'status': 'unknown', 'message': f'Update check failed ({type(error).__name__}); latest version is unknown. Retry: aaron-demo update check'}
+        if isinstance(getattr(error, 'reason', error), ssl.SSLCertVerificationError):
+            result['message'] += ' TLS certificate verification failed; check Python CA certificates or your organization\'s SSL_CERT_FILE configuration.'
     state.update(checkedAt=now, checkedId=manifest['id'], result=result)
     write_json(root / 'updates/state.json', state)
     return result
