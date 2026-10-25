@@ -21,7 +21,7 @@ try {
   git('merge-base', '--is-ancestor', previous, current);
   // Compare with the last successful deployment, not HEAD^: this includes all
   // skipped commits and preserves both sides of a cross-directory rename.
-  const paths = git('diff', '--no-renames', '--name-only', '-z', previous, current, '--').split('\0').filter(Boolean);
+  const paths = git('diff', '--no-relative', '--no-renames', '--name-only', '-z', previous, current, '--').split('\0').filter(Boolean);
   const prefixes = [
     'website/src/', 'website/public/', 'website/scripts/',
     'website/worker/', 'website/.openai/', 'packages/demo/covers/',

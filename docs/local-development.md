@@ -89,6 +89,9 @@ website dependencies to that input list.
 The Vercel project's Root Directory must remain `website`, with outside-root
 source available for the shared imports. Inspect dashboard command overrides
 before rollout; a repository config alone is not proof of effective settings.
+Build-machine size and on-demand concurrency are separate project settings;
+changing the Git triggers does not downgrade a Turbo machine or establish actual
+billing savings.
 
 ## Rollout and rollback
 
@@ -96,7 +99,10 @@ Verify locally, review the diff, and use the separately authorized merge/release
 flow. Repository changes do not alter the live deployment until published.
 After rollout, check that a runtime/docs-only main change skips, an affected
 main change builds, and a feature push creates no automatic Preview. Confirm
-`release.json` and the custom domain match the expected Git `main` revision.
+`release.json` and the custom domain match the expected built Git `main` revision.
+A skipped unrelated commit leaves that last built revision live; it need not
+equal the latest `main` tip. Confirm the live revision remains an ancestor of
+`main`, and use the canceled deployment's logs to verify the skip decision.
 
 If a site input is missed, correct the input list and commit it to `main`; edits
 to the build script itself trigger a build. If automatic previews or routine

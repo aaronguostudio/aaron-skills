@@ -24,10 +24,13 @@ test('deployment diff keeps shared inputs, accumulated changes and uncertain bas
     return git('rev-parse', 'HEAD');
   };
   const run = (previous, overrides = {}) => spawnSync(process.execPath, [script], {
-    cwd, encoding: 'utf8', env: { ...process.env, VERCEL_ENV: 'production', VERCEL_GIT_COMMIT_REF: 'main', VERCEL_GIT_COMMIT_SHA: git('rev-parse', 'HEAD'), VERCEL_GIT_PREVIOUS_SHA: previous, ...overrides },
+    cwd: path.join(cwd, 'website'), encoding: 'utf8', env: { ...process.env, VERCEL_ENV: 'production', VERCEL_GIT_COMMIT_REF: 'main', VERCEL_GIT_COMMIT_SHA: git('rev-parse', 'HEAD'), VERCEL_GIT_PREVIOUS_SHA: previous, ...overrides },
   });
   try {
     git('init', '-q');
+    // Vercel runs the ignored-build command from the configured Root Directory.
+    // Local Git preferences must not hide outside-root inputs or strip prefixes.
+    git('config', 'diff.relative', 'true');
     let base = commit('website/src/app.jsx', 'site');
     commit('docs/example.md', 'docs');
     assert.equal(run(base).status, 0, 'documentation alone skips');
@@ -46,5 +49,10 @@ test('deployment diff keeps shared inputs, accumulated changes and uncertain bas
     assert.equal(run(base, { VERCEL_GIT_COMMIT_SHA: 'b'.repeat(40) }).status, 1, 'checkout mismatch builds');
     assert.equal(run(base, { VERCEL_ENV: 'preview' }).status, 1, 'explicit previews build');
     assert.equal(run(base, { VERCEL_GIT_COMMIT_REF: 'feature/test' }).status, 1, 'do not bypass production branch guard');
+    const unrelated = git('rev-parse', 'HEAD');
+    git('checkout', '--orphan', 'divergent');
+    git('rm', '-rf', '.');
+    commit('website/src/app.jsx', 'different history');
+    assert.equal(run(unrelated).status, 1, 'divergent history builds');
   } finally { rmSync(cwd, { recursive: true, force: true }); }
 });
