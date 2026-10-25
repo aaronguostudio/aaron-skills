@@ -7,6 +7,8 @@
     "node": ">=22"
   },
   "scripts": {
+    "verify:website": "npm run verify --prefix website",
+    "verify:runtime": "python3 scripts/check.py",
     "check": "python3 scripts/check.py",
     "typecheck": "tsc --noEmit"
   },

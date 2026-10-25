@@ -2,6 +2,22 @@
 
 Keep all work local unless the user explicitly authorizes publishing. Do not add a remote or push as part of tests.
 
+## Local-first development
+
+Run day-to-day validation on the maintainer's machine. For website changes run
+`npm run verify:website` (including local responsive/browser checks); use
+`npm run verify:runtime -- --python <python-with-Pillow>` for runtime changes,
+plus isolated installed smoke when packaging/runtime changes. Keep output outside
+Git. Run the checks again after relevant edits. See `docs/local-development.md`.
+
+Vercel builds only the website delivery artifact. Automatic Git deployments are
+limited to `main`, with unrelated changes skipped against the last successful
+deployment. Keep shared cover dependencies in the deployment input list when
+website imports change. Cloud previews are explicit exceptions for review.
+The native three-OS matrix runs on version tags or manual dispatch; local Mac
+viewports do not certify Windows/Linux. Preserve automatic public-source and
+secret checks. Production remains a Git-triggered committed `main` deployment.
+
 Benchmark boundaries are defined in `benchmarks/PRIVACY.md`. Public cases must be
 registered in `benchmarks/public-cases.json` and explicitly listed in
 `bundles/source.json`. Use the public blog, licensed open-source projects or entirely

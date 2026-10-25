@@ -216,7 +216,10 @@ skill prerequisite wording are excluded:
   intended public source and Git history reported no findings.
 
 The [CI matrix](https://github.com/aaronguostudio/aaron-skills/actions/workflows/ci.yml)
-uses Node 22 and Python 3.11 on macOS 15, Ubuntu 24.04 and Windows Server 2022.
+runs on version tags or explicit manual dispatch, using Node 22 and Python 3.11
+on macOS 15, Ubuntu 24.04 and Windows Server 2022. Ordinary pushes/PRs keep only
+the public-source/history and secret boundary checks. Daily runtime and website
+acceptance is local; see [local development](local-development.md).
 It repeats source checks, fresh exported installation, revision/media/clipboard,
 headed synthetic sign-in and recovery. Consult the run for the exact commit;
 a recipe or a previous green run is not evidence for a later revision.

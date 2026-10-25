@@ -7,6 +7,10 @@ recording a real application.
 
 ## Development
 
+Daily development and testing are local-first. See
+[local development and release flow](docs/local-development.md) for website,
+runtime, manual cloud checks and Git-only production delivery.
+
 Requirements: the platform prerequisites in README.md and docs/installation.md. Install
 source dependencies with `npm ci`, `npm ci --prefix packages/demo/capture`, and
 `npm ci --prefix packages/demo/remotion`. Prepare a Demo installation as described
@@ -23,7 +27,7 @@ ordinary tests must not call paid providers.
 Both `ffmpeg` and `ffprobe` must launch from PATH before running the shared
 source gate. Missing tools fail before recording; required media tests do not skip.
 
-The CI matrix covers macOS 15, Ubuntu 24.04 and Windows Server 2022 with Node 22
+The on-demand/version-tag CI matrix covers macOS 15, Ubuntu 24.04 and Windows Server 2022 with Node 22
 and Python 3.11. It checks the exported install, revision/media/clipboard flow,
 headed synthetic sign-in and isolated recovery. `scripts/verify-windows.ps1`
 provides an additional native Windows acceptance entry point with an explicit

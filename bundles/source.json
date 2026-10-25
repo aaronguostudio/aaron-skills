@@ -28,6 +28,7 @@
     "docs/release-notes.md",
     "docs/releasing.md",
     "docs/verification.md",
+    "docs/local-development.md",
     "evals/demo-cases.json",
     "evals/fixtures/checked-invoice-walk.mjs",
     "evals/fixtures/evidence-cases.json",
