@@ -21,7 +21,8 @@ and a completed runtime workflow. None implies the others.
 
 See [verification](verification.md) for exact environments, acceptance scope and
 [three-platform CI](https://github.com/aaronguostudio/aaron-skills/actions/workflows/ci.yml).
-CI uses Node 22 and Python 3.11 on macOS 15, Ubuntu 24.04 and Windows Server 2022;
+The version-tag/manual CI matrix uses Node 22 and Python 3.11 on macOS 15,
+Ubuntu 24.04 and Windows Server 2022; daily development tests run locally.
 a green run verifies that revision, not every OS version or host model.
 
 Windows uses native Python/Node/Bun/Chromium, copied skill registrations and a
