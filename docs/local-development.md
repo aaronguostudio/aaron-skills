@@ -104,6 +104,18 @@ A skipped unrelated commit leaves that last built revision live; it need not
 equal the latest `main` tip. Confirm the live revision remains an ancestor of
 `main`, and use the canceled deployment's logs to verify the skip decision.
 
+### Reading deployment outcomes
+
+An unrelated `main` change can appear as a canceled deployment. Its build log
+must contain `Skip website: no website or shared cover input changed since the
+last deployment` and must stop before dependency installation or `vercel build`.
+This is an expected skip; inspect the log before treating a canceled deployment
+as a build failure. Automatic source/privacy/secret checks still run on GitHub.
+
+For an affected change, expect `Build website: site input changed:` followed by
+the artifact build. Verify that deployment's Git branch/SHA and the custom
+domain's `/release.json`. A branch preview must be requested explicitly.
+
 If a site input is missed, correct the input list and commit it to `main`; edits
 to the build script itself trigger a build. If automatic previews or routine
 matrix runs are needed again, revert the relevant Git/config changes through
