@@ -131,9 +131,10 @@
     "packages/demo/capture/scripts/calibration.mjs",
     "docs/local-development.md",
     "docs/data-masking.md",
-    "packages/demo/contracts/masks.mjs"
+    "packages/demo/contracts/masks.mjs",
+    "scripts/mask_smoke.py"
   ],
-  "version": "0.6.0",
+  "version": "0.6.1",
   "update": {
     "kind": "review",
     "compatibilityEpoch": "demo-0.6",

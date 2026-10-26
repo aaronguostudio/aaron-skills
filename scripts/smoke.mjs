@@ -95,23 +95,7 @@ execFileSync(python,[cli,'render',masked,'--preview'],{stdio:'inherit'})
 execFileSync(python,[cli,'render',masked,'--stills'],{stdio:'inherit'})
 await writeFile(join(masked,'message.md'),`---\ntitle: Masking check\nvideo: walkthrough.mp4 | Masked video\n---\n![Masked result](stills/01-${steps[0].id}.jpg)\n`)
 execFileSync(python,[cli,'page',join(masked,'message.md'),'--out',join(masked,'message.html')],{stdio:'inherit'})
-execFileSync(python,['-c',`
-from pathlib import Path
-from PIL import Image
-import base64,io,json,re,sys
-root=Path(sys.argv[1]); paths=[root/'body-preview.png',*sorted((root/'stills').glob('*.jpg'))]
-images=[Image.open(p).convert('RGB') for p in paths]
-box=json.loads((root/'capture.json').read_text())['masks'][0]['box']
-embedded=re.search(r'data:image/[^;]+;base64,([^"\\s]+)',(root/'message.html').read_text())
-assert embedded, 'Masked Share page must embed a rendered still'
-images.append(Image.open(io.BytesIO(base64.b64decode(embedded[1]))).convert('RGB'))
-for img in images:
- # Include the full glyph area, including the left edge and all four corners.
- for x in range(int(box[0])+2,int(box[0]+box[2])-2,7):
-  for y in range(int(box[1])+2,int(box[1]+box[3])-2,7):
-   assert max(abs(a-b) for a,b in zip(img.getpixel((x,y)),(17,24,39))) < 10, 'Mask missing in rendered/embedded pixels'
-print('MASK PIXELS PASSED: preview, MP4 stills and embedded Share image')
-`,masked],{stdio:'inherit'})
+execFileSync(python,[join(bundle,'scripts/mask_smoke.py'),masked],{stdio:'inherit'})
 if (JSON.parse(await readFile(join(run,'capture.json'),'utf8')).masks !== rawCapture.masks) throw Error('Original capture was modified')
 if (!(await readFile(join(run,'video.webm'))).equals(await readFile(join(masked,'video.webm')))) throw Error('Masking changed raw evidence')
 await writeFile(join(run, 'smoke-report.json'), JSON.stringify({ passed: true, sourceRevision: manifest.sourceRevision, bundleId: manifest.id, run, steps: steps.length, video: `H.264/${video.pix_fmt}`, page: 'message.html' }, null, 2))

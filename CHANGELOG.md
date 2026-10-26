@@ -11,7 +11,16 @@
   and handoffs. Shape remains separate from the Demo installer and runtime.
 - Include the linked local-development guide in the Demo document export.
 
-## 0.6.0 — 2026-10-26
+## 0.6.1 — 2026-10-26
+
+- Release optional masking with a codec-aware installed media check. Verify every
+  lossless PNG mask pixel, and verify H.264/JPEG interiors separately from edge
+  ringing. Missing masks and interior holes still fail; diagnostics identify the
+  image and sample region.
+- The v0.6.0 tag remains an unpublished candidate: Windows acceptance caught the
+  original smoke check treating compressed edges as lossless pixels.
+
+## 0.6.0 — 2026-10-26 (unpublished candidate)
 
 - Add optional solid pixel masks to passed captures. Revise, replace or remove
   masks offline while retaining original media, evidence and provenance.
