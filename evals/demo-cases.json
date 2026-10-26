@@ -123,6 +123,176 @@
         "reuseCapture": true,
         "needsAuthorization": false
       }
+    },
+    {
+      "id": "privacy-internal",
+      "prompt": "Make a plain silent demo from this passed capture for our internal team. The screens contain staff names and financial totals. No particular masking requirement or unusual exposure is apparent. Keep those totals readable. The presentation choices are already accepted: plain-caption, no cover, no intro/outro, no logo, silent audio. Reuse them.",
+      "expected": {
+        "requiredSkills": [
+          "walkthrough-video"
+        ],
+        "allowedSkills": [
+          "walkthrough-video"
+        ],
+        "operation": "render",
+        "reuseCapture": true,
+        "needsAuthorization": false,
+        "masking": "unchanged",
+        "privacyQuestion": false
+      }
+    },
+    {
+      "id": "privacy-mock-finance",
+      "prompt": "Make a video for a public finance-product presentation from this passed capture. Every client, email, account number and balance is purpose-built synthetic demonstration data. Keep the sample values visible. The presentation choices are already accepted: plain-caption, no cover, no intro/outro, no logo, silent audio. Reuse them.",
+      "expected": {
+        "requiredSkills": [
+          "walkthrough-video"
+        ],
+        "allowedSkills": [
+          "walkthrough-video"
+        ],
+        "operation": "render",
+        "reuseCapture": true,
+        "needsAuthorization": false,
+        "masking": "unchanged",
+        "privacyQuestion": false
+      }
+    },
+    {
+      "id": "privacy-dev",
+      "prompt": "Render a short silent demo from this passed Dev-environment capture. No sensitive-data exposure is apparent. The data source and audience have not been specified. The presentation choices are already accepted: plain-caption, no cover, no intro/outro, no logo, silent audio. Reuse them.",
+      "expected": {
+        "requiredSkills": [
+          "walkthrough-video"
+        ],
+        "allowedSkills": [
+          "walkthrough-video"
+        ],
+        "operation": "render",
+        "reuseCapture": true,
+        "needsAuthorization": false,
+        "masking": "unchanged",
+        "privacyQuestion": false
+      }
+    },
+    {
+      "id": "privacy-unspecified",
+      "prompt": "Make a video of this passed capture showing a task list and chart. No data concerns are apparent. Choose ordinary defaults and finish. The presentation choices are already accepted: plain-caption, no cover, no intro/outro, no logo, silent audio. Reuse them.",
+      "expected": {
+        "requiredSkills": [
+          "walkthrough-video"
+        ],
+        "allowedSkills": [
+          "walkthrough-video"
+        ],
+        "operation": "render",
+        "reuseCapture": true,
+        "needsAuthorization": false,
+        "masking": "unchanged",
+        "privacyQuestion": false
+      }
+    },
+    {
+      "id": "privacy-requested",
+      "prompt": "Use this passed capture. Hide the client name and account number in every scene, retain the balances needed for the demo. Their boxes and appearance times have been verified. I will review the normal preview. The presentation choices are already accepted: plain-caption, no cover, no intro/outro, no logo, silent audio. Reuse them.",
+      "expected": {
+        "requiredSkills": [
+          "walkthrough-video"
+        ],
+        "allowedSkills": [
+          "walkthrough-video"
+        ],
+        "operation": "render",
+        "reuseCapture": true,
+        "needsAuthorization": false,
+        "masking": "apply",
+        "privacyQuestion": false
+      }
+    },
+    {
+      "id": "privacy-project-rule",
+      "prompt": "This passed capture is for internal training. The relevant project rule says real client account numbers must be masked in training materials. These are real client accounts with saved field geometry. Render the video following that rule. The presentation choices are already accepted: plain-caption, no cover, no intro/outro, no logo, silent audio. Reuse them.",
+      "expected": {
+        "requiredSkills": [
+          "walkthrough-video"
+        ],
+        "allowedSkills": [
+          "walkthrough-video"
+        ],
+        "operation": "render",
+        "reuseCapture": true,
+        "needsAuthorization": false,
+        "masking": "apply",
+        "privacyQuestion": false
+      }
+    },
+    {
+      "id": "privacy-public-real",
+      "prompt": "Make a public demo from this passed capture. It visibly contains real client names, email addresses and bank account numbers, with saved field geometry. The financial totals must remain visible. The presentation choices are already accepted: plain-caption, no cover, no intro/outro, no logo, silent audio. Reuse them.",
+      "expected": {
+        "requiredSkills": [
+          "walkthrough-video"
+        ],
+        "allowedSkills": [
+          "walkthrough-video"
+        ],
+        "operation": "render",
+        "reuseCapture": true,
+        "needsAuthorization": false,
+        "masking": "apply",
+        "privacyQuestion": false
+      }
+    },
+    {
+      "id": "privacy-later-add",
+      "prompt": "The walkthrough is already correct and passed. On this later revision, mask the email in the upper-right corner throughout; leave everything else as accepted. Saved geometry is available. The presentation choices are already accepted: plain-caption, no cover, no intro/outro, no logo, silent audio. Reuse them.",
+      "expected": {
+        "requiredSkills": [
+          "walkthrough-video"
+        ],
+        "allowedSkills": [
+          "walkthrough-video"
+        ],
+        "operation": "render",
+        "reuseCapture": true,
+        "needsAuthorization": false,
+        "masking": "apply",
+        "privacyQuestion": false
+      }
+    },
+    {
+      "id": "privacy-correction",
+      "prompt": "Earlier we masked this passed capture. Correction: all values are synthetic, and this internal training video should show them. Remove the existing masks and reuse everything else. The presentation choices are already accepted: plain-caption, no cover, no intro/outro, no logo, silent audio. Reuse them.",
+      "expected": {
+        "requiredSkills": [
+          "walkthrough-video"
+        ],
+        "allowedSkills": [
+          "walkthrough-video"
+        ],
+        "operation": "render",
+        "reuseCapture": true,
+        "needsAuthorization": false,
+        "masking": "unchanged",
+        "privacyQuestion": false
+      }
+    },
+    {
+      "id": "privacy-live-secret",
+      "prompt": "Render this passed internal demo. A clearly identified live credential is accidentally visible in a header throughout; its box is available. It is unrelated to the lesson. Do not repeat its value. The presentation choices are already accepted: plain-caption, no cover, no intro/outro, no logo, silent audio. Reuse them.",
+      "expected": {
+        "requiredSkills": [
+          "walkthrough-video"
+        ],
+        "allowedSkills": [
+          "walkthrough-video"
+        ],
+        "operation": "render",
+        "reuseCapture": true,
+        "needsAuthorization": false,
+        "masking": "apply",
+        "privacyQuestion": false
+      }
     }
   ]
 }

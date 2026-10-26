@@ -1,5 +1,11 @@
 # Revise captions and highlights without recapturing
 
+Optional [data masking](data-masking.md) uses this same derivative workflow.
+A patch may contain a top-level `masks` array, alone or alongside `steps`.
+It replaces all masks, `[]` clears them and omission preserves them. The changed
+capture manifest is hashed in `revision.json`. Original media and raw shots stay
+unredacted; share only reviewed rendered outputs.
+
 When the recorded UI, actions, timings, and business assertions are still correct, change presentation metadata without visiting the app. Keep the original capture and create a separate derivative:
 
 ```sh
@@ -8,7 +14,7 @@ aaron-demo revise <passed-run> <patch.json> --out <new-run>
 aaron-demo render <new-run> --stills
 ```
 
-`patch.json` contains only a `steps` object keyed by existing step IDs. Each entry may replace `caption` and either `focus` or `focusTargets`:
+For caption/highlight edits, `patch.json` contains a `steps` object keyed by existing step IDs. Each entry may replace `caption` and either `focus` or `focusTargets`:
 
 ```json
 {

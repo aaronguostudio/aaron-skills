@@ -16,7 +16,9 @@ If the brief supplies no signature, omit it. Do not infer an author from a usern
 
 Inspect every screenshot before including it. Crop or annotate a copy with `aaron-demo mark <input.png> <output.png> --crop x0,y0,x1,y1 --box x0,y0,x1,y1:1` when useful. Check wording and numbers against visible evidence. Leave originals intact.
 
-Write `message.md` next to its `shots/` folder, outside Git repositories when it contains real captures. Use this format:
+Reuse the user's data/audience decisions without a new privacy questionnaire. Internal or declared mock-data updates normally proceed unchanged. For a masked demo, read `aaron-demo docs data-masking` and embed only the derivative's rendered `stills/`, with its new MP4; raw `shots/`, recordings and capture manifests remain unredacted working material. Check message/alt text and cover/narration against the same requested scope. Later masking corrections reuse the capture through Film; they do not require replaying the app or another approval checkpoint.
+
+Write `message.md` next to its image folder, outside Git repositories when it contains real captures. Use this format:
 
 ```markdown
 ---

@@ -1,0 +1,274 @@
+[
+  {
+    "id": "omitted",
+    "accepted": true
+  },
+  {
+    "id": "empty",
+    "masks": [],
+    "accepted": true
+  },
+  {
+    "id": "full-range",
+    "masks": [
+      {
+        "box": [
+          10,
+          20,
+          80,
+          40
+        ],
+        "fromMs": 100,
+        "toMs": 200
+      }
+    ],
+    "accepted": true
+  },
+  {
+    "id": "object-box",
+    "masks": [
+      {
+        "box": {
+          "x": 10,
+          "y": 20,
+          "w": 80,
+          "h": 40
+        },
+        "fromMs": 100,
+        "toMs": 200
+      }
+    ],
+    "accepted": true
+  },
+  {
+    "id": "instant",
+    "masks": [
+      {
+        "box": [
+          10,
+          20,
+          80,
+          40
+        ],
+        "fromMs": 150,
+        "toMs": 150
+      }
+    ],
+    "accepted": true
+  },
+  {
+    "id": "null",
+    "masks": null,
+    "accepted": false
+  },
+  {
+    "id": "object",
+    "masks": {},
+    "accepted": false
+  },
+  {
+    "id": "string",
+    "masks": "all",
+    "accepted": false
+  },
+  {
+    "id": "negative-box",
+    "masks": [
+      {
+        "box": [
+          -1,
+          20,
+          80,
+          40
+        ],
+        "fromMs": 100,
+        "toMs": 200
+      }
+    ],
+    "accepted": false
+  },
+  {
+    "id": "oversize-box",
+    "masks": [
+      {
+        "box": [
+          1400,
+          20,
+          80,
+          40
+        ],
+        "fromMs": 100,
+        "toMs": 200
+      }
+    ],
+    "accepted": false
+  },
+  {
+    "id": "zero-width",
+    "masks": [
+      {
+        "box": [
+          10,
+          20,
+          0,
+          40
+        ],
+        "fromMs": 100,
+        "toMs": 200
+      }
+    ],
+    "accepted": false
+  },
+  {
+    "id": "missing-coordinate",
+    "masks": [
+      {
+        "box": [
+          10,
+          20,
+          80
+        ],
+        "fromMs": 100,
+        "toMs": 200
+      }
+    ],
+    "accepted": false
+  },
+  {
+    "id": "boolean-box",
+    "masks": [
+      {
+        "box": [
+          true,
+          20,
+          80,
+          40
+        ],
+        "fromMs": 100,
+        "toMs": 200
+      }
+    ],
+    "accepted": false
+  },
+  {
+    "id": "extra-box-field",
+    "masks": [
+      {
+        "box": {
+          "x": 10,
+          "y": 20,
+          "w": 80,
+          "h": 40,
+          "opacity": 0
+        },
+        "fromMs": 100,
+        "toMs": 200
+      }
+    ],
+    "accepted": false
+  },
+  {
+    "id": "extra-mask-field",
+    "masks": [
+      {
+        "box": [
+          10,
+          20,
+          80,
+          40
+        ],
+        "fromMs": 100,
+        "toMs": 200,
+        "mode": "blur"
+      }
+    ],
+    "accepted": false
+  },
+  {
+    "id": "early",
+    "masks": [
+      {
+        "box": [
+          10,
+          20,
+          80,
+          40
+        ],
+        "fromMs": 99,
+        "toMs": 200
+      }
+    ],
+    "accepted": false
+  },
+  {
+    "id": "late",
+    "masks": [
+      {
+        "box": [
+          10,
+          20,
+          80,
+          40
+        ],
+        "fromMs": 100,
+        "toMs": 201
+      }
+    ],
+    "accepted": false
+  },
+  {
+    "id": "reverse",
+    "masks": [
+      {
+        "box": [
+          10,
+          20,
+          80,
+          40
+        ],
+        "fromMs": 190,
+        "toMs": 110
+      }
+    ],
+    "accepted": false
+  },
+  {
+    "id": "string-time",
+    "masks": [
+      {
+        "box": [
+          10,
+          20,
+          80,
+          40
+        ],
+        "fromMs": "100",
+        "toMs": 200
+      }
+    ],
+    "accepted": false
+  },
+  {
+    "id": "boolean-time",
+    "masks": [
+      {
+        "box": [
+          10,
+          20,
+          80,
+          40
+        ],
+        "fromMs": true,
+        "toMs": 200
+      }
+    ],
+    "accepted": false
+  },
+  {
+    "id": "null-mask",
+    "masks": [
+      null
+    ],
+    "accepted": false
+  }
+]

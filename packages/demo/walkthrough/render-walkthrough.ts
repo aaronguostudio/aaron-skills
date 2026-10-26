@@ -300,7 +300,7 @@ export async function main(argv: string[]): Promise<number> {
     if (imported) checkCards(imported.clips);
     prepared = prepare(run,out,roots,prepared.calibrationMs,{...baseTiming,...(imported?{stepMinMs:stepMinMs(prepared.steps,imported.clips),...cardMinMs(imported.clips,p?.intro.enabled&&(p.intro.sound||p.intro.soundPreset!=='none')?BRAND_STING_LEAD_MS:0)}:{})});
     if (dryRun) {
-      console.log(JSON.stringify({dryRun:true,out:prepared.out,seconds:prepared.seconds,template:p?.template ?? 'legacy',coverPreset:p?.cover?.preset,coverRequested:parsed.cover,voiceProvider:provider,narrationNotice:parsed.narrationNotice,narrationRequested:provider!=='none',narrationTiming:generated?'requires synthesis; not performed':provider==='import'?'measured imported clips':'silent',calibrationMs:prepared.calibrationMs,steps:prepared.steps.length,geometry,resolvedPalette,logoChecks,logoFallback:!logoChecks.length?p?.brand.fallback??'omit':undefined},null,2));
+      console.log(JSON.stringify({dryRun:true,maskCount:capture.masks?.length??0,out:prepared.out,seconds:prepared.seconds,template:p?.template ?? 'legacy',coverPreset:p?.cover?.preset,coverRequested:parsed.cover,voiceProvider:provider,narrationNotice:parsed.narrationNotice,narrationRequested:provider!=='none',narrationTiming:generated?'requires synthesis; not performed':provider==='import'?'measured imported clips':'silent',calibrationMs:prepared.calibrationMs,steps:prepared.steps.length,geometry,resolvedPalette,logoChecks,logoFallback:!logoChecks.length?p?.brand.fallback??'omit':undefined},null,2));
       return 0;
     }
     const selected=generated?loadVoiceProfile(voiceProfile):undefined;
@@ -344,7 +344,7 @@ export async function main(argv: string[]): Promise<number> {
       execFileSync(python,['-c','from PIL import Image; import sys; Image.open(sys.argv[1]).convert("RGB").save(sys.argv[2],"WEBP",quality=85,method=6)',png,join(dirname(prepared.out),'cover.webp')]);
     }
     if (stills&&!parsed.preview) writeStills(prepared);
-    writeFileSync(join(dirname(prepared.out),parsed.preview?'preview-manifest.json':'render-manifest.json'),JSON.stringify({version:1,preview:parsed.preview,template:p?.template??'legacy',presentation,geometry,resolvedPalette,logoChecks,voiceProvider:provider,narrationKind:clips.length?narrationKind:'none',narrationNotice:parsed.narrationNotice,seconds:prepared.seconds,sourceCaptureSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'capture.json')),'hex'),sourceVideoSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'video.webm')),'hex'),narration:clips},null,2)+'\n');
+    writeFileSync(join(dirname(prepared.out),parsed.preview?'preview-manifest.json':'render-manifest.json'),JSON.stringify({version:1,maskCount:capture.masks?.length??0,preview:parsed.preview,template:p?.template??'legacy',presentation,geometry,resolvedPalette,logoChecks,voiceProvider:provider,narrationKind:clips.length?narrationKind:'none',narrationNotice:parsed.narrationNotice,seconds:prepared.seconds,sourceCaptureSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'capture.json')),'hex'),sourceVideoSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'video.webm')),'hex'),narration:clips},null,2)+'\n');
     console.log(`${parsed.preview?'preview':'video'}: ${parsed.preview?join(dirname(prepared.out),'body-preview.png'):prepared.out} (${prepared.seconds.toFixed(2)}s); template: ${p?.template??'legacy'}; voice: ${provider}`);
     return 0;
   } catch (error) {

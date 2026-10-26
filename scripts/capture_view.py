@@ -21,6 +21,21 @@ def box(value, viewport):
     return value
 
 
+def validate_masks(capture, steps):
+    if 'masks' not in capture:
+        return
+    masks = capture['masks']
+    if not isinstance(masks, list):
+        raise ValueError('Masks must be an array; [] removes masking')
+    for mask in masks:
+        if not isinstance(mask, dict) or set(mask) != {'box', 'fromMs', 'toMs'}:
+            raise ValueError('Mask needs only box, fromMs and toMs')
+        box(mask['box'], capture['viewport'])
+        a, b = mask['fromMs'], mask['toMs']
+        if not (finite(a) and finite(b) and steps[0]['startMs'] <= a <= b <= steps[-1]['endMs']):
+            raise ValueError('Mask times must fit inside the recorded step range')
+
+
 def target_focus(step, names, viewport):
     targets = step.get('targets', {})
     if not isinstance(names, list) or not names or not all(isinstance(n, str) for n in names) or len(set(names)) != len(names):
@@ -97,6 +112,7 @@ def inspect_capture(source, *, strict=False):
         raise ValueError('Invalid capture viewport')
     if not isinstance(steps, list) or not steps:
         raise ValueError('Capture needs steps')
+    validate_masks(capture, steps)
     reviewed, issues = [], []
     for step in steps:
         item = {k: step.get(k) for k in ('id', 'caption', 'kind', 'startMs', 'endMs', 'focus', 'targets', 'evidence')}
@@ -108,7 +124,7 @@ def inspect_capture(source, *, strict=False):
             item.update(evidenceFocusComplete=False, issue=str(error))
             issues.append(str(error))
         reviewed.append(item)
-    return {'source': str(source), 'status': capture['status'], 'viewport': viewport, 'readyToRender': not issues,
+    return {'source': str(source), 'status': capture['status'], 'viewport': viewport, 'masks': capture.get('masks', []), 'readyToRender': not issues,
             'presentationEdits': 'For unchanged UI/actions, revise this capture, including first-pass visual fixes; do not replay the business flow.',
             'issues': issues, 'steps': reviewed}
 

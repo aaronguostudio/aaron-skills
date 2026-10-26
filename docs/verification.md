@@ -334,3 +334,23 @@ raw capture, session or provider configuration is included in public source.
 Shared deterministic checks, website build/Sites checks, dependency audits and
 independent secret scanning passed locally. Remote CI and production provenance
 are separate release gates; the local evidence does not claim their outcome.
+
+## v0.6.0 optional masking
+
+Local macOS arm64 checks cover the shared source gate, explicit mask contract
+validation in Python and JavaScript, source-clock timing through calibration,
+holds, waits and gaps, and add/preserve/remove revisions with unchanged raw media.
+A fresh exported installation passed doctor and capture -> render -> Share smoke;
+pixel checks cover the actual MP4 stills, body preview and embedded Share image.
+A scaled version-2 body preview and a mask-removal preview were also checked.
+
+Ten prompted decision cases passed for internal/mock/Dev/unspecified demos,
+explicit requests, project rules, public real-data context, later additions,
+user corrections and a clearly exposed live credential. These are isolated
+classifications with accepted presentation choices, not native discovery or
+complete autonomous recording tasks. The release-specific native matrix remains
+separate evidence and is linked from the GitHub Release notes.
+
+The runtime provides explicit solid rectangles. It does not detect all sensitive
+data, track moving content or blur pixels. Raw captures, screenshots and manifests
+remain unredacted; captions, cover text and audio require the same scoped review.

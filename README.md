@@ -21,6 +21,13 @@ together through shared tools and documented artifacts.
   </a>
 </p>
 
+Optional [data masking](docs/data-masking.md) lets Film cover selected regions
+and revise them without recording again. Capture, Film and Share use the intended
+audience and project context; ordinary internal or mock-data demos proceed
+without routine privacy questions. Masks are solid rectangles in exported video,
+previews and stills. Automatic detection, blur and tracking are not included, and
+raw capture files remain unredacted local working material.
+
 ## The bigger picture
 
 The workflow we are building toward is:

@@ -1,6 +1,6 @@
 ---
 name: walkthrough-video
-description: Choose and customize presentation covers, draft walkthrough scripts, and render passed application captures into guided MP4s with captions, highlights, chapters, and optional narration. Reuse captures for presentation revisions.
+description: Choose and customize presentation covers, draft walkthrough scripts, and render passed application captures into guided MP4s with captions, highlights, chapters, optional narration and data masking. Reuse captures for presentation and masking revisions.
 ---
 # Film
 
@@ -9,6 +9,8 @@ Invocation ID: `walkthrough-video`. The runtime and command names remain unchang
 At the start of a new task, run `aaron-demo update --background` if the CLI is available. This starts the configured version check without waiting; continue the task. Relay any update notice once, and use `aaron-demo update` for the change summary. Larger changes need the user's choice; never add `--yes` on their behalf. Updates do not authorize publishing or provider spending.
 
 Runtime requirements: Requires the aaron-demo Demo bundle, a verified platform (see `aaron-demo docs compatibility`), FFmpeg, and the installed Bun and Remotion runtime. Cloud narration needs a user-owned account/endpoint; optional free local Kokoro, silent and imported-audio rendering do not.
+
+Make masking decisions autonomously from the brief, audience and relevant project rules. With no concrete reason to mask, continue unchanged without a privacy questionnaire; internal demos, declared mock data, Dev/UAT and financial-looking fields alone do not justify extra confirmation. Reuse prior choices and accept later corrections. For an explicit masking request or clear contextual need, read `aaron-demo docs data-masking`, apply the known scope through a local derivative and include it in the ordinary preview. Ask one focused question only when a consequential ambiguity remains. Solid rectangles are supported; automatic detection, tracking and blur are not. Masking changes reuse the recording and need no separate approval checkpoint.
 
 ## Confirm the presentation before production
 
@@ -40,7 +42,7 @@ Keep delivered videos and covers free of process labels such as "AI Narration", 
 
 Reuse the passed capture for caption, highlight, narration, script, or language-only revisions, including fixes found during the first visual review. Use `aaron-demo inspect <run>` to read saved evidence/geometry. For caption/highlight edits, read `aaron-demo docs presentation-revisions`, create a derivative with `aaron-demo revise <run> <patch.json> --out <new-run>`, then render it. Prefer saved `focusTargets` over another UI visit to measure boxes. Do not replay business writes to change presentation metadata. Preserve the original capture and every prior take; rerun capture only when the UI evidence or actions need to change. User scripts and output stay outside Git repositories.
 
-Inspect every held-frame still and the end of every wait. Captions must match visible evidence; reject loading, error, obscured, or unintended personal-data frames. Report the MP4, chapters, and any remaining limitations. Quality changes belong in the common renderer so later videos inherit them.
+Inspect every held-frame still and the end of every wait. Captions must match visible evidence; reject loading, error or unintentionally obscured evidence. Apply the agreed data scope rather than treating every name or amount as a privacy failure. When masks are used, check their boundaries and changing screens, review text/audio separately, and deliver rendered stills instead of raw shots. Report the MP4, chapters, and any remaining limitations. Quality changes belong in the common renderer so later videos inherit them.
 
 Before delivery, reconcile every must-show scene with capture step/evidence IDs or an explicit exception. A signed-result screen is not evidence of a recipient signing journey; a confirmation preview is not submission or sealing. Do not narrate around missing footage. Layout/theme-only revisions reuse passed evidence and unchanged audio, without repeating application writes or voice synthesis.
 
