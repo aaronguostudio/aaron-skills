@@ -1,6 +1,6 @@
 {
   "name": "aaron-skills",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "private": true,
   "description": "Development checks for the Aaron Skills source repository",
   "engines": {
