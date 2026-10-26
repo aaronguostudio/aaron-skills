@@ -129,15 +129,18 @@
     "scripts/runtime_activity.py",
     "docs/updates.md",
     "packages/demo/capture/scripts/calibration.mjs",
-    "docs/local-development.md"
+    "docs/local-development.md",
+    "docs/data-masking.md",
+    "packages/demo/contracts/masks.mjs"
   ],
-  "version": "0.5.1",
+  "version": "0.6.0",
   "update": {
-    "kind": "compatible",
-    "compatibilityEpoch": "demo-0.5",
+    "kind": "review",
+    "compatibilityEpoch": "demo-0.6",
     "summary": [
-      "Wait for recorded calibration frames on cold startup instead of relying on a fixed delay.",
-      "Add clean-profile onboarding and separate native-agent acceptance benchmarks."
+      "Add editable solid masks to passed recordings, previews and exported stills without recapturing.",
+      "Let Capture, Film and Share use audience and project context without routine privacy questions.",
+      "Keep original media local and unredacted; automatic detection, blur and tracking are not included."
     ]
   }
 }

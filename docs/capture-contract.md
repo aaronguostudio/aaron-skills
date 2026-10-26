@@ -182,6 +182,13 @@ Two styles, both in a user-configured ElevenLabs voice (the default profile unle
 
     A fixed sleep is the thing this replaces: it is either too short for a slow transition or wasted time on every other step. Clicks logged through a recorder that trial-clicks first already get this, because the trial waits for the element to be stable before it reports the box.
 
+## Optional pixel masks
+
+`capture.json` may carry an optional `masks` array of `{box, fromMs, toMs}`
+in viewport pixels and original capture-clock milliseconds. Masks cover rendered
+pixels, including gap/hold frames; empty or omitted keeps the ordinary demo.
+See [data masking](data-masking.md) for timing, screenshots and delivery limits.
+
 ## Optional checked-focus metadata
 
 New `rec.focus` / `rec.show` steps may include `targets`, keyed by a stable target name with

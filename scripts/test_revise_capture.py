@@ -8,7 +8,7 @@ import base64
 import shutil
 import unittest
 from revise_capture import digest, revise
-from capture_view import inspect_capture
+from capture_view import inspect_capture, validate_masks
 
 class RevisionTests(unittest.TestCase):
     def assert_private(self, path, directory=False):
@@ -61,6 +61,46 @@ class RevisionTests(unittest.TestCase):
         (self.output / 'video.webm').write_bytes(b'changed derivative')
         self.assertEqual(digest(self.source / 'video.webm'), before['video.webm'])
         with self.assertRaisesRegex(ValueError, 'new folder'): revise(self.source, self.patch, self.output)
+
+    def test_shared_mask_contract(self):
+        fixtures = json.loads((Path(__file__).resolve().parents[1] / 'evals/fixtures/mask-cases.json').read_text())
+        for fixture in fixtures:
+            with self.subTest(case=fixture['id']):
+                capture = json.loads((self.source / 'capture.json').read_text())
+                steps = json.loads((self.source / 'steps.json').read_text())
+                if 'masks' in fixture: capture['masks'] = fixture['masks']
+                if fixture['accepted']: validate_masks(capture, steps)
+                else:
+                    with self.assertRaises(ValueError): validate_masks(capture, steps)
+
+    def test_masks_add_preserve_replace_and_remove_without_mutating_raw_evidence(self):
+        before = {p.relative_to(self.source).as_posix(): digest(p) for p in self.source.rglob('*') if p.is_file()}
+        mask = {'box': [10,20,80,40], 'fromMs':100, 'toMs':200}
+        self.patch.write_text(json.dumps({'masks':[mask]}))
+        manifest = revise(self.source, self.patch, self.output)
+        self.assertEqual(inspect_capture(self.output)['masks'], [mask])
+        self.assertEqual(manifest['derivedCaptureSha256'], digest(self.output / 'capture.json'))
+        for name, sha in before.items():
+            self.assertEqual(digest(self.source / name), sha)
+            if name != 'capture.json': self.assertEqual(digest(self.output / name), sha)
+        self.assertFalse(manifest['businessAssertionsReplayed'])
+        self.assert_private(self.output / 'capture.json')
+        # A caption correction preserves masking; the next correction can remove it.
+        self.patch.write_text(json.dumps({'steps':{'result':{'caption':'Same permitted result'}}}))
+        kept = self.root / 'kept'; revise(self.output, self.patch, kept)
+        self.assertEqual(inspect_capture(kept)['masks'], [mask])
+        self.patch.write_text(json.dumps({'masks':[]}))
+        removed = self.root / 'removed'; revise(kept, self.patch, removed)
+        self.assertEqual(inspect_capture(removed)['masks'], [])
+        self.assertEqual(digest(removed / 'video.webm'), before['video.webm'])
+
+    def test_invalid_masks_refused_before_output(self):
+        for masks in [None, [{'box':[0,0,2000,20],'fromMs':100,'toMs':200}],
+                      [{'box':[0,0,20,20],'fromMs':0,'toMs':200}]]:
+            self.patch.write_text(json.dumps({'masks':masks}))
+            with self.subTest(masks=masks), self.assertRaises(ValueError):
+                revise(self.source, self.patch, self.output)
+            self.assertFalse(self.output.exists())
 
     def test_rejects_evidence_changes_unknown_ids_bad_boxes_and_times_before_output(self):
         for change in [

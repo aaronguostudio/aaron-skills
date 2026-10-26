@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "0.5.1",
+  "version": "0.6.0",
   "files": [
     ".github/workflows/ci.yml",
     ".gitignore",
@@ -289,7 +289,11 @@
     "packages/demo/capture/test/calibration.e2e.mjs",
     "skills/feature-blueprint/references/communication.md",
     "skills/feature-blueprint/references/delivery.md",
-    "skills/feature-blueprint/assets/review-page.html"
+    "skills/feature-blueprint/assets/review-page.html",
+    "docs/data-masking.md",
+    "packages/demo/contracts/masks.mjs",
+    "packages/demo/walkthrough/masks.test.ts",
+    "evals/fixtures/mask-cases.json"
   ],
   "reviewedBinaryAssets": {
     "packages/demo/covers/art/alpine-silence.webp": {

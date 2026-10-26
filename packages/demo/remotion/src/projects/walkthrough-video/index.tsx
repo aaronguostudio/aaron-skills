@@ -44,6 +44,7 @@ import {PresentationCard, PresentationCaption, PresentationAnnotation, Presentat
 import {validatePresentation, type Presentation} from './presentation/model';
 import {annotationAt, layoutGeometry, resolveLayout} from './presentation/layout';
 import {alphaColor, paletteFor} from './presentation/theme';
+import {masksAt} from './timeline';
 
 const C = {
   bg: "#11151c",
@@ -232,7 +233,7 @@ const SpeedBadge: React.FC<{ speed: number; right: number }> = ({ speed, right }
   </div>
 );
 
-export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, narration = [], branding, presentation, narrationKind, narrationNotice = false }) => {
+export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, calibrationMs = 0, narration = [], branding, presentation, narrationKind, narrationNotice = false }) => {
   const frame = useCurrentFrame();
   if (!capture || !timeline) return <AbsoluteFill style={{ background: C.bg }} />;
   const { w, h } = capture.viewport;
@@ -314,6 +315,8 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, na
           <Highlights marks={highlightsAt(timeline, steps, capture.viewport, frame)} w={w} h={h} color={presentation?.body.highlightColor} themed={presentation?.version===2}/>
           <Cursor state={cursorAt(timeline, steps, capture.viewport, frame)} color={presentation?.version===2?paletteFor(presentation,'body').cursor:undefined} />
           {segment && segment.speed > 1 ? <SpeedBadge speed={segment.speed} right={24} /> : null}
+          {masksAt(timeline, capture.masks ?? [], frame, calibrationMs).map((b,i) =>
+            <div key={i} style={{position:'absolute',left:b.x,top:b.y,width:b.w,height:b.h,background:'#111827',pointerEvents:'none'}} />)}
           </div>
           {presentation&&!geometry.legacy?<PresentationAnnotation p={presentation} box={geometry.annotation} caption={step?.caption??''} transcript={annotation.text} position={stepIndex!==null?`${stepIndex+1}/${steps.length}`:''} progress={annotation.progress} narrated={aiNotice}/>:presentation ? <PresentationCaption p={presentation} top={h} width={w} caption={step?.caption ?? ''} position={stepIndex !== null ? `${stepIndex+1}/${steps.length}` : ''} narrated={aiNotice}/> : <CaptionBand
             top={h}
@@ -364,7 +367,7 @@ const calculateMetadata: CalculateMetadataFunction<Props> = async ({ props }) =>
     fps: FPS,
     width: geometry.width,
     height: geometry.height,
-    props: { capture, steps, timeline, narration: props.narration ?? [], branding: props.branding, presentation:props.presentation, narrationKind:props.narrationKind, narrationNotice:props.narrationNotice },
+    props: { capture, steps, timeline, calibrationMs:props.calibrationMs ?? capture.calibrationMs ?? 0, narration: props.narration ?? [], branding: props.branding, presentation:props.presentation, narrationKind:props.narrationKind, narrationNotice:props.narrationNotice },
   };
 };
 

@@ -11,6 +11,24 @@
   and handoffs. Shape remains separate from the Demo installer and runtime.
 - Include the linked local-development guide in the Demo document export.
 
+## 0.6.0 — 2026-10-26
+
+- Add optional solid pixel masks to passed captures. Revise, replace or remove
+  masks offline while retaining original media, evidence and provenance.
+- Burn masks into videos, body previews and rendered stills through the same
+  screen transform, including calibrated playback, holds, waits and gaps.
+- Let Capture, Film and Share use the audience, relevant project rules and user
+  corrections without routine privacy questions or a separate masking approval.
+  Internal, mock and ordinary Dev demos normally proceed unchanged.
+- Use rendered stills for masked Share pages. Raw recordings, screenshots,
+  manifests and text/audio remain separate working material; pixel masking does
+  not automatically sanitize them. Automatic detection, blur and tracking are
+  not included.
+- Add shared Python/JS contract cases, timing and revision regressions, installed
+  pixel/Share checks and ten prompted agent decision cases. Model classification
+  results do not establish native discovery or end-to-end autonomous execution.
+- Treat this minor update as review-required in the new `demo-0.6` epoch.
+
 ## 0.5.1 — 2026-10-24
 
 - Use the macOS system PEM bundle when Python has no CA certificates, while

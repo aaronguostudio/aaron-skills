@@ -23,8 +23,10 @@ SCHEMA = {
         'needsAuthorization': {'type': 'boolean'},
         'delivery': {'type': 'string', 'enum': ['prepare-only', 'send']},
         'reason': {'type': 'string'},
+        'masking': {'type':'string','enum':['unchanged','apply','clarify']},
+        'privacyQuestion': {'type':'boolean'},
     },
-    'required': ['selectedSkills', 'operation', 'reuseCapture', 'needsAuthorization', 'delivery', 'reason'],
+    'required': ['selectedSkills', 'operation', 'reuseCapture', 'needsAuthorization', 'delivery', 'reason', 'masking', 'privacyQuestion'],
 }
 
 
@@ -37,7 +39,7 @@ def grade(answer, expected):
         errors.append('missed required skill: ' + ', '.join(sorted(required - selected)))
     if not selected.issubset(allowed):
         errors.append('unexpected skill: ' + ', '.join(sorted(selected - allowed)))
-    for key in ['operation', 'reuseCapture', 'needsAuthorization']:
+    for key in ['operation', 'reuseCapture', 'needsAuthorization', *[k for k in ('masking','privacyQuestion') if k in expected]]:
         if answer.get(key) != expected[key]:
             errors.append(f'{key}: expected {expected[key]!r}, got {answer.get(key)!r}')
     if answer.get('delivery') != 'prepare-only':
@@ -48,12 +50,16 @@ def grade(answer, expected):
 def evaluate(case, output, schema):
     # Only the brief and skill definitions are visible, not expected outcomes.
     definitions = '\n\n'.join((ROOT / 'skills' / name / 'SKILL.md').read_text() for name in SKILLS)
+    definitions += '\n\nOPTIONAL DATA MASKING REFERENCE\n' + (ROOT / 'docs/data-masking.md').read_text()
     prompt = (
         'Classify the next action for the user brief below using the supplied skill definitions. '
         'Do not call tools, execute commands, change files, or actually perform the brief. '
         'Select the skills needed across the requested workflow. operation is the first substantive '
         'action (capture, render, repair, page, or none). needsAuthorization means additional user '
         'authorization is still required before that action. If the task is unrelated, choose none. '
+        'masking is unchanged when no masking edit is needed (including removing prior masks at the user request), '
+        'apply when masking should be added/updated, or clarify if a question must precede that choice. '
+        'privacyQuestion means an additional privacy/masking question would interrupt the user now. '
         'Return only the required JSON.\n\nSKILLS\n' + definitions + '\n\nUSER BRIEF\n' + case['prompt']
     )
     result_path = output / f'{case["id"]}.json'

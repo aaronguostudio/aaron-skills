@@ -48,7 +48,12 @@ Raw exploratory logs and recordings are not public source artifacts.
 Inspect every held frame and the end of every wait for settled UI, readable text,
 correct captions/numbers and complete highlights. Verify MP4 playback and the
 update page. Clipboard behavior depends on browser security context and needs
-separate testing. Automatic privacy redaction is not implemented.
+separate testing. Explicit masks need boundary, hold, gap and transformed-layout
+checks, plus inspection of the actual rendered pixels. Automatic privacy
+detection is not implemented. Decision cases for internal/mock demos should
+verify that no unnecessary privacy question or masking is introduced; explicit
+requests and project context should produce the requested scope without repeated
+confirmation. These model decisions are separate from deterministic pixel tests.
 
 ## Boundaries
 

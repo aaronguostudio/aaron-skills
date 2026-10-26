@@ -6,7 +6,7 @@ import json
 import math
 from pathlib import Path, PurePosixPath, PureWindowsPath
 import shutil
-from capture_view import target_focus, validate_coverage
+from capture_view import target_focus, validate_coverage, validate_masks
 from platform_tools import private_path
 
 
@@ -27,8 +27,10 @@ def revise(source, patch_path, output):
     if output.exists():
         raise ValueError('Revision output must be a new folder')
     patch = json.loads(Path(patch_path).read_text(encoding='utf-8'))
-    if not isinstance(patch, dict) or set(patch) != {'steps'} or not isinstance(patch['steps'], dict) or not patch['steps']:
-        raise ValueError('Patch must contain only a nonempty steps object keyed by step id')
+    if (not isinstance(patch, dict) or not patch or set(patch) - {'steps', 'masks'} or
+            ('steps' in patch and (not isinstance(patch['steps'], dict) or not patch['steps']))):
+        raise ValueError('Patch needs a nonempty steps object and/or a masks array')
+    changes = patch.get('steps', {})
 
     def asset(relative):
         if not isinstance(relative, str) or '\\' in relative:
@@ -54,7 +56,7 @@ def revise(source, patch_path, output):
     ids = [s.get('id') for s in steps]
     if not all(isinstance(s, str) and s for s in ids) or len(set(ids)) != len(ids):
         raise ValueError('Capture needs unique step ids')
-    if set(patch['steps']) - set(ids):
+    if set(changes) - set(ids):
         raise ValueError('Patch names an unknown step')
     originals = ['capture.json', 'steps.json', 'video.webm']
     if (source / 'revision.json').exists():
@@ -62,9 +64,9 @@ def revise(source, patch_path, output):
     for step in steps:
         if step.get('shot') is not None:
             originals.append(step['shot'])
-        change = patch['steps'].get(step['id'])
+        change = changes.get(step['id'])
         if change is None:
-            if step['id'] in patch['steps']:
+            if step['id'] in changes:
                 raise ValueError('Step changes must be objects')
             continue
         if not isinstance(change, dict) or not change or set(change) - {'caption', 'focus', 'focusTargets'}:
@@ -95,6 +97,9 @@ def revise(source, patch_path, output):
         step.update(change)
     for step in steps:
         validate_coverage(step, viewport)
+    if 'masks' in patch:
+        capture['masks'] = patch['masks']
+    validate_masks(capture, steps)
     # Validate and hash every required input before creating output. Copy bytes, never hardlink.
     files = {name: asset(name) for name in set(originals)}
     hashes = {name: digest(path) for name, path in files.items()}
@@ -110,12 +115,16 @@ def revise(source, patch_path, output):
             private_path(dest)
             if digest(dest) != hashes[name]:
                 raise ValueError('Source changed while copying; no revision retained')
-        (output / 'steps.json').write_text(json.dumps(steps, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+        if changes:
+            (output / 'steps.json').write_text(json.dumps(steps, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+        if 'masks' in patch:
+            (output / 'capture.json').write_text(json.dumps(capture, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
         if any(digest(path) != hashes[name] for name, path in files.items()):
             raise ValueError('Source changed during revision; no revision retained')
         manifest = {'version': 1, 'kind': 'presentation-only', 'source': str(source),
                     'sourceHashes': hashes, 'patch': patch,
                     'derivedStepsSha256': digest(output / 'steps.json'), 'businessAssertionsReplayed': False}
+        manifest['derivedCaptureSha256'] = digest(output / 'capture.json')
         (output / 'revision.json').write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
         for path in (output / 'steps.json', output / 'revision.json'):
             private_path(path)

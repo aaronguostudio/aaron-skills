@@ -7,6 +7,7 @@
 // waits and long gaps fast-forwarded), then an end card.
 
 import { validateEvidence } from "../../../../contracts/evidence.mjs";
+import { maskBox, validateMasks } from "../../../../contracts/masks.mjs";
 
 export const FPS = 30;
 export const TITLE_MS = 2500;
@@ -31,6 +32,7 @@ export type Click = { tMs: number; x: number; y: number; box?: Box };
 // A region the step is about (a card, a row, a total), outlined while it is shown. Some capture
 // tools write the box as [x, y, w, h].
 export type Focus = { box: Box | [number, number, number, number]; fromMs: number; toMs: number };
+export type Mask = Focus;
 export type StepKind = "action" | "wait";
 export type Step = {
   id: string;
@@ -58,6 +60,8 @@ export type Capture = {
   failedStep?: string;
   failure?: string;
   calibrationMs?: number;
+  // Optional solid pixel masks. Original media and evidence remain private and unchanged.
+  masks?: Mask[];
   // A sync flash: at tMs (capture clock) the page turned from black to white. The renderer finds
   // that frame in the recording and derives calibrationMs from it.
   sync?: { tMs: number };
@@ -162,7 +166,23 @@ export function validateCapture(capture: Capture, steps: Step[]): string[] {
     }
     problems.push(...validateEvidence(step, { w, h }));
   });
+  problems.push(...validateMasks(capture, steps));
   return problems;
+}
+
+// Use the same source clock as the actual video decoder, including speed, holds and gaps.
+// Screenshot times are unknown: conservatively apply every mask to a held screenshot.
+export function masksAt(timeline: Timeline, masks: Mask[], frame: number, calibrationMs = 0): Box[] {
+  const segment = stepAtFrame(timeline, frame);
+  if (!segment || !masks.length) return [];
+  const tick = 1000 / timeline.fps;
+  const sourceMs = Math.round(segment.srcStartMs / tick) * tick +
+    (segment.freeze || segment.still ? 0 : (frame-segment.fromFrame)*tick*segment.speed) - calibrationMs;
+  // One decoded source frame at either boundary avoids flashes from frame quantization.
+  return masks.filter(m => segment.still || (sourceMs+tick >= m.fromMs && sourceMs-tick <= m.toMs)).map(m => {
+    const b = maskBox(m.box);
+    return {x:Math.floor(b.x), y:Math.floor(b.y), w:Math.ceil(b.x+b.w)-Math.floor(b.x), h:Math.ceil(b.y+b.h)-Math.floor(b.y)};
+  });
 }
 
 // Apply the capture's calibration offset to every time it carries.
