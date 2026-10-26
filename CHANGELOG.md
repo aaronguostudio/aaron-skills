@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased — Shape source preview
+
+- Turn requests into useful messages, designs, flows, models and handoffs.
+- Add a standalone proposal template with stable section names, sticky active
+  navigation, a connected canvas and local supporting detail.
+- Give repeated explanations one home; keep period, access and save assumptions
+  beside the prototype while preserving meaningful field labels and errors.
+- Preserve ambiguous source wording and proposed decision status through designs
+  and handoffs. Shape remains separate from the Demo installer and runtime.
+- Include the linked local-development guide in the Demo document export.
+
 ## 0.5.1 — 2026-10-24
 
 - Use the macOS system PEM bundle when Python has no CA certificates, while

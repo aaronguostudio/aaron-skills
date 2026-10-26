@@ -56,3 +56,20 @@ No customer system, account or paid voice provider belongs in ordinary CI.
 External clean-machine and human acceptance remain distinct from testing on the
 developer's machine. Record untested platforms; do not infer model/provider
 support from a shared skill format.
+
+## Proposal delivery review
+
+Inspect the actual reading and viewing experience alongside semantic coverage.
+For the default Shape proposal, check the five exact navigation/heading labels,
+section contribution and repeated explanations. Inspect the working frames at a
+readable scale. Shared period, permission and save/simulation assumptions need one
+home, while meaningful basis labels, unresolved markers and errors remain local.
+Verify claimed source corrections against the inspected words.
+
+For independent tests, freeze the task, raw inputs, candidate and review criteria.
+Keep prior outputs, manually refined exemplars and reviewer conclusions out of
+the generation workspace. Preserve the unedited result and failed takes. Record
+reusable templates/controllers as part of the candidate, not instruction-only
+reasoning. Separate artifact availability, final messages and process exit.
+A repeat on a known case does not establish transfer or recipient acceptance.
+Private sources, raw runs and evaluation reports stay outside public source.

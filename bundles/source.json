@@ -286,7 +286,10 @@
     "benchmarks/onboarding-v0/native.py",
     "packages/demo/capture/scripts/calibration.mjs",
     "packages/demo/capture/test/calibration.test.mjs",
-    "packages/demo/capture/test/calibration.e2e.mjs"
+    "packages/demo/capture/test/calibration.e2e.mjs",
+    "skills/feature-blueprint/references/communication.md",
+    "skills/feature-blueprint/references/delivery.md",
+    "skills/feature-blueprint/assets/review-page.html"
   ],
   "reviewedBinaryAssets": {
     "packages/demo/covers/art/alpine-silence.webp": {
