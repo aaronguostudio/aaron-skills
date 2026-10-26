@@ -128,7 +128,8 @@
     "scripts/updates.py",
     "scripts/runtime_activity.py",
     "docs/updates.md",
-    "packages/demo/capture/scripts/calibration.mjs"
+    "packages/demo/capture/scripts/calibration.mjs",
+    "docs/local-development.md"
   ],
   "version": "0.5.1",
   "update": {

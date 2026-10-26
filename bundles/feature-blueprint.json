@@ -28,6 +28,9 @@
     "examples/feature-blueprint/lightweight.md",
     "examples/feature-blueprint/cases.mjs",
     "examples/feature-blueprint/save-feedback.mjs",
-    "docs/skill-names.md"
+    "docs/skill-names.md",
+    "skills/feature-blueprint/references/communication.md",
+    "skills/feature-blueprint/references/delivery.md",
+    "skills/feature-blueprint/assets/review-page.html"
   ]
 }

@@ -33,7 +33,7 @@ Aaron Skills 将工作流与执行工作流所需的工具放在同一个集合�
 
 **目前第一个可用的能力组合是 Demo**，覆盖演示与沟通。项目接手、实现改动、更广泛的工程验证，是这个集合后续发展的方向；当前仓库还没有单独发布这些环节的 Skills。
 
-**Shape 已提供源码预览**，保留调用标识 `feature-blueprint`。它帮助 Agent 连接相关上下文、从复杂信息中提炼关系、追问会改变判断的问题，并在反馈中不断校正理解。入口是当前对话里的需求本身，一次简短交流也可以形成完整结果；视觉表达和 Agent 原生设计能力按理解问题的需要参与。请先读 `skills/feature-blueprint/SKILL.md`；`docs/feature-blueprint.md` 提供深入指引和可选历史案例。页面、数据包或固定的输出结构都不是必要条件。下面的安装流程仍只安装 Demo。
+**Shape 已提供源码预览**，保留调用标识 `feature-blueprint`。它把需求整理成下一位接收者能理解和使用的回复、设计、流程、概念模型或开发交接。较完整的方案页采用简洁的五节模板，提供固定导航、可操作的原型画布和页内展开的补充说明；小任务仍可用简短回复完成。请先读 `skills/feature-blueprint/SKILL.md`；`docs/feature-blueprint.md` 说明使用与导出方式。下面的安装流程仍只安装 Demo。
 
 系列名称统一为 **Shape → Capture → Film → Share**。请看[名称与现有调用标识](docs/skill-names.md)。
 

@@ -43,15 +43,13 @@ communication. Project onboarding, implementation, and broader engineering
 verification are the direction for the collection; they are not yet separate
 released skills here.
 
-**Shape is available as a source-checkout preview**, with the existing
-invocation ID `feature-blueprint`. It helps the agent connect relevant context,
-simplify conflicting information and pursue questions that improve understanding
-and the next decision. Start with the user's problem in the current conversation;
-a short exchange can be a complete result. Visuals and the agent's native design
-capabilities participate when they help discovery or explanation. Read
-`skills/feature-blueprint/SKILL.md`; `docs/feature-blueprint.md` locates deeper
-practice and optional historical cases. A page, packet or fixed output structure
-is not required. The Demo setup below continues to install only the Demo bundle.
+**Shape is available as a source-checkout preview**, with invocation ID
+`feature-blueprint`. It turns a request into a useful reply, design, workflow,
+conceptual model or execution handoff. Substantial proposal pages use a compact
+five-section template with sticky navigation, a connected prototype canvas and
+same-page supporting detail. Small tasks can remain short. Read
+`skills/feature-blueprint/SKILL.md`; `docs/feature-blueprint.md` explains use and
+export. Demo setup below continues to install only the Demo bundle.
 
 The family uses short action names: **Shape → Capture → Film
 → Share**. See [names and existing invocation IDs](docs/skill-names.md).
