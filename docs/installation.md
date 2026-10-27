@@ -1,5 +1,14 @@
 # Install and recover
 
+The v1.0.0 standard installation registers Shape (`feature-blueprint`), Build
+(`build-delivery`), Verify (`verify-delivery`), Capture (`demo-capture`), Film
+(`walkthrough-video`), Deliver (`deliver-work`) and Share (`paste-ready-update`).
+The existing runtime directory, bundle identity and `aaron-demo` command are
+retained. The four instruction skills can also be copied independently without
+the media runtime; include their complete folders and preserve existing entries.
+Existing v0.x users must explicitly review this major upgrade; it is not an
+automatic compatible patch.
+
 The current checkout supports macOS arm64, Ubuntu 24.04 x64 and native Windows 11
 x64. The v0.1.0 tag remains macOS-only. See [compatibility](compatibility.md) for
 measured environments and boundaries. Install as your ordinary user.
@@ -66,8 +75,8 @@ that manager/project selection before retrying; do not replace its symlink with
 the dispatcher binary.
 
 Add the printed command directory to your user PATH yourself if needed. Start a
-new agent session to refresh discovery. Ask it to list Demo Capture, Walkthrough
-Video and Paste Ready Update, then invoke one by name. `doctor` checks runtime
+new agent session to refresh discovery. Ask it to list Shape, Build, Verify, Capture, Film, Deliver and Share, then
+invoke one by its [existing ID](skill-names.md). `doctor` checks runtime
 and registrations, not native model routing or host behavior.
 
 `aaron-demo doctor` verifies installed files, tools and browser readiness.

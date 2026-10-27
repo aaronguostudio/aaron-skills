@@ -74,7 +74,11 @@ class BundleTests(unittest.TestCase):
             self.assertEqual(package['dependencies']['remotion'], package['dependencies']['@remotion/cli'])
             self.assertTrue((output / 'packages/demo/remotion/src/projects/walkthrough-video/brand/BrandCard.tsx').exists())
             self.assertTrue((output / 'packages/demo/walkthrough/brand.ts').exists())
-            self.assertEqual(manifest['skills'], ['paste-ready-update', 'demo-capture', 'walkthrough-video'])
+            expected = {'feature-blueprint', 'build-delivery', 'verify-delivery', 'demo-capture', 'walkthrough-video', 'deliver-work', 'paste-ready-update'}
+            self.assertEqual(set(manifest['skills']), expected)
+            for name in expected:
+                self.assertTrue((output / 'skills' / name / 'SKILL.md').is_file())
+                self.assertTrue((output / 'skills' / name / 'agents/openai.yaml').is_file())
 
     def test_export_never_overwrites_or_exports_into_source(self):
         with tempfile.TemporaryDirectory() as directory:

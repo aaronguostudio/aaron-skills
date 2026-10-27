@@ -1,10 +1,11 @@
-# Shape source preview
+# Shape
 
 Shape (`feature-blueprint`) turns a request into a useful next delivery: a focused
 reply, customer confirmation, design, flow, conceptual model or execution handoff.
 Start with the user's actual request. Small tasks can stay small; no packet,
 ordered phases or fixed artifact count is required. The skill has no runtime or
-service dependency. Demo setup continues to install Capture, Film and Share.
+service dependency. Standard v1.0.0 setup includes Shape alongside Build, Verify, Capture, Film,
+Deliver and Share. Standalone use still needs no media runtime.
 
 ## Substantial proposal pages
 

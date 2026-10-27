@@ -1,6 +1,6 @@
 # Build · delivery within the user's workflow
 
-Build is a local first-version candidate, with invocation ID `build-delivery`.
+Build is included in Aaron Skills v1.0.0, with invocation ID `build-delivery`.
 It helps an agent turn understood intent into a usable result within the team's
 existing engineering or authoring system. Build identifies and closes applicable
 delivery gaps; the chosen workflow owns implementation methods, planning, review
@@ -82,12 +82,12 @@ and Share are optional ways to demonstrate or communicate an applicable result.
 Build's own delivery may be an editable file, working application or concise note.
 No mandatory sequence or integration with a third-party framework is claimed.
 
-The separate local Deliver candidate (`deliver-work`) can prepare the audience-
+Deliver (`deliver-work`) can prepare the audience-
 appropriate message, release notes or handoff from the actual result, evidence
 and limits. It may use Share for a copyable update page. It is optional; Build's
 own useful next-receiver handoff does not require another skill or a release.
 
-The separate local Verify candidate (`verify-delivery`) can revisit whether the
+Verify (`verify-delivery`) can revisit whether the
 actual deliverable and its evidence support the intended next use, repair scoped
 findings and recheck. Build retains its own ongoing checks; Verify is optional
 and is not a dependency of this standalone skill.
@@ -100,9 +100,8 @@ existing registrations. `agents/openai.yaml` supplies optional Codex UI metadata
 other hosts can use the Markdown instructions and references.
 
 The [standalone manifest](../bundles/build-delivery.json) lists the skill and
-product documentation. Build is not added to the Demo runtime installer, and
-creating this source candidate does not register it in the user's global skills.
-No new CLI command or automatic upgrade is supplied.
+product documentation. Standard setup registers Build with the other six skills. Standalone copying
+remains available without the Demo runtime. No new invocation alias is supplied.
 
 ## Evidence and limits
 
@@ -113,5 +112,5 @@ customer acceptance. See the [evaluation guidance](build-delivery-evaluation.md)
 for real-case selection, observable standards and independent comparison. It is
 a test method, not evidence that these checks or a behavioral trial have passed.
 
-The new skill and documentation do not change the released capabilities or
-website. No publication, deployment, purchase or external sending is implied.
+Using this skill does not authorize publication, deployment, purchase or
+external sending.

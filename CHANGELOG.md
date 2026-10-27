@@ -1,15 +1,25 @@
 # Changelog
 
-## Unreleased — Shape source preview
+## 1.0.0 — 2026-10-26
 
-- Turn requests into useful messages, designs, flows, models and handoffs.
-- Add a standalone proposal template with stable section names, sticky active
-  navigation, a connected canvas and local supporting detail.
-- Give repeated explanations one home; keep period, access and save assumptions
-  beside the prototype while preserving meaningful field labels and errors.
-- Preserve ambiguous source wording and proposed decision status through designs
-  and handoffs. Shape remains separate from the Demo installer and runtime.
-- Include the linked local-development guide in the Demo document export.
+- Include all seven skills in standard setup: Shape, Build, Verify, Capture,
+  Film, Deliver and Share, retaining their existing invocation IDs.
+- Release Build for usable artifacts in existing project workflows, Verify for
+  scoped inspection/repair/rechecks, and Deliver for recipient communication,
+  release notes and actual files/access. No skill requires a fixed pipeline.
+- Check promised regeneration from recipient files and declared dependencies;
+  keep unavailable historical evidence unverified rather than substituting a
+  new baseline. Preserve Share as optional copyable media packaging.
+- Include Shape’s inspectable proposal template and standalone instructions.
+- Preserve local Demo capture, rendering, masks and `aaron-demo` commands. Safely
+  retire only managed registrations when rolling back to a smaller skill set;
+  user changes stop activation and remain preserved.
+- Align the English/Chinese website and READMEs with the complete installation.
+- Update the renderer’s transitive `fast-uri` lock to 3.1.9; dependency audits
+  report no known vulnerabilities in the checked installed package sets.
+- Require explicit review in the new `demo-1.0` compatibility epoch. Synthetic
+  checks and packaged instructions do not establish universal model quality,
+  real connector compatibility or customer acceptance.
 
 ## 0.6.1 — 2026-10-26
 

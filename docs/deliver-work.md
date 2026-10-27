@@ -1,6 +1,6 @@
 # Deliver · make the result usable by its receiver
 
-Deliver is a local first-version candidate, invocation ID `deliver-work`. It
+Deliver is included in Aaron Skills v1.0.0, invocation ID `deliver-work`. It
 prepares stakeholder messages, release notes and usable handoffs, choosing the
 channel and media needed by the receiver's next action. Its portable core is
 instructions; it supplies no messaging connector, hosting service or deployment
@@ -52,12 +52,13 @@ Copy the complete `skills/deliver-work` folder into an unused host-supported
 skill location, preserving other registrations, and refresh discovery.
 `agents/openai.yaml` supplies optional Codex UI metadata. The
 [standalone manifest](../bundles/deliver-work.json) includes the skill and its
-product/workflow documentation. Deliver is not added to the released Demo
-installer or a global skill registration.
+product/workflow documentation. Standard setup registers Deliver with the other six skills; standalone use
+remains available without the media runtime.
 
 Structural validation, reference closure and isolated copying check packaging.
 The [authored evaluation cases](deliver-work-evaluation.md) describe future
 communication, media, release and receiver trials; they are not completed agent
 evaluations. Native host discovery, actual stakeholder comprehension, external
 access, connector integration and joint workflow quality require their own
-evidence. No public release or website change accompanies this candidate.
+evidence. Release-specific installation and platform evidence is recorded in
+[verification](https://github.com/aaronguostudio/aaron-skills/blob/main/docs/verification.md); synthetic trials do not establish customer acceptance.

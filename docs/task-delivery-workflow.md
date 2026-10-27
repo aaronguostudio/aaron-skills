@@ -16,10 +16,10 @@ task needs; they are not mandatory phases or a required set of files.
 | Make the result usable by its receiver | Deliver / `deliver-work` | Actual stakeholder communication, release notes or handoff with access and next action |
 | Package a copyable screenshot update when helpful | Share / `paste-ready-update` | A local review/paste page using the existing Demo runtime |
 
-Build, Verify and Deliver are local source candidates. Capture/Film/Share retain
-their existing runtime and invocation IDs. This map does not establish that all
-capabilities are released together, that a new installer includes them or that
-the whole method has passed a joint behavioral trial.
+The v1.0.0 standard installation includes all seven skills. Capture/Film/Share
+retain their existing runtime and invocation IDs. Instruction availability does
+not establish universal output quality, integration with third-party frameworks
+or a successful joint behavioral trial of the whole method.
 
 ## Carry meaning and evidence, not a universal packet
 

@@ -24,17 +24,18 @@ def policy(kind='compatible', epoch='demo-0.4'):
     return {'kind': kind, 'compatibilityEpoch': epoch, 'summary': ['Public synthetic update.']}
 
 
-def make_release(path, version='0.4.1'):
+def make_release(path, version='0.4.1', skills=None):
     path.mkdir(parents=True)
+    skills = bundle.SKILLS if skills is None else skills
     files = {}
-    for name in bundle.SKILLS:
+    for name in skills:
         relative = f'skills/{name}/SKILL.md'
         target = path / relative
         target.parent.mkdir(parents=True)
         target.write_text(version)
         files[relative] = hashlib.sha256(target.read_bytes()).hexdigest()
     manifest = {'schema': 1, 'bundle': 'demo', 'version': version, 'sourceRevision': 'a' * 40,
-                'sourceDirty': False, 'skills': list(bundle.SKILLS), 'files': files, 'update': policy(),
+                'sourceDirty': False, 'skills': list(skills), 'files': files, 'update': policy(),
                 'id': hashlib.sha256(json.dumps(files, sort_keys=True).encode()).hexdigest()[:16]}
     updates.write_json(path / 'bundle-manifest.json', manifest)
     (path / 'READY').touch()
@@ -242,6 +243,27 @@ class ActivationTests(unittest.TestCase):
         self.assertEqual(updates.read_json(self.root / 'updates/state.json')['policy'], 'notify')
         for path in self.config['skillsDirs']:
             self.assertEqual((Path(path) / 'demo-capture').resolve(), self.first / 'skills/demo-capture')
+
+    def test_rollback_to_three_skills_removes_only_new_managed_registrations(self):
+        names = ['demo-capture', 'walkthrough-video', 'paste-ready-update']
+        target = self.root / 'releases/legacy'
+        make_release(target, skills=names)
+        updates.write_json(target / 'installed.json', self.config)
+        install.activate_release(self.root, target, self.config, names)
+        directory = Path(self.config['skillsDir'])
+        self.assertEqual({p.name for p in directory.iterdir()}, set(names))
+        self.assertTrue(all((directory / n).resolve() == target / 'skills' / n for n in names))
+        install.activate_release(self.root, self.first, self.config, bundle.SKILLS)
+        self.assertEqual({p.name for p in directory.iterdir()}, set(bundle.SKILLS))
+
+    def test_retired_skill_user_replacement_blocks_switch_and_preserves_active(self):
+        directory = Path(self.config['skillsDir'])
+        retired = directory / 'verify-delivery'
+        retired.unlink(); retired.mkdir(); (retired / 'SKILL.md').write_text('user replacement')
+        with self.assertRaisesRegex(ValueError, 'preserved'):
+            install.activate_release(self.root, self.second, self.config, ['demo-capture'])
+        self.assertEqual(updates.current_release(self.root), self.first)
+        self.assertEqual((retired / 'SKILL.md').read_text(), 'user replacement')
 
     def test_rollback_can_leave_a_damaged_active_release_without_deleting_it(self):
         install.activate_release(self.root, self.second, self.config, bundle.SKILLS)

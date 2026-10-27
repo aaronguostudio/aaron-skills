@@ -1,6 +1,6 @@
 # Verify · evidence for the next use
 
-Verify is a local first-version candidate with invocation ID `verify-delivery`.
+Verify is included in Aaron Skills v1.0.0 with invocation ID `verify-delivery`.
 It checks actual deliverables against their purpose, repairs issues within scope,
 rechecks the result and reports what the evidence supports. Its core is portable
 instructions, not an installed automation engine or universal acceptance checker.
@@ -70,12 +70,13 @@ Copy the complete `skills/verify-delivery` folder into an unused host-supported
 skill location and refresh discovery. Preserve existing registrations.
 `agents/openai.yaml` supplies optional Codex UI metadata. The
 [standalone manifest](../bundles/verify-delivery.json) lists the skill and product
-notes. Verify is not added to the Demo runtime installer or a global registration.
+notes. Standard setup registers Verify with the other six skills; standalone
+copying remains available without the media runtime.
 
 Structural validation, reference closure and isolated copying test packaging,
 not the quality of the agent's judgments. The
 [authored evaluation cases](verify-delivery-evaluation.md) describe future trials;
 they are not completed runs or measured improvements. Native discovery, real
 customer acceptance and third-party framework integration remain unverified.
-No website, released runtime or production deployment changes accompany this
-candidate.
+Release-specific installation and platform evidence is recorded in
+[verification](https://github.com/aaronguostudio/aaron-skills/blob/main/docs/verification.md); synthetic trials do not establish customer acceptance.
