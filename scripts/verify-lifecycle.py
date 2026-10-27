@@ -9,6 +9,7 @@ from uuid import uuid4
 
 from managed_registration import active_release
 from platform_tools import configure_console
+from bundle import SKILLS
 
 
 def main():
@@ -58,7 +59,7 @@ def main():
     if current() != repaired:
         raise ValueError('A failed installation changed the active release.')
     run('--uninstall')
-    for name in ('demo-capture', 'walkthrough-video', 'paste-ready-update'):
+    for name in SKILLS:
         if (skills / name).exists() or (skills / name).is_symlink():
             raise ValueError('Uninstall left a managed skill registration.')
     if sentinel.read_text(encoding='utf-8') != 'retained' or not (unrelated / 'SKILL.md').is_file():

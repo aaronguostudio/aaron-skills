@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build"
+  short_description: "Deliver usable work within your existing workflow"
+  default_prompt: "Use $build-delivery to complete this work within our existing workflow and design system, address the relevant delivery requirements, and verify the result for its next receiver."

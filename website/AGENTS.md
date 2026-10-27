@@ -111,3 +111,13 @@ outputs. Use a short one-time connection/node reveal, subtle hover feedback and
 an explicit replay control. Honor reduced-motion preferences with a fully drawn
 static graph; avoid continuous decorative loops. Retain the original published
 raster assets. This supersedes keeping the hero graph limited to Demo or static.
+
+
+## Complete first release 2026-10-26
+
+Aaron authorized integrating the completed instruction skills into main, verifying
+the full installation and publishing the first complete release. v1.0.0 includes
+Shape, Build, Verify, Capture, Film, Deliver and Share in standard setup. This
+supersedes older availability notes calling non-Demo capabilities future work.
+Preserve the accepted five-capability graph, bilingual presentation and media;
+availability is not a claim of universal quality or customer acceptance.

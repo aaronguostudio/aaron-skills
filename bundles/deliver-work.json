@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "name": "deliver-work",
+  "version": "1.0.0",
+  "skills": [
+    "deliver-work"
+  ],
+  "files": [
+    "LICENSE",
+    "bundles/deliver-work.json",
+    "docs/deliver-work.md",
+    "docs/deliver-work-evaluation.md",
+    "docs/task-delivery-workflow.md",
+    "skills/deliver-work/SKILL.md",
+    "skills/deliver-work/agents/openai.yaml",
+    "skills/deliver-work/references/messages.md",
+    "skills/deliver-work/references/channels-media.md",
+    "skills/deliver-work/references/release-notes.md",
+    "skills/deliver-work/references/release-handoff.md"
+  ]
+}

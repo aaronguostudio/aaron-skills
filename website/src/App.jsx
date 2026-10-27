@@ -343,7 +343,7 @@ export function App() {
               <a className="button button-dark" href="#skills">{language === "zh" ? "看看这些能力" : "Explore the capabilities"}<Arrow /></a>
               {introduction?.video && <button className="hero-intro-link" onClick={() => setIntroductionOpen(true)} aria-haspopup="dialog">{language === "zh" ? "听 Aaron 介绍" : "Meet Aaron Skills"}<span aria-hidden="true">▷</span></button>}
             </div>
-            <p className="hero-scope">{language === "zh" ? "Demo 已发布 · Shape 源码预览 · Build / Verify / Deliver 开发中" : "Demo released · Shape source preview · Build / Verify / Deliver in development"}</p>
+            <p className="hero-scope">{language === "zh" ? "v1.0.0 已发布 · 五项能力，七个 Skills" : "v1.0.0 released · Five capabilities, seven skills"}</p>
           </div>
           <WorkflowGraph language={language} />
         </section>

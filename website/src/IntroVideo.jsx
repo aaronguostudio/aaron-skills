@@ -27,7 +27,7 @@ export function IntroVideo({ open, onClose, language, media }) {
           <source src={media.video} type="video/mp4" />
           {media.captions && <track kind="captions" src={media.captions} srcLang="en" label="English" />}
         </video>}
-        <p className="intro-scope">{language === "zh" ? "目前已发布 Demo：Capture → Film → Share。其他工作流能力仍在开发。" : "Available today: Demo — Capture → Film → Share. Other workflow capabilities are in development."}</p>
+        <p className="intro-scope">{language === "zh" ? "v1.0.0 包含 Shape、Build、Verify、Capture、Film、Deliver、Share，按需使用。" : "v1.0.0 includes Shape, Build, Verify, Capture, Film, Deliver and Share. Use what you need."}</p>
         {media.transcript && <details><summary>{language === "zh" ? "阅读文字版介绍" : "Read the introduction"}</summary><p lang="en">{media.transcript}</p></details>}
       </div>
     </dialog>

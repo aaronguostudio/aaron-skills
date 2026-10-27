@@ -17,19 +17,23 @@
 
 | 能力 | 精髓 | 可用状态 |
 | --- | --- | --- |
-| [Shape](https://skills.aaronguo.com/?lang=zh#skill-shape) | 把意图变具体，让方案可以被查看、纠正和执行。 | 源码预览 · `feature-blueprint` |
-| [Build](https://skills.aaronguo.com/?lang=zh#skill-build) | 延续已有理解和项目做法，补齐从做出来到能用的距离。 | 开发中 |
-| [Verify](https://skills.aaronguo.com/?lang=zh#skill-verify) | 检查实际承诺的结果；发现问题就修复，再验证。 | 开发中 |
+| [Shape](https://skills.aaronguo.com/?lang=zh#skill-shape) | 把意图变具体，让方案可以被查看、纠正和执行。 | 已包含 · `feature-blueprint` |
+| [Build](https://skills.aaronguo.com/?lang=zh#skill-build) | 延续已有理解和项目做法，补齐从做出来到能用的距离。 | 已包含 · `build-delivery` |
+| [Verify](https://skills.aaronguo.com/?lang=zh#skill-verify) | 检查实际承诺的结果；发现问题就修复，再验证。 | 已包含 · `verify-delivery` |
 | [Demonstrate](https://skills.aaronguo.com/?lang=zh#skill-demonstrate) | 录制真实流程，针对受众讲清检查过的结果。 | Demo 已发布 · Capture / Film / Share |
-| [Deliver](https://skills.aaronguo.com/?lang=zh#skill-deliver) | 让下一步清楚可行，使对方能审阅、使用或接着做。 | Share 已发布 · 更广泛的能力开发中 |
+| [Deliver](https://skills.aaronguo.com/?lang=zh#skill-deliver) | 让下一步清楚可行，使对方能审阅、使用或接着做。 | 已包含 · `deliver-work`；按需使用 Share 包装 |
 
 [看看“缺失收据”这个虚构案例](https://skills.aaronguo.com/?lang=zh#skills)：
 一份聚焦的方案、可操作的界面示意、验收检查、讲解分镜，以及可复制的交接草稿。
 它们用于说明方法，不作为发布或 benchmark 证据。
 
-Shape 的[源码预览](skills/feature-blueprint/SKILL.md)独立于 Demo 安装器。
-参见[使用说明](docs/feature-blueprint.md)和[现有调用标识](docs/skill-names.md)。
-Build、Verify 和更广泛的 Deliver 能力尚未在这个仓库中作为独立 Skill 发布。
+**v1.0.0 的标准安装包含七个 Skills**：Shape、Build、Verify、Capture、Film、Deliver、Share。
+Shape / Build / Verify / Deliver 是无服务依赖的可移植指令；Capture / Film / Share
+沿用现有本地 Demo 工具链。[现有调用标识](docs/skill-names.md)保持不变。
+参见[完整工作方法](docs/task-delivery-workflow.md)和 [Shape 使用说明](docs/feature-blueprint.md)。
+
+例如，让 `$verify-delivery` 检查已有成品、修复范围内的问题并复验；
+让 `$deliver-work` 准备面向接收者的实际交接。这样的请求本身不授权发送或发布。
 
 ## 当前可用：Demo
 
@@ -54,7 +58,7 @@ Build、Verify 和更广泛的 Deliver 能力尚未在这个仓库中作为独�
 [6 组视频搭配和 2 种无装饰背景的简洁版](https://skills.aaronguo.com/layouts?lang=zh)。
 这些是经过挑选的展示案例，与 benchmark 分开。
 
-## 安装 Demo
+## 安装 Aaron Skills
 
 运行时目标：**macOS arm64、Ubuntu 24.04 x64 和原生 Windows 11 x64**。
 具体实测平台与宿主范围请看[兼容性说明](docs/compatibility.md)。

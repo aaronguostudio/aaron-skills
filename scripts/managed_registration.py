@@ -73,8 +73,9 @@ def remove(path):
         path.unlink(missing_ok=True)
 
 
-def activate(root, release, skills_dirs, bin_dir, skills, python, configuration=None):
-    check_conflicts(root, skills_dirs, bin_dir, skills)
+def activate(root, release, skills_dirs, bin_dir, skills, python, configuration=None, retired_skills=()):
+    all_skills = [*skills, *retired_skills]
+    check_conflicts(root, skills_dirs, bin_dir, all_skills)
     launcher = b'''from pathlib import Path
 import json, subprocess, sys
 root = Path(__file__).resolve().parent
@@ -107,8 +108,15 @@ sys.exit(subprocess.run([sys.executable, str(release / 'scripts/cli.py'), *sys.a
                 temporary.write_bytes(source)
             else:
                 shutil.copytree(source, temporary)
-        check_conflicts(root, skills_dirs, bin_dir, skills)
+        check_conflicts(root, skills_dirs, bin_dir, all_skills)
         hashes = {str(path): digest(temporary) for path, temporary in staged.items()}
+        for directory in skills_dirs:
+            for name in retired_skills:
+                path = directory / name
+                if path.exists():
+                    backup = path.with_name(path.name + '.backup-' + token)
+                    path.replace(backup)
+                    backups[path] = backup
         for path, temporary in staged.items():
             if path.exists():
                 backup = path.with_name(path.name + '.backup-' + token)

@@ -18,21 +18,26 @@ capabilities your task needs; they are not a compulsory sequence.
 
 | Capability | The essence | Availability |
 | --- | --- | --- |
-| [Shape](https://skills.aaronguo.com/#skill-shape) | Make the intent concrete: a proposal someone can inspect, correct and act on. | Source preview · `feature-blueprint` |
-| [Build](https://skills.aaronguo.com/#skill-build) | Close the gap to usable work, using the project's existing methods and design. | In development |
-| [Verify](https://skills.aaronguo.com/#skill-verify) | Check the actual promise. Exercise the result, repair problems and check again. | In development |
+| [Shape](https://skills.aaronguo.com/#skill-shape) | Make the intent concrete: a proposal someone can inspect, correct and act on. | Included · `feature-blueprint` |
+| [Build](https://skills.aaronguo.com/#skill-build) | Close the gap to usable work, using the project's existing methods and design. | Included · `build-delivery` |
+| [Verify](https://skills.aaronguo.com/#skill-verify) | Check the actual promise. Exercise the result, repair problems and check again. | Included · `verify-delivery` |
 | [Demonstrate](https://skills.aaronguo.com/#skill-demonstrate) | Record the real flow and explain the checked result for its audience. | Demo released · Capture / Film / Share |
-| [Deliver](https://skills.aaronguo.com/#skill-deliver) | Make the next step clear so someone can review, use or continue the work. | Share released · broader capability in development |
+| [Deliver](https://skills.aaronguo.com/#skill-deliver) | Make the next step clear so someone can review, use or continue the work. | Included · `deliver-work`; optional Share packaging |
 
 [Explore one fictional missing-receipt case](https://skills.aaronguo.com/#skills):
 a focused proposal, an interactive interface sketch, acceptance checks, a
 storyboard and a copyable handoff. These illustrate the methods; they are not
 release or benchmark evidence.
 
-Shape's [source preview](skills/feature-blueprint/SKILL.md) is separate from the
-Demo installer. See its [usage guide](docs/feature-blueprint.md) and the
-[existing invocation IDs](docs/skill-names.md). Build, Verify and broader Deliver
-are not yet separately released skills in this repository.
+**v1.0.0 installs all seven skills** through the standard setup below: Shape, Build,
+Verify, Capture, Film, Deliver and Share. Shape / Build / Verify / Deliver are
+portable instructions with no service dependency; Capture / Film / Share use the
+existing local Demo toolchain. Keep the [existing invocation IDs](docs/skill-names.md).
+See the [full workflow](docs/task-delivery-workflow.md) and [Shape guide](docs/feature-blueprint.md).
+
+For example, ask `$verify-delivery` to check an existing deliverable, fix scoped
+issues and recheck it; ask `$deliver-work` to prepare its actual recipient handoff.
+Neither request authorizes sending or publication.
 
 ## Available now: Demo
 
@@ -57,7 +62,7 @@ Explore [32 cover styles](https://skills.aaronguo.com/covers) and
 [six matched video treatments plus two unframed choices](https://skills.aaronguo.com/layouts).
 The examples are curated showcases, separate from benchmarks.
 
-## Install Demo
+## Install Aaron Skills
 
 Runtime targets: **macOS arm64, Ubuntu 24.04 x64 and native Windows 11 x64**.
 See [compatibility](docs/compatibility.md) for measured platform and host coverage.

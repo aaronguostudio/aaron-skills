@@ -1,3 +1,36 @@
+# Complete workflow release v1.0.0
+
+The standard installation now registers seven skills: Shape, Build, Verify,
+Capture, Film, Deliver and Share. Existing `aaron-demo` commands and the local
+media workflow retain their identities. A rollback to a smaller skill set retires
+only unchanged managed registrations; user replacements block activation.
+
+Release acceptance requires the complete source gate, an isolated exported
+installation, doctor and the installed capture/revision/media/clipboard flow,
+update/rollback and lifecycle checks. The version-tag native matrix covers the
+exact release revision on macOS 15, Ubuntu 24.04 and Windows Server 2022 with
+Node 22 and Python 3.11. See the [release](https://github.com/aaronguostudio/aaron-skills/releases/tag/v1.0.0)
+and [CI runs](https://github.com/aaronguostudio/aaron-skills/actions/workflows/ci.yml)
+for its final remote results. Historical records below retain their original scope.
+
+Verify and Deliver had synthetic development trials covering report arithmetic,
+scoped repairs and dependent exports, repeated template output and invalid-input
+preservation, recipient files/access, draft release status, a local fake send with
+uncertain acknowledgment, read-only checks and missing historical references.
+One recipient reuse failure led to explicit package-only replay guidance. A later
+replay needed an evaluator staging correction to supply the original historical
+fixture; it is assisted evidence, not an independent clean pass or a causal
+old/new improvement measurement. A missing-reference control correctly retained
+an unverified historical-identity claim without a substitute baseline.
+
+These trials and installed checks do not certify universal model quality, human
+preference, third-party framework integration, real messaging connectors or
+customer acceptance. Raw trials, generated media, authentication and machine
+paths remain outside Git. Native discovery is host/version-specific; registration
+alone is not proof of model selection on every target host.
+
+---
+
 # Ubuntu setup and capture fixes — v0.4.1 candidate
 
 Date: 2026-10-21. Local evidence uses public/synthetic fixtures only.

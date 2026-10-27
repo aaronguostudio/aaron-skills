@@ -32,6 +32,9 @@ def activate_release(root, release, config, skills, *, expected_active=None):
             if previous != expected_active.resolve():
                 raise ValueError('The active version changed during update preparation. Check again before updating.')
             verify_bundle(previous)
+        previous_manifest = previous / 'bundle-manifest.json' if previous else None
+        previous_skills = json.loads(previous_manifest.read_text(encoding='utf-8')).get('skills', []) if previous_manifest and previous_manifest.is_file() else []
+        retired_skills = set(previous_skills) - set(skills)
         record = root / 'previous-release.json'
         old_record = record.read_bytes() if record.is_file() else None
         # Write the rollback pointer before activation. A full disk must not
@@ -40,9 +43,9 @@ def activate_release(root, release, config, skills, *, expected_active=None):
             write_json(record, {'release': str(previous)})
         try:
             if os.name == 'nt':
-                managed_registration.activate(root, release, directories, bin_dir, skills, config['tools']['python'], configuration=config)
+                managed_registration.activate(root, release, directories, bin_dir, skills, config['tools']['python'], configuration=config, retired_skills=retired_skills)
             else:
-                _activate_posix(root, release, config, directories, bin_dir, write_json)
+                _activate_posix(root, release, config, directories, bin_dir, write_json, skills, retired_skills, previous)
         except BaseException:
             if old_record is None:
                 record.unlink(missing_ok=True)
@@ -51,10 +54,18 @@ def activate_release(root, release, config, skills, *, expected_active=None):
             raise
 
 
-def _activate_posix(root, release, config, directories, bin_dir, write_json):
+def _activate_posix(root, release, config, directories, bin_dir, write_json, skills, retired_skills, previous):
     # Recheck just before switching; another program may have replaced a link.
-    wanted = link_conflicts(root, directories, bin_dir)
-    old = {path: path.readlink() if path.is_symlink() else None for path in [root / 'current', *wanted]}
+    wanted = link_conflicts(root, directories, bin_dir, skills)
+    retired = []
+    for directory in directories:
+        for name in retired_skills:
+            path = directory / name
+            if path.exists() or path.is_symlink():
+                if not path.is_symlink() or path.resolve() != (previous / 'skills' / name).resolve():
+                    raise ValueError(f'Existing or modified entry preserved: {path}')
+                retired.append(path)
+    old = {path: path.readlink() if path.is_symlink() else None for path in [root / 'current', *wanted, *retired]}
     previous_config = (release / 'installed.json').read_bytes()
     try:
         for path in (*directories, bin_dir):
@@ -63,6 +74,8 @@ def _activate_posix(root, release, config, directories, bin_dir, write_json):
         atomic_link(release, root / 'current')
         for link, target in wanted.items():
             atomic_link(target, link)
+        for path in retired:
+            path.unlink()
     except BaseException:
         (release / 'installed.json').write_bytes(previous_config)
         for path, target in old.items():
@@ -103,9 +116,9 @@ def verify_installed_smoke(run, command):
                          f'Review the smoke output, then retry:\n{retry}\nCause: {error}') from error
 
 
-def link_conflicts(root, skills_dir, bin_dir):
+def link_conflicts(root, skills_dir, bin_dir, skills=SKILLS):
     directories = [skills_dir] if isinstance(skills_dir, Path) else skills_dir
-    wanted = {directory / name: root / 'current/skills' / name for directory in directories for name in SKILLS}
+    wanted = {directory / name: root / 'current/skills' / name for directory in directories for name in skills}
     wanted[bin_dir / 'aaron-demo'] = root / 'current/aaron-demo'
     conflicts = [str(path) for path, target in wanted.items()
         if (path.exists() or path.is_symlink()) and (not path.is_symlink() or path.resolve() != target.resolve())]

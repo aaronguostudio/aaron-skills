@@ -41,6 +41,29 @@ class RegistrationTests(unittest.TestCase):
         self.install(self.first)
         self.assertEqual(errors(self.root, self.first, self.config, self.names), [])
 
+    def test_retired_copies_are_removed_transactionally_and_user_edits_block(self):
+        folder = self.first / 'skills/verify-delivery'; folder.mkdir()
+        (folder / 'SKILL.md').write_text('verification')
+        names = [*self.names, 'verify-delivery']
+        activate(self.root, self.first, [self.skills], self.bin, names, self.base / 'python.exe')
+        original = Path.replace
+        def fail_on_pointer(path, target):
+            if path.name.startswith('active.json.stage-'):
+                raise OSError('synthetic pointer failure')
+            return original(path, target)
+        with patch.object(Path, 'replace', fail_on_pointer), self.assertRaises(OSError):
+            activate(self.root, self.second, [self.skills], self.bin, self.names, self.base / 'python.exe', retired_skills=['verify-delivery'])
+        self.assertEqual(active_release(self.root), self.first)
+        self.assertEqual(digest(self.skills / 'verify-delivery'), digest(folder))
+        changed = self.skills / 'verify-delivery/SKILL.md'; changed.write_text('custom edit')
+        with self.assertRaisesRegex(ValueError, 'preserved'):
+            activate(self.root, self.second, [self.skills], self.bin, self.names, self.base / 'python.exe', retired_skills=['verify-delivery'])
+        self.assertEqual(changed.read_text(), 'custom edit')
+        changed.write_text('verification')
+        activate(self.root, self.second, [self.skills], self.bin, self.names, self.base / 'python.exe', retired_skills=['verify-delivery'])
+        self.assertFalse((self.skills / 'verify-delivery').exists())
+        self.assertEqual(errors(self.root, self.second, self.config, self.names), [])
+
     def test_unrelated_and_modified_skills_are_preserved(self):
         self.skills.mkdir()
         unrelated = self.skills / 'other'; unrelated.mkdir(); (unrelated / 'SKILL.md').write_text('other')

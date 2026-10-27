@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deliver"
+  short_description: "Prepare stakeholder messages, release notes and handoffs"
+  default_prompt: "Use $deliver-work to prepare the audience-appropriate message, release notes or handoff this result needs, with the right channel and supporting media, and preserve its verified status and next action."

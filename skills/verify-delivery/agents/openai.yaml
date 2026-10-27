@@ -1,0 +1,4 @@
+interface:
+  display_name: "Verify"
+  short_description: "Check actual deliverables, repair gaps and verify again"
+  default_prompt: "Use $verify-delivery to check this actual deliverable against its brief and intended use, fix issues within scope, recheck the result, and report the evidence and remaining limits."
