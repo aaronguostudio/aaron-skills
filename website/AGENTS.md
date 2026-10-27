@@ -83,3 +83,31 @@ finished examples. Forma is a fictional, frontend-only demo, not an ERP screen.
 On 2026-10-21 Aaron requested GitHub as an icon to the right of the English/Chinese language switch, separate from the content navigation. Keep its bilingual accessible label and tooltip, a 44px touch target, and the same arrangement across the homepage, covers and video layouts. On narrow screens, keep brand and utilities together above the content links so all navigation destinations remain accessible.
 
 Use the classic circular GitHub Mark (Octicons), which Aaron preferred over the standalone cat-shaped Phosphor icon on 2026-10-21.
+
+
+## Capability-led local preview (2026-10-26)
+
+Aaron requested a concise website upgrade that explains the essence of Shape,
+Build, Verify, Demonstrate and Deliver with concrete examples. Retain the white,
+blue Workflow Canvas identity and English/Chinese pairing. Use a compact capability
+directory and a single fictional case with inspectable artifacts. Keep the existing
+finished Demo videos, cover library and video layouts. Capabilities can be used
+independently. Distinguish source previews and work in development from the
+released Demo bundle; a local illustrative example is not release evidence.
+This request authorizes a local preview, not publication.
+
+
+Aaron's 2026-10-26 preview feedback: retain the existing illustrated Demo workflow
+in the hero. He values its graph-like visual character; a second text-only list
+of links repeats the capability directory below. Pair the original graph with
+the new concise headline and capability examples. Label its Demo scope, keep it
+static, and preserve the existing artwork and published URLs.
+
+
+Aaron then requested extending that graph language to all five capabilities,
+including Shape, Build and Verify, and adding Motion-based animation. Preserve
+the original blue connectors, flat rounded nodes and illustrated documents/video
+outputs. Use a short one-time connection/node reveal, subtle hover feedback and
+an explicit replay control. Honor reduced-motion preferences with a fully drawn
+static graph; avoid continuous decorative loops. Retain the original published
+raster assets. This supersedes keeping the hero graph limited to Demo or static.

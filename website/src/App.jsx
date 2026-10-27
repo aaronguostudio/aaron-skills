@@ -2,8 +2,9 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ArrowRightIcon } from "@phosphor-icons/react/dist/csr/ArrowRight";
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/csr/ArrowUpRight";
 import { XIcon } from "@phosphor-icons/react/dist/csr/X";
-import workflowDiagram from "./assets/workflow-canvas/workflow-diagram.webp";
-import workflowDiagramSmall from "./assets/workflow-canvas/workflow-diagram-768.webp";
+import { SkillEssentials } from "./SkillEssentials";
+import { WorkflowGraph } from "./WorkflowGraph";
+import { LazyMotion, domAnimation, MotionConfig } from "motion/react";
 import { Showcases } from "./Showcases";
 import { IntroVideo } from "./IntroVideo";
 import publishedIntroduction from "./introduction.json";
@@ -15,8 +16,8 @@ const copy = {
   en: {
     nav: ["Workflow", "Skills"],
     eyebrow: "METHODS FOR WORKING WITH AGENTS",
-    headline: ["From unfamiliar", "project to a", "clear handoff."],
-    intro: "Reusable skills and tools for working with AI agents. Start with Demo: record a real workflow, explain the checked result, and prepare a clear handoff.",
+    headline: ["From intent", "to work people", "can use."],
+    intro: "Shape the idea. Build it with care. Check the result. Make it clear to the next person. Reusable methods and tools for working with AI agents.",
     explore: "Explore the skills",
     github: "View on GitHub",
     workflow: "A WORKING METHOD, MADE REUSABLE.",
@@ -71,8 +72,8 @@ const copy = {
   zh: {
     nav: ["工作流程", "Skills"],
     eyebrow: "与 AGENT 协作的工作方法",
-    headline: ["从陌生项目，", "到清楚交付。"],
-    intro: "将 AI Agent 的工作方法与执行工具连起来。目前已发布 Demo：录制真实流程，讲清检查过的结果，再整理成可交付的更新。",
+    headline: ["让想法，", "成为可用的成果。"],
+    intro: "理清想法，用心实现，检查结果，再让接收者看明白。与 AI Agent 协作的可复用方法和工具。",
     explore: "探索这些 Skills",
     github: "在 GitHub 查看",
     workflow: "把工作方法，变成可复用的能力。",
@@ -267,6 +268,8 @@ export function App() {
   const isLayoutsPage = window.location.pathname.replace(/\/$/, "") === "/layouts";
   const home = isCoversPage || isLayoutsPage ? (language === "zh" ? "/?lang=zh" : "/") : "";
   return (
+    <LazyMotion features={domAnimation} strict>
+    <MotionConfig reducedMotion="user">
     <div className={`site ${language === "zh" ? "is-chinese" : ""}`}>
       <a href="#main" className="skip-link">
         {text.skip}
@@ -337,75 +340,14 @@ export function App() {
             </h1>
             <p className="hero-description">{text.intro}</p>
             <div className="hero-actions">
-              {introduction?.video ? <button className="button button-dark" onClick={() => setIntroductionOpen(true)} aria-haspopup="dialog">
-                {language === "zh" ? "先看 Aaron Skills 介绍" : "What is Aaron Skills?"}<span aria-hidden="true">▶</span>
-              </button> : <a className="button button-dark" href="#skills">{text.explore}<Arrow /></a>}
-              <a href="#examples" className="text-link">
-                {language === "zh" ? "观看实例" : "Watch the examples"}
-                <Arrow />
-              </a>
+              <a className="button button-dark" href="#skills">{language === "zh" ? "看看这些能力" : "Explore the capabilities"}<Arrow /></a>
+              {introduction?.video && <button className="hero-intro-link" onClick={() => setIntroductionOpen(true)} aria-haspopup="dialog">{language === "zh" ? "听 Aaron 介绍" : "Meet Aaron Skills"}<span aria-hidden="true">▷</span></button>}
             </div>
-            <p className="hero-scope">{language === "zh" ? "已发布：Demo · Capture / Film / Share。其他工作流能力仍在开发。" : "Released: Demo · Capture / Film / Share. Other workflow capabilities are in development."}</p>
+            <p className="hero-scope">{language === "zh" ? "Demo 已发布 · Shape 源码预览 · Build / Verify / Deliver 开发中" : "Demo released · Shape source preview · Build / Verify / Deliver in development"}</p>
           </div>
-          <figure className="hero-art">
-            <img
-              src={workflowDiagram}
-              srcSet={`${workflowDiagramSmall} 768w, ${workflowDiagram} 1475w`}
-              sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1440px) 48vw, 683px"
-              decoding="async"
-              width="1475"
-              height="1066"
-              alt={language === "zh"
-                ? "项目通过 Capture 录制真实流程、Film 制作讲解视频、Share 整理清楚的更新说明。"
-                : "A project moves through Capture to record the real flow, Film to create a guided video, and Share to prepare a clear update."}
-              fetchPriority="high"
-            />
-          </figure>
+          <WorkflowGraph language={language} />
         </section>
-        <section className="skills wrap" id="skills" aria-labelledby="skills-title">
-          <p className="eyebrow">{text.bundle}</p>
-          <h2 className="sr-only" id="skills-title">
-            {text.skillsHeadline.join(" ")}
-          </h2>
-          <div className="skills-grid">
-            {skills.map((skill, index) => (
-              <article key={skill.slug} className="skill">
-                <button className="skill-button" onClick={() => setSelected(index)}
-                  aria-haspopup="dialog" aria-label={`${text.skillAction} ${skill.name}`}>
-                  <span className="skill-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                  <div className="skill-content">
-                    <div className="skill-heading">
-                      <h3>{skill.name}</h3>
-                      <Arrow className="skill-arrow" size={22} />
-                    </div>
-                    <p>{text.descriptions[index]}</p>
-                  </div>
-                </button>
-              </article>
-            ))}
-          </div>
-        </section>
-        <section className="workflow wrap" id="workflow" aria-labelledby="workflow-title">
-          <h2 className="eyebrow" id="workflow-title">{text.workflow}</h2>
-          <ol className="workflow-steps">
-            {text.stages.map((stage, index) => (
-              <li className={`workflow-step ${index < 3 ? "future" : "available"}`} key={stage}>
-                <h3>{stage}</h3>
-                <p className="stage-status">{index < 3 ? text.future : text.available}</p>
-                {index < 4 && <Arrow className="flow-arrow" size={22} />}
-              </li>
-            ))}
-          </ol>
-        </section>
-        <section className="positioning wrap" aria-labelledby="positioning-title">
-          <p className="eyebrow">{language === "zh" ? "如何融入你的工作流" : "HOW IT FITS YOUR WORKFLOW"}</p>
-          <h2 id="positioning-title">{language === "zh" ? "从做出来，到让人看明白。" : "Make the work reviewable."}</h2>
-          <p>{language === "zh" ? "Aaron Skills 将可复用的方法与执行工具放在一起。当前已发布的重点是 Demo：真实录制、检查过的结果、可调整的讲解，以及供人审阅的交付。" : "Aaron Skills pairs reusable working methods with executable tools. The released focus is Demo: real recordings, checked results, adaptable explanations, and a handoff someone can review."}</p>
-          <details><summary>{language === "zh" ? "与 gstack、Superpowers 的侧重点有什么不同？" : "How does this compare with gstack and Superpowers?"}</summary>
-            <p>{language === "zh" ? "gstack 的官方介绍强调产品、工程、QA 与发布等角色式工具；Superpowers 强调从澄清、计划到测试与评审的开发方法。Aaron Skills 当前发布的 Demo 聚焦把应用结果变成可观看、可审阅、可交付的材料。范围有重叠，这是一种侧重点比较，不是功能缺失或效果优劣的断言。" : "gstack documents role-based tools spanning product, engineering, QA and release. Superpowers documents a development methodology from clarification and planning through testing and review. Aaron Skills’ released Demo bundle focuses on turning application results into watchable, reviewable handoffs. These scopes overlap; this describes documented focus, not missing capabilities or comparative performance."}</p>
-            <div className="positioning-sources"><ExternalLink href="https://github.com/garrytan/gstack">gstack — official README ↗</ExternalLink><ExternalLink href="https://github.com/obra/superpowers">Superpowers — official README ↗</ExternalLink></div>
-          </details>
-        </section>
+        <SkillEssentials language={language} onExploreDemo={setSelected} />
         <Showcases language={language} cases={review?.cases} />
         <section className="layout-teaser wrap"><p className="eyebrow">{language === "zh" ? "让产品成为主角" : "LET THE PRODUCT LEAD"}</p><h2>{language === "zh" ? "从开场，到每一帧。" : "From the opening to every frame."}</h2><p>{language === "zh" ? "6 组封面与视频页搭配，另加 2 种无装饰背景的简洁版。" : "Six cover and video treatments. Two unframed options. One clear story."}</p><a className="text-link" href={`/layouts${language === "zh" ? "?lang=zh" : ""}`}>{language === "zh" ? "探索视频版式" : "Explore the video collection"}<Arrow /></a></section>
         <CoverLibrary language={language} teaser />
@@ -430,5 +372,7 @@ export function App() {
         text={text}
       />
     </div>
+    </MotionConfig>
+    </LazyMotion>
   );
 }
