@@ -8,6 +8,12 @@ Reusable methods and tools for working with AI agents. Shape the idea, build it
 with care, check the result, and make it clear to the next person. Use the
 capabilities your task needs; they are not a compulsory sequence.
 
+<p align="center">
+  <a href="https://skills.aaronguo.com/#skills">
+    <img src="docs/skill-workflow.svg" width="760" alt="Aaron Skills: Shape, Build, Verify, Demonstrate and Deliver connect an idea to clear explanations and useful handoffs" />
+  </a>
+</p>
+
 ## Choose the help you need
 
 | Capability | The essence | Availability |
@@ -38,12 +44,6 @@ The released bundle connects three skills through a shared local toolchain:
 | [Capture](skills/demo-capture/SKILL.md) | Record real actions, check the result and save the evidence. |
 | [Film](skills/walkthrough-video/SKILL.md) | Make a guided video or branded cover. Refine the explanation without repeating business actions. |
 | [Share](skills/paste-ready-update/SKILL.md) | Prepare a reviewable HTML update with copyable text, screenshots and optional video. |
-
-<p align="center">
-  <a href="https://skills.aaronguo.com/#examples">
-    <img src="https://skills.aaronguo.com/art/optimized/workflow-overview.07ee3e92c535.webp" width="760" alt="The released Demo bundle: Capture records the flow, Film creates a guided video, and Share prepares a clear update" />
-  </a>
-</p>
 
 [Watch eight narrated examples](https://skills.aaronguo.com/#examples). Each case
 reuses one checked recording for different audiences and purposes.

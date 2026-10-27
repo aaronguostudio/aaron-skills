@@ -214,6 +214,7 @@
     "examples/feature-blueprint/cases.mjs",
     "examples/feature-blueprint/save-feedback.mjs",
     "docs/skill-names.md",
+    "docs/skill-workflow.svg",
     "docs/video-showcases.md",
     "examples/showcase-review/README.md",
     "examples/showcase-review/app.mjs",

@@ -7,6 +7,12 @@
 与 AI Agent 协作的可复用方法和工具。理清想法，用心实现，检查结果，再让接收者看明白。
 根据任务需要选择能力，无需按固定顺序使用整套流程。
 
+<p align="center">
+  <a href="https://skills.aaronguo.com/?lang=zh#skills">
+    <img src="docs/skill-workflow.svg" width="760" alt="Aaron Skills 五项能力：Shape、Build、Verify、Demonstrate、Deliver，从想法到清楚的讲解与交接" />
+  </a>
+</p>
+
 ## 选择当前任务需要的帮助
 
 | 能力 | 精髓 | 可用状态 |
@@ -35,12 +41,6 @@ Build、Verify 和更广泛的 Deliver 能力尚未在这个仓库中作为独�
 | [Capture](skills/demo-capture/SKILL.md) | 录制真实操作，检查结果，保存证据。 |
 | [Film](skills/walkthrough-video/SKILL.md) | 制作讲解视频或品牌封面；调整表达时无需重复业务操作。 |
 | [Share](skills/paste-ready-update/SKILL.md) | 准备可审阅的 HTML 更新页面，包含可复制的文字、截图与可选视频。 |
-
-<p align="center">
-  <a href="https://skills.aaronguo.com/?lang=zh#examples">
-    <img src="https://skills.aaronguo.com/art/optimized/workflow-overview.07ee3e92c535.webp" width="760" alt="已发布的 Demo 能力组合：Capture 录制流程，Film 制作讲解视频，Share 整理清楚的更新" />
-  </a>
-</p>
 
 [观看八条配音示例](https://skills.aaronguo.com/?lang=zh#examples)。
 每个案例复用同一份检查过的录制，针对不同受众和目的组织讲解。
