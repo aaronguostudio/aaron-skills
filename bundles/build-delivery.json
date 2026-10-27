@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "name": "build-delivery",
+  "version": "0.1.0",
+  "skills": [
+    "build-delivery"
+  ],
+  "files": [
+    "LICENSE",
+    "bundles/build-delivery.json",
+    "docs/build-delivery.md",
+    "docs/build-delivery-evaluation.md",
+    "skills/build-delivery/SKILL.md",
+    "skills/build-delivery/agents/openai.yaml",
+    "skills/build-delivery/references/web.md",
+    "skills/build-delivery/references/presentations.md",
+    "skills/build-delivery/references/documents.md",
+    "skills/build-delivery/references/templates-automation.md"
+  ]
+}

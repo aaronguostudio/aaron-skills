@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "name": "verify-delivery",
+  "version": "0.1.0",
+  "skills": [
+    "verify-delivery"
+  ],
+  "files": [
+    "LICENSE",
+    "bundles/verify-delivery.json",
+    "docs/verify-delivery.md",
+    "docs/verify-delivery-evaluation.md",
+    "skills/verify-delivery/SKILL.md",
+    "skills/verify-delivery/agents/openai.yaml",
+    "skills/verify-delivery/references/web.md",
+    "skills/verify-delivery/references/presentations.md",
+    "skills/verify-delivery/references/documents-reports.md",
+    "skills/verify-delivery/references/templates-automation.md"
+  ]
+}
