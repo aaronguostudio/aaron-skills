@@ -1,6 +1,6 @@
 # Verify · evidence for the next use
 
-Verify is included in Aaron Skills v1.0.0 with invocation ID `verify-delivery`.
+Verify was introduced in Aaron Skills v1.0.0 with invocation ID `verify-delivery`.
 It checks actual deliverables against their purpose, repairs issues within scope,
 rechecks the result and reports what the evidence supports. Its core is portable
 instructions, not an installed automation engine or universal acceptance checker.
@@ -75,8 +75,20 @@ copying remains available without the media runtime.
 
 Structural validation, reference closure and isolated copying test packaging,
 not the quality of the agent's judgments. The
-[authored evaluation cases](verify-delivery-evaluation.md) describe future trials;
-they are not completed runs or measured improvements. Native discovery, real
-customer acceptance and third-party framework integration remain unverified.
+[authored evaluation cases](verify-delivery-evaluation.md) describe trial designs;
+the separate bounded paired comparison covers four synthetic controls. Neither
+establishes general model quality, real customer acceptance or third-party
+framework integration. Native macOS Codex installation evidence is scoped to the
+local tasks recorded for its release; broader host/model coverage is unverified.
 Release-specific installation and platform evidence is recorded in
 [verification](https://github.com/aaronguostudio/aaron-skills/blob/main/docs/verification.md); synthetic trials do not establish customer acceptance.
+
+## Review practice references
+
+The [Claude Code team's review account](https://claude.dev/blog/solving-code-review-at-anthropic/)
+and [verification guidance](https://code.claude.com/docs/en/best-practices) inform
+the v1.0.1 evidence, attribution, convergence and evaluation guidance.
+Team-specific approval counts, automatic reviewers and incident access are not
+requirements of this portable skill. The bounded paired comparison is documented
+in [the evaluation case](https://github.com/aaronguostudio/aaron-skills/blob/main/benchmarks/verify-review-v1/results.md);
+it does not establish general quality or review-time improvement.

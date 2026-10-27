@@ -23,6 +23,13 @@
       "sourceType": "synthetic",
       "dataPolicy": "synthetic-only",
       "credentials": "synthetic-only"
+    },
+    {
+      "id": "verify-review-v1",
+      "path": "benchmarks/verify-review-v1",
+      "sourceType": "synthetic",
+      "dataPolicy": "synthetic-only",
+      "credentials": "synthetic-only"
     }
   ]
 }

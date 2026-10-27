@@ -190,14 +190,14 @@
     "skills/deliver-work/references/release-notes.md",
     "skills/deliver-work/references/release-handoff.md"
   ],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "update": {
     "kind": "review",
     "compatibilityEpoch": "demo-1.0",
     "summary": [
-      "Install the complete Shape, Build, Verify, Capture, Film, Deliver and Share skill set.",
-      "Verify actual deliverables and deliver usable recipient packages with honest evidence and release status.",
-      "Retain existing invocation IDs, aaron-demo commands and local Demo media workflows."
+      "Keep executable check evidence attributable to the inspected revision and distinguish build, unit and visual results.",
+      "Compare interface changes with their accepted design and baseline; distinguish introduced defects from inherited issues.",
+      "Consolidate duplicate findings and reassess reviews that stop converging."
     ]
   }
 }

@@ -1,0 +1,28 @@
+{
+  "id": "verify-review-v1",
+  "sourceType": "synthetic",
+  "dataPolicy": "Wholly authored fictional local application and report. No accounts, network services, private-project inputs, or external source imports.",
+  "cases": [
+    "ui-review",
+    "label-review",
+    "repair-app",
+    "report-review"
+  ],
+  "protocol": {
+    "arms": [
+      "baseline-v1.0.0",
+      "initial-candidate",
+      "final-candidate"
+    ],
+    "runsPerCasePerArm": 1,
+    "concurrency": 2,
+    "secondsPerRun": 240,
+    "order": "baseline first on cases1/3; candidate first on cases2/4",
+    "model": "No override; actual serving identifier not exposed",
+    "evaluation": "artifact-based manual rubric plus deterministic replay; not statistical superiority",
+    "sessions": 12,
+    "adaptiveRefinement": "Four fresh final-candidate controls followed retained initial eight sessions; guidance clarifies pixel-inspection evidence boundary."
+  },
+  "rawEvidencePolicy": "All executor prompts, model events, generated reports, screenshots and logs remain outside all Git checkouts.",
+  "fixtureSourceRoot": "test/fixtures"
+}

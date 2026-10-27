@@ -29,7 +29,7 @@ a focused proposal, an interactive interface sketch, acceptance checks, a
 storyboard and a copyable handoff. These illustrate the methods; they are not
 release or benchmark evidence.
 
-**v1.0.0 installs all seven skills** through the standard setup below: Shape, Build,
+**v1.0.1 installs all seven skills** through the standard setup below: Shape, Build,
 Verify, Capture, Film, Deliver and Share. Shape / Build / Verify / Deliver are
 portable instructions with no service dependency; Capture / Film / Share use the
 existing local Demo toolchain. Keep the [existing invocation IDs](docs/skill-names.md).

@@ -10,7 +10,7 @@ const content = {
     example: "ONE SMALL EXAMPLE",
     caseTitle: "The missing receipt.",
     caseIntro: "A fictional expense app. Someone submits an expense without a receipt. Help them finish it, and help the reviewer understand what changed.",
-    source: "v1.0.0 includes all seven skills. Use only the capabilities your task needs.",
+    source: "v1.0.1 includes all seven skills. Use only the capabilities your task needs.",
     tabs: "Explore the capabilities", readSkill: "Read the skill", install: "Install all seven skills",
     output: "WHAT IT LOOKS LIKE",
     stages: [
@@ -29,7 +29,7 @@ const content = {
     copy: "Copy example update", copied: "Copied", copyFailed: "Select and copy the text above.", share: "See how Share prepares the update",
   },
   zh: {
-    eyebrow: "五项能力 · 按需使用", title: "把工作，一步步做到位。", intro: "从当前任务需要的地方开始，把已有的理解带到下一步。", example: "一个小例子", caseTitle: "那张缺失的收据。", caseIntro: "一个虚构的报销应用：有人提交了报销，却漏了收据。帮他补齐，也让审核人看懂改动。", source: "v1.0.0 包含七个 Skills，根据任务需要选择使用。", tabs: "探索各项能力", readSkill: "阅读 Skill", install: "安装七个 Skills", output: "看看具体产物",
+    eyebrow: "五项能力 · 按需使用", title: "把工作，一步步做到位。", intro: "从当前任务需要的地方开始，把已有的理解带到下一步。", example: "一个小例子", caseTitle: "那张缺失的收据。", caseIntro: "一个虚构的报销应用：有人提交了报销，却漏了收据。帮他补齐，也让审核人看懂改动。", source: "v1.0.1 包含七个 Skills，根据任务需要选择使用。", tabs: "探索各项能力", readSkill: "阅读 Skill", install: "安装七个 Skills", output: "看看具体产物",
     stages: [
       { name: "Shape", essence: "把意图变具体。", summary: "把模糊的需求，变成别人可以查看、纠正和执行的方案。", reason: "把目的、关键选择和背后的原因留在一起。根据任务需要，用设计、流程或一段简短回复来表达。", status: "已包含 · feature-blueprint", artifact: "一份聚焦的方案", prompt: "“漏交收据这件事，能不能处理得轻松一点？”", result: "让方向可以确认，也让尚未决定的选择清楚可见。" },
       { name: "Build", essence: "补齐从做出来到能用的距离。", summary: "延续已有理解和项目做法，把成果做到能用。", reason: "连起界面、状态和异常恢复；边做边检查，把实现中的发现带回设计。", status: "已包含", artifact: "一个可以操作的界面", prompt: "“按确认的方案，在现有应用里做出补件流程。”", result: "试试这个浏览器内的界面示意。切换能力或刷新后会重置。" },

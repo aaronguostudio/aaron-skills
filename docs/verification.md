@@ -1,3 +1,33 @@
+# Verify review evidence — v1.0.1
+
+This patch refines Verify's evidence records, comparable UI review, change
+attribution and review convergence. All seven invocation IDs and the executable
+media/installation sources are unchanged from v1.0.0. The update remains
+review-required in `demo-1.0`; it adds no release approval or external-write
+permission.
+
+The registered [paired case](https://github.com/aaronguostudio/aaron-skills/blob/main/benchmarks/verify-review-v1/results.md)
+compares four synthetic controls against v1.0.0, retains the initial candidate
+and records four final-candidate repeats after an evidence-boundary clarification.
+All arms made the same substantive scoped decisions. This bounded adaptive
+comparison does not demonstrate general model quality or faster human review.
+CLI-exported events do not fully establish each executor's pixel-viewing actions;
+a separate parent pixel review supports the fixture and final-output judgments.
+No new human acceptance, production-data review or third-party host certification
+is implied.
+
+Local macOS acceptance includes the complete source/history/privacy gate,
+website build/Sites and 18 Chromium route/language/viewport checks, dependency
+and independent secret scans, an isolated exported install and doctor,
+capture/revision/video/page/clipboard checks, and sequential synthetic
+update/rollback verification. Raw logs, screenshots and model events stay outside
+Git. The exact tagged revision must also pass the macOS/Ubuntu/Windows matrix;
+consult [the release](https://github.com/aaronguostudio/aaron-skills/releases/tag/v1.0.1)
+for final CI and Git-main production provenance, rather than treating this local
+record as proof of remote completion.
+
+---
+
 # Complete workflow release v1.0.0
 
 The standard installation now registers seven skills: Shape, Build, Verify,
