@@ -1,82 +1,70 @@
 # Aaron Skills
 
-使用 `aaron-demo version` 查看版本。干净的托管安装每天在后台检查更新，自动安装经过验证的兼容补丁；较大变化由用户选择升级。使用 `aaron-demo update` 查看和安装更新，`aaron-demo rollback` 回退，或用 `aaron-demo update policy notify|off` 调整策略。本地修改源码的安装保持手动管理。参见[版本与更新说明](docs/updates.md)。
-
-当前源码中的 Film 增强支持 Logo 来源与素材检查、统一配色，以及应用画面与字幕或全文讲稿面板的上下左右布局。可先预览封面和内容帧，再渲染视频；现有 v1 配置保持兼容。参见[视频布局说明](docs/video-layouts.md)。
-
-
 [English](README.md) | [简体中文](README.zh-CN.md) | [官网](https://skills.aaronguo.com/?lang=zh)
 
-把与 AI Agent 协作的方法和执行工具放在一起：从理解陌生项目，到交付经过检查、别人看得见也用得上的成果。**当前已发布 Demo：Capture → Film → Share。**
+**让想法，成为可用的成果。**
 
-Aaron Skills 将工作流与执行工作流所需的工具放在同一个集合里。目标是让你更容易接手一个项目、理解问题、完成有明确范围的改动、验证实际行为，再把结果讲清楚。每个 Skill 承载其中一段可重复的方法；相关的 Skills 通过共享工具和明确的产物格式协作。
+与 AI Agent 协作的可复用方法和工具。理清想法，用心实现，检查结果，再让接收者看明白。
+根据任务需要选择能力，无需按固定顺序使用整套流程。
 
-<p align="center">
-  <a href="https://skills.aaronguo.com/?lang=zh">
-    <img src="https://skills.aaronguo.com/art/optimized/workflow-overview.07ee3e92c535.webp" width="760" alt="Aaron Skills 工作流：Capture 录制真实流程，Film 制作讲解视频，Share 整理清楚的更新" />
-  </a>
-</p>
+## 选择当前任务需要的帮助
 
-可选的[数据遮挡](docs/data-masking.md)让 Film 隐藏指定画面区域，并复用原录制修改遮挡。
-Capture、Film 和 Share 会结合演示受众与项目背景判断；普通内部演示或 mock 数据无需反复确认隐私问题。
-当前支持导出视频、预览和截图中的实色遮盖，尚不包含自动识别、模糊或动态追踪；原始录制文件仍是未脱敏的本地工作材料。
+| 能力 | 精髓 | 可用状态 |
+| --- | --- | --- |
+| [Shape](https://skills.aaronguo.com/?lang=zh#skill-shape) | 把意图变具体，让方案可以被查看、纠正和执行。 | 源码预览 · `feature-blueprint` |
+| [Build](https://skills.aaronguo.com/?lang=zh#skill-build) | 延续已有理解和项目做法，补齐从做出来到能用的距离。 | 开发中 |
+| [Verify](https://skills.aaronguo.com/?lang=zh#skill-verify) | 检查实际承诺的结果；发现问题就修复，再验证。 | 开发中 |
+| [Demonstrate](https://skills.aaronguo.com/?lang=zh#skill-demonstrate) | 录制真实流程，针对受众讲清检查过的结果。 | Demo 已发布 · Capture / Film / Share |
+| [Deliver](https://skills.aaronguo.com/?lang=zh#skill-deliver) | 让下一步清楚可行，使对方能审阅、使用或接着做。 | Share 已发布 · 更广泛的能力开发中 |
 
-## 整体方向
+[看看“缺失收据”这个虚构案例](https://skills.aaronguo.com/?lang=zh#skills)：
+一份聚焦的方案、可操作的界面示意、验收检查、讲解分镜，以及可复制的交接草稿。
+它们用于说明方法，不作为发布或 benchmark 证据。
 
-我们希望逐步串起这样的工作流：
-
-```text
-理解项目与问题
-  → 规划并实现有明确范围的改动
-  → 验证实际行为
-  → 演示结果
-  → 交付清楚的更新或交接说明
-```
-
-这个集合会围绕工作流中的实际问题逐步扩展。一个 Skill 应该帮助 Agent 判断该做什么、调用合适的工具执行，并留下别人可以检查的证据。新增能力需要解决真实、可重复的问题，也需要有明确的说明和验证方式。
-
-**目前第一个可用的能力组合是 Demo**，覆盖演示与沟通。项目接手、实现改动、更广泛的工程验证，是这个集合后续发展的方向；当前仓库还没有单独发布这些环节的 Skills。
-
-**Shape 已提供源码预览**，保留调用标识 `feature-blueprint`。它把需求整理成下一位接收者能理解和使用的回复、设计、流程、概念模型或开发交接。较完整的方案页采用简洁的五节模板，提供固定导航、可操作的原型画布和页内展开的补充说明；小任务仍可用简短回复完成。请先读 `skills/feature-blueprint/SKILL.md`；`docs/feature-blueprint.md` 说明使用与导出方式。下面的安装流程仍只安装 Demo。
-
-系列名称统一为 **Shape → Capture → Film → Share**。请看[名称与现有调用标识](docs/skill-names.md)。
-
-
-浏览 [6 组封面与视频页搭配，以及 2 种无装饰背景的简洁版](https://skills.aaronguo.com/layouts)，也可以直接让 Film 根据内容与品牌推荐三组。原始视频下方只放短字幕或少量 transcript，同样是正式选项。
+Shape 的[源码预览](skills/feature-blueprint/SKILL.md)独立于 Demo 安装器。
+参见[使用说明](docs/feature-blueprint.md)和[现有调用标识](docs/skill-names.md)。
+Build、Verify 和更广泛的 Deliver 能力尚未在这个仓库中作为独立 Skill 发布。
 
 ## 当前可用：Demo
 
-将一个已经能运行的 Web 功能，变成有引导的视频、截图和可复制的更新说明。Demo 通过一套共享的本地工具，串起三个 Skills：
+将一个已经能运行的 Web 功能，变成有引导的视频、截图和可复制的更新说明。
+已发布的能力组合通过一套共享的本地工具串起三个 Skills：
 
-| [Capture](skills/demo-capture/SKILL.md) | [Film](skills/walkthrough-video/SKILL.md) | [Share](skills/paste-ready-update/SKILL.md) |
-| :---: | :---: | :---: |
-| **录制真实流程。** 保存截图与经过检查的结果证据。 | **让结果容易看懂。** 将通过检查的录制制作成带引导的 MP4。 | **把工作带进对话。** 整理文字、截图与可选视频，供你审阅和分享。 |
+| Skill | 具体作用 |
+| --- | --- |
+| [Capture](skills/demo-capture/SKILL.md) | 录制真实操作，检查结果，保存证据。 |
+| [Film](skills/walkthrough-video/SKILL.md) | 制作讲解视频或品牌封面；调整表达时无需重复业务操作。 |
+| [Share](skills/paste-ready-update/SKILL.md) | 准备可审阅的 HTML 更新页面，包含可复制的文字、截图与可选视频。 |
 
-例如，你接手一个项目并完成某个功能改动后，可以让 Agent 展示起始状态、操作变化后的流程、检查界面结果，再准备给客户或团队的更新说明。Demo 提供的就是这一段能力。下面的安装步骤针对 Demo；未来其他能力组合可以有各自的依赖和安装路径。
+<p align="center">
+  <a href="https://skills.aaronguo.com/?lang=zh#examples">
+    <img src="https://skills.aaronguo.com/art/optimized/workflow-overview.07ee3e92c535.webp" width="760" alt="已发布的 Demo 能力组合：Capture 录制流程，Film 制作讲解视频，Share 整理清楚的更新" />
+  </a>
+</p>
 
-## 看看实际产物
+[观看八条配音示例](https://skills.aaronguo.com/?lang=zh#examples)。
+每个案例复用同一份检查过的录制，针对不同受众和目的组织讲解。
 
-先听 Aaron 用自己的声音[介绍 Aaron Skills](https://skills.aaronguo.com/?lang=zh)，再比较[八条配音示例](https://skills.aaronguo.com/?lang=zh#examples)。每个案例复用同一份通过检查的录制。网站还提供可展开的虚构脚本示例，说明如何从一个简报写出讲解。
+| 虚构产品演示 | 公开内容导览 |
+| --- | --- |
+| [<img src="https://skills.aaronguo.com/art/optimized/ledgerlane-example.5a31757c6ee6.webp" width="360" alt="Ledgerlane 产品演示封面" />](https://skills.aaronguo.com/?lang=zh#example-ledgerlane) | [<img src="https://skills.aaronguo.com/art/optimized/blog-example.02465ed700ac.webp" width="360" alt="Builder Notes 内容导览封面" />](https://skills.aaronguo.com/?lang=zh#example-blog) |
+| 两张发票，一次有依据的决定。 | 一次有内容的 Builder Notes 导览。 |
 
-| 虚构登录应用 | 公开博客 · 无需登录 |
-| :--- | :--- |
-| [<img src="https://skills.aaronguo.com/art/optimized/ledgerlane-example.5a31757c6ee6.webp" width="360" alt="蓝白 Aaron Skills 品牌下的 Ledgerlane 产品演示封面" />](https://skills.aaronguo.com/?lang=zh#example-ledgerlane) | [<img src="https://skills.aaronguo.com/art/optimized/blog-example.02465ed700ac.webp" width="360" alt="蓝白 Aaron Skills 品牌下的 Builder Notes 内容导览封面" />](https://skills.aaronguo.com/?lang=zh#example-blog) |
-| **两张发票，一次有依据的决定。** 六种讲解：Official Product Demo、Quick Demo、Release Update、Stakeholder Walkthrough、Task Tutorial、Training Lesson。 | **一次有内容的 Builder Notes 导览。** 两种内容讲解：Task Tutorial、Stakeholder Walkthrough。 |
+还可以浏览 [32 种封面风格](https://skills.aaronguo.com/covers?lang=zh)，以及
+[6 组视频搭配和 2 种无装饰背景的简洁版](https://skills.aaronguo.com/layouts?lang=zh)。
+这些是经过挑选的展示案例，与 benchmark 分开。
 
-这些是经过挑选的展示案例，与 benchmark 分开。当前八条样片统一使用 Professional 视觉模板，方便比较讲解方式；声音、视觉模板和沟通目标可以独立组合。详见[制作配方](https://github.com/aaronguostudio/aaron-skills/blob/main/docs/video-showcases.md)。
+## 安装 Demo
 
-
-## 安装
-
-当前代码支持 **macOS arm64、Ubuntu 24.04 x64 和原生 Windows 11 x64**。
-已有的 v0.1.0 标签仍然只有 macOS 支持；具体实测环境和宿主限制请看[兼容性说明](docs/compatibility.md)。
-
-需要 Git、Python 3.11+、Node 22+（含 npm）和 FFmpeg/ffprobe。安装器会安装固定版本的浏览器、视频和 Python 依赖。运行示例不需要客户账号或付费 API。
+运行时目标：**macOS arm64、Ubuntu 24.04 x64 和原生 Windows 11 x64**。
+具体实测平台与宿主范围请看[兼容性说明](docs/compatibility.md)。
+需要 Git、Python 3.11+、Node 22+（含 npm）和 FFmpeg/ffprobe。
+安装器会安装固定版本的浏览器、视频和 Python 依赖；公开示例不需要客户账号或付费 API。
 
 ```sh
 git clone https://github.com/aaronguostudio/aaron-skills.git
 cd aaron-skills
-# macOS / Ubuntu；也可以把 codex 改成 claude、cursor 或 both：
+# macOS / Ubuntu；也可把 codex 改成 claude、cursor 或 both：
 bash scripts/setup.sh --agent codex --smoke
 ```
 
@@ -86,62 +74,59 @@ bash scripts/setup.sh --agent codex --smoke
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/setup.ps1 --agent codex --smoke
 ```
 
-Windows 不需要 WSL 或管理员权限；执行策略的 Bypass 只作用于这一次 PowerShell 进程。
-前置工具需要先安装，Ubuntu 还需要 Chromium 系统依赖。macOS 可以加 `--install-prerequisites`，通过已有的 Homebrew 安装缺少的工具。各平台准备、隔离安装、升级、修复和卸载，请看[安装与恢复](docs/installation.md)。
+Windows 不需要 WSL 或管理员权限；执行策略的 Bypass 只作用于这一次进程。
+前置工具需要先安装，Ubuntu 还需要 Chromium 系统依赖。
+平台准备、Agent 注册、隔离并存和卸载，请看[安装与恢复](docs/installation.md)。
 
-也可以在仓库目录中给本地 Agent 这段提示词：
+## 制作第一个 Demo
 
-> 阅读 README.zh-CN.md 和 docs/installation.md，检查当前平台的前置工具，再为我正在使用的 Agent 安装 Demo。保留其他 Skills 和配置。运行 doctor 和公开示例的 smoke 检查，打开生成的更新页面并检查视频帧，报告仍需手动完成的设置。此次安装不要使用客户应用、凭据或付费旁白。
+可以这样告诉本地 Agent：
 
-Codex Skills 注册在用户目录的 `.agents/skills`，Claude Code 在 `.claude/skills`；
-`--agent cursor` 注册到 `.cursor/skills`。注册成功不代表模型调用已通过验收。
-已有其他 Demo 安装时，请参阅[隔离并存说明](docs/installation.md#coexist-with-another-demo-installation)。
-Windows 使用受管理的副本，macOS/Ubuntu 使用链接；安装保留无关条目，遇到名称冲突会停止。
-如果需要，请将安装输出的命令目录加入 PATH，并开启新的 Agent 会话以刷新发现结果。
-Smoke 检查会输出 MP4、供审阅的静帧和本地 HTML 更新页面。
+> 使用 Capture 演示我本地应用中的这个功能。展示起始状态、关键操作和检查过的结果。
+> 生成一个简短的静音演示视频和更新页面，供我审阅。修改呈现方式时复用已有录制。
+> 不要发送或发布任何内容。
 
-## 制作一个 Demo
-
-可以这样告诉 Agent：
-
-> 使用 Capture 演示我本地应用中的这个功能。展示起始状态、关键操作和经过验证的结果。生成一个简短的静音演示视频和更新页面，供我审阅。字幕或高亮需要修改时，复用已有录制。不要发送或发布任何内容。
-
-接入一个应用需要小型项目适配器，描述应用地址和界面操作步骤。Agent 可以在检查应用后编写它。录制前需要确认写入操作和生产环境限制。登录由你在可见浏览器中完成，Skill 不代填凭据。请看[第一次制作 Demo](docs/first-demo.md)和[适配器参考](docs/project-adapters.md)。
+Agent 可以检查应用，编写描述地址、步骤和检查项的小型适配器。
+录制前请确认写入操作和生产环境限制；登录由你在可见浏览器中完成，Skill 不代填凭据。
+参见[第一次制作 Demo](docs/first-demo.md)和[项目适配器](docs/project-adapters.md)。
 
 ```sh
-aaron-demo capture --project /path/to/app --list
 aaron-demo capture --project /path/to/app --env local --walk tour
 aaron-demo render /path/to/passed-run --stills
 aaron-demo inspect /path/to/passed-run
-aaron-demo revise /path/to/passed-run /path/to/patch.json --out /path/to/revision
-aaron-demo page /path/to/message.md --out /path/to/message.html
 ```
 
-结果字段通过精确断言检查，并保存命名高亮区域的位置。仅调整呈现方式时，保留原始录制，避免重复执行业务写入。视觉模板可选择 Minimal、Professional 或 Showcase；讲解风格可以独立选择。Film 可以根据你的简报和录制证据起草脚本，不需要你先写好一整份稿子。
+脚本、声音与视觉风格可以独立选择。Film 可以根据简报和录制证据起草脚本。
+视频默认静音；也可导入音频、使用自己的云端／公司声音，或按需安装免费的本地配音。
+`aaron-demo voice setup` 提供引导配置。详见[旁白](docs/narration.md)、
+[封面选择](docs/cover-library.md)、[视频布局](docs/video-layouts.md)和[呈现修改](docs/presentation-revisions.md)。
 
-制作演示封面时，可以先浏览 [32 种封面风格](https://skills.aaronguo.com/covers?lang=zh)，用 `aaron-demo cover --list` 选择样式，再替换标题、副标题、Logo、Presenter、日期和颜色。`aaron-demo cover --presentation /path/to/presentation.json --out /path/to/revision/cover.png` 无需录制应用即可导出 PNG/WebP，同一份配置也可以用于视频开场和封面。详见[封面制作流程](docs/cover-library.md)。
-
-默认生成静音视频。需要旁白时，可以导入自己的音频、使用自己的 ElevenLabs／Google 账号或公司语音接口，也可以按需安装免费的本地 Kokoro。运行 `aaron-demo voice setup` 引导配置和选声音，无需手写 JSON。Qwen 生成的声音可通过兼容接口或音频导入使用。视频和封面默认不添加制作过程标签。`render --dry-run` 只生成计划，不创建文件或调用服务。详见[呈现修改](docs/presentation-revisions.md)、[视觉模板](docs/video-presentation.md)、[脚本起草](docs/narrative-styles.md)和[旁白](docs/narration.md)。
+用 `aaron-demo version` 查看版本。干净的托管安装在后台检查更新，自动安装经过验证的兼容补丁；
+较大变化由用户选择。使用 `aaron-demo update`、`aaron-demo rollback`，或
+`aaron-demo update policy notify|off` 管理更新。本地修改源码的安装保持手动管理。
+参见[版本与更新](docs/updates.md)。
 
 ## 隐私与适用范围
 
-会话、录制和生成页面保存在 Git 仓库之外。产物可能包含真实界面，分享前请检查；工具不会自动对个人信息脱敏。适配器是需要信任的可执行 JavaScript，浏览器网络防护不能作为恶意适配器的沙箱。详见[数据与网络行为](docs/data-and-network-behavior.md)。
+录制、会话和生成页面保存在 Git 仓库之外。产物可能包含真实界面，分享前请检查。
+可选的[实色区域遮挡](docs/data-masking.md)覆盖导出画面中的指定区域，
+不会自动识别个人信息，也不支持模糊或动态追踪；原始录制仍是未脱敏的本地工作材料。
+适配器是需要信任的可执行 JavaScript，浏览器防护不能作为恶意适配器的沙箱。
+参见[数据与网络行为](docs/data-and-network-behavior.md)。
 
-共享 CLI 独立于模型。[兼容性说明](docs/compatibility.md)区分格式兼容、宿主发现和实际工作流验证。DeepSeek、GLM、MiniMax 及更多宿主组合仍未验证。Windows/Linux 的运行时验收不等于已经验证本地 LLM 宿主的原生调用。仅有标准 `SKILL.md`，不能证明浏览器和渲染器已在某个宿主上运行通过。
+宿主注册和运行时兼容不等于模型调用已经通过验收。
+实测范围请看[兼容性说明](docs/compatibility.md)。
 
 ## 开发与扩展
 
-- `skills/`：职责明确的 Agent Skills 入口。
-- `packages/demo/`：录制、数据契约、渲染和更新页面的实现。
-- `bundles/`：明确列出的运行时与公开源码清单。
-- `examples/` 和 `evals/`：公开示例，以及按需运行的行为评估。
+从[贡献指南](CONTRIBUTING.md)、[本地开发](docs/local-development.md)、
+[验证记录](docs/verification.md)和[评估方法](docs/evaluation.md)开始。
+确定性测试、模型行为和视觉验收分别检查。
 
-请阅读[贡献指南](CONTRIBUTING.md)、[验证记录](docs/verification.md)和[评估方法](docs/evaluation.md)。确定性测试、Agent 行为和视觉验收分别检查。新能力可以在这个仓库里增加自己的 package 和 bundle，无需额外建立一个总仓库来协调。
+## 作者与许可证
 
-## 作者、文档与许可证
+由 **[Aaron Guo](https://aaronguo.com)** 创建。中英文 README 覆盖项目定位和入门步骤；
+详细技术参考暂时保持英文。命令、路径和 Skill 标识在两个版本中保持一致。
 
-由 **[Aaron Guo](https://aaronguo.com)** 创建。Aaron 是一名产品构建者和工程师，持续探索实用的 AI 工作流。这个仓库分享解决软件问题、验证结果和清楚沟通所需的可复用工具。
-
-中英文 README 覆盖项目定位和入门步骤；详细技术参考暂时保持英文。命令、路径和 Skill 标识在两个版本中保持一致。
-
-原创项目代码采用 [MIT 许可证](LICENSE)。依赖保留各自条款；Remotion 对免费使用有资格限制，不符合条件的组织需要 Company License。组织内推广使用前，请阅读[第三方声明](THIRD_PARTY_NOTICES.md)。安全问题请按 [SECURITY.md](SECURITY.md) 中的方式报告。
+原创代码采用 [MIT 许可证](LICENSE)。依赖保留各自条款；Remotion 的免费使用资格和 Company License 条件适用。
+参见[第三方声明](THIRD_PARTY_NOTICES.md)和[安全说明](SECURITY.md)。
