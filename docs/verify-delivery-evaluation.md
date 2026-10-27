@@ -1,7 +1,8 @@
 # Verify candidate · evaluation cases
 
-These are authored synthetic trial designs, not executed agent evaluations or
-benchmark results. Provide actual permitted fixtures before running them. Keep
+The requests below are authored synthetic trial designs, not executed agent
+evaluations. The separate [v1.0.1 paired comparison](https://github.com/aaronguostudio/aaron-skills/blob/main/benchmarks/verify-review-v1/results.md)
+records the executed four-case controls and their limits. Provide actual permitted fixtures before running them. Keep
 raw artifacts, model events and screenshots outside all Git checkouts. Follow
 the repository's benchmark registration policy before publishing future cases
 or results as benchmarks.
@@ -91,6 +92,19 @@ when still valid; do not invent an exhaustive audit or claim that its narrower
 checks establish readiness of unrelated features.
 
 ## Comparison method
+
+Include a UI before/design/after comparison with a pre-existing issue and a
+passing unit suite alongside a failing required build. Judge causal attribution
+and separate evidence; a generic passed label is insufficient.
+Audit visual-review claims against actual rendered-pixel inspection. Screenshot
+creation and DOM measurements alone do not earn visual-review credit.
+
+For repeated review, record resolved and duplicate findings and useful changes.
+Measure active human review and correction effort separately from queue, model
+and CI elapsed time. Track invalid or intentional findings on known-clean cases;
+use incidents/reverts as quality guardrails where permitted evidence exists.
+Lower review time alone is not improvement. Keep private incident material
+outside this public case library under the existing privacy policy.
 
 For any handoff that promises regeneration or a repeatable check, give a fresh
 receiver only the delivered files and declared dependencies. Replay its command

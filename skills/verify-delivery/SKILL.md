@@ -51,6 +51,10 @@ necessary failure cases, not only the easiest sample. Prefer repeatable checks
 for deterministic behavior and reusable outputs; combine them with visual and
 semantic inspection. Use existing tests where they test the right promise.
 
+For executable checks, retain the command, relevant input/revision, outcome and
+material failures/skips. A build, unit suite and visual comparison support
+different claims; do not collapse them into one passed label.
+
 Reuse prior evidence when its artifact/version, environment, inputs and method
 are relevant and still valid. Do not simply inherit a "passed" label, but do not
 rerun unchanged checks without a reason. A changed dependency or related part may
@@ -70,6 +74,9 @@ smallest coherent cause within scope, carrying corrections into dependent text,
 charts, interactions, examples and delivery files. Do not rewrite the requirement,
 loosen a test, hide a failed take or remove content merely to make a check pass.
 An optional improvement should not become a release blocker by reviewer taste.
+Consolidate duplicate findings and fix an evidenced bug class within scope.
+Use the project's review budget; repeated nonconvergence needs reassessment,
+not another unchanged full review.
 
 Preserve an account of the original failure. Recheck the failed promise on the
 final artifact and relevant neighboring behavior; rerender and reinspect affected

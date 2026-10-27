@@ -1,0 +1,12 @@
+[
+  {
+    "id": "cedar",
+    "subtotalCents": 1999,
+    "discountPercent": 10
+  },
+  {
+    "id": "meadow",
+    "subtotalCents": 1055,
+    "discountPercent": 15
+  }
+]

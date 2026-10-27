@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.0.1 — 2026-10-26
+
+- Retain executable check commands, inspected inputs/revisions, outcomes and
+  material failures or skips; distinguish build, unit and visual evidence.
+- Compare changed interfaces with the accepted design and relevant before state
+  under comparable conditions, viewing rendered pixels before claiming visual
+  review. Attribute findings to concrete source evidence and
+  distinguish introduced defects from inherited issues and optional polish.
+- Consolidate duplicate findings, repair evidenced bug classes within scope and
+  reassess repeated reviews that stop converging.
+- Add a bounded paired evaluation with synthetic defect, clean-change, repair and
+  report controls. Keep human effort separate from model/CI elapsed time; no
+  general speed or quality improvement is claimed.
+- Preserve the seven-skill installation and media runtime. Keep this instruction
+  behavior update review-required in the existing `demo-1.0` compatibility epoch.
+
 ## 1.0.0 — 2026-10-26
 
 - Include all seven skills in standard setup: Shape, Build, Verify, Capture,

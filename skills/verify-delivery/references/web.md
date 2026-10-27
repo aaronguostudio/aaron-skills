@@ -44,6 +44,17 @@ Check console/network failures that affect the task. Use the project's
 accessibility/performance targets when supplied; don't invent a universal score
 or claim conformance from a few spot checks.
 
+For UI changes, compare the actual result with the accepted design and relevant
+before state at comparable viewport, content and interaction state. Explain
+meaningful deviations; screenshot similarity alone cannot establish behavior.
+Inspect rendered pixels before claiming visual review; generating a screenshot
+or measuring DOM geometry does not establish that it was viewed.
+
+For code-review findings, inspect the diff and surrounding contract. Give a
+concrete trigger, consequence and file/line evidence. Compare the base before
+attributing an issue to this change. Keep pre-existing issues and optional polish
+distinct from introduced defects; route each by its effect on the intended use.
+
 Validate permissions at their owning boundary when access is part of the task;
 hiding a button does not establish authorization. Keep security checks relevant
 to the changed behavior and authorized environment rather than launching an

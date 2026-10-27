@@ -27,7 +27,7 @@
 一份聚焦的方案、可操作的界面示意、验收检查、讲解分镜，以及可复制的交接草稿。
 它们用于说明方法，不作为发布或 benchmark 证据。
 
-**v1.0.0 的标准安装包含七个 Skills**：Shape、Build、Verify、Capture、Film、Deliver、Share。
+**v1.0.1 的标准安装包含七个 Skills**：Shape、Build、Verify、Capture、Film、Deliver、Share。
 Shape / Build / Verify / Deliver 是无服务依赖的可移植指令；Capture / Film / Share
 沿用现有本地 Demo 工具链。[现有调用标识](docs/skill-names.md)保持不变。
 参见[完整工作方法](docs/task-delivery-workflow.md)和 [Shape 使用说明](docs/feature-blueprint.md)。

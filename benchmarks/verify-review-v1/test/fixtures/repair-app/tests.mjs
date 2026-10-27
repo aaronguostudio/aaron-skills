@@ -1,0 +1,1 @@
+import test from'node:test';import assert from'node:assert/strict';import{netCents}from'./money.mjs';test('cedar discount is rounded to whole cents',()=>assert.equal(netCents(1999,10),1799));test('meadow discount is rounded to whole cents',()=>assert.equal(netCents(1055,15),897));test('zero discount',()=>assert.equal(netCents(1000,0),1000));

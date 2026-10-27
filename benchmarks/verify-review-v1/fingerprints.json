@@ -1,0 +1,77 @@
+{
+  "baselineCommit": "a56c5eb63a5bd6296d507d4bb74304c577a1365f",
+  "skills": {
+    "baseline": {
+      "treeSha256": "2e09957fcd7e572946c51675b8696697372bc0e9f75e6e603bedae184a90ae55",
+      "files": {
+        "SKILL.md": "28a9c16a18b284c11a9f72aa6fa365f5311b40ebf9a58afd1da6bb58bb3043f6",
+        "agents/openai.yaml": "7ee2f6bebbf9d558399849336f170fea01050cb88207a917751404441afdad44",
+        "references/documents-reports.md": "22600c6c78f32e79ddae5be9dfe1d3b0ed85bfd2ac7da7592adb18848cad055e",
+        "references/presentations.md": "304414f7e0bfa7c42d6b00d01f5afb07056c22f1d9eb47df2f23332ba2669bca",
+        "references/templates-automation.md": "4e2322a625a07654f3eec31bf7f8721cb027799e7b58bf2c32104394dbef431e",
+        "references/web.md": "5280792f378cd94891b3b535db338483cc66a2ff57c16caf12b53ae2a1612f7c"
+      }
+    },
+    "candidate": {
+      "treeSha256": "4b2ca5c086572997b82b32528e06f38d8d51e100dfa9bc360be4f9cbf7a2a64a",
+      "files": {
+        "SKILL.md": "7838626b71c75ecb7e4f3124b604bb25f87c1338fc0361203801f652ce46fc65",
+        "agents/openai.yaml": "7ee2f6bebbf9d558399849336f170fea01050cb88207a917751404441afdad44",
+        "references/documents-reports.md": "22600c6c78f32e79ddae5be9dfe1d3b0ed85bfd2ac7da7592adb18848cad055e",
+        "references/presentations.md": "304414f7e0bfa7c42d6b00d01f5afb07056c22f1d9eb47df2f23332ba2669bca",
+        "references/templates-automation.md": "4e2322a625a07654f3eec31bf7f8721cb027799e7b58bf2c32104394dbef431e",
+        "references/web.md": "88fc44675a6509dc10b4bc1902a16c080ca19a30bc5ec04556b06d5b6071def3"
+      }
+    },
+    "final-candidate": {
+      "treeSha256": "c298bd39ca2f1a897c2f8a5e8d28b36f8caac2b07f89656bb39e1cb9b0c02ca1",
+      "files": {
+        "SKILL.md": "7838626b71c75ecb7e4f3124b604bb25f87c1338fc0361203801f652ce46fc65",
+        "agents/openai.yaml": "7ee2f6bebbf9d558399849336f170fea01050cb88207a917751404441afdad44",
+        "references/documents-reports.md": "22600c6c78f32e79ddae5be9dfe1d3b0ed85bfd2ac7da7592adb18848cad055e",
+        "references/presentations.md": "304414f7e0bfa7c42d6b00d01f5afb07056c22f1d9eb47df2f23332ba2669bca",
+        "references/templates-automation.md": "4e2322a625a07654f3eec31bf7f8721cb027799e7b58bf2c32104394dbef431e",
+        "references/web.md": "f8ee66f59fe1adaa9f41cfc6ea03ada84e8e91473f26f4e92f0b53ccb7f24689"
+      }
+    }
+  },
+  "rubricSha256": "73b223d0bda67fe3d6e48e46b8ac9d8daceaa84eb3206279f4e88fac9766e643",
+  "authoredInputs": {
+    "label-review/after/behavior.js": "840be47d44ebda9a09a1d75f262e35775c8449b6fca6107b4eaa4c31218491ed",
+    "label-review/after/build.mjs": "d13faeb497fef77b7056a803a98796c8d62c1d23fae18c17e35c38ef0fa5059d",
+    "label-review/after/index.html": "c2ec5933fff5e1f5b7148760a9c3c806a41da19c6910a9c8a435816a8d365c6c",
+    "label-review/after/package.json": "03f5b3272d1efe43cbff64561fef309509969f72fe2ddbf7a1f3227085a03962",
+    "label-review/after/tests.mjs": "0bd6ddaaa3c80f5ec2e0c3be73d591d3fdf6b95551262be9acdbdd94c9a1df07",
+    "label-review/before/behavior.js": "840be47d44ebda9a09a1d75f262e35775c8449b6fca6107b4eaa4c31218491ed",
+    "label-review/before/build.mjs": "d13faeb497fef77b7056a803a98796c8d62c1d23fae18c17e35c38ef0fa5059d",
+    "label-review/before/index.html": "b523b6c8f99d12f36d886d712cb41a6bb84db31bb85366aa32c60a1f13fab56e",
+    "label-review/before/package.json": "03f5b3272d1efe43cbff64561fef309509969f72fe2ddbf7a1f3227085a03962",
+    "label-review/before/tests.mjs": "0bd6ddaaa3c80f5ec2e0c3be73d591d3fdf6b95551262be9acdbdd94c9a1df07",
+    "label-review/brief.md": "e5cff15535cb9bfd8b107d51a1db972138ccda110d3bbc84694d217351415066",
+    "repair-app/brief.md": "d3016e5b7aab2bc3ab46e3ae2f42e34191b7894c8c81471c67adf77abaa21ec4",
+    "repair-app/build.mjs": "c39918714eadf44517b348ab1d0676eec9413ccdf4c5b669989bf98ffd86f1cb",
+    "repair-app/money.mjs": "46adf37c8d0380a5db3e073cdf77ddc158fb2f8f864d4b2f1c01580ceb4b5dc2",
+    "repair-app/orders.json": "2f505e64634a8ea32fd9944aac8921bca585849491c8c6e5157a35c53d67d4b7",
+    "repair-app/package.json": "03f5b3272d1efe43cbff64561fef309509969f72fe2ddbf7a1f3227085a03962",
+    "repair-app/render.mjs": "bd9e9b82cc4b9100d4c44f98a39b89f462f06e39ac1171b8e7e082d8d6c19eb0",
+    "repair-app/tests.mjs": "87dff9a04933d74d889eeb5e6a14a5608ec26267f9e052b23fccfc4205721c88",
+    "report-review/brief.md": "50a7a07ee9ac1131c96c46635b5908b5d37b761e498c6b27b81c1857791ba1da",
+    "report-review/method.md": "0b141eb31f08eb798bb868edeb2de7156f87b563b4dad1f9660fd270308be16a",
+    "report-review/report.md": "fa7066069c2f918383bf34e004ff94867e51a588fa8da3adde0cf5c80cb31c46",
+    "report-review/source.csv": "35ee40ceffd98be6a1bd9e10e6939858378100efefc792ccf08251c418a69990",
+    "ui-review/accepted/index.html": "061c0c10f4d3a7aacab5546e4359ddb333df2692bd737017cb7ac57f2b21f1a7",
+    "ui-review/after/app.mjs": "a5622ece57ceba26cb26d16442a6e616d68465d289133968727dd763d8778a36",
+    "ui-review/after/build.mjs": "911ffd2daec731697156d742eee90c606ee349a5bc16b1e5c00af5948423ef6e",
+    "ui-review/after/index.html": "50544f2fa42a37f0ea10affb0657ea1bf425369599510ca71ba69847b36db375",
+    "ui-review/after/package.json": "03f5b3272d1efe43cbff64561fef309509969f72fe2ddbf7a1f3227085a03962",
+    "ui-review/after/tests.mjs": "3fb6b8b0b85ec68216c1c8ee0ca014ac2a7b75aa85923fd5cd243fcb15956997",
+    "ui-review/after/theme.mjs": "0bc6cf902dffdaec2e5d313f52008a1a6ca7b61f8543e408f449db2a63d5afc8",
+    "ui-review/before/app.mjs": "58fe9ad3650240ad8cf9c90e74659cf752d7d20a153e6b940080a515224183b0",
+    "ui-review/before/build.mjs": "911ffd2daec731697156d742eee90c606ee349a5bc16b1e5c00af5948423ef6e",
+    "ui-review/before/index.html": "1f388a987f57459ed71d3a0f91185f08fc64cc2acc639e27236c4f64772f2413",
+    "ui-review/before/package.json": "03f5b3272d1efe43cbff64561fef309509969f72fe2ddbf7a1f3227085a03962",
+    "ui-review/before/tests.mjs": "3fb6b8b0b85ec68216c1c8ee0ca014ac2a7b75aa85923fd5cd243fcb15956997",
+    "ui-review/before/theme.mjs": "7b8f1dd92858dadd845f0bb552d669ee33a6b8558f75cd31d41a134ba3c38fcc",
+    "ui-review/brief.md": "3c34713f849598782fbea0317d46c40bc51debdc070a2562467177e04924e1d5"
+  }
+}
