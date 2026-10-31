@@ -44,6 +44,7 @@ import { BrandCard, BrandMark } from "./brand/BrandCard";
 import { validateBrand, type Brand } from "./brand/model";
 import {PresentationCard, PresentationCaption, PresentationAnnotation, PresentationBackdrop} from './presentation/Presentation';
 import {validatePresentation, type Presentation} from './presentation/model';
+import {cameraAt, cameraMoves, CAMERA_DEFAULTS} from './presentation/camera';
 import {annotationAt, layoutGeometry, resolveLayout} from './presentation/layout';
 import {alphaColor, paletteFor} from './presentation/theme';
 import {masksAt} from './timeline';
@@ -242,8 +243,14 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, ca
   const { w, h } = capture.viewport;
   const geometry=layoutGeometry(capture.viewport,presentation);
   const stage=presentation?.layout?resolveLayout(presentation.layout).stageStyle:undefined;
-  // Video, stills and every evidence overlay share exactly this capture-space transform.
-  const screenStyle:React.CSSProperties={position:'absolute',left:geometry.screen.x,top:geometry.screen.y,width:w,height:h,transform:`scale(${geometry.screen.scale})`,transformOrigin:'top left',overflow:'hidden'};
+  // The camera only moves toward geometry the capture asserted; see presentation/camera.ts.
+  const camera=cameraAt(cameraMoves(timeline,steps,capture.viewport,{...CAMERA_DEFAULTS,...presentation?.camera}),frame,capture.viewport);
+  // Two layers, so the whole frame keeps its place while the picture moves inside
+  // it: the window is fixed to the layout's screen region and clips, and the inner
+  // capture-space transform carries the video, the stills and every evidence
+  // overlay together. A camera move cannot slide an outline off its field.
+  const windowStyle:React.CSSProperties={position:'absolute',left:geometry.screen.x,top:geometry.screen.y,width:w*geometry.screen.scale,height:h*geometry.screen.scale,overflow:'hidden'};
+  const captureStyle:React.CSSProperties={position:'absolute',left:0,top:0,width:w,height:h,transform:`scale(${geometry.screen.scale*camera.scale}) translate(${-camera.x}px, ${-camera.y}px)`,transformOrigin:'top left'};
   const videoEnd = timeline.titleFrames + timeline.videoFrames;
   const inVideo = frame >= timeline.titleFrames && frame < videoEnd;
   const segment = stepAtFrame(timeline, frame);
@@ -269,7 +276,7 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, ca
       </Sequence> : null}
       {timeline.segments.map((s) => (
         <Sequence key={`${s.fromFrame}`} from={s.fromFrame} durationInFrames={s.frames}>
-          <div style={{...screenStyle,...(stage?{boxShadow:stage==='paper'?'0 12px 45px #1d29251c':'0 20px 80px #10131f40',outline:'1px solid #ffffff30'}:{})}}>
+          <div style={{...windowStyle,...(stage?{boxShadow:stage==='paper'?'0 12px 45px #1d29251c':'0 20px 80px #10131f40',outline:'1px solid #ffffff30'}:{})}}><div style={captureStyle}>
             {s.still ? (
               <Img src={staticFile(s.still)} style={{ width: w, height: h }} />
             ) : s.freeze ? (
@@ -291,7 +298,7 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, ca
                 style={{ width: w, height: h }}
               />
             )}
-          </div>
+          </div></div>
         </Sequence>
       ))}
       {narration.map((clip) => {
@@ -314,14 +321,16 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, ca
       })}
       {inVideo ? (
         <>
-          <div style={screenStyle}>
+          <div style={windowStyle}>
+          {/* Chrome, not evidence: the badge keeps its corner while the camera moves. */}
+          {segment && segment.speed > 1 ? <SpeedBadge speed={segment.speed} right={24} /> : null}
+          <div style={captureStyle}>
           <Highlights marks={highlightsAt(timeline, steps, capture.viewport, frame)} w={w} h={h} color={presentation?.body.highlightColor} themed={presentation?.version===2}/>
           <Cursor state={cursorAt(timeline, steps, capture.viewport, frame)} color={presentation?.version===2?paletteFor(presentation,'body').cursor:undefined} />
-          {segment && segment.speed > 1 ? <SpeedBadge speed={segment.speed} right={24} /> : null}
           {callouts?.callouts.map((c,i)=>{const n=steps.findIndex(s=>s.id===c.step);const first=timeline.segments.find(s=>s.step===n);if(!first || stepIndex!==n)return null;const ms=(frame-first.fromFrame)*1000/FPS;return ms>=c.startMs&&ms<c.endMs?<ContextCalloutView key={i} callout={c} ms={ms}/>:null;})}
           {masksAt(timeline, capture.masks ?? [], frame, calibrationMs).map((b,i) =>
             <div key={i} style={{position:'absolute',left:b.x,top:b.y,width:b.w,height:b.h,background:'#111827',pointerEvents:'none'}} />)}
-          </div>
+          </div></div>
           {presentation&&!geometry.legacy?<PresentationAnnotation p={presentation} box={geometry.annotation} caption={step?.caption??''} transcript={annotation.text} position={stepIndex!==null?`${stepIndex+1}/${steps.length}`:''} progress={annotation.progress} narrated={aiNotice}/>:presentation ? <PresentationCaption p={presentation} top={h} width={w} caption={step?.caption ?? ''} position={stepIndex !== null ? `${stepIndex+1}/${steps.length}` : ''} narrated={aiNotice}/> : <CaptionBand
             top={h}
             width={w}

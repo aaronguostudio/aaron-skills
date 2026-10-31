@@ -264,6 +264,7 @@
     "packages/demo/remotion/src/projects/walkthrough-video/index.tsx",
     "packages/demo/remotion/src/projects/walkthrough-video/presentation/Presentation.tsx",
     "packages/demo/remotion/src/projects/walkthrough-video/presentation/annotation.tsx",
+    "packages/demo/remotion/src/projects/walkthrough-video/presentation/camera.ts",
     "packages/demo/remotion/src/projects/walkthrough-video/presentation/layout.ts",
     "packages/demo/remotion/src/projects/walkthrough-video/presentation/model.ts",
     "packages/demo/remotion/src/projects/walkthrough-video/presentation/theme.ts",

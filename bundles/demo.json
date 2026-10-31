@@ -124,6 +124,7 @@
     "packages/demo/covers/art/soft-grid.webp",
     "docs/video-layouts.md",
     "packages/demo/remotion/src/projects/walkthrough-video/presentation/layout.ts",
+    "packages/demo/remotion/src/projects/walkthrough-video/presentation/camera.ts",
     "packages/demo/remotion/src/projects/walkthrough-video/presentation/theme.ts",
     "packages/demo/walkthrough/voice-config.ts",
     "packages/demo/walkthrough/voice-cli.ts",

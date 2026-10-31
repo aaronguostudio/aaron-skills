@@ -1,6 +1,7 @@
 import {coverColors,validateCover,type CoverSettings} from '../../../../../covers/catalog';
 import {contrastRatio, paletteFor} from './theme';
 import {validateLayout, type ScreenLayout} from './layout';
+import {validateCamera, type CameraSettings} from './camera';
 export const TEMPLATES = ['minimal', 'professional', 'showcase'] as const;
 export type Template = typeof TEMPLATES[number];
 export type Presentation = {
@@ -11,6 +12,7 @@ export type Presentation = {
   cover?: CoverSettings;
   theme?: {preset?: 'blue-lavender' | 'neutral'; background?: string; foreground?: string; accent?: string; highlight?: string; cursor?: string};
   layout?: ScreenLayout;
+  camera?: CameraSettings;
   brand: {name: string; tagline: string; primary: string; accent: string; logo?: string;
     logoVariants?: {light?: string; dark?: string}; logoContainsName?: boolean; logoBackground?: string;
     logoProvenance?: {source: string; role: 'corporate' | 'product'; verified: boolean}; fallback?: 'omit' | 'monogram'};
@@ -42,6 +44,7 @@ export function validatePresentation(value: unknown, localAssets = true): assert
   if (!['left', 'right', 'none'].includes(p.body.logoPosition)) throw Error('Body logoPosition must be left, right or none');
   if(p.version===2){
     validateLayout(p.layout);
+    validateCamera(p.camera);
     if(p.cover){const colors=coverColors(p.cover);if(contrastRatio(colors.background,colors.foreground)<4.5)throw Error('Cover text contrast must be at least 4.5:1; adjust cover.colors');}
     if(p.theme?.preset!==undefined && !['blue-lavender','neutral'].includes(p.theme.preset))throw Error('Unknown presentation theme preset');
     for(const surface of ['intro','body','outro'] as const){
@@ -79,9 +82,9 @@ export function validatePresentationFields(raw: Record<string, unknown> | Presen
   const object=(value:unknown,keys:string[],label:string)=>{
     if(!value||typeof value!=='object'||Array.isArray(value)||Object.keys(value).some(k=>!keys.includes(k)))throw Error(`Unknown or invalid presentation ${label} field`);
   };
-  object(raw,['version','template','title','subtitle','brand','intro','outro','body','cover','theme','layout'],'configuration');
+  object(raw,['version','template','title','subtitle','brand','intro','outro','body','cover','theme','layout','camera'],'configuration');
   const extra=raw.version===2;
-  if(!extra && (raw.theme!==undefined||raw.layout!==undefined))throw Error('Theme and layout require presentation version 2');
+  if(!extra && (raw.theme!==undefined||raw.layout!==undefined||raw.camera!==undefined))throw Error('Theme, layout and camera require presentation version 2');
   const fields={brand:['name','tagline','primary','accent','logo',...(extra?['logoVariants','logoContainsName','logoProvenance','logoBackground','fallback']:[])],intro:['enabled','durationMs','sound','soundPreset','volume',...(extra?['background','foreground']:[])],outro:['enabled','durationMs','title','subtitle','url',...(extra?['background','foreground']:[])],body:['logoPosition','highlightColor',...(extra?['background','foreground','cursorColor']:[])]};
   for(const [key,allowed] of Object.entries(fields)){const value=(raw as Record<string,unknown>)[key];if(value!==undefined)object(value,allowed,key);}
   const brand=raw.brand as Presentation['brand']|undefined;
