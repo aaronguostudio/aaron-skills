@@ -6,6 +6,7 @@ import {tmpdir} from 'os';
 import {join} from 'path';
 import {presentationPreset,validatePresentation} from '../remotion/src/projects/walkthrough-video/presentation/model';
 import {buildTimeline} from '../remotion/src/projects/walkthrough-video/timeline';
+import {layoutGeometry} from '../remotion/src/projects/walkthrough-video/presentation/layout';
 import {installPresentation,loadPresentation,validatePresentationMedia} from './presentation';
 import {readImportedAudio,installImportedAudio,outsideGit} from './import-audio';
 import {speechProvider} from './voice-providers';
@@ -35,6 +36,25 @@ describe('presentation contracts',()=>{
     expect(()=>loadPresentation('unavailable',undefined,'Title','')).toThrow('Unknown');
     expect(()=>loadPresentation(undefined,config({intro:{duratonMs:3000}}),'Title','')).toThrow('Unknown');
     for(const patch of [{brand:{logo:'https://example.org/logo.png'}},{brand:{logo:'../logo.png'}},{intro:{durationMs:-1}},{body:{logoPosition:'over-the-app'}},{brand:{primary:'white'}}]) expect(()=>loadPresentation('professional',config(patch),'Title','')).toThrow();
+  });
+  test('a layout preset can be chosen without an external configuration file',()=>{
+    // --layout alone must produce a usable version 2 presentation, and pick up
+    // the treatment's matched cover and palette the way a file does.
+    const loaded=loadPresentation(undefined,undefined,'Title','',undefined,'studio-cobalt')!;
+    expect(loaded.presentation.version).toBe(2);
+    expect(loaded.presentation.layout!.preset).toBe('studio-cobalt');
+    expect(loaded.presentation.cover!.preset).toBe('cobalt-signal');
+    expect(layoutGeometry({w:1440,h:900},loaded.presentation).width).toBe(1920);
+    // A plain composition stays unbranded and keeps its own canvas.
+    const plain=loadPresentation(undefined,undefined,'Title','',undefined,'square-lesson')!;
+    expect(layoutGeometry({w:1440,h:900},plain.presentation)).toMatchObject({width:1440,height:1440});
+  });
+  test('a layout preset refuses to silently upgrade or override a configuration',()=>{
+    expect(()=>loadPresentation(undefined,undefined,'Title','',undefined,'no-such-layout')).toThrow('Unknown video layout preset');
+    expect(()=>loadPresentation(undefined,config({version:1,brand:{fallback:'omit'}}),'Title','',undefined,'guided-demo')).toThrow('version 2');
+    expect(()=>loadPresentation(undefined,config({version:2,brand:{fallback:'omit'},layout:{preset:'guided-demo'}}),'Title','',undefined,'reading-room')).toThrow('already selects layout');
+    // Naming the same preset the file already uses is not a conflict.
+    expect(loadPresentation(undefined,config({version:2,brand:{fallback:'omit'},layout:{preset:'guided-demo'}}),'Title','',undefined,'guided-demo')!.presentation.layout!.preset).toBe('guided-demo');
   });
   test('external assets are hash-named and portable in the render public directory',()=>{
     const path=config({brand:{logo:'logo.png'}});writeFileSync(join(path,'..','logo.png'),'fixture bytes');

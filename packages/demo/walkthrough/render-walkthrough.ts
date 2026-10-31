@@ -218,6 +218,7 @@ export type Args = {
   template?: string;
   presentation?: string;
   callouts?: string;
+  layoutPreset?: string;
   coverPreset?: string;
   audio?: string;
   voiceProvider?: string;
@@ -230,7 +231,7 @@ export function parseArgs(argv: string[]): Args {
   const values: Record<string, keyof Args> = {
     "--out": "out", "--calibration-ms": "calibrationMs", "--voice-profile": "voiceProfile",
     "--script": "script", "--speed": "speed", "--brand": "brand",
-    '--template':'template', '--presentation':'presentation', '--callouts':'callouts', '--cover-preset':'coverPreset', '--audio':'audio', '--voice-provider':'voiceProvider',
+    '--template':'template', '--presentation':'presentation', '--callouts':'callouts', '--cover-preset':'coverPreset', '--layout':'layoutPreset', '--audio':'audio', '--voice-provider':'voiceProvider',
   };
   const flags = new Map<string, "dryRun" | "stills" | "narrate" | 'cover' | 'narrationNotice' | 'preview'>([
     ["--dry-run", "dryRun"], ["--stills", "stills"], ["--narrate", "narrate"],
@@ -263,7 +264,7 @@ export function parseArgs(argv: string[]): Args {
   return args;
 }
 
-const USAGE = "usage: aaron-demo render <passed-run> [--template minimal|professional|showcase] [--presentation <external.json>] [--callouts <external.json>] [--cover-preset <id>] [--cover] [--preview] [--narration-notice] [--audio <manifest.json> | --narrate | --voice-provider none|elevenlabs|google|custom|kokoro|import] [--script <script.json>] [--voice-profile <id>] [--speed <0.7-1.2>] [--brand <legacy-id>] [--out <file.mp4>] [--stills] [--dry-run]. First narration: aaron-demo voice setup";
+const USAGE = "usage: aaron-demo render <passed-run> [--template minimal|professional|showcase] [--presentation <external.json>] [--callouts <external.json>] [--cover-preset <id>] [--layout <id>] [--cover] [--preview] [--narration-notice] [--audio <manifest.json> | --narrate | --voice-provider none|elevenlabs|google|custom|kokoro|import] [--script <script.json>] [--voice-profile <id>] [--speed <0.7-1.2>] [--brand <legacy-id>] [--out <file.mp4>] [--stills] [--dry-run]. First narration: aaron-demo voice setup";
 
 export async function main(argv: string[]): Promise<number> {
   if (argv.length === 1 && (argv[0] === '--help' || argv[0] === '-h')) { console.log(USAGE); return 0; }
@@ -278,7 +279,7 @@ export async function main(argv: string[]): Promise<number> {
     if(parsed.preview&&generated)throw new RenderRefusal('Preview never synthesizes narration; use none or --audio with existing clips');
     if (provider === 'qwen') throw new RenderRefusal('Qwen TTS adapter is reserved, not implemented or validated. Use --audio with output from your local TTS. No provider call was made.');
     if ((provider === 'import') !== !!parsed.audio || (parsed.audio && parsed.narrate) || (!generated && (parsed.narrate || scriptArg || voiceProfile || speed !== undefined))) throw new RenderRefusal('Conflicting audio options: choose none, imported manifest, or configured narration');
-    if (brandArg && (parsed.template || parsed.presentation || parsed.coverPreset)) throw new RenderRefusal('Use the presentation brand configuration or legacy --brand, not both');
+    if (brandArg && (parsed.template || parsed.presentation || parsed.coverPreset || parsed.layoutPreset)) throw new RenderRefusal('Use the presentation brand configuration or legacy --brand, not both');
     outsideGit(run);
     if (out) outsideGit(out);
     const roots = repoRoots();
@@ -288,8 +289,8 @@ export async function main(argv: string[]): Promise<number> {
     const callouts=parsed.callouts ? JSON.parse(readFileSync(resolve(parsed.callouts),'utf8')) : undefined;
     if(parsed.callouts) validateCallouts(callouts,prepared.steps,capture.viewport);
     if (parsed.presentation) outsideGit(parsed.presentation);
-    const config = loadPresentation(parsed.template, parsed.presentation, capture.title, capture.subtitle ?? '',parsed.coverPreset);
-    if (parsed.cover && !config) throw new RenderRefusal('--cover requires --template or --presentation');
+    const config = loadPresentation(parsed.template, parsed.presentation, capture.title, capture.subtitle ?? '',parsed.coverPreset,parsed.layoutPreset);
+    if (parsed.cover && !config) throw new RenderRefusal('--cover requires --template, --layout or --presentation');
     const p = config?.presentation;
     const logoChecks=p?validatePresentationMedia(p,config?.assetRoot):[];
     const geometry=layoutGeometry(capture.viewport,p);

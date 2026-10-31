@@ -10,10 +10,22 @@ import {VIDEO_TREATMENTS} from '../remotion/src/projects/walkthrough-video/prese
 
 const COVER_ROOT=resolve(import.meta.dir,'../covers');
 
-export function loadPresentation(template: string | undefined, file: string | undefined, title: string, subtitle: string, coverPreset?:string): {presentation: Presentation; assetRoot?: string} | undefined {
-  if (!template && !file && !coverPreset) return undefined;
+export function loadPresentation(template: string | undefined, file: string | undefined, title: string, subtitle: string, coverPreset?:string, layoutPreset?:string): {presentation: Presentation; assetRoot?: string} | undefined {
+  if (!template && !file && !coverPreset && !layoutPreset) return undefined;
   let raw = file ? JSON.parse(readFileSync(file, 'utf8')) : {};
   if(!raw || typeof raw!=='object' || Array.isArray(raw)) throw Error('Presentation configuration must be an object');
+  // A composition can be chosen without authoring a file. Layout is a version 2
+  // field, so a version 1 configuration is refused rather than silently upgraded:
+  // its colour, card and caption defaults differ.
+  if(layoutPreset!==undefined){
+    if(raw.version!==undefined && raw.version!==2) throw Error('A layout preset needs presentation version 2; upgrade the configuration deliberately');
+    if(raw.layout?.preset!==undefined && raw.layout.preset!==layoutPreset) throw Error(`The configuration already selects layout ${raw.layout.preset}`);
+    raw={...raw, version:2, layout:{...raw.layout, preset:layoutPreset}};
+    // Version 2 makes an unresolved logo an explicit choice. Choosing a layout at
+    // the command line supplies no brand, so record that omission rather than
+    // refuse; a configuration file still has to state its own choice.
+    if(!file && raw.brand?.fallback===undefined) raw={...raw, brand:{...raw.brand, fallback:'omit'}};
+  }
   const treatment=raw.version===2?VIDEO_TREATMENTS[raw.layout?.preset]:undefined;
   if(treatment)raw={...raw,cover:raw.cover??(raw.theme?.preset&&treatment.cover?{preset:treatment.cover.preset}:treatment.cover),theme:{...(!raw.theme?.preset?treatment.theme:{}),...raw.theme},body:{...treatment.body,...raw.body},intro:{...treatment.intro,...raw.intro},outro:{...treatment.outro,...raw.outro}};
   const preset = presentationPreset((template ?? raw.template ?? 'professional') as Template, title, subtitle);
