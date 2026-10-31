@@ -1,0 +1,25 @@
+name: Cover masters
+# The PNG masters live in the cover-originals release, not the tree. This job
+# checks that the catalogue, the committed derivatives and the release agree.
+# It reads the release index only; it never downloads the 54 MB of masters.
+# The byte-level check is `npm run test:cover-masters`, a separate gate.
+on:
+  push:
+    paths: ['website/src/covers.json', 'website/cover-library.json', 'website/public/covers/**', 'website/scripts/covers.py', '.github/workflows/covers.yml']
+  pull_request:
+    paths: ['website/src/covers.json', 'website/cover-library.json', 'website/public/covers/**', 'website/scripts/covers.py', '.github/workflows/covers.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.11'
+      - name: Catalogue, derivatives and release agree
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 website/scripts/covers.py verify

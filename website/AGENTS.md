@@ -137,3 +137,33 @@ Aaron requested the next local presentation preview show cover choices above lay
 Aaron's follow-up asks for multi-row cover and layout catalogs instead of horizontal carousels, and a programmatic browser preview joining a customizable cover to an animated fictional example. Let people enter their demo and brand details and preview a supplied logo. Preserve honest distinction between the illustrative browser preview and rendering a real video; carry the selected configuration and any logo handoff faithfully. This is local review work, not SaaS or publication authorization.
 
 Aaron requested a high-fidelity local preview based on an actual fictional Forma recording and Film's layout and annotation components. Keep demo title, company name, logo and cover colors immediately discoverable; preserve truthful differences between preview and export. This is local review, not publication.
+
+## Cover masters moved out of the tree (2026-10-31)
+
+Aaron asked for a smaller clone and a painless way to add, update and remove
+covers. The 32 byte-preserved PNG masters were 54 MB of the 71 MB tracked tree,
+and every `/plugin install` shallow-clones the repository, so every user paid for
+files only the gallery's download link and the preparation script ever read.
+
+The masters now live in the `cover-originals` pre-release asset store, mirrored
+locally in the ignored `website/.covers-masters/`. It is marked pre-release
+deliberately: the stable-update client reads `/releases/latest` and also rejects
+pre-releases, and `update-assets.yml` skips them, so an asset store can never be
+mistaken for a software version. Do not make it a normal release.
+
+`website/scripts/covers.py` replaces `prepare-cover-assets.py` and owns the whole
+lifecycle: `sync` uploads new masters, restores missing ones and rebuilds every
+derivative; `add` and `remove` also write the catalogue entry; `verify` reports
+drift. Adding a cover takes the same steps as before, and the repository grows by
+about 130 KB instead of 1.8 MB.
+
+Keep the SHA-256 and byte sizes in `src/covers.json`: they are what makes the
+masters verifiable once they are outside Git. Offline tests check structure and
+derivatives; `npm run test:cover-masters` downloads and hashes the masters, and
+the Cover masters workflow checks catalogue/derivative/release agreement through
+the release index without downloading. Do not move the byte check into the
+default suite; `npm run verify` stays offline.
+
+The renderer was never affected. Film bundles its own WebP copies under
+`packages/demo/covers/art/`, at the same pixel dimensions; nothing about making a
+video changed.

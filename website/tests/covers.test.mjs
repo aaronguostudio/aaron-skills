@@ -1,27 +1,27 @@
+// Offline checks only. The PNG masters live in the cover-originals release, so
+// their bytes are verified by tests/cover-masters.test.mjs, which needs network.
 import assert from "node:assert/strict";
-import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { test } from "node:test";
 
 const covers = JSON.parse(await readFile(new URL("../src/covers.json", import.meta.url), "utf8"));
 const briefs = JSON.parse(await readFile(new URL("../cover-library.json", import.meta.url), "utf8"));
 const asset = path => new URL(`../public${path}`, import.meta.url);
+export const MASTER_STORE = "https://github.com/aaronguostudio/aaron-skills/releases/download/cover-originals/";
 
-test("the library preserves 32 unique originals across eight bilingual styles", async () => {
+test("the library describes 32 unique covers across eight bilingual styles", async () => {
   assert.equal(covers.length, 32);
   assert.equal(briefs.covers.length, 32);
   assert.equal(new Set(covers.map(cover => cover.id)).size, 32);
   assert.equal(new Set(covers.map(cover => cover.sha256)).size, 32);
+  assert.deepEqual(covers.map(cover => cover.id), briefs.covers.map(brief => brief.id));
   const families = new Map();
   for (const cover of covers) {
     families.set(cover.family, (families.get(cover.family) || 0) + 1);
     assert.ok(cover.width / cover.height > 1.74 && cover.width / cover.height < 1.81, `${cover.id}: landscape slide proportions`);
-    const png = await readFile(asset(cover.png));
-    assert.equal(png.subarray(1, 4).toString(), "PNG");
-    assert.equal(png.readUInt32BE(16), cover.width);
-    assert.equal(png.readUInt32BE(20), cover.height);
-    assert.equal(createHash("sha256").update(png).digest("hex"), cover.sha256, `${cover.id}: byte-preserved original`);
-    assert.equal(png.length, cover.bytes.png);
+    assert.equal(cover.png, `${MASTER_STORE}${cover.id}.png`, `${cover.id}: master download points at the release store`);
+    assert.ok(Number.isInteger(cover.bytes.png) && cover.bytes.png > 0, `${cover.id}: recorded master size`);
+    assert.match(cover.sha256, /^[0-9a-f]{64}$/, `${cover.id}: recorded master digest`);
     for (const language of ["en", "zh"]) {
       assert.ok(cover.title[language] && cover.familyTitle[language] && cover.description[language]);
     }

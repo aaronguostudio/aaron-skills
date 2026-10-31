@@ -13,14 +13,33 @@ keyboard navigation, Escape, and native dialog focus restoration.
 
 ## Assets
 
-- Byte-preserved generated PNGs: `public/covers/originals/<id>.png`.
+- Byte-preserved generated PNGs: the [`cover-originals`](https://github.com/aaronguostudio/aaron-skills/releases/tag/cover-originals)
+  release, mirrored locally in the ignored `website/.covers-masters/`.
 - Full-size WebP: `public/covers/previews/<id>.webp`.
 - Responsive 640px thumbnails: `public/covers/previews/<id>-640.webp`.
 - Delivery metadata, dimensions, SHA-256 and byte sizes: `src/covers.json`.
 
-To rebuild the WebP derivatives, install Pillow and run
-`python3 website/scripts/prepare-cover-assets.py` from the repository root. This
-leaves the PNG originals unchanged. The website build does not require Pillow.
+The masters are not in the tree. Every plugin install shallow-clones this
+repository, so 32 masters cost every user about 54 MB for files that only this
+script and the gallery's download link read. Keeping them in a release asset
+store leaves the clone near 31 MB. Their SHA-256 and byte size stay recorded in
+`src/covers.json`, so integrity remains checkable. The renderer is unaffected:
+Film bundles its own WebP copies under `packages/demo/covers/art/`.
+
+`website/scripts/covers.py` maintains all of this. It needs Pillow and the
+GitHub CLI; the website build needs neither.
+
+```sh
+python3 website/scripts/covers.py sync      # upload new masters, restore missing ones, rebuild derivatives
+python3 website/scripts/covers.py add <file.png> --id … --family … --title-en … --title-zh … \
+    --family-title-en … --family-title-zh … --description-en … --description-zh … --prompt …
+python3 website/scripts/covers.py remove <id>
+python3 website/scripts/covers.py verify    # report drift; --offline skips every network call
+```
+
+`sync` is idempotent and safe to run at any time. On a fresh clone it restores
+every master the catalogue names, so derivatives can always be rebuilt. Commit
+the previews and `src/covers.json`; the masters stay out of Git.
 Keep the image samples separate from client material and capture evidence.
 
 Run `npm run build --prefix website` and `npm run test:sites --prefix website`.
