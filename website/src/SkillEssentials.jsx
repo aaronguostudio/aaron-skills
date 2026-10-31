@@ -6,10 +6,10 @@ const content = {
   en: {
     eyebrow: "FIVE CAPABILITIES · USE WHAT YOU NEED",
     title: "Good work, all the way through.",
-    intro: "Start where your task needs help. Carry the understanding forward.",
-    example: "ONE SMALL EXAMPLE",
+    intro: "Five capabilities describe the work; seven skills give your agent practical ways to do it. Choose what the task needs, independently or together.",
+    example: "SEE THE SKILLS AT WORK",
     caseTitle: "The missing receipt.",
-    caseIntro: "A fictional expense app. Someone submits an expense without a receipt. Help them finish it, and help the reviewer understand what changed.",
+    caseIntro: "In this fictional expense app, a receipt is missing. Select a capability to see its role, a prompt and an example output.",
     source: "v1.0.1 includes all seven skills. Use only the capabilities your task needs.",
     tabs: "Explore the capabilities", readSkill: "Read the skill", install: "Install all seven skills",
     output: "WHAT IT LOOKS LIKE",
@@ -29,7 +29,7 @@ const content = {
     copy: "Copy example update", copied: "Copied", copyFailed: "Select and copy the text above.", share: "See how Share prepares the update",
   },
   zh: {
-    eyebrow: "五项能力 · 按需使用", title: "把工作，一步步做到位。", intro: "从当前任务需要的地方开始，把已有的理解带到下一步。", example: "一个小例子", caseTitle: "那张缺失的收据。", caseIntro: "一个虚构的报销应用：有人提交了报销，却漏了收据。帮他补齐，也让审核人看懂改动。", source: "v1.0.1 包含七个 Skills，根据任务需要选择使用。", tabs: "探索各项能力", readSkill: "阅读 Skill", install: "安装七个 Skills", output: "看看具体产物",
+    eyebrow: "五项能力 · 按需使用", title: "把工作，一步步做到位。", intro: "五项能力描述工作的不同需要，七个 Skills 为 AI agent 提供具体做法。根据任务独立使用，也可以按需组合。", example: "看看 Skills 如何发挥作用", caseTitle: "那张缺失的收据。", caseIntro: "在这个虚构的报销应用中，有人漏交了收据。选择一项能力，看看它的作用、示例指令和产物。", source: "v1.0.1 包含七个 Skills，根据任务需要选择使用。", tabs: "探索各项能力", readSkill: "阅读 Skill", install: "安装七个 Skills", output: "看看具体产物",
     stages: [
       { name: "Shape", essence: "把意图变具体。", summary: "把模糊的需求，变成别人可以查看、纠正和执行的方案。", reason: "把目的、关键选择和背后的原因留在一起。根据任务需要，用设计、流程或一段简短回复来表达。", status: "已包含 · feature-blueprint", artifact: "一份聚焦的方案", prompt: "“漏交收据这件事，能不能处理得轻松一点？”", result: "让方向可以确认，也让尚未决定的选择清楚可见。" },
       { name: "Build", essence: "补齐从做出来到能用的距离。", summary: "延续已有理解和项目做法，把成果做到能用。", reason: "连起界面、状态和异常恢复；边做边检查，把实现中的发现带回设计。", status: "已包含", artifact: "一个可以操作的界面", prompt: "“按确认的方案，在现有应用里做出补件流程。”", result: "试试这个浏览器内的界面示意。切换能力或刷新后会重置。" },
@@ -63,7 +63,7 @@ function ExampleArtifact({ selected, text, onExploreDemo }) {
   if (selected === 0) return <div className="proposal-sketch"><p className="artifact-eyebrow">SHAPE / 01</p><h4>{text.proposal.title}</h4><dl><div><dt>{text.proposal.goal}</dt><dd>{text.proposal.goalText}</dd></div><div><dt>{text.proposal.choice}</dt><dd><ol className="proposal-flow">{text.proposal.steps.map(step => <li key={step}>{step}</li>)}</ol></dd></div><div><dt>{text.proposal.why}</dt><dd>{text.proposal.whyText}</dd></div></dl><aside><strong>{text.proposal.open}</strong><p>{text.proposal.openText}</p></aside></div>;
   if (selected === 1) return <ReceiptSketch text={text.build} />;
   if (selected === 2) return <div className="verify-sketch"><table><caption className="artifact-eyebrow">VERIFY / 03</caption><thead><tr>{text.checkHead.map(label => <th key={label} scope="col">{label}</th>)}</tr></thead><tbody>{text.checks.map(row => <tr key={row[0]}>{row.map((cell, i) => i === 0 ? <th scope="row" key={cell}>{cell}</th> : <td key={cell}>{cell}</td>)}</tr>)}</tbody></table></div>;
-  if (selected === 3) return <div className="storyboard-sketch"><p className="artifact-eyebrow">CAPTURE → FILM → SHARE</p><div className="storyboard-frames">{text.film.frames.map(([number, title, body]) => <div key={number}><span>{number}</span><h4>{title}</h4><p>{body}</p></div>)}</div><blockquote>{text.film.quote}</blockquote><a className="example-link" href="#examples">{text.film.watch} ↗</a><div className="demo-skill-links">{["Capture", "Film", "Share"].map((name, i) => <button key={name} onClick={() => onExploreDemo(i)}>{text.film.explore} {name} ↗</button>)}</div></div>;
+  if (selected === 3) return <div className="storyboard-sketch"><p className="artifact-eyebrow">CAPTURE / FILM / SHARE</p><div className="storyboard-frames">{text.film.frames.map(([number, title, body]) => <div key={number}><span>{number}</span><h4>{title}</h4><p>{body}</p></div>)}</div><blockquote>{text.film.quote}</blockquote><a className="example-link" href="#examples">{text.film.watch} ↗</a><div className="demo-skill-links">{["Capture", "Film", "Share"].map((name, i) => <button key={name} onClick={() => onExploreDemo(i)}>{text.film.explore} {name} ↗</button>)}</div></div>;
   return <div className="handoff-sketch"><p className="artifact-eyebrow">DELIVER / 05</p><p className="handoff-message">{text.handoff}</p><div className="handoff-actions"><button className="example-button" onClick={async () => { try { await navigator.clipboard.writeText(text.handoff); setCopyStatus("copied"); } catch { setCopyStatus("copyFailed"); } }}>{text.copy}<span aria-hidden="true">↗</span></button><span role="status">{copyStatus && text[copyStatus]}</span></div><button className="example-link" onClick={() => onExploreDemo(2)}>{text.share} ↗</button></div>;
 }
 
@@ -80,7 +80,7 @@ export function SkillEssentials({ language, onExploreDemo }) {
     return () => window.removeEventListener("hashchange", syncHash);
   }, []);
   const stage = text.stages[selected];
-  const invocationIds = ["feature-blueprint", "build-delivery", "verify-delivery", "demo-capture", "deliver-work"];
+  const skillLinks = [[["Shape", "feature-blueprint"]], [["Build", "build-delivery"]], [["Verify", "verify-delivery"]], [["Capture", "demo-capture"], ["Film", "walkthrough-video"]], [["Deliver", "deliver-work"], ["Share", "paste-ready-update"]]];
   function selectStage(index) { setSelected(index); window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}#skill-${text.stages[index].name.toLowerCase()}`); }
   function onTabKey(event, index) {
     const next = ["ArrowRight", "ArrowDown"].includes(event.key) ? (index + 1) % 5 : ["ArrowLeft", "ArrowUp"].includes(event.key) ? (index + 4) % 5 : event.key === "Home" ? 0 : event.key === "End" ? 4 : null;
@@ -88,11 +88,12 @@ export function SkillEssentials({ language, onExploreDemo }) {
     event.preventDefault(); selectStage(next); document.getElementById(`skill-${text.stages[next].name.toLowerCase()}`)?.focus();
   }
   return <section className="essentials wrap" id="skills" aria-labelledby="skills-title">
+    <span id="workflow" aria-hidden="true" />
     <div className="essentials-heading"><p className="eyebrow">{text.eyebrow}</p><h2 id="skills-title">{text.title}</h2><p>{text.intro}</p></div>
+    <div className="case-heading"><div><p className="eyebrow">{text.example}</p><h3>{text.caseTitle}</h3></div><p>{text.caseIntro}</p></div>
     <div className="capability-tabs" role="tablist" aria-label={text.tabs}>{text.stages.map((item, index) => <button key={item.name} id={`skill-${item.name.toLowerCase()}`} role="tab" aria-selected={selected === index} aria-controls="capability-panel" tabIndex={selected === index ? 0 : -1} onClick={() => selectStage(index)} onKeyDown={event => onTabKey(event, index)}><span className="capability-index">0{index + 1}</span><strong>{item.name}</strong><span className="capability-essence">{item.essence}</span></button>)}</div>
-    <div className="case-heading" id="workflow"><div><p className="eyebrow">{text.example}</p><h3>{text.caseTitle}</h3></div><p>{text.caseIntro}</p></div>
     <div className="capability-panel" id="capability-panel" role="tabpanel" aria-labelledby={`skill-${stage.name.toLowerCase()}`} tabIndex={0}>
-      <div className="capability-explanation"><span className="capability-status released">{stage.status}</span><h3>{stage.summary}</h3><p>{stage.reason}</p><p><a className="example-link" href={`https://github.com/aaronguostudio/aaron-skills/blob/main/skills/${invocationIds[selected]}/SKILL.md`}>{text.readSkill} · {invocationIds[selected]} ↗</a></p><blockquote>{stage.prompt}</blockquote><div className="artifact-description"><p className="eyebrow">{text.output}</p><h4>{stage.artifact}</h4><p>{stage.result}</p></div></div>
+      <div className="capability-explanation"><span className="capability-status released">{stage.status}</span><h3>{stage.summary}</h3><p>{stage.reason}</p><p>{skillLinks[selected].map(([name, id], index) => <span key={id}>{index > 0 && " · "}<a className="example-link" href={`https://github.com/aaronguostudio/aaron-skills/blob/main/skills/${id}/SKILL.md`}>{text.readSkill}: {name} ↗</a></span>)}</p><blockquote>{stage.prompt}</blockquote><div className="artifact-description"><p className="eyebrow">{text.output}</p><h4>{stage.artifact}</h4><p>{stage.result}</p></div></div>
       <m.div key={selected} className="capability-artifact" initial={reducedMotion ? false : { opacity: 0.6, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : 0.2, ease: "easeOut" }}><ExampleArtifact selected={selected} text={text} onExploreDemo={onExploreDemo} /></m.div>
     </div>
     <p className="capability-availability">{text.source} <a href="https://github.com/aaronguostudio/aaron-skills/blob/main/docs/installation.md">{text.install} ↗</a></p>

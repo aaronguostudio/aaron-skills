@@ -121,3 +121,7 @@ Shape, Build, Verify, Capture, Film, Deliver and Share in standard setup. This
 supersedes older availability notes calling non-Demo capabilities future work.
 Preserve the accepted five-capability graph, bilingual presentation and media;
 availability is not a claim of universal quality or customer acceptance.
+
+## Skills navigation clarity (2026-10-29)
+
+Aaron observed that Workflow and Skills repeated the same content and that Workflow appeared first in navigation despite pointing inside Skills. Keep one Skills entry; explain how capabilities relate to the installed skills and use the example to show their roles without implying a required sequence. Preserve existing workflow links.

@@ -14,7 +14,7 @@ import { CoverLibrary } from "./CoverLibrary";
 const REPO = "https://github.com/aaronguostudio/aaron-skills";
 const copy = {
   en: {
-    nav: ["Workflow", "Skills"],
+    nav: ["Skills"],
     eyebrow: "METHODS FOR WORKING WITH AGENTS",
     headline: ["From intent", "to work people", "can use."],
     intro: "Shape the idea. Build it with care. Check the result. Make it clear to the next person. Reusable methods and tools for working with AI agents.",
@@ -70,7 +70,7 @@ const copy = {
     skillAction: "Explore",
   },
   zh: {
-    nav: ["工作流程", "Skills"],
+    nav: ["Skills"],
     eyebrow: "与 AGENT 协作的工作方法",
     headline: ["让想法，", "成为可用的成果。"],
     intro: "理清想法，用心实现，检查结果，再让接收者看明白。与 AI Agent 协作的可复用方法和工具。",
@@ -286,8 +286,7 @@ export function App() {
             Aaron Skills
           </a>
           <nav aria-label={language === "zh" ? "主导航" : "Main navigation"}>
-            <a href={`${home}#workflow`}>{text.nav[0]}</a>
-            <a href={`${home}#skills`}>{text.nav[1]}</a>
+            <a href={`${home}#skills`}>{text.nav[0]}</a>
             <a href={`${home}#examples`}>{language === "zh" ? "案例" : "Examples"}</a>
             <a href={`/covers${language === "zh" ? "?lang=zh" : ""}`} aria-current={isCoversPage ? "page" : undefined}>{language === "zh" ? "封面" : "Covers"}</a>
             <a href={`/layouts${language === "zh" ? "?lang=zh" : ""}`} aria-current={isLayoutsPage ? "page" : undefined}>{language === "zh" ? "视频版式" : "Video layouts"}</a>

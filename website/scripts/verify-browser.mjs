@@ -47,6 +47,10 @@ try {
           assert.ok(await page.getByRole('heading', { level: 1 }).isVisible(), `${route} heading visible`);
           assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${route} ${width}px ${language}: horizontal overflow`);
           if (route === '/') {
+            const navigation = page.getByRole('navigation', { name: language === 'zh' ? '主导航' : 'Main navigation' });
+            assert.equal(await navigation.locator('a[href$="#skills"]').count(), 1);
+            assert.equal(await navigation.locator('a[href$="#workflow"]').count(), 0);
+            assert.ok(await page.locator('#workflow').count(), 'legacy workflow anchor remains available');
             const graph = page.locator('.workflow-graph');
             assert.equal(await graph.getAttribute('data-reduced-motion'), 'true');
             assert.equal(await graph.locator('.workflow-node').count(), 5);
@@ -58,6 +62,8 @@ try {
               await tabs.nth(index).click();
               assert.equal(await tabs.nth(index).getAttribute('aria-selected'), 'true');
               assert.ok(await page.getByRole('tabpanel').isVisible());
+              const links = page.getByRole('tabpanel').locator('a[href*="/skills/"]');
+              assert.equal(await links.count(), index >= 3 ? 2 : 1, 'each capability links to its skills');
               assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `capability ${index} ${width}px ${language}: overflow`);
             }
             await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
