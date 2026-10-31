@@ -187,3 +187,19 @@ When sharing anything else with Film, import it from a module with no `remotion`
 import and inject the player-specific parts. Check it the way Vercel does, with
 the website's dependencies alone, not against a checkout that happens to have the
 renderer installed.
+
+## README demonstration GIF (2026-10-31)
+
+A project whose headline capability is explanatory video had nothing moving in
+its README. `public/media/walkthrough-demo.gif` is 13.4 seconds cut from the
+published Ledgerlane quick-demo: the pointer selects two invoices, the approval
+preview shows the total, and the saved batch shows 2 / $2,000.00 / Approved with
+each field outlined. It opens on an action and closes on the checked result, so
+the loop lands on the thing that distinguishes this toolchain.
+
+Unlike the showcase films it is a repository file, not Blob media. It is 0.81 MB
+against a 17 MB tree, it needs no hash record because it carries no delivery
+claim, and the README has to reach it over plain HTTP from the site. Keep it
+that small: 900x623 at 12 fps, 128 colours, no dithering, which flat product UI
+survives without banding. Check any replacement at the README's real display
+width of 760px, including a dense table frame, before publishing it.

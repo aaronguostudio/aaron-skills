@@ -38,6 +38,15 @@ Shape / Build / Verify / Deliver 是无服务依赖的可移植指令；Capture 
 ## 当前可用：Demo
 
 将一个已经能运行的 Web 功能，变成有引导的视频、截图和可复制的更新说明。
+
+<p align="center">
+  <a href="https://skills.aaronguo.com/?lang=zh#example-ledgerlane">
+    <img src="https://skills.aaronguo.com/media/walkthrough-demo.gif" width="760" alt="渲染出的讲解视频：光标选中两张发票，审批预览显示总额，保存后的批次显示 2 张、$2,000、已批准，每项都被框出为经过检查的证据" />
+  </a>
+</p>
+
+<p align="center"><sub>节选自 Ledgerlane 的讲解视频，Ledgerlane 是一个虚构的演示应用。<br/>被框出的字段是断言过的检查项：结果对不上的录制不会变成视频。</sub></p>
+
 已发布的能力组合通过一套共享的本地工具串起三个 Skills：
 
 | Skill | 具体作用 |

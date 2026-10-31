@@ -42,6 +42,15 @@ Neither request authorizes sending or publication.
 ## Available now: Demo
 
 Turn a working web feature into a guided video, screenshots and a copyable update.
+
+<p align="center">
+  <a href="https://skills.aaronguo.com/#example-ledgerlane">
+    <img src="https://skills.aaronguo.com/media/walkthrough-demo.gif" width="760" alt="A rendered walkthrough: the pointer selects two invoices, the approval preview shows the total, and the saved batch holds 2 invoices, $2,000 and Approved, each outlined as checked evidence" />
+  </a>
+</p>
+
+<p align="center"><sub>Part of a rendered walkthrough of Ledgerlane, a fictional demonstration application.<br/>The outlined fields are checked assertions: a walk whose result does not match never becomes a video.</sub></p>
+
 The released bundle connects three skills through a shared local toolchain:
 
 | Skill | What it does |
