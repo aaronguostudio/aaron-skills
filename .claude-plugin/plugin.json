@@ -1,0 +1,24 @@
+{
+  "name": "aaron-skills",
+  "version": "1.0.1",
+  "description": "Seven skills that carry an idea from intent to work people can use. Shape makes the intent concrete, Build closes the gap to usable, Verify checks the actual promise, Capture/Film/Share demonstrate the result, and Deliver makes the next step clear. Shape, Build, Verify and Deliver need no runtime; Capture, Film and Share use the separately installed local aaron-demo toolchain.",
+  "author": {
+    "name": "Aaron Guo",
+    "url": "https://aaronguo.com"
+  },
+  "homepage": "https://skills.aaronguo.com",
+  "repository": "https://github.com/aaronguostudio/aaron-skills",
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "product-demo",
+    "demo-video",
+    "screen-recording",
+    "walkthrough",
+    "release-notes",
+    "handoff",
+    "verification",
+    "technical-writing",
+    "workflow"
+  ]
+}

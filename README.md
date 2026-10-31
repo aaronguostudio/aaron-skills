@@ -64,6 +64,16 @@ The examples are curated showcases, separate from benchmarks.
 
 ## Install Aaron Skills
 
+On Claude Code, the quickest start needs no prerequisites and no local runtime:
+
+```sh
+/plugin install aaron-skills --marketplace aaronguostudio/aaron-skills
+```
+
+Shape, Build, Verify and Deliver work immediately. Capture, Film and Share are
+also registered, and each says what it needs when the `aaron-demo` runtime is
+absent; install it below to record and render.
+
 Runtime targets: **macOS arm64, Ubuntu 24.04 x64 and native Windows 11 x64**.
 See [compatibility](docs/compatibility.md) for measured platform and host coverage.
 Requirements: Git, Python 3.11+, Node 22+ with npm, and FFmpeg/ffprobe.

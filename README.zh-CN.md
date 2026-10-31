@@ -60,6 +60,15 @@ Shape / Build / Verify / Deliver 是无服务依赖的可移植指令；Capture 
 
 ## 安装 Aaron Skills
 
+在 Claude Code 上，最快的方式不需要任何前置工具，也不需要本地运行时：
+
+```sh
+/plugin install aaron-skills --marketplace aaronguostudio/aaron-skills
+```
+
+Shape、Build、Verify、Deliver 装完即用。Capture、Film、Share 同样会被注册；
+当 `aaron-demo` 运行时不存在时，它们会说明自己需要什么。要录制和渲染，继续按下面安装。
+
 运行时目标：**macOS arm64、Ubuntu 24.04 x64 和原生 Windows 11 x64**。
 具体实测平台与宿主范围请看[兼容性说明](docs/compatibility.md)。
 需要 Git、Python 3.11+、Node 22+（含 npm）和 FFmpeg/ffprobe。

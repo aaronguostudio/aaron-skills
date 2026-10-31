@@ -1,0 +1,33 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "aaron-skills",
+  "owner": {
+    "name": "Aaron Guo",
+    "url": "https://aaronguo.com"
+  },
+  "metadata": {
+    "description": "Reusable methods for working with AI agents, from shaping a request to delivering work someone else can use."
+  },
+  "plugins": [
+    {
+      "name": "aaron-skills",
+      "description": "Shape an unclear request into an inspectable proposal, build it with the project's existing methods, verify the actual result, demonstrate it as a guided video, and hand it off. Shape, Build, Verify and Deliver work on their own; Capture, Film and Share additionally need the local aaron-demo runtime, and say so when it is missing.",
+      "version": "1.0.1",
+      "author": {
+        "name": "Aaron Guo",
+        "url": "https://aaronguo.com"
+      },
+      "source": "./",
+      "category": "productivity",
+      "homepage": "https://skills.aaronguo.com",
+      "tags": [
+        "agent-skills",
+        "product-demo",
+        "demo-video",
+        "verification",
+        "handoff",
+        "workflow"
+      ]
+    }
+  ]
+}

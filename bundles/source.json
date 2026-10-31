@@ -2,6 +2,8 @@
   "schema": 1,
   "version": "1.0.1",
   "files": [
+    ".claude-plugin/marketplace.json",
+    ".claude-plugin/plugin.json",
     ".github/workflows/ci.yml",
     ".gitignore",
     "AGENTS.md",

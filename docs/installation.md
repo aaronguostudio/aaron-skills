@@ -13,6 +13,16 @@ The current checkout supports macOS arm64, Ubuntu 24.04 x64 and native Windows 1
 x64. The v0.1.0 tag remains macOS-only. See [compatibility](compatibility.md) for
 measured environments and boundaries. Install as your ordinary user.
 
+## Claude Code plugin
+
+`/plugin install aaron-skills --marketplace aaronguostudio/aaron-skills` registers
+all seven skills with no prerequisites and no media runtime. Shape, Build, Verify
+and Deliver are complete this way. Capture, Film and Share are registered too and
+report what they need while `aaron-demo` is absent; they record and render only
+after the runtime installation below. The plugin and the runtime installation
+register through different mechanisms, so using both registers a skill twice:
+choose one per host, or remove the plugin before running setup.
+
 ## Prerequisites
 
 All platforms need Git, Python 3.11+, Node 22+ with npm, and FFmpeg/ffprobe on PATH.
