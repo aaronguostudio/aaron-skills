@@ -167,3 +167,23 @@ default suite; `npm run verify` stays offline.
 The renderer was never affected. Film bundles its own WebP copies under
 `packages/demo/covers/art/`, at the same pixel dimensions; nothing about making a
 video changed.
+
+## The site must build without Remotion (2026-10-31)
+
+`website/AGENTS.md` already required the site to build and run without Remotion
+execution, but nothing enforced it, and the Film preview added in 0897021
+imported `PresentationAnnotation` from a module whose top-level import pulls in
+`remotion`. Local builds resolved it through `packages/demo/remotion/node_modules`
+and passed; Vercel installs only the website's dependencies, so every production
+deployment failed until this was split.
+
+`presentation/annotation.tsx` now holds the three shared components that need no
+Remotion API — the logo, the caption band and the annotation panel — and takes a
+`renderLogo` injection the way `CoverDesign` already takes `renderImage`.
+`Presentation.tsx` re-exports them bound to Remotion, so the composition and the
+renderer tests import them unchanged.
+
+When sharing anything else with Film, import it from a module with no `remotion`
+import and inject the player-specific parts. Check it the way Vercel does, with
+the website's dependencies alone, not against a checkout that happens to have the
+renderer installed.
