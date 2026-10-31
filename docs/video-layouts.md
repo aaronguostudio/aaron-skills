@@ -308,3 +308,34 @@ existing `--audio` to preview measured narration/transcripts. `--narrate` with p
 is refused. `--dry-run` writes nothing and reports geometry/palette/logo checks.
 Use separate directories for every variation. A preview checks one content frame;
 it does not replace reviewing all held frames, wait endings and audio in the film.
+
+## Camera (presentation v2, off by default)
+
+A layout refuses any `fit` other than contain, because a permanently cropped
+frame cannot be checked against the recording. A camera move makes a different
+claim and is allowed under conditions that keep the check intact:
+
+- It only targets a step's saved `focus` geometry. That geometry exists because
+  `rec.show` verified those field values, so the frame can only travel toward
+  evidence the capture asserted, never toward a region chosen for looks.
+- The whole screen opens and closes every step. The viewer sees the region in
+  its surroundings before it fills the frame, and the frame is whole again
+  before the step hands over.
+- The view is clamped to the recording. Nothing outside the captured screen is
+  ever shown, and no pixel is invented.
+- The picture, outlines, pointer, masks and callouts travel on one transform, so
+  an outline cannot drift off the field it marks. Interface chrome such as the
+  fast-forward badge stays in its corner.
+
+```json
+{"version":2,"layout":{"preset":"screen-first"},"camera":{"enabled":true,"maxScale":1.8,"settleMs":900}}
+```
+
+`maxScale` is 1 to 2.5 and `settleMs` 400 to 4000. A step with no saved focus
+geometry never moves, and neither does one too short to open, hold and close.
+Leaving `camera` out keeps every existing render identical.
+
+Review a camera render at normal speed before delivering it. The renderer can
+check that a move stays inside the recording; it cannot judge whether the
+movement helps this audience, and a moving frame is not evidence that the
+underlying result was checked.
