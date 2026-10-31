@@ -56,3 +56,11 @@ test('deployment diff keeps shared inputs, accumulated changes and uncertain bas
     assert.equal(run(unrelated).status, 1, 'divergent history builds');
   } finally { rmSync(cwd, { recursive: true, force: true }); }
 });
+
+test('presentation and release notes deep links reach the app shell', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const config = JSON.parse(await readFile(new URL('../vercel.json', import.meta.url), 'utf8'));
+  for (const source of ['/releases', '/releases/', '/presentation', '/presentation/', '/covers', '/covers/', '/layouts', '/layouts/']) {
+    assert.ok(config.rewrites.some(rule => rule.source === source && rule.destination === '/index.html'));
+  }
+});

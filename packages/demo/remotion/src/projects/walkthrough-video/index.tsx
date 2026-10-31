@@ -7,6 +7,8 @@
 // Prefer ../../../scripts/walkthrough/render-walkthrough.ts, which validates first, writes chapters.txt
 // and, with --narrate, makes the voice clips and passes them in as props.
 import React from "react";
+import {ContextCalloutView} from "./ContextCallout";
+import {validateCallouts, validateCalloutTiming, type ContextCallouts} from "./callouts";
 import {
   AbsoluteFill,
   Audio,
@@ -64,6 +66,7 @@ type Clip = { at: number | "intro" | "outro"; file: string; ms: number; text?:st
 // calibrationMs comes from the render CLI, which measured it from the capture's sync flash;
 // stepMinMs and narration come from it too when the walkthrough is narrated.
 type Props = {
+  callouts?: ContextCallouts;
   capture: Capture | null;
   steps: Step[];
   timeline: Timeline | null;
@@ -233,7 +236,7 @@ const SpeedBadge: React.FC<{ speed: number; right: number }> = ({ speed, right }
   </div>
 );
 
-export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, calibrationMs = 0, narration = [], branding, presentation, narrationKind, narrationNotice = false }) => {
+export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, calibrationMs = 0, narration = [], branding, presentation, narrationKind, narrationNotice = false, callouts }) => {
   const frame = useCurrentFrame();
   if (!capture || !timeline) return <AbsoluteFill style={{ background: C.bg }} />;
   const { w, h } = capture.viewport;
@@ -315,6 +318,7 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, ca
           <Highlights marks={highlightsAt(timeline, steps, capture.viewport, frame)} w={w} h={h} color={presentation?.body.highlightColor} themed={presentation?.version===2}/>
           <Cursor state={cursorAt(timeline, steps, capture.viewport, frame)} color={presentation?.version===2?paletteFor(presentation,'body').cursor:undefined} />
           {segment && segment.speed > 1 ? <SpeedBadge speed={segment.speed} right={24} /> : null}
+          {callouts?.callouts.map((c,i)=>{const n=steps.findIndex(s=>s.id===c.step);const first=timeline.segments.find(s=>s.step===n);if(!first || stepIndex!==n)return null;const ms=(frame-first.fromFrame)*1000/FPS;return ms>=c.startMs&&ms<c.endMs?<ContextCalloutView key={i} callout={c} ms={ms}/>:null;})}
           {masksAt(timeline, capture.masks ?? [], frame, calibrationMs).map((b,i) =>
             <div key={i} style={{position:'absolute',left:b.x,top:b.y,width:b.w,height:b.h,background:'#111827',pointerEvents:'none'}} />)}
           </div>
@@ -361,13 +365,14 @@ const calculateMetadata: CalculateMetadataFunction<Props> = async ({ props }) =>
     endMs: props.endMs,
     ...(props.presentation ? {titleBaseMs:props.presentation.intro.enabled?props.presentation.intro.durationMs:0, endBaseMs:props.presentation.outro.enabled?props.presentation.outro.durationMs:0} : {}),
   });
+  if(props.callouts){validateCallouts(props.callouts,steps,capture.viewport);validateCalloutTiming(props.callouts,steps,timeline);}
   const geometry=layoutGeometry(capture.viewport,props.presentation);
   return {
     durationInFrames: timeline.durationInFrames,
     fps: FPS,
     width: geometry.width,
     height: geometry.height,
-    props: { capture, steps, timeline, calibrationMs:props.calibrationMs ?? capture.calibrationMs ?? 0, narration: props.narration ?? [], branding: props.branding, presentation:props.presentation, narrationKind:props.narrationKind, narrationNotice:props.narrationNotice },
+    props: { callouts:props.callouts, capture, steps, timeline, calibrationMs:props.calibrationMs ?? capture.calibrationMs ?? 0, narration: props.narration ?? [], branding: props.branding, presentation:props.presentation, narrationKind:props.narrationKind, narrationNotice:props.narrationNotice },
   };
 };
 

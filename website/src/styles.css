@@ -440,3 +440,21 @@ body:has(.skill-dialog[open]) { overflow: hidden; }
   .workflow-graph { width: calc(100% + 8px); margin-left: -4px; margin-right: -4px; }
   .workflow-graph figcaption { padding-inline: 4px; font-size: 10px; }
 }
+
+/* Release notes: a quiet reading surface in the existing Workflow Canvas. */
+.release-page { max-width: 1080px; padding-top: clamp(64px, 8vw, 112px); padding-bottom: 110px; }
+.release-intro { max-width: 700px; margin-bottom: 74px; }
+.release-kicker { color: #0755ff; font-size: 15px; font-weight: 650; margin: 0 0 18px; }
+.release-intro h1 { margin: 0 0 20px; font-size: clamp(44px, 6vw, 76px); line-height: 1.05; letter-spacing: -.045em; }
+.release-intro > p:last-child { color: #5d6a83; font-size: clamp(18px, 2vw, 21px); line-height: 1.6; margin: 0; }
+.release-entry { display: grid; grid-template-columns: 195px minmax(0, 1fr); gap: 35px; padding: 38px 0 44px; border-top: 1px solid #e2e7ef; }
+.release-meta { display: flex; flex-wrap: wrap; align-content: start; align-items: center; gap: 10px; font-size: 14px; }
+.release-version { color: #101929; font-weight: 700; }
+.release-latest { color: #0755ff; background: #edf3ff; border-radius: 99px; padding: 4px 10px; font-size: 12px; font-weight: 650; }
+.release-meta time { flex-basis: 100%; color: #68758b; margin-top: 5px; }
+.release-content h2 { font-size: clamp(23px, 2.5vw, 29px); letter-spacing: -.025em; line-height: 1.2; margin: 0 0 12px; }
+.release-content p { color: #5d6a83; font-size: 17px; line-height: 1.7; max-width: 650px; margin: 0 0 18px; }
+.release-content a, .release-more a { color: #0755ff; font-weight: 600; text-decoration: none; }
+.release-content a:hover, .release-more a:hover { text-decoration: underline; }
+.release-more { margin-top: 24px; }
+@media (max-width: 640px) { .release-page { padding-top: 56px; } .release-intro { margin-bottom: 48px; } .release-entry { grid-template-columns: 1fr; gap: 16px; padding: 28px 0 34px; } .release-meta time { flex-basis: auto; margin: 0 0 0 auto; } }

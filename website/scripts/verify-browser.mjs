@@ -15,11 +15,14 @@ await stat(path.join(root, 'index.html'));
 const server = createServer(async (request, response) => {
   try {
     const pathname = decodeURIComponent(new URL(request.url, 'http://127.0.0.1').pathname);
-    const relative = ['/', '/covers', '/covers/', '/layouts', '/layouts/'].includes(pathname) ? 'index.html' : pathname.slice(1);
+    const relative = ['/', '/covers', '/covers/', '/layouts', '/layouts/', '/releases', '/releases/', '/presentation', '/presentation/'].includes(pathname) ? 'index.html' : pathname.slice(1);
     const file = path.resolve(root, relative);
     if (!file.startsWith(root)) { response.writeHead(403).end(); return; }
     const body = await readFile(file);
-    response.writeHead(200, { 'Content-Type': mime[path.extname(file)] || 'application/octet-stream' }).end(body);
+    const contentType=mime[path.extname(file)] || 'application/octet-stream';
+    const range=request.headers.range?.match(/^bytes=(\d+)-(\d*)$/);
+    if(range){const start=Number(range[1]),end=range[2]?Math.min(Number(range[2]),body.length-1):body.length-1;response.writeHead(206,{'Content-Type':contentType,'Accept-Ranges':'bytes','Content-Range':`bytes ${start}-${end}/${body.length}`,'Content-Length':end-start+1}).end(body.subarray(start,end+1));}
+    else response.writeHead(200, { 'Content-Type':contentType,'Content-Length':body.length,'Accept-Ranges':'bytes' }).end(body);
   } catch { response.writeHead(404).end(); }
 });
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
@@ -29,7 +32,7 @@ try {
   browser = await chromium.launch({ headless: true });
   const origin = `http://127.0.0.1:${server.address().port}`;
   for (const width of [390, 768, 1440]) {
-    for (const route of ['/', '/covers', '/layouts']) {
+    for (const route of ['/', '/covers', '/layouts', '/presentation', '/releases']) {
       const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: 'reduce' });
       // Layout/navigation acceptance needs only local files. Do not repeatedly
       // fetch the published video library or third-party links during this gate.
@@ -46,6 +49,17 @@ try {
           assert.ok(await page.getByRole('navigation', { name: language === 'zh' ? '主导航' : 'Main navigation', exact: true }).isVisible());
           assert.ok(await page.getByRole('heading', { level: 1 }).isVisible(), `${route} heading visible`);
           assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${route} ${width}px ${language}: horizontal overflow`);
+          if (['/presentation','/covers','/layouts'].includes(route)) {
+            assert.ok(await page.locator('.ps-workspace').isVisible(), `${route} shows the presentation workspace`);
+            assert.ok(await page.getByRole('navigation', { name: language === 'zh' ? '主导航' : 'Main navigation' }).getByRole('link', { name: language === 'zh' ? '视频呈现' : 'Video presentation' }).isVisible());
+            if(width===390) {assert.ok(await page.locator('.ps-cover-strip').isVisible(), 'mobile cover choices visible'); assert.ok(await page.locator('.ps-layout-strip').isVisible(), 'mobile layout choices visible');}
+          }
+          if (route === '/releases') {
+            assert.equal(await page.locator('.release-entry').count(), 6);
+            assert.equal(await page.locator('.release-entry').first().locator('.release-version').innerText(), 'v1.0.1');
+            assert.equal(await page.locator('.release-entry').first().locator('h2').innerText(), language === 'zh' ? '更可靠的检查' : 'More dependable reviews');
+            assert.ok((await page.locator('.release-entry').first().locator('a').getAttribute('href')).endsWith('/tag/v1.0.1'));
+          }
           if (route === '/') {
             const navigation = page.getByRole('navigation', { name: language === 'zh' ? '主导航' : 'Main navigation' });
             assert.equal(await navigation.locator('a[href$="#skills"]').count(), 1);
@@ -100,6 +114,67 @@ try {
         }
       } finally { await page.close(); }
     }
+  }
+  // Preview, choose and hand off without leaving the workspace; old links remain usable.
+  {
+    const page = await browser.newPage({viewport:{width:1200,height:900}});
+    await page.route('**/*', route => route.request().url().startsWith(origin + '/') ? route.continue() : route.abort());
+    await page.context().grantPermissions(['clipboard-read','clipboard-write']);
+    await page.goto(origin + '/presentation', {waitUntil:'networkidle'});
+    assert.equal(await page.locator('.ps-actions').evaluate(el=>getComputedStyle(el).position),'sticky');
+    assert.equal(await page.locator('.ps-preview').evaluate(el=>getComputedStyle(el).position),'sticky');
+    assert.equal(await page.locator('.ps-cover-strip .ps-cover-option').count(),9);
+    await page.getByRole('button',{name:'Show all covers'}).click();
+    assert.equal(await page.locator('.ps-cover-strip .ps-cover-option').count(),33);
+    assert.equal(await page.locator('.ps-cover-strip').evaluate(el=>getComputedStyle(el).display),'grid');
+    assert.equal(await page.locator('.ps-layout-strip').evaluate(el=>getComputedStyle(el).display),'grid');
+    assert.equal(await page.locator('.ps-switch').count(),0, 'the preview does not require a cover/video switch');
+    await page.locator('.ps-cover-option').nth(1).click();
+    assert.equal(new URL(page.url()).searchParams.get('cover'),'cobalt-signal');
+    assert.equal(await page.locator('.ps-canvas').getAttribute('data-phase'),'cover');
+    await page.locator('.ps-layout-item').last().click();
+    assert.equal(new URL(page.url()).searchParams.get('layout'), 'plain-transcript');
+    assert.equal(await page.locator('.ps-canvas').getAttribute('data-phase'),'cover', 'changing layout restarts at the chosen cover');
+    await page.waitForFunction(()=>document.querySelector('.ps-canvas')?.dataset.phase==='video',null,{timeout:8000});
+    assert.equal(await page.locator('.ps-film-recording').count(),1, 'preview uses the real sample recording');
+    assert.equal(await page.locator('[data-annotation-style]').count(),1, 'preview uses Film annotation');
+    await page.locator('.ps-fields').getByLabel('Demo title',{exact:true}).fill('Quarterly review');
+    await page.locator('.ps-fields').getByLabel('Background',{exact:true}).fill('#ffffff');
+    assert.equal(await page.getByRole('button',{name:'Download configuration'}).isEnabled(),false,'unreadable colors cannot be downloaded');
+    await page.locator('.ps-fields').getByLabel('Background',{exact:true}).fill('#14263a');
+    assert.equal(await page.locator('.ps-canvas').getAttribute('data-phase'),'cover');
+    assert.equal(await page.locator('.ps-film-frame [data-cover-preset]').evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(20, 38, 58)');
+    await page.locator('.ps-cover-option').nth(2).click();
+    await page.locator('.ps-cover-option').nth(1).click();
+    assert.equal(await page.locator('.ps-fields').getByLabel('Background',{exact:true}).inputValue(),'#14263a','color edits survive comparison during the session');
+    assert.equal(await page.locator('.ps-fields').getByLabel('Demo title',{exact:true}).inputValue(),'Quarterly review');
+    await page.locator('.ps-fields').getByLabel('Company name',{exact:true}).fill('North Star');
+    await page.locator('.ps-fields input[type=file]').setInputFiles({name:'brand.webp',mimeType:'image/webp',buffer:await readFile(new URL('../public/art/demo-capture.webp', import.meta.url))});
+    assert.equal(await page.getByRole('button',{name:'Download configuration'}).isEnabled(),false);
+    await page.getByLabel('This logo represents my company').check();
+    assert.equal(await page.getByRole('button',{name:'Download configuration'}).isEnabled(),true);
+    assert.equal(await page.locator('.ps-film-frame img').count()>0,true);
+    await page.getByRole('button',{name:'Copy brief',exact:true}).click();
+    const brief=await page.evaluate(()=>navigator.clipboard.readText());
+    assert.ok(brief.includes('Quarterly review') && brief.includes('plain-transcript') && brief.includes('cobalt-signal') && brief.includes('#14263a') && brief.includes('brand.webp') && brief.includes('North Star'));
+    assert.ok(!brief.includes('no opening cover'));
+    const downloadPromise=page.waitForEvent('download');
+    await page.getByRole('button',{name:'Download configuration'}).click();
+    const download=await downloadPromise;
+    const config=JSON.parse(await readFile(await download.path(),'utf8'));
+    assert.equal(config.layout.preset,'plain-transcript');assert.equal(config.cover.preset,'cobalt-signal');assert.equal(config.cover.colors.background,'#14263a');assert.equal(config.intro.enabled,true);assert.equal(config.title,'Quarterly review');assert.equal(config.brand.name,'North Star');assert.equal(config.brand.logo,'brand.webp');assert.equal(config.brand.logoProvenance.verified,true);
+    await page.getByRole('button',{name:'No cover',exact:true}).click();
+    assert.equal(await page.locator('[data-annotation-style]').count(),1);
+    const nonePromise=page.waitForEvent('download');await page.getByRole('button',{name:'Download configuration'}).click();
+    const none=JSON.parse(await readFile(await (await nonePromise).path(),'utf8'));assert.equal(none.intro.enabled,false);assert.equal(none.cover,undefined);
+    await page.reload({waitUntil:'networkidle'});
+    assert.ok((await page.locator('.ps-summary').innerText()).includes('No cover'));
+    await page.goto(origin + '/covers?style=cobalt-signal', {waitUntil:'networkidle'});
+    assert.ok(await page.locator('#cover-editor-title').isVisible());
+    await page.goto(origin + '/layouts?style=studio-sand', {waitUntil:'networkidle'});
+    assert.equal(await page.locator('.ps-layout-item').nth(1).getAttribute('aria-pressed'),'true');
+    await page.close();
+    console.log('PASS workspace choices, configuration, reload and legacy links');
   }
   for (const width of [390, 1440]) {
     const page = await browser.newPage({ viewport: { width, height: 900 }, reducedMotion: 'no-preference' });

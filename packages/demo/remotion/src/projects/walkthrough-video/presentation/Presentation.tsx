@@ -15,9 +15,9 @@ export const PresentationBackdrop:React.FC<{p:Presentation}>=({p})=>{
   </AbsoluteFill>;
 };
 
-export const PresentationLogo: React.FC<{p: Presentation; size: number; background?:string}> = ({p, size,background}) => {
+export const PresentationLogo: React.FC<{p: Presentation; size: number; background?:string; previewSrc?:string}> = ({p, size,background,previewSrc}) => {
   const logo=logoFor(p,p.brand.logoBackground??background??paletteFor(p,'body').background);
-  if(logo)return <span style={{display:'inline-flex',alignItems:'center',flexShrink:0,background:p.brand.logoBackground,padding:p.brand.logoBackground?size*.12:0,borderRadius:size*.1}}><Img src={staticFile(logo)} style={{width: 'auto', height: size, maxWidth: size * 4, objectFit: 'contain', objectPosition: 'left center', flexShrink: 0}} /></span>;
+  if(logo)return <span style={{display:'inline-flex',alignItems:'center',flexShrink:0,background:p.brand.logoBackground,padding:p.brand.logoBackground?size*.12:0,borderRadius:size*.1}}>{previewSrc?<img src={previewSrc} style={{width:'auto',height:size,maxWidth:size*4,objectFit:'contain',objectPosition:'left center',flexShrink:0}}/>:<Img src={staticFile(logo)} style={{width: 'auto', height: size, maxWidth: size * 4, objectFit: 'contain', objectPosition: 'left center', flexShrink: 0}} />}</span>;
   if(p.version===2)return p.brand.fallback==='monogram'?<span style={{fontSize:size*.7,lineHeight:1,fontWeight:700}}>{Array.from(p.brand.name)[0]?.toUpperCase()}</span>:null;
   // Version 1 has no explicit monogram choice. Show only a supplied logo/name.
   return null;
@@ -83,14 +83,14 @@ export const PresentationCaption: React.FC<{p:Presentation; top:number; width:nu
   </div>;
 };
 
-export const PresentationAnnotation:React.FC<{p:Presentation;box:Box;caption:string;transcript?:string;position:string;progress:number;narrated:boolean}> = ({p,box,caption,transcript,position,progress,narrated})=>{
+export const PresentationAnnotation:React.FC<{p:Presentation;box:Box;caption:string;transcript?:string;position:string;progress:number;narrated:boolean;previewLogoSrc?:string}> = ({p,box,caption,transcript,position,progress,narrated,previewLogoSrc})=>{
   const palette=paletteFor(p,'body'),layout=p.layout?resolveLayout(p.layout):undefined,full=layout?.annotationMode==='transcript';
   const pad=20,{pages,size}=annotationPages(p,box,caption,transcript);
   const area=annotationTextArea(p,box,caption,transcript);
   const headerHeight=p.brand.logoBackground?52:40,logoSize=Math.min(40,(box.w-100)/4);
   const index=Math.min(pages.length-1,Math.max(0,Math.floor(progress*pages.length)));
   const hasMark=!!logoFor(p,p.brand.logoBackground??palette.background)||p.brand.fallback==='monogram';
-  const mark=p.body.logoPosition!=='none'?<div style={{display:'flex',alignItems:'center',gap:10,order:p.body.logoPosition==='left'?-1:1,maxWidth:box.w-100}}><PresentationLogo p={p} size={logoSize} background={palette.background}/>{!p.brand.logoContainsName&&(!hasMark||box.w>=340)?<span style={{fontSize:box.w<340?12:14,overflowWrap:'anywhere',maxWidth:box.w-100}}>{p.brand.name}</span>:null}</div>:null;
+  const mark=p.body.logoPosition!=='none'?<div style={{display:'flex',alignItems:'center',gap:10,order:p.body.logoPosition==='left'?-1:1,maxWidth:box.w-100}}><PresentationLogo p={p} size={logoSize} background={palette.background} previewSrc={previewLogoSrc}/>{!p.brand.logoContainsName&&(!hasMark||box.w>=340)?<span style={{fontSize:box.w<340?12:14,overflowWrap:'anywhere',maxWidth:box.w-100}}>{p.brand.name}</span>:null}</div>:null;
   if(layout?.annotationStyle==='simple')return <div data-annotation-style="simple" data-annotation-mode={full?'transcript':'caption'} style={{position:'absolute',left:box.x,top:box.y,width:box.w,height:box.h,padding:'16px 24px',boxSizing:'border-box',display:'flex',gap:24,alignItems:full?'flex-start':'center',background:palette.background,color:palette.foreground,fontFamily:FONT}}>
     <span style={{width:40,flexShrink:0,fontSize:13,opacity:.6,paddingTop:full?7:0,fontVariantNumeric:'tabular-nums'}}>{position}</span>
     <div style={{width:area.width,fontSize:size,lineHeight:1.4,overflowWrap:'anywhere'}}>{pages[index]}</div>

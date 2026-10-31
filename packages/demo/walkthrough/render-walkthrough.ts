@@ -6,6 +6,7 @@
 // <run> follows capture contract version 1 (see ../../../docs/capture-contract.md).
 // Refuses a capture whose status is not "passed", and any run folder or output inside this repo,
 // so a work recording can never land in the content pipelines here.
+import {validateCallouts, validateCalloutTiming} from "../remotion/src/projects/walkthrough-video/callouts";
 import { execFileSync, spawnSync } from "child_process";
 import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from "fs";
 import { basename, dirname, join, resolve, sep } from "path";
@@ -216,6 +217,7 @@ export type Args = {
   brand?: string;
   template?: string;
   presentation?: string;
+  callouts?: string;
   coverPreset?: string;
   audio?: string;
   voiceProvider?: string;
@@ -228,7 +230,7 @@ export function parseArgs(argv: string[]): Args {
   const values: Record<string, keyof Args> = {
     "--out": "out", "--calibration-ms": "calibrationMs", "--voice-profile": "voiceProfile",
     "--script": "script", "--speed": "speed", "--brand": "brand",
-    '--template':'template', '--presentation':'presentation', '--cover-preset':'coverPreset', '--audio':'audio', '--voice-provider':'voiceProvider',
+    '--template':'template', '--presentation':'presentation', '--callouts':'callouts', '--cover-preset':'coverPreset', '--audio':'audio', '--voice-provider':'voiceProvider',
   };
   const flags = new Map<string, "dryRun" | "stills" | "narrate" | 'cover' | 'narrationNotice' | 'preview'>([
     ["--dry-run", "dryRun"], ["--stills", "stills"], ["--narrate", "narrate"],
@@ -261,7 +263,7 @@ export function parseArgs(argv: string[]): Args {
   return args;
 }
 
-const USAGE = "usage: aaron-demo render <passed-run> [--template minimal|professional|showcase] [--presentation <external.json>] [--cover-preset <id>] [--cover] [--preview] [--narration-notice] [--audio <manifest.json> | --narrate | --voice-provider none|elevenlabs|google|custom|kokoro|import] [--script <script.json>] [--voice-profile <id>] [--speed <0.7-1.2>] [--brand <legacy-id>] [--out <file.mp4>] [--stills] [--dry-run]. First narration: aaron-demo voice setup";
+const USAGE = "usage: aaron-demo render <passed-run> [--template minimal|professional|showcase] [--presentation <external.json>] [--callouts <external.json>] [--cover-preset <id>] [--cover] [--preview] [--narration-notice] [--audio <manifest.json> | --narrate | --voice-provider none|elevenlabs|google|custom|kokoro|import] [--script <script.json>] [--voice-profile <id>] [--speed <0.7-1.2>] [--brand <legacy-id>] [--out <file.mp4>] [--stills] [--dry-run]. First narration: aaron-demo voice setup";
 
 export async function main(argv: string[]): Promise<number> {
   if (argv.length === 1 && (argv[0] === '--help' || argv[0] === '-h')) { console.log(USAGE); return 0; }
@@ -282,6 +284,9 @@ export async function main(argv: string[]): Promise<number> {
     const roots = repoRoots();
     let prepared = prepare(run, out, roots, calibrationMs);
     const capture = JSON.parse(readFileSync(join(prepared.run,'capture.json'),'utf8'));
+    if(parsed.callouts) outsideGit(parsed.callouts);
+    const callouts=parsed.callouts ? JSON.parse(readFileSync(resolve(parsed.callouts),'utf8')) : undefined;
+    if(parsed.callouts) validateCallouts(callouts,prepared.steps,capture.viewport);
     if (parsed.presentation) outsideGit(parsed.presentation);
     const config = loadPresentation(parsed.template, parsed.presentation, capture.title, capture.subtitle ?? '',parsed.coverPreset);
     if (parsed.cover && !config) throw new RenderRefusal('--cover requires --template or --presentation');
@@ -299,6 +304,7 @@ export async function main(argv: string[]): Promise<number> {
     };
     if (imported) checkCards(imported.clips);
     prepared = prepare(run,out,roots,prepared.calibrationMs,{...baseTiming,...(imported?{stepMinMs:stepMinMs(prepared.steps,imported.clips),...cardMinMs(imported.clips,p?.intro.enabled&&(p.intro.sound||p.intro.soundPreset!=='none')?BRAND_STING_LEAD_MS:0)}:{})});
+    if (dryRun && callouts && !generated) validateCalloutTiming(callouts,prepared.steps,buildTimeline(prepared.steps,{...(prepared.stepMinMs?{minStepMs:(_s:Step,i:number)=>prepared.stepMinMs?.[i]??0}:{}),titleMs:prepared.titleMs,endMs:prepared.endMs,titleBaseMs:prepared.titleBaseMs,endBaseMs:prepared.endBaseMs}));
     if (dryRun) {
       console.log(JSON.stringify({dryRun:true,maskCount:capture.masks?.length??0,out:prepared.out,seconds:prepared.seconds,template:p?.template ?? 'legacy',coverPreset:p?.cover?.preset,coverRequested:parsed.cover,voiceProvider:provider,narrationNotice:parsed.narrationNotice,narrationRequested:provider!=='none',narrationTiming:generated?'requires synthesis; not performed':provider==='import'?'measured imported clips':'silent',calibrationMs:prepared.calibrationMs,steps:prepared.steps.length,geometry,resolvedPalette,logoChecks,logoFallback:!logoChecks.length?p?.brand.fallback??'omit':undefined},null,2));
       return 0;
@@ -326,8 +332,9 @@ export async function main(argv: string[]): Promise<number> {
     checkCards(clips);
     const timing={...baseTiming,...(clips.length?{stepMinMs:stepMinMs(prepared.steps,clips),...cardMinMs(clips,(presentation?.intro.sound||branding?.sound)?BRAND_STING_LEAD_MS:0)}:{})};
     prepared=prepare(run,out,roots,prepared.calibrationMs,timing);
+    if(callouts) validateCalloutTiming(callouts,prepared.steps,buildTimeline(prepared.steps,{...(prepared.stepMinMs?{minStepMs:(_s:Step,i:number)=>prepared.stepMinMs?.[i]??0}:{}),titleMs:prepared.titleMs,endMs:prepared.endMs,titleBaseMs:prepared.titleBaseMs,endBaseMs:prepared.endBaseMs}));
     writeFileSync(prepared.chaptersPath,prepared.chaptersText);
-    const props=`--props=${JSON.stringify({calibrationMs:prepared.calibrationMs,stepMinMs:prepared.stepMinMs,titleMs:prepared.titleMs,endMs:prepared.endMs,narration:clips.map(({at,file,ms,text})=>({at,file,ms,text})),narrationKind,narrationNotice:parsed.narrationNotice,branding,presentation})}`;
+    const props=`--props=${JSON.stringify({calibrationMs:prepared.calibrationMs,stepMinMs:prepared.stepMinMs,titleMs:prepared.titleMs,endMs:prepared.endMs,narration:clips.map(({at,file,ms,text})=>({at,file,ms,text})),narrationKind,narrationNotice:parsed.narrationNotice,branding,presentation,callouts})}`;
     const cli=join(REMOTION_DIR,'node_modules','@remotion','cli','remotion-cli.js');
     const invoke=(args:string[])=>{
       const result=spawnSync('node',[cli,...args],{cwd:REMOTION_DIR,stdio:'inherit'});

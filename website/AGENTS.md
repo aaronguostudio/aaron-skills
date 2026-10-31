@@ -125,3 +125,15 @@ availability is not a claim of universal quality or customer acceptance.
 ## Skills navigation clarity (2026-10-29)
 
 Aaron observed that Workflow and Skills repeated the same content and that Workflow appeared first in navigation despite pointing inside Skills. Keep one Skills entry; explain how capabilities relate to the installed skills and use the example to show their roles without implying a required sequence. Preserve existing workflow links.
+
+## Unified video presentation preview (2026-10-29)
+
+Aaron wants the cover library and video layouts combined into one coherent journey. Show the complete video treatment and allow cover-only selection in the same page; cover and body remain independent decisions. Preserve existing `/covers` and `/layouts` links and any existing style query links. This is a local preview request, not authorization to publish.
+
+Aaron requested a more integrated local presentation workbench: keep preview, layout and cover choices, and handoff close together, with sticky context while browsing. Preserve independent cover/body decisions, truthful preview limitations and working legacy links. This refinement is local review work and does not itself authorize publication.
+
+Aaron requested the next local presentation preview show cover choices above layout choices together, without separate preview toggles. Preview the selected cover followed by the selected example video in one flow; expose cover color adjustments and keep the handoff consistent with the selection. State the limits of the browser preview and preserve independent choices and legacy links. This is local review, not publication authorization.
+
+Aaron's follow-up asks for multi-row cover and layout catalogs instead of horizontal carousels, and a programmatic browser preview joining a customizable cover to an animated fictional example. Let people enter their demo and brand details and preview a supplied logo. Preserve honest distinction between the illustrative browser preview and rendering a real video; carry the selected configuration and any logo handoff faithfully. This is local review work, not SaaS or publication authorization.
+
+Aaron requested a high-fidelity local preview based on an actual fictional Forma recording and Film's layout and annotation components. Keep demo title, company name, logo and cover colors immediately discoverable; preserve truthful differences between preview and export. This is local review, not publication.

@@ -367,7 +367,23 @@
     "benchmarks/verify-review-v1/test/fixtures/ui-review/before/package.json",
     "benchmarks/verify-review-v1/test/fixtures/ui-review/before/tests.mjs",
     "benchmarks/verify-review-v1/test/fixtures/ui-review/before/theme.mjs",
-    "benchmarks/verify-review-v1/test/fixtures/ui-review/brief.md"
+    "benchmarks/verify-review-v1/test/fixtures/ui-review/brief.md",
+    "packages/demo/remotion/src/projects/walkthrough-video/callouts.ts",
+    "packages/demo/remotion/src/projects/walkthrough-video/ContextCallout.tsx",
+    "docs/context-callouts.md",
+    "website/src/ReleaseNotes.jsx",
+    "packages/demo/walkthrough/callouts.test.ts",
+    "website/RELEASE_NOTES.md",
+    "website/src/PresentationChoices.jsx",
+    "website/src/cover-handoff.mjs",
+    "website/src/presentation-handoff.mjs",
+    "website/tests/presentation-handoff.test.mjs",
+    "website/src/FilmPreview.jsx",
+    "website/src/PresentationStudio.jsx",
+    "website/src/presentation-studio.css",
+    "website/src/presentation-studio.mjs",
+    "website/tests/presentation-studio.test.mjs",
+    "packages/demo/walkthrough/presentation-studio.test.ts"
   ],
   "reviewedBinaryAssets": {
     "packages/demo/covers/art/alpine-silence.webp": {

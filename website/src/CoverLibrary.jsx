@@ -1,6 +1,7 @@
-import { lazy, Suspense, useLayoutEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import covers from "./covers.json";
 import "./covers.css";
+import {usePresentationChoices, PresentationHandoff} from "./PresentationChoices";
 
 const CoverEditor = lazy(() => import("./CoverEditor"));
 
@@ -60,37 +61,49 @@ function CoverPreview({ cover, position, total, onClose, onMove, onUse, language
   );
 }
 
-export function CoverLibrary({ language, teaser = false }) {
+export function CoverLibrary({ language, teaser = false, embedded = false }) {
+  const choices = usePresentationChoices();
   const [family, setFamily] = useState("all");
   const [selected, setSelected] = useState(null);
   const [search, setSearch] = useState("");
-  const initial = new URLSearchParams(window.location.search).get("style");
+  const params = new URLSearchParams(window.location.search);
+  const legacyCovers = window.location.pathname.replace(/\/$/, "") === "/covers";
+  const initial = params.get("cover") ?? (legacyCovers ? params.get("style") : null);
   const [editorPreset, setEditorPreset] = useState(covers.some(item => item.id === initial) && !teaser ? initial : null);
-  const [editing, setEditing] = useState(Boolean(editorPreset));
+  const [editing, setEditing] = useState(Boolean(editorPreset) && params.get("browse") !== "1");
   const galleryHeading = useRef(null);
+  const section = useRef(null);
+  useEffect(() => { if (embedded && initial === "none") choices?.setCover({none:true}); }, [embedded, initial, choices?.setCover]);
+  useEffect(() => { if (embedded && legacyCovers && !window.location.hash) requestAnimationFrame(() => section.current?.scrollIntoView({block:"start"})); }, [embedded, legacyCovers]);
   const selectStyle = id => {
     setSelected(null); setEditorPreset(id); setEditing(true);
-    const url = new URL(window.location.href); url.searchParams.set("style", id); window.history.replaceState(null, "", url);
-    window.scrollTo({ top: 0, behavior: "instant" });
+    const url = new URL(window.location.href); url.searchParams.set("cover", id); url.searchParams.delete("browse"); if (legacyCovers) url.searchParams.delete("style"); window.history.replaceState(null, "", url);
+    if (embedded) requestAnimationFrame(() => section.current?.scrollIntoView({block:"start", behavior:"instant"})); else window.scrollTo({ top: 0, behavior: "instant" });
+  };
+  const skipCover = () => {
+    choices?.setCover({none:true}); setEditorPreset(null); setEditing(false);
+    const url = new URL(window.location.href); url.searchParams.set("cover","none"); url.searchParams.delete("browse"); if(legacyCovers) url.searchParams.delete("style"); window.history.replaceState(null,"",url);
   };
   const backToGallery = () => {
-    setEditing(false); const url = new URL(window.location.href); url.searchParams.delete("style"); window.history.replaceState(null, "", url);
+    setEditing(false); const url = new URL(window.location.href); url.searchParams.set("cover", editorPreset); url.searchParams.set("browse", "1"); if (legacyCovers) url.searchParams.delete("style"); window.history.replaceState(null, "", url);
     requestAnimationFrame(() => { galleryHeading.current?.focus(); });
   };
-  const Heading = teaser ? "h2" : "h1";
+  const Heading = teaser || embedded ? "h2" : "h1";
   const t = copy[language];
   const visible = teaser ? [covers[0], covers[4], covers[8], covers[12]] : covers.filter(cover => (family === "all" || cover.family === family) && `${cover.id} ${cover.title.en} ${cover.title.zh} ${cover.familyTitle.en} ${cover.familyTitle.zh}`.toLowerCase().includes(search.trim().toLowerCase()));
   const cover = selected === null ? null : visible[selected];
-  const galleryUrl = `/covers${language === "zh" ? "?lang=zh" : ""}`;
+  const galleryUrl = `/presentation${language === "zh" ? "?lang=zh" : ""}#covers`;
+  const styleUrl = id => `/presentation?cover=${encodeURIComponent(id)}${language === "zh" ? "&lang=zh" : ""}#covers`;
   return (
-    <section className={`cover-library wrap ${teaser ? "cover-teaser" : "cover-full"}`} id="covers" aria-labelledby={editing ? "cover-editor-title" : "covers-title"}>
+    <section className={`cover-library wrap ${teaser ? "cover-teaser" : "cover-full"} ${embedded ? "presentation-covers" : ""}`} id="covers" ref={section} aria-labelledby={editing ? "cover-editor-title" : "covers-title"}>
       <div hidden={editing}>
-      {!teaser && <a className="cover-back" href={language === "zh" ? "/?lang=zh" : "/"}>← {t.back}</a>}
+      {!teaser && !embedded && <a className="cover-back" href={language === "zh" ? "/?lang=zh" : "/"}>← {t.back}</a>}
       <div className={teaser ? undefined : "cover-gallery-hero"}>
-      <div className="cover-library-heading"><div><p className="eyebrow">{t.eyebrow}</p><Heading ref={galleryHeading} tabIndex={-1} className="cover-title" id="covers-title">{t.title}</Heading><p className="cover-intro">{t.intro}</p></div>
+      <div className="cover-library-heading"><div><p className="eyebrow">{embedded ? (language === "zh" ? "封面图库" : "Cover library") : t.eyebrow}</p><Heading ref={galleryHeading} tabIndex={-1} className="cover-title" id="covers-title">{embedded ? (language === "zh" ? "选择你的开场封面。" : "Find your opening cover.") : t.title}</Heading><p className="cover-intro">{embedded ? (language === "zh" ? "32 种风格，可单独使用，也可以与你选择的视频版式搭配。" : "32 styles to use on their own or alongside the video layout you choose.") : t.intro}</p>{embedded && <a className="cover-layout-link" href="#video-layouts">{language === "zh" ? "返回视频版式" : "Back to video layouts"} <span aria-hidden="true">↑</span></a>}</div>
         {teaser && <a className="text-link" href={galleryUrl}>{t.browse} <span aria-hidden="true">↗</span></a>}</div>
-      {!teaser && <div className="cover-agent-invite"><p>{t.agent}</p><blockquote>“{t.prompt}”</blockquote><span>{t.agentDetail}</span></div>}
+      {!teaser && !embedded && <div className="cover-agent-invite"><p>{t.agent}</p><blockquote>“{t.prompt}”</blockquote><span>{t.agentDetail}</span></div>}
       </div>
+      {embedded && <><div className="cover-optional"><button aria-pressed={Boolean(choices?.cover?.none)} onClick={skipCover}>{language === "zh" ? "不使用开场封面" : "No opening cover"}</button><span>{language === "zh" ? "可以不选封面。" : "A cover is optional."}</span></div><PresentationHandoff language={language}/></>}
       {!teaser && <>
         <div className="cover-filters" role="group" aria-label={t.filter}>
           {[["all", { en: t.all, zh: t.all }], ...families].map(([id, title]) => <button key={id} aria-pressed={family === id} onClick={() => { setSelected(null); setFamily(id); }}>{title[language]}</button>)}
@@ -101,13 +114,13 @@ export function CoverLibrary({ language, teaser = false }) {
             width={item.width} height={item.height} loading="lazy" decoding="async" alt={item.description[language]} />
           <span className="cover-image-action" aria-hidden="true">↗</span>
         </button>
-        <div className="cover-item-caption"><h3>{item.title[language]}</h3><p>{item.familyTitle[language]}</p><button className="cover-use-style" onClick={() => teaser ? window.location.assign(`${galleryUrl}${language === "zh" ? "&" : "?"}style=${item.id}`) : selectStyle(item.id)}>{t.use} ↗</button></div>
+        <div className="cover-item-caption"><h3>{item.title[language]}</h3><p>{item.familyTitle[language]}</p><button className="cover-use-style" onClick={() => teaser ? window.location.assign(styleUrl(item.id)) : selectStyle(item.id)}>{t.use} ↗</button></div>
       </article>)}</div>
       {!visible.length && <p className="cover-empty">{t.noResults}</p>}
       {teaser && <a className="cover-browse-mobile text-link" href={galleryUrl}>{t.browse} <span aria-hidden="true">↗</span></a>}
       </div>
-      {editorPreset && <Suspense fallback={<p>{t.loading}</p>}><CoverEditor presetId={editorPreset} active={editing} language={language} onBack={backToGallery} /></Suspense>}
-      <CoverPreview cover={cover} position={selected ?? 0} total={visible.length} onClose={() => setSelected(null)} onMove={direction => setSelected(current => current === null ? null : (current + direction + visible.length) % visible.length)} onUse={id => teaser ? window.location.assign(`${galleryUrl}${language === "zh" ? "&" : "?"}style=${id}`) : selectStyle(id)} language={language} />
+      {editorPreset && <Suspense fallback={<p>{t.loading}</p>}><CoverEditor presetId={editorPreset} active={editing} embedded={embedded} language={language} onBack={backToGallery} /></Suspense>}
+      <CoverPreview cover={cover} position={selected ?? 0} total={visible.length} onClose={() => setSelected(null)} onMove={direction => setSelected(current => current === null ? null : (current + direction + visible.length) % visible.length)} onUse={id => teaser ? window.location.assign(styleUrl(id)) : selectStyle(id)} language={language} />
     </section>
   );
 }

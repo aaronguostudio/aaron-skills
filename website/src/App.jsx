@@ -1,3 +1,6 @@
+import ReleaseNotes from './ReleaseNotes';
+import {PresentationProvider} from './PresentationChoices';
+import {PresentationStudio} from './PresentationStudio';
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ArrowRightIcon } from "@phosphor-icons/react/dist/csr/ArrowRight";
 import { ArrowUpRightIcon } from "@phosphor-icons/react/dist/csr/ArrowUpRight";
@@ -255,7 +258,7 @@ export function App() {
   }, [language]);
   useLayoutEffect(() => {
     const anchor = window.location.hash.slice(1);
-    if (anchor) document.getElementById(anchor)?.scrollIntoView({ behavior: "instant" });
+    if (anchor && !(window.location.pathname.replace(/\/$/, "") === "/presentation" && anchor === "covers")) document.getElementById(anchor)?.scrollIntoView({ behavior: "instant" });
   }, []);
   function changeLanguage(next) {
     setLanguage(next);
@@ -266,7 +269,9 @@ export function App() {
   }
   const isCoversPage = window.location.pathname.replace(/\/$/, "") === "/covers";
   const isLayoutsPage = window.location.pathname.replace(/\/$/, "") === "/layouts";
-  const home = isCoversPage || isLayoutsPage ? (language === "zh" ? "/?lang=zh" : "/") : "";
+  const isPresentationPage = window.location.pathname.replace(/\/$/, "") === "/presentation" || isCoversPage || isLayoutsPage;
+  const isReleasesPage = window.location.pathname.replace(/\/$/, "") === "/releases";
+  const home = isPresentationPage || isReleasesPage ? (language === "zh" ? "/?lang=zh" : "/") : "";
   return (
     <LazyMotion features={domAnimation} strict>
     <MotionConfig reducedMotion="user">
@@ -288,8 +293,8 @@ export function App() {
           <nav aria-label={language === "zh" ? "主导航" : "Main navigation"}>
             <a href={`${home}#skills`}>{text.nav[0]}</a>
             <a href={`${home}#examples`}>{language === "zh" ? "案例" : "Examples"}</a>
-            <a href={`/covers${language === "zh" ? "?lang=zh" : ""}`} aria-current={isCoversPage ? "page" : undefined}>{language === "zh" ? "封面" : "Covers"}</a>
-            <a href={`/layouts${language === "zh" ? "?lang=zh" : ""}`} aria-current={isLayoutsPage ? "page" : undefined}>{language === "zh" ? "视频版式" : "Video layouts"}</a>
+            <a href={`/presentation${language === "zh" ? "?lang=zh" : ""}`} aria-current={isPresentationPage ? "page" : undefined}>{language === "zh" ? "视频呈现" : "Video presentation"}</a>
+            <a href={`/releases${language === "zh" ? "?lang=zh" : ""}`} aria-current={isReleasesPage ? "page" : undefined}>{language === "zh" ? "更新" : "Updates"}</a>
           </nav>
           <div className="header-tools">
             <div
@@ -323,7 +328,7 @@ export function App() {
         </div>
       </header>
       <main id="main">
-        {isLayoutsPage ? <VideoLayouts language={language} /> : isCoversPage ? <CoverLibrary language={language} /> : <>
+        {isReleasesPage ? <ReleaseNotes language={language} /> : isPresentationPage ? (isCoversPage && new URLSearchParams(window.location.search).has("style") ? <PresentationProvider><CoverLibrary language={language}/></PresentationProvider> : <PresentationStudio language={language}/>) : <>
         <section className="hero wrap" aria-labelledby="hero-title">
           <div className="hero-copy">
             <p className="eyebrow">{text.eyebrow}</p>
@@ -348,7 +353,7 @@ export function App() {
         </section>
         <SkillEssentials language={language} onExploreDemo={setSelected} />
         <Showcases language={language} cases={review?.cases} />
-        <section className="layout-teaser wrap"><p className="eyebrow">{language === "zh" ? "让产品成为主角" : "LET THE PRODUCT LEAD"}</p><h2>{language === "zh" ? "从开场，到每一帧。" : "From the opening to every frame."}</h2><p>{language === "zh" ? "6 组封面与视频页搭配，另加 2 种无装饰背景的简洁版。" : "Six cover and video treatments. Two unframed options. One clear story."}</p><a className="text-link" href={`/layouts${language === "zh" ? "?lang=zh" : ""}`}>{language === "zh" ? "探索视频版式" : "Explore the video collection"}<Arrow /></a></section>
+        <section className="layout-teaser wrap"><p className="eyebrow">{language === "zh" ? "让产品成为主角" : "LET THE PRODUCT LEAD"}</p><h2>{language === "zh" ? "从开场，到每一帧。" : "From the opening to every frame."}</h2><p>{language === "zh" ? "6 组封面与视频页搭配，另加 2 种无装饰背景的简洁版。" : "Six cover and video treatments. Two unframed options. One clear story."}</p><a className="text-link" href={`/presentation${language === "zh" ? "?lang=zh" : ""}`}>{language === "zh" ? "探索视频版式" : "Explore the video collection"}<Arrow /></a></section>
         <CoverLibrary language={language} teaser />
         </>}
       </main>

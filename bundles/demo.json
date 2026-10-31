@@ -188,7 +188,10 @@
     "skills/deliver-work/references/messages.md",
     "skills/deliver-work/references/channels-media.md",
     "skills/deliver-work/references/release-notes.md",
-    "skills/deliver-work/references/release-handoff.md"
+    "skills/deliver-work/references/release-handoff.md",
+    "packages/demo/remotion/src/projects/walkthrough-video/callouts.ts",
+    "packages/demo/remotion/src/projects/walkthrough-video/ContextCallout.tsx",
+    "docs/context-callouts.md"
   ],
   "version": "1.0.1",
   "update": {

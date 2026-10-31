@@ -23,6 +23,26 @@
     {
       "source": "/layouts/",
       "destination": "/index.html"
+    },
+    {
+      "source": "/releases",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/releases/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/covers/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/presentation",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/presentation/",
+      "destination": "/index.html"
     }
   ],
   "headers": [
