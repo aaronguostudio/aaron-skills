@@ -152,6 +152,20 @@ are geometry primitives, not four complete design choices. Use
 `"layout": {"preset": "screen-first"}` in a v2 file. Individual fields override
 the preset, so a different panel ratio or canvas needs no new template.
 
+`--layout <id>` selects any composition on this page without an external file:
+
+```sh
+aaron-demo render <passed-run> --layout screen-first --stills
+aaron-demo render <passed-run> --layout studio-sand --cover --stills
+```
+
+A studio treatment still brings its matched cover and palette. Because the flag
+supplies no brand, it records `brand.fallback: "omit"` so an unresolved logo stays
+an explicit choice rather than a silent one; a configuration file must state its
+own. The flag needs presentation version 2 and refuses to upgrade a version 1
+file or to contradict a preset that file already selects. With a file, `--layout`
+and the file's own `layout.preset` must name the same composition.
+
 | Stable ID | Best use | Tradeoff |
 | --- | --- | --- |
 | `screen-first` | Dense tables and detailed product tours | Slim caption strip; most space goes to the application |

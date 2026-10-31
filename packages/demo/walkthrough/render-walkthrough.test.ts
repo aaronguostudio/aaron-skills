@@ -75,6 +75,16 @@ describe("final render validation", () => {
     expect(await main(["--dry-run", run])).toBe(3);
   });
 
+  test("a layout preset is selectable at the command line without a configuration file", async () => {
+    const run = captureFolder();
+    const before = readdirSync(run, { recursive: true });
+    // The composition alone must reach a complete plan: no file, no brand, no cover flag.
+    expect(await main(["--dry-run", run, "--layout", "screen-first"])).toBe(0);
+    expect(await main(["--dry-run", run, "--layout", "studio-sand", "--cover"])).toBe(0);
+    expect(await main(["--dry-run", run, "--layout", "not-a-layout"])).toBe(3);
+    expect(readdirSync(run, { recursive: true })).toEqual(before);
+  });
+
   test("narrated dry-run does not fetch, load voice credentials or write files", async () => {
     const run = captureFolder();
     const before = readdirSync(run, { recursive: true });
