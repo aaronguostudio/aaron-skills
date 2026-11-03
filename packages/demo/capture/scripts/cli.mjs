@@ -231,7 +231,7 @@ function offOrigin(url, origin) {
 // then. Signed out means, at the start page and after setup, a page off the app's origin or one
 // isSignedOut calls signed out, and before each step, one isSignedOut calls signed out. A saved
 // session that cannot be read and a browser that will not start are CaptureRefusals.
-export async function record({ chromium, config, env, walk, params, runDir, statePath, learnHosts, headed, log = console.log }) {
+export async function record({ chromium, config, env, walk, params, runDir, statePath, learnHosts, headed, viewport = VIEWPORT, log = console.log }) {
   let rec = null
   let signedOut = false
   let capture = null
@@ -259,8 +259,8 @@ export async function record({ chromium, config, env, walk, params, runDir, stat
       args: launchArgs({ hosts: env.hosts, learning: learnHosts })
     })
     const context = await browser.newContext({
-      viewport: VIEWPORT,
-      recordVideo: { dir: videoDir, size: VIEWPORT },
+      viewport,
+      recordVideo: { dir: videoDir, size: viewport },
       storageState,
       acceptDownloads: true,
       // A service worker's own fetches would bypass the network guard.
@@ -299,7 +299,7 @@ export async function record({ chromium, config, env, walk, params, runDir, stat
       ...(walk.description ? { subtitle: walk.description } : {}),
       appRevision: 'unknown',
       startedAt: new Date().toISOString(),
-      viewport: { w: VIEWPORT.width, h: VIEWPORT.height }
+      viewport: { w: viewport.width, h: viewport.height }
     }
     let outcome = { status: 'passed' }
     // At the start, a page off the app's origin is signed out too: an identity provider's page can
@@ -505,6 +505,7 @@ export async function main(
             statePath: session.state,
             learnHosts: args.learnHosts,
             headed: args.headed,
+            viewport: args.viewport,
             log
           }),
         dropState: () => deleteState(session.state),

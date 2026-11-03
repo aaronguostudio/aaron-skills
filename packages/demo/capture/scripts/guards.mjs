@@ -23,13 +23,14 @@ export function usageText() {
 
   node scripts/cli.mjs --project <dir> --list
   node scripts/cli.mjs sign-in --project <dir> --env <name>
-  node scripts/cli.mjs --project <dir> --env <name> --walk <name> [--set key=value]... [--out <dir>] [--headed]
+  node scripts/cli.mjs --project <dir> --env <name> --walk <name> [--set key=value]... [--out <dir>] [--viewport WIDTHxHEIGHT] [--headed]
 
   --project         the folder that holds demo-capture/config.mjs (default: the current folder)
   --env             required, no default: an environment the project's config declares
   --walk            a file in demo-capture/walks/, without .mjs (--list shows them)
   --set key=value   a param the config declares; repeat it for several
   --out             the run folder (default ~/.demo-capture/<project>/runs/<yyyymmdd-hhmmss>-<walk>)
+  --viewport        even dimensions 320–3840, e.g. 1920x900 (default 1440x900)
   --headed          show the browser while recording
   --learn-hosts     run a read-only walk that lets unlisted hosts through and lists them (no video)
   --prod-go-ahead   needed for a production environment. An agent adds it only after the
@@ -42,7 +43,7 @@ The first run of an environment opens a browser for a person to sign in; nothing
 them. The session is kept in ~/.demo-capture/<project>/<env>/, outside every repo, and reused.`
 }
 
-const VALUE_FLAGS = new Set(['--project', '--env', '--walk', '--out', '--set'])
+const VALUE_FLAGS = new Set(['--project', '--env', '--walk', '--out', '--set', '--viewport'])
 const SET_KEY = /^[A-Za-z][A-Za-z0-9_-]*$/
 
 // One --set value: "key=value", split at the first "=". The value may be empty or hold "=".
@@ -94,6 +95,13 @@ export function parseArgs(argv) {
     else if (a === '--prod-go-ahead') out.prodGoAhead = true
     else if (a === '--write-go-ahead') out.writeGoAhead = true
     else throw new CaptureRefusal(`unknown argument: ${a}`)
+  }
+  if (out.viewport !== undefined) {
+    const match = /^(\d{3,4})x(\d{3,4})$/.exec(out.viewport)
+    const sizes = match?.slice(1).map(Number)
+    if (!sizes || sizes.some(n => n < 320 || n > 3840 || n % 2))
+      throw new CaptureRefusal('--viewport needs even WIDTHxHEIGHT dimensions between 320 and 3840')
+    out.viewport = { width: sizes[0], height: sizes[1] }
   }
   if (help) return { ...out, command: 'help' }
   if (list) {

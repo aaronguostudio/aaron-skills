@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0 — 2026-11-03
+
+- Offer purpose and aspect ratio, cover previews and independent body layout choices before full production, while reusing explicitly approved series choices.
+- Allow an even, bounded capture viewport and render a dense-caption preview alongside the representative body frame. Existing configurations keep their defaults.
+- Mark this workflow update for review in the existing `demo-1.0` compatibility epoch.
+
 ## 1.0.1 — 2026-10-26
 
 - Retain executable check commands, inspected inputs/revisions, outcomes and

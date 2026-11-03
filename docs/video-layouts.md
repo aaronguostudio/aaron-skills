@@ -10,7 +10,8 @@ one short conversational choice; “make a video” alone leaves them open.
 
 | Decision | What the user reviews |
 | --- | --- |
-| Cover | None, an existing cover, or a short visual shortlist with the real title/brand |
+| Purpose / aspect | Recommend 16:9, 9:16, 1:1 or original proportions for the viewing context; preserve explicit approved series choices |
+| Cover | None, an existing cover, or 2–3 actual rendered previews with the real title/brand |
 | Opening / ending | Whether the cover also opens the film; outro and sound are separate opt-ins |
 | Video body | Native video + caption bar (recommended for internal use), compact transcript, or a designed frame |
 | Identity | Actual company/product logo, palette and source; where each appears, including deliberate omissions |
@@ -29,7 +30,7 @@ choice to omit it. A gallery palette, legacy file or template is not brand appro
 
 Use `aaron-demo cover` for inexpensive cover candidates and `render --preview`
 for the actual body. Show both surfaces with representative settled application
-content, output dimensions and application scale before asking for selection.
+content, output dimensions and application scale before asking for selection. Review `dense-caption-preview.png` at the intended viewing size as well; the longest text is a heuristic, so inspect other dense content when needed.
 `--preview` does not synthesize narration or render a full MP4; use existing audio
 if available, otherwise saved captions for this visual decision. Keep its flags
 free of `--narrate` or a generated voice provider. The preview does not test final
@@ -43,7 +44,7 @@ that authorization and do not require another approval for unchanged choices.
 Delegation to choose a cover does not delegate the body or corporate identity.
 
 Record a small presentation brief outside Git beside the external configuration:
-audience/use, cover and opening/outro choices, body preset, brand asset source and
+audience/use, aspect ratio and capture viewport, cover and opening/outro choices, body preset, brand asset source and
 palette, preview paths, and the user's selection or scope of delegation. Mark
 unresolved items as pending, never accepted by default. Keep the configuration
 used for the previews for rendering. Reconfirm changed brand/layout choices;
@@ -302,7 +303,7 @@ aaron-demo render <passed-run> --presentation <external.json> --preview --cover 
 aaron-demo render <passed-run> --presentation <external.json> --audio <existing-audio.json> --cover --stills --out <new-delivery-directory>/walkthrough.mp4
 ```
 
-`--preview` writes `body-preview.png` at the first held step, optional cover PNG/WebP,
+`--preview` writes `body-preview.png` at the first held step and `dense-caption-preview.png` at the step with the longest available annotation text, optional cover PNG/WebP,
 chapters and `preview-manifest.json`, without an MP4 or provider synthesis. Pass
 existing `--audio` to preview measured narration/transcripts. `--narrate` with preview
 is refused. `--dry-run` writes nothing and reports geometry/palette/logo checks.
@@ -339,3 +340,16 @@ Review a camera render at normal speed before delivering it. The renderer can
 check that a move stays inside the recording; it cannot judge whether the
 movement helps this audience, and a moving frame is not evidence that the
 underlying result was checked.
+
+## Aspect and capture setup
+
+Set `layout.canvas` to 1920×1080 (16:9), 1080×1920 (9:16), or
+1440×1440 (1:1) with a compatible preset or explicit placement. With an
+existing capture, preserve its screen proportions through contain; do not stretch
+or crop. Original means the complete capture with any caption band, so its final
+canvas may have a different ratio. For a new desktop recording, a viewport such
+as `--viewport 1920x900` leaves room for a bottom band on 16:9. Select sizes
+for the actual application, not blindly: responsive layouts and dense tables
+can require a wider viewport or a different aspect. Preview and inspect at the
+intended display size before committing to a narrow output. Legacy captures and
+configurations retain their original dimensions.

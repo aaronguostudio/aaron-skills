@@ -126,3 +126,12 @@ test('a CaptureRefusal is named, and carries the step it stopped, which is null 
   assert.equal(new CaptureRefusal('Stopped.', { step: 'open' }).step, 'open')
   assert.ok(plain instanceof Error)
 })
+
+test('capture viewport is explicit, even and bounded', () => {
+  const run = ['--env', 'dev', '--walk', 'tour']
+  assert.equal(parseArgs(run).viewport, undefined)
+  assert.deepEqual(parseArgs([...run, '--viewport', '1920x900']).viewport, {width:1920, height:900})
+  for (const size of ['1921x900', '319x900', '4000x900', '1920:900', 'NaNx900'])
+    refuses(() => parseArgs([...run, '--viewport', size]), /--viewport needs/)
+  refuses(() => parseArgs([...run, '--viewport', '1920x900', '--viewport', '800x600']), /given twice/)
+})

@@ -41,6 +41,16 @@ describe('versioned layout and theme',()=>{
     expect(()=>v2({layout:{preset:'screen-first',screenPlacement:'left'}})).toThrow('Compact');
     expect(()=>v2({layout:{preset:'lesson-notes',annotationStyle:'unknown'}})).toThrow('annotationStyle');
   });
+  test('fixed output aspects contain the complete screen without stretching',()=>{
+    for(const canvas of [{width:1920,height:1080},{width:1080,height:1920},{width:1440,height:1440}]){
+      const p=v2({layout:{preset:'plain-caption',canvas}}),g=layoutGeometry({w:1920,h:900},p);
+      expect([g.width,g.height]).toEqual([canvas.width,canvas.height]);
+      expect(g.screen.w/g.screen.h).toBeCloseTo(1920/900);
+      expect(g.screen.x).toBeGreaterThanOrEqual(0);
+      expect(g.screen.y+g.screen.h).toBeLessThanOrEqual(g.annotation.y+.001);
+      expect(annotationPages(p,g.annotation,'Review the synthetic workflow before confirming.').pages).toEqual(['Review the synthetic workflow before confirming.']);
+    }
+  });
   test('studio frames reserve only a short ribbon and keep the whole product visible',()=>{
     for(const item of VIDEO_LAYOUTS.filter(p=>p.id.startsWith('studio-'))){
       const p=v2({layout:{preset:item.id}}),g=layoutGeometry({w:1440,h:900},p);

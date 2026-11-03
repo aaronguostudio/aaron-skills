@@ -704,6 +704,14 @@ test('the recording context is made with exactly these options: the saved sessio
   )
 })
 
+test('a configured viewport reaches both recording and capture metadata', async () => {
+  const fake = fakeChromium()
+  const { runDir } = await go(fake, { viewport: { width: 1920, height: 900 } })
+  assert.deepEqual(fake.contextOptions.viewport, { width: 1920, height: 900 })
+  assert.deepEqual(fake.contextOptions.recordVideo.size, { width: 1920, height: 900 })
+  assert.deepEqual(readCapture(runDir).viewport, { w: 1920, h: 900 })
+})
+
 test('a saved session that cannot be read is a refusal that quotes none of it, before a browser starts', async () => {
   for (const state of ['{"cookies":[{"value":"SESSION-SECRET-VALUE"', '', null]) {
     const fake = fakeChromium()

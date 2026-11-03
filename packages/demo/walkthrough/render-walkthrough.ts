@@ -341,7 +341,14 @@ export async function main(argv: string[]): Promise<number> {
       const result=spawnSync('node',[cli,...args],{cwd:REMOTION_DIR,stdio:'inherit'});
       if (result.status!==0) throw new RenderRefusal('Remotion render failed');
     };
-    if(parsed.preview)invoke(['still',ENTRY,'WalkthroughVideo',join(dirname(prepared.out),'body-preview.png'),`--frame=${prepared.stills[0].frame}`,`--public-dir=${prepared.run}`,props,'--log=error']);
+    if(parsed.preview) {
+      const dense = prepared.stills.reduce((best, still) => {
+        const text = (i:number) => imported?.clips.find(c=>c.at===i)?.text ?? script?.steps[prepared.steps[i].id] ?? prepared.steps[i].narration ?? prepared.steps[i].caption;
+        return Array.from(text(still.index)).length > Array.from(text(best.index)).length ? still : best;
+      });
+      for (const [name, frame] of [['body-preview.png', prepared.stills[0].frame], ['dense-caption-preview.png', dense.frame]] as const)
+        invoke(['still',ENTRY,'WalkthroughVideo',join(dirname(prepared.out),name),`--frame=${frame}`,`--public-dir=${prepared.run}`,props,'--log=error']);
+    }
     else invoke(['render',ENTRY,'WalkthroughVideo',prepared.out,`--public-dir=${prepared.run}`,props,'--codec=h264','--crf=20','--pixel-format=yuv420p',...(clips.length||presentation?.intro.sound||branding?.sound?['--audio-codec=aac']:['--muted']),'--log=error']);
     if (parsed.cover) {
       const png=join(dirname(prepared.out),'cover.png');

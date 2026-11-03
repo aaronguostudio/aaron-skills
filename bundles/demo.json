@@ -195,14 +195,14 @@
     "packages/demo/remotion/src/projects/walkthrough-video/ContextCallout.tsx",
     "docs/context-callouts.md"
   ],
-  "version": "1.0.1",
+  "version": "1.1.0",
   "update": {
     "kind": "review",
     "compatibilityEpoch": "demo-1.0",
     "summary": [
-      "Keep executable check evidence attributable to the inspected revision and distinguish build, unit and visual results.",
-      "Compare interface changes with their accepted design and baseline; distinguish introduced defects from inherited issues.",
-      "Consolidate duplicate findings and reassess reviews that stop converging."
+      "Choose the intended aspect ratio, cover and body layout before full video production.",
+      "Capture at a configured viewport and review representative and dense-caption previews.",
+      "Existing captures and presentation configurations retain their dimensions."
     ]
   }
 }
