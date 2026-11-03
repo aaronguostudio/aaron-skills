@@ -202,7 +202,8 @@
     "summary": [
       "Choose the intended aspect ratio, cover and body layout before full video production.",
       "Capture at a configured viewport and review representative and dense-caption previews.",
-      "Existing captures and presentation configurations retain their dimensions."
+      "Existing captures and presentation configurations retain their dimensions.",
+      "The release also includes the optional evidence-preserving camera, context callouts and layout CLI already on main."
     ]
   }
 }

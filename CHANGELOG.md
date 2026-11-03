@@ -4,6 +4,7 @@
 
 - Offer purpose and aspect ratio, cover previews and independent body layout choices before full production, while reusing explicitly approved series choices.
 - Allow an even, bounded capture viewport and render a dense-caption preview alongside the representative body frame. Existing configurations keep their defaults.
+- Include previously merged Film additions: optional evidence-preserving camera, context callouts and command-line layout selection.
 - Mark this workflow update for review in the existing `demo-1.0` compatibility epoch.
 
 ## 1.0.1 — 2026-10-26
