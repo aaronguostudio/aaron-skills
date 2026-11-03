@@ -190,6 +190,7 @@ export function writeStills(prepared: Prepared, fps = 30): string {
   for (const { id, index, frame } of prepared.stills) {
     const file = join(dir, `${String(index + 1).padStart(2, "0")}-${id}.jpg`);
     execFileSync("ffmpeg", ["-v", "error", "-y", "-ss", (frame / fps).toFixed(3), "-i", prepared.out, "-frames:v", "1", "-q:v", "3", file]);
+    execFileSync("ffmpeg", ["-v", "error", "-y", "-ss", (frame / fps).toFixed(3), "-i", prepared.out, "-frames:v", "1", file.replace(/\.jpg$/, ".png")]);
   }
   return dir;
 }

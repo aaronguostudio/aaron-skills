@@ -38,6 +38,15 @@ def verify(root):
     stills = sorted((root / 'stills').glob('*.jpg'))
     if not stills:
         raise ValueError('No rendered MP4 stills to check')
+    for p in stills[:1]:
+        png = Image.open(p.with_suffix('.png')).convert('RGB')
+        jpg = Image.open(p).convert('RGB')
+        x, y, w, h = box
+        bounds = (math.floor(x) + 8, math.floor(y) + 8, math.ceil(x + w) - 8, math.ceil(y + h) - 8)
+        for label, image in [('video_png', png), ('video_jpeg', jpg)]:
+            sample = image.crop(bounds)
+            delta = ImageChops.difference(sample, Image.new('RGB', sample.size, COLOR))
+            print(f'DIAGNOSTIC {p.name} {label} extrema={delta.getextrema()} center={image.getpixel(((bounds[0]+bounds[2])//2,(bounds[1]+bounds[3])//2))}', flush=True)
     checks.extend(check_mask(Image.open(p), box, lossless=False, name=p.name) for p in stills)
     embedded = re.search(r'data:image/[^;]+;base64,([^"\s]+)', (root / 'message.html').read_text(encoding='utf-8'))
     if not embedded:
