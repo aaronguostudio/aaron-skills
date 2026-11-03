@@ -88,21 +88,19 @@ jobs:
             [System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$tokens, [ref]$parseErrors) | Out-Null
             if ($parseErrors.Count) { throw ($parseErrors | Out-String) }
           }
-      - name: Deterministic checks and public history
-        run: python scripts/check.py --public-history --python python
-      - name: Dependency audit
+      - name: Diagnose synthetic mask encoding repeatedly
         run: |
-          npm audit --omit=dev --audit-level=high
-          npm audit --prefix packages/demo/capture --omit=dev --audit-level=high
-          npm audit --prefix packages/demo/remotion --omit=dev --audit-level=high
-      - name: Clean-profile installation and first-artifact onboarding benchmark
-        run: >-
-          python benchmarks/onboarding-v0/run.py
-          --workspace "$RUNNER_TEMP/demo install"
-      - name: Report synthetic mask encoding diagnostics
-        if: always()
-        run: |
-          python -c 'from pathlib import Path; import os; root=Path(os.environ["RUNNER_TEMP"])/"demo install"; files=list(root.glob("command-*.log")); lines=[line for f in files for line in f.read_text(encoding="utf-8",errors="replace").splitlines() if "DIAGNOSTIC " in line]; print("\n".join(lines) if lines else "No synthetic diagnostic output was produced")'
+          set -e
+          root="$RUNNER_TEMP/mask-diagnostic"
+          python scripts/install.py --agent codex --root "$root/runtime" --skills-dir "$root/skills" --bin-dir "$root/bin"
+          set +e
+          for attempt in 1 2 3 4; do
+            "$root/bin/aaron-demo" smoke > "$RUNNER_TEMP/mask-attempt-$attempt.log" 2>&1
+            result=$?
+            echo "SYNTHETIC ATTEMPT $attempt EXIT $result"
+            grep -E 'DIAGNOSTIC |mask pixel mismatch|SMOKE PASSED' "$RUNNER_TEMP/mask-attempt-$attempt.log" || true
+            if [ "$result" -ne 0 ]; then break; fi
+          done
           exit 1
       - name: Installed revision, playback and clipboard
         run: |

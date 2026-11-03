@@ -41,9 +41,10 @@ def verify(root):
     for p in stills[:1]:
         png = Image.open(p.with_suffix('.png')).convert('RGB')
         jpg = Image.open(p).convert('RGB')
+        q2 = Image.open(p.with_suffix('.q2.jpeg')).convert('RGB')
         x, y, w, h = box
         bounds = (math.floor(x) + 8, math.floor(y) + 8, math.ceil(x + w) - 8, math.ceil(y + h) - 8)
-        for label, image in [('video_png', png), ('video_jpeg', jpg)]:
+        for label, image in [('video_png', png), ('video_jpeg_q3', jpg), ('video_jpeg_q2', q2)]:
             sample = image.crop(bounds)
             delta = ImageChops.difference(sample, Image.new('RGB', sample.size, COLOR))
             print(f'DIAGNOSTIC {p.name} {label} extrema={delta.getextrema()} center={image.getpixel(((bounds[0]+bounds[2])//2,(bounds[1]+bounds[3])//2))}', flush=True)
