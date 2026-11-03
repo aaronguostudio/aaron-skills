@@ -1,5 +1,5 @@
 import {test, expect} from 'bun:test';
-import {validateCallouts, validateCalloutTiming} from '../remotion/src/projects/walkthrough-video/callouts';
+import {validateCallouts, validateCalloutTiming} from '../renderer/src/projects/walkthrough-video/callouts';
 const steps=[{id:'review'}], viewport={w:1440,h:900};
 const valid=()=>({version:1,callouts:[{step:'review',startMs:1000,endMs:9000,box:{x:200,y:500,w:1000,h:200},title:'Migration rehearsal',description:'Local synthetic data',source:'synthetic report',metrics:[{value:'304',label:'invoice drafts',atMs:4000},{value:'42',label:'people',atMs:5500}]}]});
 test('accepts explicit evidence and step-relative placement',()=>expect(()=>validateCallouts(valid(),steps,viewport)).not.toThrow());

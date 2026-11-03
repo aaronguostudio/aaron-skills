@@ -14,7 +14,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync, renameSync, unlinkS
 import { dirname, join, resolve } from "path";
 import {profilePath, readConfig, validateProfile, type VoiceProfile} from './voice-config';
 export type {VoiceProfile} from './voice-config';
-import { readingMs, type Step } from "../remotion/src/projects/walkthrough-video/timeline";
+import { readingMs, type Step } from "../renderer/src/projects/walkthrough-video/timeline";
 
 export const KEYCHAIN_SERVICE = "aaron-demo-elevenlabs";
 export const NARRATION_PAD_MS = 400;

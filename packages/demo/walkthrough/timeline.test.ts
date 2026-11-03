@@ -20,7 +20,7 @@ import {
   validateCapture,
   type Capture,
   type Step,
-} from "../remotion/src/projects/walkthrough-video/timeline";
+} from "../renderer/src/projects/walkthrough-video/timeline";
 
 const capture: Capture = {
   version: 1,

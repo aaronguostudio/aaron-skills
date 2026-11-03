@@ -157,9 +157,9 @@ test('a missing dependency says to run npm ci, and keeps the first line of the i
   }
   await assert.rejects(loadChromium(importer), (error) => {
     assert.ok(error instanceof CaptureRefusal)
-    assert.match(
+    assert.equal(
       error.message,
-      /^The engine's dependency is missing: run npm ci in \S+ \(Cannot find package 'playwright' imported from \/x\/cli\.mjs\)$/
+      `The engine's dependency is missing: run npm ci in ${dirname(import.meta.dirname)} (Cannot find package 'playwright' imported from /x/cli.mjs)`
     )
     return true
   })

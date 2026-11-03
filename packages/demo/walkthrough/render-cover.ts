@@ -1,11 +1,13 @@
 #!/usr/bin/env bun
-import {execFileSync,spawnSync} from 'child_process';
+import {execFileSync} from 'child_process';
 import {existsSync,mkdirSync,mkdtempSync,readFileSync,rmSync,writeFileSync} from 'fs';
 import {dirname,extname,join,resolve} from 'path';
 import {coverColors,coverPresets} from '../covers/catalog';
 import {privateDirectory} from '../capture/scripts/platform.mjs';
 import {outsideGit} from './import-audio';
 import {installPresentation,loadPresentation,validatePresentationMedia} from './presentation';
+
+import {render, RENDERER} from '../renderer/backend';
 
 const HELP='usage: aaron-demo cover --list | --presentation <external.json> [--preset <id>] --out <cover.png> [--dry-run]';
 export function parseCoverArgs(argv:string[]) {
@@ -52,12 +54,10 @@ export async function main(argv:string[]):Promise<number> {
     workspace=mkdtempSync(join(dirname(out),'.cover-render-'));
     if(process.platform==='win32') await privateDirectory(workspace);
     const presentation=installPresentation(p,loaded.assetRoot,workspace);
-    const remotion=resolve(import.meta.dir,'../remotion');
-    const result=spawnSync('node',[join(remotion,'node_modules/@remotion/cli/remotion-cli.js'),'still','src/projects/walkthrough-video/index.tsx','StandaloneCover',out,`--public-dir=${workspace}`,`--props=${JSON.stringify({presentation})}`,'--log=error'],{cwd:remotion,stdio:'inherit'});
-    if(result.status!==0) throw Error('Cover render failed');
+    await render({run:workspace,props:{presentation},out,mode:'cover'});
     const python=join(resolve(import.meta.dir,'../../..'),'.venv',process.platform==='win32'?'Scripts':'bin',process.platform==='win32'?'python.exe':'python3');
     execFileSync(python,['-c','from PIL import Image;import sys;Image.open(sys.argv[1]).convert("RGB").save(sys.argv[2],"WEBP",quality=88,method=6)',out,webp]);
-    writeFileSync(manifest,JSON.stringify({version:1,preset:p.cover.preset,width:1600,height:900,presentation,logoChecks,colors:coverColors(p.cover),providerCalls:0},null,2)+'\n');
+    writeFileSync(manifest,JSON.stringify({version:1,renderer:RENDERER,preset:p.cover.preset,width:1600,height:900,presentation,logoChecks,colors:coverColors(p.cover),providerCalls:0},null,2)+'\n');
     console.log(JSON.stringify({png:out,webp,preset:p.cover.preset,width:1600,height:900,providerCalls:0},null,2));
     return 0;
   } catch(error) {console.error(error instanceof Error?error.message:String(error));return 3;}

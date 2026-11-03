@@ -3,7 +3,7 @@
 // staticFile() and the capture folder is the render's public dir.
 import { copyFileSync, existsSync, mkdirSync, readFileSync } from "fs";
 import { basename, dirname, join, resolve } from "path";
-import { validateBrand, type Brand } from "../remotion/src/projects/walkthrough-video/brand/model";
+import { validateBrand, type Brand } from "../renderer/src/projects/walkthrough-video/brand/model";
 
 // The tile's own root, so a profile's asset paths are written relative to it rather than to
 // whichever folder the CLI was started from.

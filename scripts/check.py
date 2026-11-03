@@ -39,7 +39,7 @@ def main():
     commands = [
         ['node', 'node_modules/typescript/bin/tsc', '--noEmit'],
         npm_command({'npm': shutil.which('npm'), 'node': shutil.which('node')}, 'run', 'test:unit', '--prefix', 'packages/demo/capture'),
-        [str(bun_binary(ROOT / 'packages/demo/remotion')), 'test', 'packages/demo/walkthrough'],
+        [str(bun_binary(ROOT / 'packages/demo/renderer')), 'test', 'packages/demo/walkthrough'],
         [args.python, '-m', 'unittest', 'discover', '-s', 'scripts', '-p', 'test_*.py'],
         [args.python, '-m', 'unittest', 'discover', '-s', 'packages/demo/update/scripts', '-p', 'test_*.py'],
         [args.python, '-m', 'unittest', 'discover', '-s', 'benchmarks/blog-v0', '-p', 'test_*.py'],
@@ -51,7 +51,7 @@ def main():
         commands.append(npm_command({'npm': shutil.which('npm'), 'node': shutil.which('node')}, 'run', 'test:e2e', '--prefix', 'packages/demo/capture'))
     for command in commands:
         print('CHECK ' + ' '.join(command), flush=True)
-        subprocess.run(command, cwd=ROOT, check=True)
+        subprocess.run(command, cwd=ROOT, check=True, env={**os.environ, 'AARON_DEMO_TEST_PYTHON': args.python})
     print('Deterministic checks passed. Installed smoke, host tasks and visual review are separate gates.')
 
 

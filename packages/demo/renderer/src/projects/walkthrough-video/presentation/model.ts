@@ -77,7 +77,7 @@ export function validatePresentation(value: unknown, localAssets = true): assert
   if (!p.intro.enabled && p.intro.sound) throw Error('A disabled intro cannot have a sound');
 }
 
-// Shared by partial file loading and the final Remotion entry point.
+// Shared by partial file loading and the final the frame runtime entry point.
 export function validatePresentationFields(raw: Record<string, unknown> | Presentation): void {
   const object=(value:unknown,keys:string[],label:string)=>{
     if(!value||typeof value!=='object'||Array.isArray(value)||Object.keys(value).some(k=>!keys.includes(k)))throw Error(`Unknown or invalid presentation ${label} field`);

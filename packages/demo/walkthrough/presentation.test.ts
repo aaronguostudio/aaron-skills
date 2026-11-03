@@ -1,12 +1,12 @@
 import {createRequire} from 'node:module';
-import {PresentationCaption,PresentationLogo} from '../remotion/src/projects/walkthrough-video/presentation/Presentation';
+import {PresentationCaption,PresentationLogo} from '../renderer/src/projects/walkthrough-video/presentation/Presentation';
 import {describe,expect,test} from 'bun:test';
 import {mkdtempSync,mkdirSync,readFileSync,readdirSync,writeFileSync} from 'fs';
 import {tmpdir} from 'os';
 import {join} from 'path';
-import {presentationPreset,validatePresentation} from '../remotion/src/projects/walkthrough-video/presentation/model';
-import {buildTimeline} from '../remotion/src/projects/walkthrough-video/timeline';
-import {layoutGeometry} from '../remotion/src/projects/walkthrough-video/presentation/layout';
+import {presentationPreset,validatePresentation} from '../renderer/src/projects/walkthrough-video/presentation/model';
+import {buildTimeline} from '../renderer/src/projects/walkthrough-video/timeline';
+import {layoutGeometry} from '../renderer/src/projects/walkthrough-video/presentation/layout';
 import {installPresentation,loadPresentation,validatePresentationMedia} from './presentation';
 import {readImportedAudio,installImportedAudio,outsideGit} from './import-audio';
 import {speechProvider} from './voice-providers';
@@ -134,7 +134,7 @@ describe('provider seam',()=>{
 });
 
  test('caption output keeps the result and brand while making the notice explicit-only',()=>{
-  const runtimeRequire=createRequire(new URL('../remotion/package.json',import.meta.url));
+  const runtimeRequire=createRequire(new URL('../renderer/package.json',import.meta.url));
   const React=runtimeRequire('react');
   const {renderToStaticMarkup}=runtimeRequire('react-dom/server');
   const props={p:presentationPreset('professional','Result'),top:900,width:1440,caption:'Two invoices verified',position:'1/2'};
@@ -146,7 +146,7 @@ describe('provider seam',()=>{
 
 
 test('all templates omit default branding and preserve explicitly configured customer identity',()=>{
-  const runtimeRequire=createRequire(new URL('../remotion/package.json',import.meta.url));
+  const runtimeRequire=createRequire(new URL('../renderer/package.json',import.meta.url));
   const React=runtimeRequire('react');
   const {renderToStaticMarkup}=runtimeRequire('react-dom/server');
   for(const template of ['minimal','professional','showcase'] as const){

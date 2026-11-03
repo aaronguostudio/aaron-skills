@@ -26,7 +26,7 @@ Run (Join-Path $bin 'aaron-demo.cmd') @('doctor')
 $npm = (Get-Command npm.cmd -ErrorAction Stop).Source
 Run $npm @('ci')
 Run $npm @('ci', '--prefix', 'packages/demo/capture')
-Run $npm @('ci', '--prefix', 'packages/demo/remotion')
+Run $npm @('ci', '--prefix', 'packages/demo/renderer')
 Run $python @('scripts/check.py', '--public-history', '--python', (Join-Path $release '.venv/Scripts/python.exe'))
 Run node @('scripts/verify-installed.mjs', $release)
 Run node @('scripts/verify-sign-in.mjs', $release)

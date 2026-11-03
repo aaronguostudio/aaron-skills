@@ -18,7 +18,7 @@ for (const target of [run, out]) {
   }
 }
 const {prepare} = await import(pathToFileURL(join(runtime, 'packages/demo/walkthrough/render-walkthrough.ts')).href);
-const {buildTimeline} = await import(pathToFileURL(join(runtime, 'packages/demo/remotion/src/projects/walkthrough-video/timeline.ts')).href);
+const {buildTimeline} = await import(pathToFileURL(join(runtime, 'packages/demo/renderer/src/projects/walkthrough-video/timeline.ts')).href);
 const prepared = prepare(run);
 const timeline = buildTimeline(prepared.steps);
 const duration = Number(execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', prepared.out], {encoding:'utf8'}).trim());

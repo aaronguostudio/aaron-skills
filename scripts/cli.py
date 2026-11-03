@@ -13,7 +13,7 @@ from runtime_activity import runtime_activity
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / 'packages/demo/capture'
-RENDER = ROOT / 'packages/demo/remotion'
+RENDER = ROOT / 'packages/demo/renderer'
 
 def settings():
     return json.loads((ROOT / 'installed.json').read_text(encoding='utf-8'))
@@ -25,6 +25,8 @@ def environment(config):
     env['PATH'] = os.pathsep.join(dict.fromkeys(directories + [env.get('PATH', '')]))
     env['PLAYWRIGHT_BROWSERS_PATH'] = config['playwrightBrowsers']
     env['PYTHONUTF8'] = '1'
+    env['HYPERFRAMES_NO_TELEMETRY'] = '1'
+    env['DO_NOT_TRACK'] = '1'
     return env
 
 def run(command, config, **kwargs):
@@ -71,7 +73,7 @@ def doctor(config, check_links=True):
         "import {chromium} from 'playwright';import {existsSync} from 'node:fs';"
         "if(!existsSync(chromium.executablePath()))throw Error('Headed Chromium is missing');"
         "const b=await chromium.launch();await b.close()"], cwd=ENGINE)
-    check('Remotion browser', [config['tools']['node'], RENDER / 'node_modules/@remotion/cli/remotion-cli.js', 'browser', 'ensure'], cwd=RENDER)
+    check('HyperFrames local renderer', [config['tools']['node'], RENDER / 'node_modules/hyperframes/bin/hyperframes.mjs', '--version'], cwd=RENDER)
     if check_links and config.get('registrationMode') == 'copies':
         failures.extend(managed_registration.errors(Path(config['installRoot']), ROOT, config, manifest['skills']))
     elif check_links:

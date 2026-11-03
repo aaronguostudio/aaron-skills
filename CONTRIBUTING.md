@@ -13,7 +13,7 @@ runtime, manual cloud checks and Git-only production delivery.
 
 Requirements: the platform prerequisites in README.md and docs/installation.md. Install
 source dependencies with `npm ci`, `npm ci --prefix packages/demo/capture`, and
-`npm ci --prefix packages/demo/remotion`. Prepare a Demo installation as described
+`npm ci --prefix packages/demo/renderer`. Prepare a Demo installation as described
 in docs/installation.md; use its Python virtual environment for Pillow tests.
 
 Run `npm run check -- --python <installed-runtime>/current/.venv/bin/python3`.

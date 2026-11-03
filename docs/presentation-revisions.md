@@ -40,7 +40,7 @@ when a checked field is missing from a highlight, so that problem can be repaire
 interval. Unknown/duplicate names, targets from incompatible intervals and omission of a
 `rec.show` checked target are refused. Explicit `focus` boxes on checked evidence groups must
 also cover all declared targets for their recorded intervals. The public render command refuses
-incomplete checked groups before starting Remotion. Legacy captures without target/evidence
+incomplete checked groups before starting HyperFrames. Legacy captures without target/evidence
 metadata remain supported but cannot acquire those guarantees retroactively; use verified
 explicit boxes for their presentation edits.
 

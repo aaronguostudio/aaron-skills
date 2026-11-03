@@ -15,3 +15,5 @@ or `aaron-demo update policy off` to disable automatic checks. Locally modified
 source installations skip this automatic activity. See [updates](updates.md).
 
 No publishing, messaging, analytics collection, or upload is part of the default flow.
+
+The HyperFrames adapter renders locally with no account or renderer API key. It sets `HYPERFRAMES_NO_TELEMETRY=1` and `DO_NOT_TRACK=1`, uses the existing capture Chromium, and calls no cloud render, media generation, publish or authentication command. Composition assets are copied selectively into a private temporary project and removed on completion/failure. Preview requests are restricted to their local asset server. Original capture and narration assets are preserved.

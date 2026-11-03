@@ -4,7 +4,7 @@ import {existsSync,mkdirSync,mkdtempSync,readFileSync,writeFileSync} from 'fs';
 import {tmpdir} from 'os';
 import {dirname,join,resolve} from 'path';
 import {coverColors,coverPresets,getCoverPreset,validateCover} from '../covers/catalog';
-import {fitCoverText} from '../remotion/src/cover-library/CoverDesign';
+import {fitCoverText} from '../renderer/src/cover-library/CoverDesign';
 import {installPresentation,loadPresentation,validatePresentationMedia} from './presentation';
 import {main,parseCoverArgs} from './render-cover';
 

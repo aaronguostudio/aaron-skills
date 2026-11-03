@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.1.1",
+  "version": "1.2.0",
   "files": [
     ".claude-plugin/marketplace.json",
     ".claude-plugin/plugin.json",
@@ -253,23 +253,22 @@
     "packages/demo/covers/art/solar-horizon.webp",
     "packages/demo/covers/catalog.ts",
     "packages/demo/covers/presets.json",
-    "packages/demo/remotion/package-lock.json",
-    "packages/demo/remotion/package.json",
-    "packages/demo/remotion/remotion.config.ts",
-    "packages/demo/remotion/src/cover-library/CoverDesign.tsx",
-    "packages/demo/remotion/src/projects/walkthrough-video/ContextCallout.tsx",
-    "packages/demo/remotion/src/projects/walkthrough-video/brand/BrandCard.tsx",
-    "packages/demo/remotion/src/projects/walkthrough-video/brand/model.ts",
-    "packages/demo/remotion/src/projects/walkthrough-video/callouts.ts",
-    "packages/demo/remotion/src/projects/walkthrough-video/index.tsx",
-    "packages/demo/remotion/src/projects/walkthrough-video/presentation/Presentation.tsx",
-    "packages/demo/remotion/src/projects/walkthrough-video/presentation/annotation.tsx",
-    "packages/demo/remotion/src/projects/walkthrough-video/presentation/camera.ts",
-    "packages/demo/remotion/src/projects/walkthrough-video/presentation/layout.ts",
-    "packages/demo/remotion/src/projects/walkthrough-video/presentation/model.ts",
-    "packages/demo/remotion/src/projects/walkthrough-video/presentation/theme.ts",
-    "packages/demo/remotion/src/projects/walkthrough-video/timeline.ts",
-    "packages/demo/remotion/tsconfig.json",
+    "packages/demo/renderer/package-lock.json",
+    "packages/demo/renderer/package.json",
+    "packages/demo/renderer/src/cover-library/CoverDesign.tsx",
+    "packages/demo/renderer/src/projects/walkthrough-video/ContextCallout.tsx",
+    "packages/demo/renderer/src/projects/walkthrough-video/brand/BrandCard.tsx",
+    "packages/demo/renderer/src/projects/walkthrough-video/brand/model.ts",
+    "packages/demo/renderer/src/projects/walkthrough-video/callouts.ts",
+    "packages/demo/renderer/src/projects/walkthrough-video/index.tsx",
+    "packages/demo/renderer/src/projects/walkthrough-video/presentation/Presentation.tsx",
+    "packages/demo/renderer/src/projects/walkthrough-video/presentation/annotation.tsx",
+    "packages/demo/renderer/src/projects/walkthrough-video/presentation/camera.ts",
+    "packages/demo/renderer/src/projects/walkthrough-video/presentation/layout.ts",
+    "packages/demo/renderer/src/projects/walkthrough-video/presentation/model.ts",
+    "packages/demo/renderer/src/projects/walkthrough-video/presentation/theme.ts",
+    "packages/demo/renderer/src/projects/walkthrough-video/timeline.ts",
+    "packages/demo/renderer/tsconfig.json",
     "packages/demo/update/assets/template.html",
     "packages/demo/update/references/guided-demo.md",
     "packages/demo/update/references/walkthrough.md",
@@ -390,7 +389,19 @@
     "website/src/presentation-studio.mjs",
     "website/tests/cover-masters.test.mjs",
     "website/tests/presentation-handoff.test.mjs",
-    "website/tests/presentation-studio.test.mjs"
+    "website/tests/presentation-studio.test.mjs",
+    "packages/demo/renderer/backend.ts",
+    "packages/demo/renderer/src/frame.tsx",
+    "packages/demo/renderer/src/browser.tsx",
+    "licenses/HyperFrames-Apache-2.0.txt",
+    "docs/rendering-engine.md",
+    "packages/demo/walkthrough/renderer.test.ts",
+    "packages/demo/renderer/contract.ts",
+    "packages/demo/renderer/composition.ts",
+    "packages/demo/renderer/backends/hyperframes.ts",
+    "packages/demo/renderer/backends/hyperframes-browser.ts",
+    "packages/demo/walkthrough/camera.test.ts",
+    "website/public/art/demo-capture.webp"
   ],
   "reviewedBinaryAssets": {
     "packages/demo/covers/art/alpine-silence.webp": {
@@ -522,6 +533,11 @@
       "sourceType": "generated",
       "mediaType": "image/webp",
       "sha256": "15091e8139dde4737ebb3ddda25f29f448a1097b303d47302cfbc0dbb5e08294"
+    },
+    "website/public/art/demo-capture.webp": {
+      "sourceType": "generated",
+      "mediaType": "image/webp",
+      "sha256": "da6c8804023b3c6f00baef911b9e1e345039429a6c84041289b000ff6577ce72"
     }
   }
 }

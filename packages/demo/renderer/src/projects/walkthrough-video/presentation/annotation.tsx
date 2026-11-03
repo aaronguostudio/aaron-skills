@@ -1,10 +1,10 @@
 // The caption band, the annotation panel and the brand mark they share, free of
-// Remotion. Only the logo needs a player: Remotion resolves it through staticFile
+// the frame runtime. Only the logo needs a player: the frame runtime resolves it through staticFile
 // and <Img>, while the website's preview passes a plain <img>, the same split
 // CoverDesign already uses for its artwork. Keeping these three here lets the
-// site build without Remotion in its module graph.
+// site build without the frame runtime in its module graph.
 //
-// Presentation.tsx re-exports all three bound to Remotion, so the composition and
+// Presentation.tsx re-exports all three bound to the frame runtime, so the composition and
 // the existing tests import them from there unchanged.
 import React, {type CSSProperties, type ReactNode} from 'react';
 import type {Presentation} from './model';

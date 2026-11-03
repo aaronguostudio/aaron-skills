@@ -7,7 +7,7 @@
 import { execFileSync } from "child_process";
 import { mkdirSync, writeFileSync } from "fs";
 import { join, resolve } from "path";
-import type { Capture, Step } from "../remotion/src/projects/walkthrough-video/timeline";
+import type { Capture, Step } from "../renderer/src/projects/walkthrough-video/timeline";
 
 const W = 1440;
 const H = 900;

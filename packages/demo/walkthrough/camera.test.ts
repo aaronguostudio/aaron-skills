@@ -3,8 +3,8 @@
 // follows geometry the capture asserted, opens and closes every step on the whole
 // screen, and never reaches past the recording.
 import {describe, expect, test} from 'bun:test';
-import {buildTimeline, type Step} from '../remotion/src/projects/walkthrough-video/timeline';
-import {cameraAt, cameraMoves, validateCamera, CAMERA_DEFAULTS, STILL} from '../remotion/src/projects/walkthrough-video/presentation/camera';
+import {buildTimeline, type Step} from '../renderer/src/projects/walkthrough-video/timeline';
+import {cameraAt, cameraMoves, validateCamera, CAMERA_DEFAULTS, STILL} from '../renderer/src/projects/walkthrough-video/presentation/camera';
 
 const VIEWPORT = {w: 1440, h: 900};
 const on = {...CAMERA_DEFAULTS, enabled: true};

@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, mkdtempSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { basename, join } from "path";
-import { readingMs, type Step } from "../remotion/src/projects/walkthrough-video/timeline";
+import { readingMs, type Step } from "../renderer/src/projects/walkthrough-video/timeline";
 import {
   NARRATION_PAD_MS,
   WALKTHROUGH_SPEED,

@@ -96,6 +96,16 @@ class ReleaseTests(unittest.TestCase):
         from bundle import bundle_files
         self.assertFalse(set(bundle_files()) - set(public_files()))
 
+    def test_source_export_contains_renderer_suite_and_its_brand_fixture(self):
+        root = Path(__file__).resolve().parents[1]
+        exported = public_files()
+        renderer_tests = {path.relative_to(root).as_posix()
+                          for path in (root / 'packages/demo/walkthrough').glob('*.test.ts')}
+        self.assertTrue(renderer_tests)
+        self.assertFalse(renderer_tests - set(exported), 'Export must reproduce the complete renderer suite')
+        self.assertIn('website/public/art/demo-capture.webp', exported,
+                      'Presentation handoff acceptance needs its real image fixture')
+
     def test_maintainer_imports_require_exported_test_fixtures(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

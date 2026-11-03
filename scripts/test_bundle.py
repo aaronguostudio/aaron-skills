@@ -70,9 +70,15 @@ class BundleTests(unittest.TestCase):
             self.assertFalse(any(path.is_symlink() for path in output.rglob('*')))
             self.assertFalse(any('src/content/' in path or '/build/' in path or '.env' in path for path in actual))
             self.assertFalse((output / 'provenance.json').exists())
-            package = json.loads((output / 'packages/demo/remotion/package.json').read_text())
-            self.assertEqual(package['dependencies']['remotion'], package['dependencies']['@remotion/cli'])
-            self.assertTrue((output / 'packages/demo/remotion/src/projects/walkthrough-video/brand/BrandCard.tsx').exists())
+            package = json.loads((output / 'packages/demo/renderer/package.json').read_text())
+            self.assertEqual(package['dependencies']['hyperframes'], '0.8.223')
+            self.assertNotIn('remotion', package['dependencies'])
+            lock = json.loads((output / 'packages/demo/renderer/package-lock.json').read_text())
+            self.assertFalse(any('/@remotion/' in path or path.endswith('/remotion') for path in lock['packages']))
+            self.assertIn('Apache License', (output / 'licenses/HyperFrames-Apache-2.0.txt').read_text())
+            # The browser entry is selected by esbuild at runtime, not a static import.
+            self.assertTrue((output / 'packages/demo/renderer/backends/hyperframes-browser.ts').is_file())
+            self.assertTrue((output / 'packages/demo/renderer/src/projects/walkthrough-video/brand/BrandCard.tsx').exists())
             self.assertTrue((output / 'packages/demo/walkthrough/brand.ts').exists())
             expected = {'feature-blueprint', 'build-delivery', 'verify-delivery', 'demo-capture', 'walkthrough-video', 'deliver-work', 'paste-ready-update'}
             self.assertEqual(set(manifest['skills']), expected)
@@ -127,7 +133,7 @@ class BundleTests(unittest.TestCase):
 
     def test_export_refuses_a_manifest_missing_a_transitive_module(self):
         files = bundle.bundle_files()
-        del files['packages/demo/remotion/src/projects/walkthrough-video/brand/model.ts']
+        del files['packages/demo/renderer/src/projects/walkthrough-video/brand/model.ts']
         with self.assertRaisesRegex(ValueError, 'Missing bundled imports'):
             bundle.check_imports(files)
 

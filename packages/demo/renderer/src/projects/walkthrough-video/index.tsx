@@ -1,28 +1,7 @@
-// WalkthroughVideo: turns a capture folder (a screen recording plus steps.json) into a captioned
-// walkthrough with a drawn cursor and fast-forwarded waits, silent or with one AI-narrated clip per step.
-//
-// Render with the folder as the public dir, so the composition never sees a path:
-//   npx remotion render src/projects/walkthrough-video/index.tsx WalkthroughVideo <run>/walkthrough.mp4 \
-//     --public-dir=<run> --codec=h264 --muted
-// Prefer ../../../scripts/walkthrough/render-walkthrough.ts, which validates first, writes chapters.txt
-// and, with --narrate, makes the voice clips and passes them in as props.
 import React from "react";
 import {ContextCalloutView} from "./ContextCallout";
 import {validateCallouts, validateCalloutTiming, type ContextCallouts} from "./callouts";
-import {
-  AbsoluteFill,
-  Audio,
-  Composition,
-  Freeze,
-  Img,
-  OffthreadVideo,
-  Sequence,
-  interpolate,
-  registerRoot,
-  staticFile,
-  useCurrentFrame,
-  type CalculateMetadataFunction,
-} from "remotion";
+import {AbsoluteFill, Audio, Freeze, Img, SourceVideo, Sequence, interpolate, staticFile, useCurrentFrame} from '../../frame';
 import {
   BRAND_STING_LEAD_MS,
   CAPTION_BAND,
@@ -66,7 +45,7 @@ type Clip = { at: number | "intro" | "outro"; file: string; ms: number; text?:st
 
 // calibrationMs comes from the render CLI, which measured it from the capture's sync flash;
 // stepMinMs and narration come from it too when the walkthrough is narrated.
-type Props = {
+export type Props = {
   callouts?: ContextCallouts;
   capture: Capture | null;
   steps: Step[];
@@ -282,7 +261,7 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, ca
             ) : s.freeze ? (
               // A short step held on its hold frame while its caption is read.
               <Freeze frame={0}>
-                <OffthreadVideo
+                <SourceVideo
                   src={staticFile("video.webm")}
                   trimBefore={Math.round((s.srcStartMs * FPS) / 1000)}
                   muted
@@ -290,7 +269,7 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, ca
                 />
               </Freeze>
             ) : (
-              <OffthreadVideo
+              <SourceVideo
                 src={staticFile("video.webm")}
                 trimBefore={Math.round((s.srcStartMs * FPS) / 1000)}
                 playbackRate={s.speed}
@@ -352,66 +331,4 @@ export const WalkthroughVideo: React.FC<Props> = ({ capture, steps, timeline, ca
   );
 };
 
-const readJson = async <T,>(name: string): Promise<T> => {
-  const response = await fetch(staticFile(name));
-  if (!response.ok) throw new Error(`The capture folder has no ${name}`);
-  return (await response.json()) as T;
-};
-
-// Everything comes from the capture folder at render time, and a capture that is not valid
-// (for example a failed walk) never renders.
-const calculateMetadata: CalculateMetadataFunction<Props> = async ({ props }) => {
-  const capture = await readJson<Capture>("capture.json");
-  const raw = await readJson<Step[]>("steps.json");
-  if (props.branding) validateBrand(props.branding);
-  if (props.presentation) validatePresentation(props.presentation);
-  const problems = validateCapture(capture, raw);
-  if (problems.length) throw new Error(`Capture refused:\n- ${problems.join("\n- ")}`);
-  const steps = calibrate(raw, props.calibrationMs ?? capture.calibrationMs ?? 0);
-  const timeline = buildTimeline(steps, {
-    minStepMs: (step, i) => props.stepMinMs?.[i] ?? readingMs(step.caption),
-    titleMs: props.titleMs,
-    endMs: props.endMs,
-    ...(props.presentation ? {titleBaseMs:props.presentation.intro.enabled?props.presentation.intro.durationMs:0, endBaseMs:props.presentation.outro.enabled?props.presentation.outro.durationMs:0} : {}),
-  });
-  if(props.callouts){validateCallouts(props.callouts,steps,capture.viewport);validateCalloutTiming(props.callouts,steps,timeline);}
-  const geometry=layoutGeometry(capture.viewport,props.presentation);
-  return {
-    durationInFrames: timeline.durationInFrames,
-    fps: FPS,
-    width: geometry.width,
-    height: geometry.height,
-    props: { callouts:props.callouts, capture, steps, timeline, calibrationMs:props.calibrationMs ?? capture.calibrationMs ?? 0, narration: props.narration ?? [], branding: props.branding, presentation:props.presentation, narrationKind:props.narrationKind, narrationNotice:props.narrationNotice },
-  };
-};
-
-const Cover: React.FC<Props> = ({presentation}) => presentation ? <PresentationCard p={presentation} cover/> : <AbsoluteFill style={{background:C.bg}}/>;
-const calculateCoverMetadata:CalculateMetadataFunction<Props>=async args=>{
-  const metadata=await calculateMetadata(args);
-  return args.props.presentation?.cover?{...metadata,width:1600,height:900}:metadata;
-};
-const standaloneCoverMetadata:CalculateMetadataFunction<Props>=async({props})=>{
-  if(!props.presentation?.cover) throw Error('A standalone cover needs a library preset');
-  validatePresentation(props.presentation);
-  return {props,width:1600,height:900,durationInFrames:1};
-};
-
-const Root: React.FC = () => (<>
-  <Composition
-    id="WalkthroughVideo"
-    component={WalkthroughVideo}
-    durationInFrames={FPS}
-    fps={FPS}
-    width={1440}
-    height={900 + CAPTION_BAND}
-    defaultProps={{ capture: null, steps: [], timeline: null, narration: [] } as Props}
-    calculateMetadata={calculateMetadata}
-  />
-  <Composition id="WalkthroughCover" component={Cover} durationInFrames={FPS} fps={FPS} width={1440} height={996}
-    defaultProps={{capture:null,steps:[],timeline:null,narration:[]} as Props} calculateMetadata={calculateCoverMetadata}/>
-  <Composition id="StandaloneCover" component={Cover} durationInFrames={1} fps={FPS} width={1600} height={900}
-    defaultProps={{capture:null,steps:[],timeline:null,narration:[]} as Props} calculateMetadata={standaloneCoverMetadata}/>
-  </>
-);
-
-registerRoot(Root);
+export const Cover: React.FC<Props> = ({presentation}) => presentation ? <PresentationCard p={presentation} cover/> : <AbsoluteFill style={{background:C.bg}}/>;

@@ -1,5 +1,5 @@
 import React from 'react';
-import {interpolate} from 'remotion';
+import {interpolate} from '../../frame';
 import type {ContextCallout} from './callouts';
 
 // A compact heading grows only when the first supporting fact arrives.

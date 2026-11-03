@@ -10,7 +10,7 @@
 // every pixel the recording holds is on screen at the start and end of each
 // move, and the overlays travel on the same transform as the picture.
 //
-// Off by default. Pure math, no Remotion: the composition applies the result and
+// Off by default. Pure math, no the frame runtime: the composition applies the result and
 // the tests check the guarantees without rendering.
 import type {Step, Timeline, Box} from '../timeline';
 

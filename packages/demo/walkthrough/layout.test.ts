@@ -6,12 +6,12 @@ import {join} from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {loadPresentation, validatePresentationMedia, installPresentation} from './presentation';
 import {main,parseArgs} from './render-walkthrough';
-import {buildTimeline, calibrate} from '../remotion/src/projects/walkthrough-video/timeline';
+import {buildTimeline, calibrate} from '../renderer/src/projects/walkthrough-video/timeline';
 import {fixtureSteps} from './make-fixture';
-import {presentationPreset, validatePresentation} from '../remotion/src/projects/walkthrough-video/presentation/model';
-import {annotationAt, annotationPages, layoutGeometry, mapBox, resolveLayout, textPages, VIDEO_LAYOUTS} from '../remotion/src/projects/walkthrough-video/presentation/layout';
-import {paletteFor, contrastRatio, logoFor} from '../remotion/src/projects/walkthrough-video/presentation/theme';
-import {PresentationLogo, PresentationAnnotation} from '../remotion/src/projects/walkthrough-video/presentation/Presentation';
+import {presentationPreset, validatePresentation} from '../renderer/src/projects/walkthrough-video/presentation/model';
+import {annotationAt, annotationPages, layoutGeometry, mapBox, resolveLayout, textPages, VIDEO_LAYOUTS} from '../renderer/src/projects/walkthrough-video/presentation/layout';
+import {paletteFor, contrastRatio, logoFor} from '../renderer/src/projects/walkthrough-video/presentation/theme';
+import {PresentationLogo, PresentationAnnotation} from '../renderer/src/projects/walkthrough-video/presentation/Presentation';
 
 const load=(raw:unknown)=>{
   const file=join(mkdtempSync(join(tmpdir(),'layout-contract-')),'presentation.json');
@@ -149,7 +149,7 @@ describe('versioned layout and theme',()=>{
 });
 
 describe('annotation and identity',()=>{
-  const require=createRequire(new URL('../remotion/package.json',import.meta.url));
+  const require=createRequire(new URL('../renderer/package.json',import.meta.url));
   const React=require('react');const {renderToStaticMarkup}=require('react-dom/server');
   test('long transcript pages preserve every word and unvoiced text can be shown',()=>{
     const text=Array.from({length:240},(_,i)=>`word${i}`).join(' ');

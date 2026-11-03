@@ -3,7 +3,7 @@ import { existsSync, mkdtempSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 import { BRAND_DIR, installBrand, loadBrandProfile, PROFILES } from "./brand";
-import { validateBrand, type Brand } from "../remotion/src/projects/walkthrough-video/brand/model";
+import { validateBrand, type Brand } from "../renderer/src/projects/walkthrough-video/brand/model";
 
 const brand = (overrides: Partial<Brand> = {}): Brand => ({
   name: "Demo App",

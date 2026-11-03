@@ -150,5 +150,5 @@ aaron-demo inspect /path/to/passed-run
 由 **[Aaron Guo](https://aaronguo.com)** 创建。中英文 README 覆盖项目定位和入门步骤；
 详细技术参考暂时保持英文。命令、路径和 Skill 标识在两个版本中保持一致。
 
-原创代码采用 [MIT 许可证](LICENSE)。依赖保留各自条款；Remotion 的免费使用资格和 Company License 条件适用。
+原创代码采用 [MIT 许可证](LICENSE)。本地渲染使用 HyperFrames（Apache 2.0），不需要渲染服务账号，也没有按组织人数收费的门槛。依赖保留各自条款。
 参见[第三方声明](THIRD_PARTY_NOTICES.md)和[安全说明](SECURITY.md)。

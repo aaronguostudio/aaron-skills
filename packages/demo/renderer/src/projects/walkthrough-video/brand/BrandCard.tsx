@@ -3,7 +3,7 @@
 // Opening: the mark assembles, the line rises under it, the sting plays once, and the card fades
 // into the walkthrough. Closing: the same lockup, already settled, held silent and then cut.
 import React from "react";
-import { AbsoluteFill, Audio, Easing, interpolate, staticFile, useCurrentFrame } from "remotion";
+import { AbsoluteFill, Audio, Easing, interpolate, staticFile, useCurrentFrame } from "../../../frame";
 import { brandCardOpacity, brandPieceState, DEFAULT_VIEW_BOX, type Brand } from "./model";
 
 // The settled mark on its own, small. The caption band wears it on every frame, so the film is

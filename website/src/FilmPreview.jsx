@@ -1,9 +1,9 @@
 import {useEffect,useLayoutEffect,useRef,useState} from 'react';
-import {CoverDesign} from '../../packages/demo/remotion/src/cover-library/CoverDesign';
-import {PresentationAnnotation} from '../../packages/demo/remotion/src/projects/walkthrough-video/presentation/annotation';
-import {layoutGeometry,resolveLayout,VIDEO_TREATMENTS} from '../../packages/demo/remotion/src/projects/walkthrough-video/presentation/layout';
-import {presentationPreset} from '../../packages/demo/remotion/src/projects/walkthrough-video/presentation/model';
-import {inheritedPalette} from '../../packages/demo/remotion/src/projects/walkthrough-video/presentation/theme';
+import {CoverDesign} from '../../packages/demo/renderer/src/cover-library/CoverDesign';
+import {PresentationAnnotation} from '../../packages/demo/renderer/src/projects/walkthrough-video/presentation/annotation';
+import {layoutGeometry,resolveLayout,VIDEO_TREATMENTS} from '../../packages/demo/renderer/src/projects/walkthrough-video/presentation/layout';
+import {presentationPreset} from '../../packages/demo/renderer/src/projects/walkthrough-video/presentation/model';
+import {inheritedPalette} from '../../packages/demo/renderer/src/projects/walkthrough-video/presentation/theme';
 import {getCoverPreset} from '../../packages/demo/covers/catalog';
 import layouts from './video-layouts.json';
 

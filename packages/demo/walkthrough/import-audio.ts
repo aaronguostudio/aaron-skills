@@ -2,7 +2,7 @@ import {copyFileSync, existsSync, mkdirSync, readFileSync, realpathSync} from 'f
 import {createHash} from 'crypto';
 import {dirname, extname, join, resolve, sep} from 'path';
 import {ffprobeMs, type NarrationClip, type ProbeMs} from './narration';
-import type {Step} from '../remotion/src/projects/walkthrough-video/timeline';
+import type {Step} from '../renderer/src/projects/walkthrough-video/timeline';
 
 export function outsideGit(path: string): void {
   let probe = resolve(path);

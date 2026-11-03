@@ -2,7 +2,7 @@
 
 How to write a walk so the rendered video guides the eye, and how to check it. Read this before you write or change a walk, and before you deliver a walkthrough.
 
-The renderer draws every effect below. Never build your own composition, overlay or re-timing for a capture. If an effect is missing, add it to the renderer (`packages/demo/remotion/src/projects/walkthrough-video`) so every agent and every video gets it.
+The renderer draws every effect below. Never build your own composition, overlay or re-timing for a capture. If an effect is missing, add it to the renderer (`packages/demo/renderer/src/projects/walkthrough-video`) so every agent and every video gets it.
 
 ## What the viewer sees
 

@@ -25,7 +25,7 @@ try {
   const prefixes = [
     'website/src/', 'website/public/', 'website/scripts/',
     'website/worker/', 'website/.openai/', 'packages/demo/covers/',
-    'packages/demo/remotion/src/cover-library/',
+    'packages/demo/renderer/src/cover-library/',
   ];
   const files = new Set([
     'website/package.json', 'website/package-lock.json', 'website/index.html',

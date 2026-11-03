@@ -3,7 +3,7 @@ import layouts from './video-layouts.json';
 import covers from './covers.json';
 import {getCoverPreset} from '../../packages/demo/covers/catalog';
 import {FilmPreview} from './FilmPreview';
-import {contrastRatio} from '../../packages/demo/remotion/src/projects/walkthrough-video/presentation/theme';
+import {contrastRatio} from '../../packages/demo/renderer/src/projects/walkthrough-video/presentation/theme';
 import {studioBrief,studioConfig} from './presentation-studio.mjs';
 import './presentation-studio.css';
 

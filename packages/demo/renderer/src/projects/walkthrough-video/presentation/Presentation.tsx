@@ -1,13 +1,13 @@
 import React from 'react';
-import {AbsoluteFill, Audio, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Audio, Img, interpolate, staticFile, useCurrentFrame, useVideoConfig} from '../../../frame';
 import type {Presentation} from './model';
 import {CoverDesign} from '../../../cover-library/CoverDesign';
 import {logoFor, logoSurfaceBackground, paletteFor} from './theme';
 import {resolveLayout} from './layout';
 import {FONT, PresentationAnnotation as Annotation, PresentationCaption as Caption, PresentationLogo as Logo, type RenderLogo} from './annotation';
 
-// A presentation stores a run-relative logo path; Remotion resolves it through
-// staticFile. The three shared components stay Remotion-free in ./annotation so
+// A presentation stores a run-relative logo path; the frame runtime resolves it through
+// staticFile. The three shared components stay the frame runtime-free in ./annotation so
 // the website can build them, and are re-exported here already bound.
 const renderLogo: RenderLogo = (logo, style) => <Img src={staticFile(logo)} style={style} />;
 

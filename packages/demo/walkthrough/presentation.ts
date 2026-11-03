@@ -2,11 +2,11 @@ import {copyFileSync, existsSync, mkdirSync, readFileSync, realpathSync} from 'f
 import {createHash} from 'crypto';
 import {execFileSync} from 'child_process';
 import {dirname, extname, isAbsolute, join, resolve, sep} from 'path';
-import {presentationPreset, validatePresentation, validatePresentationFields, type Presentation, type Template} from '../remotion/src/projects/walkthrough-video/presentation/model';
-import {contrastRatio, inheritedPalette, logoFor, logoSurfaceBackground, THEMES} from '../remotion/src/projects/walkthrough-video/presentation/theme';
+import {presentationPreset, validatePresentation, validatePresentationFields, type Presentation, type Template} from '../renderer/src/projects/walkthrough-video/presentation/model';
+import {contrastRatio, inheritedPalette, logoFor, logoSurfaceBackground, THEMES} from '../renderer/src/projects/walkthrough-video/presentation/theme';
 import {getCoverPreset,validateCover} from '../covers/catalog';
 
-import {VIDEO_TREATMENTS} from '../remotion/src/projects/walkthrough-video/presentation/layout';
+import {VIDEO_TREATMENTS} from '../renderer/src/projects/walkthrough-video/presentation/layout';
 
 const COVER_ROOT=resolve(import.meta.dir,'../covers');
 

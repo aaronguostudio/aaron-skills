@@ -41,7 +41,7 @@ reviewed revision before merging. A later edit invalidates earlier evidence.
 ## Runtime acceptance
 
 Install the source dependencies described in CONTRIBUTING.md, including the
-capture and Remotion packages and Python with Pillow, then run:
+capture and HyperFrames packages and Python with Pillow, then run:
 
 ```sh
 npm run verify:runtime -- --python <python-with-Pillow>

@@ -7,7 +7,7 @@ type Box=[number,number,number,number];
 const SANS="Arial, 'Helvetica Neue', 'Noto Sans CJK SC', sans-serif";
 const SERIF="Georgia, 'Times New Roman', 'Noto Serif CJK SC', serif";
 
-// Native fonts are available synchronously in both the browser and Remotion.
+// Native fonts are available synchronously in both the browser and the frame runtime.
 // Measure words rather than character count so long titles and CJK can fit.
 export function fitCoverText(text:string,box:Box,family:string,max:number,lineHeight=1.04,tracking=0):number {
   if(!text) return max;

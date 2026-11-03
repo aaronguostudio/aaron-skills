@@ -1,7 +1,7 @@
 import {expect, test} from 'bun:test';
 import cases from '../../../evals/fixtures/mask-cases.json';
 import {validateMasks} from '../contracts/masks.mjs';
-import {buildTimeline, calibrate, masksAt, validateCapture, type Capture, type Step} from '../remotion/src/projects/walkthrough-video/timeline';
+import {buildTimeline, calibrate, masksAt, validateCapture, type Capture, type Step} from '../renderer/src/projects/walkthrough-video/timeline';
 
 const viewport = {w:1440,h:900};
 const capture:Capture = {version:1,walk:'synthetic',env:'local',title:'Synthetic',startedAt:'2026-10-26',viewport,status:'passed'};

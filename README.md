@@ -164,6 +164,5 @@ Built by **[Aaron Guo](https://aaronguo.com)**. Both READMEs cover the overview 
 getting started; detailed technical references remain in English. Commands,
 paths and skill IDs are the same in both languages.
 
-Original code is [MIT](LICENSE). Dependencies retain their own terms; Remotion's
-free-use eligibility and Company License conditions apply. See
+Original code is [MIT](LICENSE). Rendering uses HyperFrames (Apache 2.0) locally, without a renderer account or organization-size fee. Dependencies retain their own terms. See
 [third-party notices](THIRD_PARTY_NOTICES.md) and [SECURITY.md](SECURITY.md).

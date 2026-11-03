@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0 — 2026-11-03
+
+- Render Film locally with HyperFrames for videos, previews and covers while preserving capture and presentation contracts.
+- Include the configured capture viewport, cover and aspect choices, dense-caption preview and improved JPEG still quality.
+- Require review for this renderer migration and start the `demo-1.2` compatibility epoch.
+
 ## 1.1.1 — 2026-11-03
 
 - Increase exported JPEG still quality to reduce compression artifacts around masks; retain the existing mask validation thresholds.

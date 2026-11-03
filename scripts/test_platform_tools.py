@@ -105,7 +105,7 @@ function ffprobe {{ if ($global:attempt -ge {ready_after}) {{ $global:LASTEXITCO
                 npm.unlink()
 
     def test_pinned_bun_is_an_executable_on_the_current_host(self):
-        binary = bun_binary(bundle.ROOT / 'packages/demo/remotion')
+        binary = bun_binary(bundle.ROOT / 'packages/demo/renderer')
         self.assertTrue(binary.is_file())
         import subprocess
         result = subprocess.run([str(binary), '--version'], text=True, capture_output=True)

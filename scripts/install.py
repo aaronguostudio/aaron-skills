@@ -233,7 +233,7 @@ def main():
         spec.loader.exec_module(cli)
         cli.ROOT = release
         cli.ENGINE = release / 'packages/demo/capture'
-        cli.RENDER = release / 'packages/demo/remotion'
+        cli.RENDER = release / 'packages/demo/renderer'
         config = cli.settings()
         # Save machine-local executable paths; no credentials belong here.
         config.update(tools=tools, skillsDir=str(directories[0]), skillsDirs=[str(p) for p in directories], binDir=str(bin_dir), agent=args.agent,
@@ -248,7 +248,6 @@ def main():
             run([venv_python(release), '-m', 'pip', 'install', '--disable-pip-version-check', '-r', release / 'scripts/requirements.txt'])
         # Browser caches may have been removed after a successful installation. Prepare them on retries too.
         run([tools['node'], cli.ENGINE / 'node_modules/playwright/cli.js', 'install', 'chromium'])
-        run([tools['node'], cli.RENDER / 'node_modules/@remotion/cli/remotion-cli.js', 'browser', 'ensure'], cwd=cli.RENDER)
         if cli.doctor(config, check_links=False):
             raise ValueError('Verification failed; the active release was preserved. Retry with --repair to rebuild dependencies and files.')
         manifest_path.write_text(json.dumps(manifest, indent=2) + '\n')

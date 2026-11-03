@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { CoverDesign } from "../../packages/demo/remotion/src/cover-library/CoverDesign";
+import { CoverDesign } from "../../packages/demo/renderer/src/cover-library/CoverDesign";
 import { getCoverPreset } from "../../packages/demo/covers/catalog";
 import {usePresentationChoices, PresentationHandoff} from "./PresentationChoices";
 import { coverConfiguration, coverBrief } from "./cover-handoff.mjs";

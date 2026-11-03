@@ -28,7 +28,7 @@ writeFileSync(presentation,JSON.stringify({version:1,brand:{name:'Fictional fixt
 const evidence=[];
 // Reproduce the newcomer title in a real browser/font environment. Height-only
 // checks miss a word broken in the middle even when the title stays in bounds.
-const {fitCoverText}=await import(pathToFileURL(join(release,'packages/demo/remotion/src/cover-library/CoverDesign.tsx')).href);
+const {fitCoverText}=await import(pathToFileURL(join(release,'packages/demo/renderer/src/cover-library/CoverDesign.tsx')).href);
 const {chromium}=await import(pathToFileURL(join(release,'packages/demo/capture/node_modules/playwright/index.mjs')).href);
 const browser=await chromium.launch();
 try {

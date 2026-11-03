@@ -6,8 +6,8 @@
 // <run> follows capture contract version 1 (see ../../../docs/capture-contract.md).
 // Refuses a capture whose status is not "passed", and any run folder or output inside this repo,
 // so a work recording can never land in the content pipelines here.
-import {validateCallouts, validateCalloutTiming} from "../remotion/src/projects/walkthrough-video/callouts";
-import { execFileSync, spawnSync } from "child_process";
+import {validateCallouts, validateCalloutTiming} from "../renderer/src/projects/walkthrough-video/callouts";
+import { execFileSync } from "child_process";
 import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from "fs";
 import { basename, dirname, join, resolve, sep } from "path";
 import { privateDirectory } from "../capture/scripts/platform.mjs";
@@ -25,10 +25,10 @@ import {
 import {loadPresentation, installPresentation, validatePresentationMedia} from './presentation';
 import {outsideGit, readImportedAudio, installImportedAudio} from './import-audio';
 import {speechProvider,providerKey} from './voice-providers';
-import {annotationPages, layoutGeometry} from '../remotion/src/projects/walkthrough-video/presentation/layout';
-import {paletteFor} from '../remotion/src/projects/walkthrough-video/presentation/theme';
+import {annotationPages, layoutGeometry, resolveLayout} from '../renderer/src/projects/walkthrough-video/presentation/layout';
+import {paletteFor} from '../renderer/src/projects/walkthrough-video/presentation/theme';
 import { installBrand, loadBrandProfile } from "./brand";
-import type { Brand } from "../remotion/src/projects/walkthrough-video/brand/model";
+import type { Brand } from "../renderer/src/projects/walkthrough-video/brand/model";
 import {
   BRAND_STING_LEAD_MS,
   buildTimeline,
@@ -38,10 +38,9 @@ import {
   validateCapture,
   type Capture,
   type Step,
-} from "../remotion/src/projects/walkthrough-video/timeline";
+} from "../renderer/src/projects/walkthrough-video/timeline";
 
-const REMOTION_DIR = resolve(import.meta.dir, "..", "remotion");
-const ENTRY = "src/projects/walkthrough-video/index.tsx";
+import {render, RENDERER} from "../renderer/backend";
 
 export class RenderRefusal extends Error {}
 
@@ -335,31 +334,26 @@ export async function main(argv: string[]): Promise<number> {
     prepared=prepare(run,out,roots,prepared.calibrationMs,timing);
     if(callouts) validateCalloutTiming(callouts,prepared.steps,buildTimeline(prepared.steps,{...(prepared.stepMinMs?{minStepMs:(_s:Step,i:number)=>prepared.stepMinMs?.[i]??0}:{}),titleMs:prepared.titleMs,endMs:prepared.endMs,titleBaseMs:prepared.titleBaseMs,endBaseMs:prepared.endBaseMs}));
     writeFileSync(prepared.chaptersPath,prepared.chaptersText);
-    const props=`--props=${JSON.stringify({calibrationMs:prepared.calibrationMs,stepMinMs:prepared.stepMinMs,titleMs:prepared.titleMs,endMs:prepared.endMs,narration:clips.map(({at,file,ms,text})=>({at,file,ms,text})),narrationKind,narrationNotice:parsed.narrationNotice,branding,presentation,callouts})}`;
-    const cli=join(REMOTION_DIR,'node_modules','@remotion','cli','remotion-cli.js');
-    const invoke=(args:string[])=>{
-      const result=spawnSync('node',[cli,...args],{cwd:REMOTION_DIR,stdio:'inherit'});
-      if (result.status!==0) throw new RenderRefusal('Remotion render failed');
-    };
+    const props={calibrationMs:prepared.calibrationMs,stepMinMs:prepared.stepMinMs,titleMs:prepared.titleMs,endMs:prepared.endMs,narration:clips.map(({at,file,ms,text})=>({at,file,ms,text})),narrationKind,narrationNotice:parsed.narrationNotice,branding,presentation,callouts};
     if(parsed.preview) {
-      const dense = prepared.stills.reduce((best, still) => {
-        const text = (i:number) => imported?.clips.find(c=>c.at===i)?.text ?? script?.steps[prepared.steps[i].id] ?? prepared.steps[i].narration ?? prepared.steps[i].caption;
-        return Array.from(text(still.index)).length > Array.from(text(best.index)).length ? still : best;
+      const transcript=p?.layout && resolveLayout(p.layout).annotationMode==='transcript';
+      const dense=prepared.stills.reduce((best,still)=>{
+        const text=(i:number)=>transcript ? (imported?.clips.find(c=>c.at===i)?.text ?? script?.steps[prepared.steps[i].id] ?? prepared.steps[i].narration ?? prepared.steps[i].caption) : prepared.steps[i].caption;
+        return Array.from(text(still.index)).length>Array.from(text(best.index)).length?still:best;
       });
-      for (const [name, frame] of [['body-preview.png', prepared.stills[0].frame], ['dense-caption-preview.png', dense.frame]] as const)
-        invoke(['still',ENTRY,'WalkthroughVideo',join(dirname(prepared.out),name),`--frame=${frame}`,`--public-dir=${prepared.run}`,props,'--log=error']);
-    }
-    else invoke(['render',ENTRY,'WalkthroughVideo',prepared.out,`--public-dir=${prepared.run}`,props,'--codec=h264','--crf=20','--pixel-format=yuv420p',...(clips.length||presentation?.intro.sound||branding?.sound?['--audio-codec=aac']:['--muted']),'--log=error']);
+      for(const [name,frame] of [['body-preview.png',prepared.stills[0].frame],['dense-caption-preview.png',dense.frame]] as const)
+        await render({run:prepared.run,props,out:join(dirname(prepared.out),name),mode:'preview',frame});
+    } else await render({run:prepared.run,props,out:prepared.out,mode:'video'});
     if (parsed.cover) {
       const png=join(dirname(prepared.out),'cover.png');
-      invoke(['still',ENTRY,'WalkthroughCover',png,`--public-dir=${prepared.run}`,props,'--log=error']);
+      await render({run:prepared.run,props,out:png,mode:'cover'});
       // FFmpeg distributions differ in optional WebP encoders. The installed Pillow
       // wheel is already a verified runtime dependency, so cover export uses it.
       const python=join(resolve(import.meta.dir,'../../..'),'.venv',process.platform==='win32'?'Scripts':'bin',process.platform==='win32'?'python.exe':'python3');
       execFileSync(python,['-c','from PIL import Image; import sys; Image.open(sys.argv[1]).convert("RGB").save(sys.argv[2],"WEBP",quality=85,method=6)',png,join(dirname(prepared.out),'cover.webp')]);
     }
     if (stills&&!parsed.preview) writeStills(prepared);
-    writeFileSync(join(dirname(prepared.out),parsed.preview?'preview-manifest.json':'render-manifest.json'),JSON.stringify({version:1,maskCount:capture.masks?.length??0,preview:parsed.preview,template:p?.template??'legacy',presentation,geometry,resolvedPalette,logoChecks,voiceProvider:provider,narrationKind:clips.length?narrationKind:'none',narrationNotice:parsed.narrationNotice,seconds:prepared.seconds,sourceCaptureSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'capture.json')),'hex'),sourceVideoSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'video.webm')),'hex'),narration:clips},null,2)+'\n');
+    writeFileSync(join(dirname(prepared.out),parsed.preview?'preview-manifest.json':'render-manifest.json'),JSON.stringify({version:1,renderer:RENDERER,maskCount:capture.masks?.length??0,preview:parsed.preview,template:p?.template??'legacy',presentation,geometry,resolvedPalette,logoChecks,voiceProvider:provider,narrationKind:clips.length?narrationKind:'none',narrationNotice:parsed.narrationNotice,seconds:prepared.seconds,sourceCaptureSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'capture.json')),'hex'),sourceVideoSha256:Bun.SHA256.hash(readFileSync(join(prepared.run,'video.webm')),'hex'),narration:clips},null,2)+'\n');
     console.log(`${parsed.preview?'preview':'video'}: ${parsed.preview?join(dirname(prepared.out),'body-preview.png'):prepared.out} (${prepared.seconds.toFixed(2)}s); template: ${p?.template??'legacy'}; voice: ${provider}`);
     return 0;
   } catch (error) {

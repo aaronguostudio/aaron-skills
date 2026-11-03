@@ -1,5 +1,7 @@
 # Compatibility
 
+The HyperFrames renderer migration has local macOS verification only until the new matrix runs. Earlier Windows/Linux results below describe the previous renderer; they do not certify this migration.
+
 v0.2.0 extends the macOS-only v0.1.0 release with Ubuntu and native Windows
 runtime support and presentation-cover presets. Use v0.2.0 or current main for
 these capabilities; the historical v0.1.0 tag does not contain them.
@@ -10,7 +12,7 @@ and a completed runtime workflow. None implies the others.
 | Layer or platform | Current scope | Evidence and limits |
 | --- | --- | --- |
 | Skill format | Standard name/description and host-neutral body; optional OpenAI UI metadata | Structural checks and referenced docs closure |
-| Runtime | Node 22+, Python 3.11+, FFmpeg/ffprobe; pinned Bun, Remotion and Chromium | Exported installation and deterministic tests |
+| Runtime | Node 22+, Python 3.11+, FFmpeg/ffprobe; pinned Bun, HyperFrames and Chromium | Exported installation and deterministic tests |
 | macOS arm64 | Supported | Real Apple Silicon machine: installation, capture, revision, media/page/clipboard, headed synthetic sign-in and recovery; existing macOS behavior retained |
 | Ubuntu 24.04 x64 | Supported runtime target | Full workflow in Ubuntu 24.04.4 container under x64 emulation on an ARM Mac; native runner results are reported separately in CI |
 | Windows 11 x64, NTFS | Supported | Real Windows 11 Home laptop, ordinary user token, stock PowerShell 5.1; full workflow, private ACLs, paths with spaces/Chinese, recovery and native launcher |

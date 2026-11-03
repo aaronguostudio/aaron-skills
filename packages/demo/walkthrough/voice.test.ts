@@ -7,7 +7,7 @@ import {voiceMain,type VoiceIO,parseVoiceArgs} from './voice-cli';
 import {readConfig,saveProfile,saveKey,credentialPath,validateEndpoint,externalPath,type VoiceProfile} from './voice-config';
 import {loadVoiceProfile,narrate,ffprobeMs} from './narration';
 import {GOOGLE_MODEL,speechProvider,listElevenVoices,providerKey,normalizeMp3,request} from './voice-providers';
-import type {Step} from '../remotion/src/projects/walkthrough-video/timeline';
+import type {Step} from '../renderer/src/projects/walkthrough-video/timeline';
 
 // Windows privacy checks invoke native ACL tooling for each atomic write/lock.
 if(process.platform==='win32')setDefaultTimeout(60000);

@@ -90,7 +90,7 @@ def run(workspace):
     report.update(bundleId=manifest['id'], sourceRevision=manifest['sourceRevision'], version=manifest['version'])
     persist()
     try:
-        command('journey', [bun_binary(release / 'packages/demo/remotion'), HERE / 'journey.ts', release, workspace])
+        command('journey', [bun_binary(release / 'packages/demo/renderer'), HERE / 'journey.ts', release, workspace])
     finally:
         journey = workspace / 'journey.json'
         if journey.is_file():
