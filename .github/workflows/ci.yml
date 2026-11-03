@@ -99,6 +99,11 @@ jobs:
         run: >-
           python benchmarks/onboarding-v0/run.py
           --workspace "$RUNNER_TEMP/demo install"
+      - name: Report synthetic mask encoding diagnostics
+        if: always()
+        run: |
+          python -c 'from pathlib import Path; import os; root=Path(os.environ["RUNNER_TEMP"])/"demo install"; files=list(root.glob("command-*.log")); lines=[line for f in files for line in f.read_text(encoding="utf-8",errors="replace").splitlines() if "DIAGNOSTIC " in line]; print("\n".join(lines) if lines else "No synthetic diagnostic output was produced")'
+          exit 1
       - name: Installed revision, playback and clipboard
         run: |
           release=$(python -c 'import os,sys;from pathlib import Path;sys.path.insert(0,"scripts");from managed_registration import active_release;root=Path(os.environ["RUNNER_TEMP"])/"demo install/runtime";print(active_release(root) if os.name=="nt" else root/"current")')
