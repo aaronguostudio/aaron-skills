@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1 — 2026-11-03
+
+- Increase exported JPEG still quality to reduce compression artifacts around masks; retain the existing mask validation thresholds.
+
 ## 1.1.0 — 2026-11-03
 
 - Offer purpose and aspect ratio, cover previews and independent body layout choices before full production, while reusing explicitly approved series choices.

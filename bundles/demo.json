@@ -195,11 +195,12 @@
     "packages/demo/remotion/src/projects/walkthrough-video/ContextCallout.tsx",
     "docs/context-callouts.md"
   ],
-  "version": "1.1.0",
+  "version": "1.1.1",
   "update": {
     "kind": "review",
     "compatibilityEpoch": "demo-1.0",
     "summary": [
+      "Improve exported JPEG still quality to reduce codec artifacts around masked areas.",
       "Choose the intended aspect ratio, cover and body layout before full video production.",
       "Capture at a configured viewport and review representative and dense-caption previews.",
       "Existing captures and presentation configurations retain their dimensions.",
