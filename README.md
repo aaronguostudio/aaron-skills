@@ -107,6 +107,8 @@ to that process. Prerequisites must already be installed; Ubuntu also needs
 Chromium system libraries. See [installation and recovery](docs/installation.md)
 for preparation, agent registration, isolated coexistence and uninstall.
 
+For a team workspace, the full runtime includes `aaron-demo studio connect`. Connect once and ask Film to use the team template on subsequent local runs. [Team template guide](docs/demo-studio.md).
+
 ## Make your first demo
 
 Ask your local agent:

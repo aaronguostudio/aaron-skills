@@ -4,6 +4,8 @@ description: Choose and customize presentation covers, draft walkthrough scripts
 ---
 # Film
 
+For a team or Studio template, read `aaron-demo docs demo-studio`. Run `aaron-demo studio resolve --project <existing-run-directory>`, pass its returned presentation path to the normal local render, and keep the project pin for revisions. If the user explicitly requests an offline revision, resolve with `--offline`. Only request a connection if this OS account is not connected.
+
 Invocation ID: `walkthrough-video`. The runtime and command names remain unchanged.
 
 At the start of a new task, run `aaron-demo update --background` if the CLI is available. This starts the configured version check without waiting; continue the task. Relay any update notice once, and use `aaron-demo update` for the change summary. Larger changes need the user's choice; never add `--yes` on their behalf. Updates do not authorize publishing or provider spending.
