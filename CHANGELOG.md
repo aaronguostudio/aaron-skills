@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+
+- Connect a local agent to a Demo Studio team, resolve its approved Film template and reuse a pinned release offline.
+
 ## 1.2.0 — 2026-11-03
 
 - Render Film locally with HyperFrames for videos, previews and covers while preserving capture and presentation contracts.

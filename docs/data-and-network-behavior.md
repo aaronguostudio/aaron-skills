@@ -17,3 +17,5 @@ source installations skip this automatic activity. See [updates](updates.md).
 No publishing, messaging, analytics collection, or upload is part of the default flow.
 
 The HyperFrames adapter renders locally with no account or renderer API key. It sets `HYPERFRAMES_NO_TELEMETRY=1` and `DO_NOT_TRACK=1`, uses the existing capture Chromium, and calls no cloud render, media generation, publish or authentication command. Composition assets are copied selectively into a private temporary project and removed on completion/failure. Preview requests are restricted to their local asset server. Original capture and narration assets are preserved.
+
+Connecting Demo Studio is optional. The CLI sends its device challenge and scoped credential only to the Studio origin chosen during connection. It reads team template settings and the optional logo. Captures, narration and movies stay local until a user chooses an approved upload in the Studio web app. Local project pins and cache files are separate from the device credential. See [team templates](demo-studio.md).

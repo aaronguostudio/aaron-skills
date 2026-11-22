@@ -97,7 +97,7 @@ def main():
     os.umask(0o077)
     args = sys.argv[1:]
     if not args or args[0] in ('--help', '-h'):
-        print('Usage: aaron-demo version [--json] | update [check|policy compatible|notify|off|snooze] [--yes] | rollback | doctor | voice setup|list|voices|test|doctor|install-local | smoke | uninstall | docs [topic] | capture <args> | inspect <run> | cover --list | cover --presentation <external.json> --out <cover.png> | render <run> [args] | revise <run> <patch.json> --out <new-run> | page <message.md> --out <page.html> | mark <args>')
+        print('Usage: aaron-demo version [--json] | update [check|policy compatible|notify|off|snooze] [--yes] | rollback | studio connect|status|resolve|disconnect | doctor | voice setup|list|voices|test|doctor|install-local | smoke | uninstall | docs [topic] | capture <args> | inspect <run> | cover --list | cover --presentation <external.json> --out <cover.png> | render <run> [args] | revise <run> <patch.json> --out <new-run> | page <message.md> --out <page.html> | mark <args>')
         return 0
     if args[0] == 'docs':
         topic = args[1] if len(args) > 1 else 'first-demo'
@@ -130,6 +130,7 @@ def main():
     if command == 'doctor':
         return doctor(config)
     commands = {
+        'studio': [venv_python(ROOT), ROOT / 'scripts/studio.py'],
         'capture': [config['tools']['node'], ENGINE / 'scripts/cli.mjs'],
         'render': [bun_binary(RENDER), ROOT / 'packages/demo/walkthrough/render-walkthrough.ts'],
         'voice': [bun_binary(RENDER), ROOT / 'packages/demo/walkthrough/voice-cli.ts'],

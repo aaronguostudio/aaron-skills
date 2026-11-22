@@ -11,6 +11,7 @@ Dependencies are installed from pinned manifests; their upstream licenses contin
 | React and React DOM | 19.2.4 | MIT, https://github.com/facebook/react |
 | Bun runtime package | 1.4.3 | See bundled upstream notices, https://github.com/oven-sh/bun |
 | Pillow | 12.3.0 | HPND and included component notices, https://github.com/python-pillow/Pillow |
+| keyring | 25.7.0 | MIT, https://github.com/jaraco/keyring |
 | Chromium and FFmpeg | Installed separately | Retain their distribution-specific notices and configuration terms. |
 
 The Demo bundle has no Remotion dependency. HyperFrames is installed from its pinned npm lock; its Apache 2.0 license is included at `licenses/HyperFrames-Apache-2.0.txt`. Upstream dependency and bundled-vendor notices remain applicable; the root MIT license does not relicense them. Local rendering needs no HyperFrames/HeyGen account or renderer license key. Rendering uses the already installed Playwright Chromium and system FFmpeg; no second browser download is required. The adapter disables HyperFrames usage telemetry and does not invoke publishing or hosted generation commands. Silent videos require no narration provider. Optional cloud narration uses the user's account and its terms. FFmpeg build/codec and media/font rights still depend on the exact delivery; this migration does not claim universal commercial clearance.

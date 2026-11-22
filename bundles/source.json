@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "version": "1.2.0",
+  "version": "1.3.0",
   "files": [
     ".claude-plugin/marketplace.json",
     ".claude-plugin/plugin.json",
@@ -401,7 +401,10 @@
     "packages/demo/renderer/backends/hyperframes.ts",
     "packages/demo/renderer/backends/hyperframes-browser.ts",
     "packages/demo/walkthrough/camera.test.ts",
-    "website/public/art/demo-capture.webp"
+    "website/public/art/demo-capture.webp",
+    "scripts/studio.py",
+    "docs/demo-studio.md",
+    "scripts/test_studio.py"
   ],
   "reviewedBinaryAssets": {
     "packages/demo/covers/art/alpine-silence.webp": {
