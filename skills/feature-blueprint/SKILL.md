@@ -9,7 +9,7 @@ inspect and use. Connect what people need to the result they should experience,
 then choose the expression that supports the next conversation, decision or
 execution step. There are no fixed phases or required document counts. Use the
 default proposal-page template below for substantial web proposals, adapting its
-content to the project while preserving its section labels. Honor another
+content to the project within one of its section presets. Honor another
 requested medium or existing format.
 The core skill has no runtime or service dependency.
 
@@ -19,8 +19,8 @@ source-grounded example to connect the need, the proposed experience and the
 decision that follows. Each part should add a reason, evidence, a consequence or
 a useful choice. Choose the reading order for the receiver; Why, What and How
 can guide the thinking without becoming compulsory headings. For a proposal
-page, keep the stable section names below; use project-specific language in the
-content and screen names. For other media, use their existing conventions. Keep the language plain and specific. Replace
+page, use the section names of the chosen preset below; use project-specific
+language in the content and screen names. For other media, use their existing conventions. Keep the language plain and specific. Replace
 generic promises such as better visibility with the information, judgment or
 action that would change. Do not invent an incident, result or stakeholder
 answer to make a story persuasive.
@@ -102,55 +102,99 @@ For a one-page delivery, keep necessary supporting detail accessible in place,
 for example through a local disclosure beside its context. Avoid a page round
 trip just to understand the proposal; a source citation can still open its source.
 For a substantial web proposal, start from the self-contained
-[proposal-page template](assets/review-page.html). Preserve these five navigation
-labels and visible section headings exactly, in this order: **Requirements**,
-**Operating model**, **Prototype**, **Data model**, **Next steps**. These are stable
-reading categories, not prompts to invent more elaborate synonyms. Do not rename
-or add top-level sections unless the user explicitly requests a different format.
-Adapt the content, diagrams and screen names within them. Keep desktop navigation
-sticky, highlight the current section, and retain a compact sticky row on narrow
-screens. This contract applies to this proposal format, not every Shape response.
+[proposal-page template](assets/review-page.html). Choose one preset by the kind
+of delivery, say which one you chose, and use its five labels exactly, in order,
+in the sidebar and as the visible headings:
+
+| Delivery | Sections |
+| --- | --- |
+| Feature with screens | Requirements, Operating model, **Prototype**, **Data model**, Next steps |
+| System or infrastructure change | Requirements, Operating model, **Before and after**, **How the pieces fit**, Next steps |
+| Process or policy change | Requirements, Operating model, **Before and after**, **Who does what**, Next steps |
+
+These are stable reading categories, not prompts to invent synonyms. Do not
+invent another label or add top-level sections unless the user explicitly asks
+for a different format; a new preset is added to this table, not improvised.
+Adapt the content, diagrams and screen names within the sections. Keep desktop
+navigation sticky, highlight the current section, and retain a compact sticky row
+on narrow screens. This contract applies to this proposal format, not every Shape
+response.
 
 Use the template's compact content structure:
 
-- **Requirements:** one list combining each requested addition and its practical
-  use. The opening already states the overall request; do not add another opening,
-  value callout, recommendation block or walkthrough of the same requirements.
+- **Requirements:** one line per requirement: the change itself, stated so the
+  collapsed list reads as a list of changes. Its practical use, evidence, status
+  and origin go in a disclosure on that item. The opening already states the
+  overall request; do not add another opening, value callout, recommendation block
+  or walkthrough of the same requirements.
 - **Operating model:** one compact account of who acts, what triggers or schedules
   their work, and what follows the result. Use a list, table or flow as appropriate;
   do not stack equivalent representations. Keep detailed exceptions in local detail.
-- **Prototype:** show the working design first. Use named frames on an overview/
-  focus canvas with pan, zoom and expand, and let people try the connected journey.
-  Label demo data once. Give shared period/currency, access and simulation/save
-  assumptions one home beside the canvas in a collapsed disclosure. Use short
-  value labels where a basis matters and a local Proposed marker for an unresolved
-  field; do not repeat explanatory banners across frames. Normal saves should
-  show the changed state, with at most a brief Saved acknowledgement. Show inline
-  validation or permission errors only when the action needs them. Keep necessary
-  instructions short and inspect control padding, focus and targets.
-- **Data model:** let the diagram label existing objects, extensions, new records,
-  calculated results and their links. Do not paraphrase the diagram in body prose.
-  Put physical-schema checks and unresolved rules in local detail.
-- **Next steps:** use the three compact groups Can start now, Need to confirm and
-  Outside this first version. Give open decisions their owner and dependency here;
-  put recommendation/tradeoff detail in a disclosure, not another set of question
-  cards after the groups. Do not repeat the operating model or add a second roadmap.
+- **Prototype** (feature preset): show the working design first, as named frames
+  of the connected journey that people can try. Each frame's first state is
+  written in the HTML; a script may switch, highlight or zoom it, but never be
+  what puts content on the page, because some viewers show local pages with
+  scripts off. Three frames or fewer read best stacked in the page; for more, use
+  the template's overview/focus canvas, which opens on the first frame at a
+  readable size and stacks the frames when scripts are off. Label demo data once.
+  Give shared period/currency, access and simulation/save assumptions one home
+  beside the frames in a collapsed disclosure. Use short value labels where a basis
+  matters and a local Proposed marker for an unresolved field; do not repeat
+  explanatory banners across frames. Normal saves should show the changed state,
+  with at most a brief Saved acknowledgement. Show inline validation or permission
+  errors only when the action needs them. Keep necessary instructions short and
+  inspect control padding, focus and targets.
+- **Before and after** (system and process presets): show the real values, states
+  or steps today and after the change, side by side, in static HTML. Do not draw
+  mock screens of a system that has none of its own; a table of the actual values
+  is the honest form.
+- **Data model** (feature preset): let the diagram label existing objects,
+  extensions, new records, calculated results and their links. Do not paraphrase
+  the diagram in body prose. Put physical-schema checks and unresolved rules in
+  local detail.
+- **How the pieces fit** (system preset): which component writes or owns what,
+  where they meet, and which one wins when two disagree. **Who does what**
+  (process preset): actors, triggers and handoffs. Use one diagram or table, and
+  keep unresolved ownership in local detail.
+- **Next steps:** the three groups Can start now, Need to confirm and Outside this
+  first version, with one line per action. Mark an owner, dependency or blocker as
+  a short inline tag after the line. Put options, recommendations and tradeoffs in
+  a disclosure on that item, not another set of question cards after the groups.
+  Do not repeat the operating model or add a second roadmap.
 
 Before delivery, reread the main page without opening disclosures. For each
 statement, identify its home: request/use, operation, design, relationships or next
 action. Remove duplicate explanations and move supporting rationale into that
 home's detail. A brief uncertainty marker can recur where needed; its full
-explanation should have one home. Check the five labels against the template and
-check every claimed source correction against the actual words. Do this review
-silently; do not print the checklist, evidence legend or a general disclaimer on
-the page. Keep consequential uncertainty next to the affected claim.
+explanation should have one home. Read it as the receiver and find any identifier
+you could not look up: give each real object's name (a ticket, build, pipeline,
+pull request, deployment or resource) a link where one exists, otherwise a few
+words on first use saying what system it lives in. Check the preset labels against
+the table and every claimed source correction against the actual words. Do this
+review silently; do not print the checklist, evidence legend or a general
+disclaimer on the page. Keep consequential uncertainty next to the affected claim.
+
+Then run the page check, which reads the page with scripts removed and
+disclosures closed, and fix what it reports. It needs Python 3, standard library
+only, and does not judge meaning:
+
+```bash
+python3 "<skill-dir>/scripts/check_page.py" <page.html>
+```
+
+`<skill-dir>` is the folder holding this `SKILL.md`.
 
 Deliver the usable primary artifact before an optional engineering appendix.
 Reuse the template's dependency-free canvas when suitable and replace its fictional
-content and sample behavior. Finish with available verification. If visual rendering
-is unavailable, disclose that limit in the final handoff and finish; do not build
-replacement rendering infrastructure. The template needs only a browser; no
-particular canvas product is required.
+content and sample behavior. Do not build replacement rendering infrastructure,
+but use a browser that is already there. Before delivering a page that runs
+script, open it in a real browser (an installed Playwright or Puppeteer, or a
+system Chrome or Chromium run headless), take a screenshot of the main design
+section and exercise one interaction; a structural check or a passing syntax
+check does not show that the content rendered. Say in the handoff which
+interaction you exercised and where the screenshot is. Only when no browser
+exists on the machine, disclose that limit and finish. The template needs only a
+browser; no particular canvas product is required.
 
 **Revise, then carry the understanding forward.** Treat feedback as evidence:
 change the interpretation and affected decisions, not just the presentation.
@@ -171,7 +215,8 @@ Keep the main thread focused on what this receiver needs to understand or decide
 Place material uncertainty next to the claim it affects, and disclose detailed
 source audits and implementation notes where they can be consulted without
 interrupting the main explanation.
-Avoid repeating caveats or internal question IDs across the reading surface.
+Avoid repeating caveats or internal question IDs across the reading surface;
+the identifiers of the user's own systems are not internal and need their gloss.
 Prepare the next useful exchange instead of sending the whole discovery backlog.
 
 **Make the delivery concrete.** Identify who will use it, what they need to

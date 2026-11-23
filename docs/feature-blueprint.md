@@ -10,22 +10,37 @@ Deliver and Share. Standalone use still needs no media runtime.
 ## Substantial proposal pages
 
 Use the self-contained [template](../skills/feature-blueprint/assets/review-page.html)
-for substantial web proposals. Replace the fictional workshop content while
-preserving the five short sidebar/heading labels: Requirements, Operating model,
-Prototype, Data model and Next steps. An explicitly requested format or another
-medium can use its own conventions.
+for substantial web proposals. Replace the fictional workshop content and pick
+one preset of five short sidebar/heading labels by the kind of delivery:
 
-- Requirements combines the requested additions with their practical use in one list.
+| Delivery | Sections |
+| --- | --- |
+| Feature with screens | Requirements, Operating model, Prototype, Data model, Next steps |
+| System or infrastructure change | Requirements, Operating model, Before and after, How the pieces fit, Next steps |
+| Process or policy change | Requirements, Operating model, Before and after, Who does what, Next steps |
+
+An explicitly requested format or another medium can use its own conventions.
+
+- Requirements lists one change per line; each item's use and evidence sit in a
+  disclosure on it.
 - Operating model explains roles, timing and follow-through in one account.
-- Prototype provides a connected, inspectable design on an overview/focus canvas.
+- Prototype shows connected, inspectable frames; Before and after shows the real
+  values or steps today and after the change, without mock screens.
 - Data model labels existing concepts, extensions, new records and calculated
-  results with their relationships directly in the diagram.
+  results with their relationships directly in the diagram. How the pieces fit
+  shows which component owns what and which wins a conflict; Who does what shows
+  actors, triggers and handoffs.
 - Next steps groups what can start, what needs confirmation and what is outside
-  the first version. Keep longer rationale and source checks in local disclosures.
+  the first version, one line per action. Keep longer rationale and source checks
+  in local disclosures.
 
-Keep the navigation sticky and highlight the current section. The dependency-free
-canvas supports named frames, focus, pan, zoom and expansion; application content
-and the reusable controller are separate. Preserve usable targets, control
+Keep the navigation sticky and highlight the current section. Every frame's first
+state is written in the HTML, so a viewer that shows local pages without scripts
+still shows it. The dependency-free canvas supports named frames, focus, pan, zoom
+and expansion, opens on the first frame at a readable size and stacks the frames
+when scripts are off; application content and the reusable controller are
+separate. `scripts/check_page.py` reads a page with scripts removed and
+disclosures closed and reports what a static viewer would miss. Preserve usable targets, control
 padding, keyboard access and narrow-screen navigation. Native designs and other
 requested media retain their own conventions.
 
@@ -45,10 +60,12 @@ status in dependent requirements, designs and handoffs. Source access does not
 authorize implementation, contacting people or publication.
 
 Read the actual delivery as its receiver before handoff. Remove duplicate
-explanations, check the exact five labels for the proposal format, inspect the
-visual at a usable scale and verify its meaningful interactions. A structure or
-format check is not evidence of recipient acceptance. When browser inspection is
-unavailable, finish the useful artifact and disclose that verification limit.
+explanations, check the preset's labels for the proposal format, give every
+identifier of a real object a link or a short gloss, inspect the visual at a
+usable scale and verify its meaningful interactions. Render a page that runs
+script in a browser already on the machine and keep the screenshot. A structure or
+format check is not evidence of recipient acceptance. Only when no browser exists,
+finish the useful artifact and disclose that verification limit.
 See the [delivery guidance](../skills/feature-blueprint/references/delivery.md),
 [communication examples](../skills/feature-blueprint/references/communication.md)
 and [uncertainty guidance](../skills/feature-blueprint/references/workflow.md).

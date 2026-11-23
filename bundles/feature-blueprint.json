@@ -15,6 +15,7 @@
     "skills/feature-blueprint/references/packet.md",
     "skills/feature-blueprint/references/workflow.md",
     "skills/feature-blueprint/scripts/blueprint.py",
+    "skills/feature-blueprint/scripts/check_page.py",
     "examples/feature-blueprint/README.md",
     "examples/feature-blueprint/app.mjs",
     "examples/feature-blueprint/blueprint.json",
