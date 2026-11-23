@@ -90,6 +90,21 @@ limits, actual files/access and next action without reconstructing settled
 decisions or claiming untested acceptance. A receiver probe must receive both
 the notice and the files it points to, using equivalent access.
 
+## Review-and-run request in a chat
+
+**Request:** Prepare a Teams message from a fictional engineer asking a
+colleague to review a pull request, run two commands only the colleague can run,
+commit the reports and send back one count. The fixture holds a long pull
+request description and session notes in an order unlike the message's.
+
+**Fixture:** Synthetic pull request text, two commands, a count question with a
+sharing limit, and a change with a visible review page; no real repository.
+
+**Review:** Every ask in one numbered list directly under the opener, commands
+copy-ready, the count's form and limit stated, a picture or named placeholder
+with directions to take it, reasons last and the passing check. Flag dropped
+pointers to known gaps, padding to fill the word limit and invented asks.
+
 ## Comparison and limits
 
 When delivered instructions promise a rerun or regeneration, replay them unchanged

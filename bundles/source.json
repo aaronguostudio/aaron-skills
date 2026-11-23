@@ -355,6 +355,8 @@
     "skills/deliver-work/references/channels-media.md",
     "skills/deliver-work/references/messages.md",
     "skills/deliver-work/references/release-handoff.md",
+    "skills/deliver-work/references/requests.md",
+    "skills/deliver-work/scripts/check_request.py",
     "skills/deliver-work/references/release-notes.md",
     "skills/demo-capture/SKILL.md",
     "skills/demo-capture/agents/openai.yaml",
@@ -404,7 +406,8 @@
     "website/public/art/demo-capture.webp",
     "scripts/studio.py",
     "docs/demo-studio.md",
-    "scripts/test_studio.py"
+    "scripts/test_studio.py",
+    "scripts/test_deliver_request_check.py"
   ],
   "reviewedBinaryAssets": {
     "packages/demo/covers/art/alpine-silence.webp": {

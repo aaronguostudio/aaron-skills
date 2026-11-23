@@ -38,6 +38,9 @@ Read only the applicable references:
 
 - [Stakeholder messages](references/messages.md): meaningful changes, useful
   next actions, audience-specific wording and ready-to-use communication.
+- [Requests](references/requests.md): any message that asks its receiver to
+  review, run, test, approve, decide or send something back. It has a fixed
+  shape and a check to run before handing it over.
 - [Channels and media](references/channels-media.md): chat, email, documents,
   screenshots, video, attachment access and optional Share packaging.
 - [Release notes](references/release-notes.md): user-facing change explanation,
@@ -51,6 +54,8 @@ them, ensure they match the delivered version and write text that remains useful
 without playback. A short text update or backend change may need no media.
 Reuse suitable assets. Request or create new capture/narration only within the
 task's scope; preparation of a message is not automatic recording authority.
+A request about work that shows on a screen always carries a still or a named
+placeholder for one; [Requests](references/requests.md) says how.
 
 Share (`paste-ready-update`) is an optional way to package copyable text with
 screenshots and video when installed. Capture and Film are optional ways to

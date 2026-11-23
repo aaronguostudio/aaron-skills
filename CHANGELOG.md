@@ -3,6 +3,7 @@
 ## 1.3.0
 
 - Connect a local agent to a Demo Studio team, resolve its approved Film template and reuse a pinned release offline.
+- Give Deliver a fixed shape for messages that ask the receiver to do something: every ask in one numbered list under a short opener, a picture or a named placeholder for visible work, reasons last, and a standard-library check to run before handing it over.
 
 ## 1.2.0 — 2026-11-03
 

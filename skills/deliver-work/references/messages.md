@@ -1,9 +1,16 @@
 # Stakeholder messages
 
-Read when preparing an update, customer reply, announcement, how-to or decision
-request. Write the actual message in the requested language and channel style.
-Reuse established terminology, tone and supplied signature. Do not infer an
-author from a username, path, example or tool identity.
+Read when preparing an update, customer reply, announcement, how-to, decision
+request or request for action. Write the actual message in the requested
+language and channel style. Reuse established terminology, tone and supplied
+signature. Do not infer an author from a username, path, example or tool identity.
+
+## A message that asks for something is a request
+
+If the receiver has to do anything for the sender (review, run, test, approve,
+decide, send back a file or a number), read [Requests](requests.md) and write
+the message in its shape. This holds when the message also reports work. The
+sections below then apply to wording and status only.
 
 ## Lead with what matters to this reader
 
