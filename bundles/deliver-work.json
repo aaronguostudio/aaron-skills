@@ -16,6 +16,8 @@
     "skills/deliver-work/references/messages.md",
     "skills/deliver-work/references/channels-media.md",
     "skills/deliver-work/references/release-notes.md",
-    "skills/deliver-work/references/release-handoff.md"
+    "skills/deliver-work/references/release-handoff.md",
+    "skills/deliver-work/references/requests.md",
+    "skills/deliver-work/scripts/check_request.py"
   ]
 }

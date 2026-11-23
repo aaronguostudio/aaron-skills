@@ -25,6 +25,17 @@ cannot be checked, preserve the limit instead of implying the authoring workspac
 travels with the files. Plain messages and reading-only handoffs need no extra
 reproduction package.
 
+## Requests
+
+A message that asks its receiver to do something (review, run, test, approve,
+decide, send something back) follows a fixed shape in
+[requests](../skills/deliver-work/references/requests.md): a short opener that
+states how many asks there are, every ask in one numbered list, a short summary,
+a picture or a named placeholder when the work shows on a screen, and reasons
+last. `scripts/check_request.py` checks that shape mechanically before the
+message is handed over; it does not judge meaning. One replay of a real review
+request, with controls, is the only evidence so far.
+
 ## Relationship to Share and the rest of the method
 
 Deliver handles audience, purpose, content, channel, applicability, transfer and
