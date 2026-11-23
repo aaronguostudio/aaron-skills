@@ -368,6 +368,7 @@
     "skills/feature-blueprint/references/packet.md",
     "skills/feature-blueprint/references/workflow.md",
     "skills/feature-blueprint/scripts/blueprint.py",
+    "skills/feature-blueprint/scripts/check_page.py",
     "skills/paste-ready-update/SKILL.md",
     "skills/paste-ready-update/agents/openai.yaml",
     "skills/verify-delivery/SKILL.md",
@@ -407,7 +408,8 @@
     "scripts/studio.py",
     "docs/demo-studio.md",
     "scripts/test_studio.py",
-    "scripts/test_deliver_request_check.py"
+    "scripts/test_deliver_request_check.py",
+    "scripts/test_shape_page_check.py"
   ],
   "reviewedBinaryAssets": {
     "packages/demo/covers/art/alpine-silence.webp": {

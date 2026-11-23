@@ -47,9 +47,10 @@ record" rather than slogans that make the reader infer the subject. Omit
 decorative blue eyebrows, all-caps labels, edition breadcrumbs and repeated
 general disclaimers. Retain useful dates and consequential uncertainty.
 
-For the default proposal page, use the short stable labels Requirements,
-Operating model, Prototype, Data model and Next steps. Put the project's specific
-meaning in the content and screen names. Do not make the reader relearn the
+For the default proposal page, use the short stable labels of one preset from
+the table in SKILL.md: a feature with screens, a system or infrastructure change,
+or a process or policy change. Put the project's specific meaning in the content
+and screen names. Do not make the reader relearn the
 navigation through synonyms or editorial titles. A different user-requested format
 or medium can use its own structure.
 
@@ -74,8 +75,8 @@ appropriate. A one-page design is an option, not a universal required format.
 
 For substantial web proposals, use the
 [proposal-page template](../assets/review-page.html) as the default reading
-surface. Replace its fictional workshop content with the current request, keeping
-the five top-level headings and their matching sidebar labels unchanged. Keep the left navigation sticky on desktop and highlight
+surface. Replace its fictional workshop content with the current request, using the
+five headings of the chosen preset with matching sidebar labels. Keep the left navigation sticky on desktop and highlight
 the section currently being read, including after manual scrolling, anchor
 navigation and layout changes. Make the current location available to assistive
 technology. On narrow screens retain navigation without squeezing the content;
@@ -83,15 +84,18 @@ the template uses a compact sticky row. Preserve normal keyboard navigation and
 reduced-motion preferences. Change top-level labels or count only when the user
 explicitly asks for a different format.
 
-Keep the sidebar and visible section headings identical, including casing:
-Requirements, Operating model, Prototype, Data model and Next steps. Use Operating model to explain
+Keep the sidebar and visible section headings identical, including casing, to
+the chosen preset. Use Operating model to explain
 who participates or is affected, what triggers their work, how states or steps
 progress and what decisions or actions follow. Include adoption or organizational
 change planning when the request needs it, rather than assuming those are covered
 by describing an operational workflow.
 
-For several application pages, give the receiver a canvas overview of the named
-frames and a way to focus, pan and zoom into a readable screen. Connect the useful
+For several application pages, give the receiver the named frames in a readable
+first state. Three or fewer read best stacked in the page. For more, a canvas
+overview with focus, pan and zoom helps; open it on the first frame at a readable
+size, never on a fit-everything overview, and keep every frame's first state in
+the HTML so a viewer without scripts still shows it stacked. Connect the useful
 interactions and keep form inputs separate from viewport gestures. Use the host's
 existing canvas tools or a suitable implementation; the skill does not require a
 particular library. Label the example data once and keep unresolved choices in
@@ -104,11 +108,13 @@ Give each idea one home and one primary expression:
 
 | Section | Main surface | Supporting detail |
 | --- | --- | --- |
-| Requirements | One plain list: addition + use. No separate value/recommendation callouts repeating the opening. | Source wording needed to interpret a requirement. |
+| Requirements | One line per change. No separate value/recommendation callouts repeating the opening. | The item's use, evidence, status, origin and source wording, in a disclosure on that item. |
 | Operating model | One list, table **or** flow covering roles, timing and follow-through. | Exceptions and unagreed policy rationale. |
-| Prototype | Working canvas and one demo marker; at most a short necessary instruction. | Assumptions and longer how-to notes. |
+| Prototype | Working frames and one demo marker; at most a short necessary instruction. | Assumptions and longer how-to notes. |
+| Before and after | The real values, states or steps today and after the change. | How each value was read and what has not run yet. |
 | Data model | Relationships and existing/extend/new/calculated labels **in the diagram**. | Actual-schema checks and unresolved links. |
-| Next steps | Can start now / Need to confirm / Outside this first version. Short actions and decision owner/dependency. | Options, recommendations and tradeoffs for those same decisions. |
+| How the pieces fit / Who does what | Components or actors, what each owns or writes, and which wins a conflict. | Unresolved ownership and remaining gaps. |
+| Next steps | Can start now / Need to confirm / Outside this first version. One line per action, owner or blocker as a short tag. | Options, recommendations and tradeoffs for those same decisions. |
 
 The canvas controller and fictional application are separate scripts; reuse or
 adapt the former, replace the latter. Keep the connected journey usable. Do not
@@ -145,10 +151,13 @@ quota. Check exact section labels and consequential source wording. This is an
 internal editing pass, not a new visible checklist or verification section.
 
 Build the primary reading surface before writing an optional detailed appendix.
-Prefer the available renderer/browser and existing reusable controls. When a tool
-cannot render or inspect the result, record that limit and complete the useful
-artifact rather than developing a custom renderer. A completed handoff with an
-honest verification limit is more useful than an unfinished tool-building detour.
+Prefer the available renderer/browser and existing reusable controls. Look for a
+browser before concluding there is none: an installed Playwright or Puppeteer, or
+a system Chrome or Chromium run headless. Render a page that runs script, take a
+screenshot of its main design section and exercise one interaction. Only when no
+browser exists, record that limit and complete the useful artifact rather than
+developing a custom renderer. A completed handoff with an honest verification
+limit is more useful than an unfinished tool-building detour.
 
 This default applies to proposal pages. A short reply, an existing native design,
 a slide deck or a document should keep the medium and conventions the user needs.
