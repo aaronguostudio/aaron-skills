@@ -100,7 +100,7 @@ Windows 不需要 WSL 或管理员权限；执行策略的 Bypass 只作用于�
 前置工具需要先安装，Ubuntu 还需要 Chromium 系统依赖。
 平台准备、Agent 注册、隔离并存和卸载，请看[安装与恢复](docs/installation.md)。
 
-团队工作区可通过完整版运行时的 `aaron-demo studio connect` 连接。连接一次后，后续本地制作时可以直接让 Film 使用团队模板。[团队模板指南](docs/demo-studio.md)。
+[Housecut](https://skills.aaronguo.com/housecut) 是团队共用品牌、模板和分享成片的付费工作区。在安装完整版 Aaron Skills 的电脑上运行一次 `aaron-demo studio connect`，以后就可以直接让 Film 用团队模板在本机制作视频。[团队模板指南](docs/demo-studio.md)
 
 ## 制作第一个 Demo
 

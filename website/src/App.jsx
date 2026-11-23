@@ -295,6 +295,7 @@ export function App() {
             <a href={`${home}#examples`}>{language === "zh" ? "案例" : "Examples"}</a>
             <a href={`/presentation${language === "zh" ? "?lang=zh" : ""}`} aria-current={isPresentationPage ? "page" : undefined}>{language === "zh" ? "视频呈现" : "Video presentation"}</a>
             <a href={`/releases${language === "zh" ? "?lang=zh" : ""}`} aria-current={isReleasesPage ? "page" : undefined}>{language === "zh" ? "更新" : "Updates"}</a>
+            <a href="https://skills.aaronguo.com/housecut" title={language === "zh" ? "打开团队视频工作区" : "Open the team video workspace"}>Housecut</a>
           </nav>
           <div className="header-tools">
             <div
