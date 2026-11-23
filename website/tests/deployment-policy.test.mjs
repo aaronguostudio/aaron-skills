@@ -14,6 +14,15 @@ test('only main has automatic Git deployments enabled', () => {
   assert.equal(config.ignoreCommand, 'node scripts/vercel-ignore-build.mjs');
 });
 
+test('Housecut and the original Studio link open the same workspace', () => {
+  const config = JSON.parse(readFileSync(new URL('../vercel.json', import.meta.url)));
+  for (const source of ['/housecut', '/studio']) {
+    assert.deepEqual(config.redirects.find(rule => rule.source === source), {
+      source, destination: 'https://aaron-demo-studio.vercel.app/', permanent: false,
+    });
+  }
+});
+
 test('deployment diff keeps shared inputs, accumulated changes and uncertain baselines safe', () => {
   const cwd = mkdtempSync(path.join(tmpdir(), 'aaron-build-policy-'));
   const git = (...args) => execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();

@@ -4,7 +4,7 @@ description: Choose and customize presentation covers, draft walkthrough scripts
 ---
 # Film
 
-For a team or Studio template, read `aaron-demo docs demo-studio`. Run `aaron-demo studio resolve --project <existing-run-directory>`, pass its returned presentation path to the normal local render, and keep the project pin for revisions. If the user explicitly requests an offline revision, resolve with `--offline`. Only request a connection if this OS account is not connected.
+For a Housecut or team template, read `aaron-demo docs demo-studio`. Run `aaron-demo studio resolve --project <existing-run-directory>`, pass its returned presentation path to the normal local render, and keep the project pin for revisions. If the user explicitly requests an offline revision, resolve with `--offline`. Only request a connection if this OS account is not connected.
 
 Invocation ID: `walkthrough-video`. The runtime and command names remain unchanged.
 

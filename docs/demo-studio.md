@@ -1,6 +1,6 @@
-# Team templates in Demo Studio
+# Team templates in Housecut
 
-Install the full Aaron Skills runtime. Sign in to your team's Studio, accept the invitation with the same verified email address and choose **Connect Aaron Skills**. Run the connection command shown there once per OS account and workspace. Confirm the short code on your computer in the browser. The device may read published templates for 90 days. It cannot upload recordings, manage billing or edit the team.
+Install the full Aaron Skills runtime and open [Housecut](https://skills.aaronguo.com/housecut). Sign in with the email your teammate invited. Under **Workspaces**, accept the invitation to open **Local agent** with your assigned template. Run the connection command shown there once per OS account and workspace, then enter the code from your terminal in the browser. The device may read published templates for 90 days. It cannot upload recordings, manage billing or edit the team.
 
 When asked to film a demo with the team template, resolve it before rendering:
 

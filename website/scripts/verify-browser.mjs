@@ -62,6 +62,9 @@ try {
           }
           if (route === '/') {
             const navigation = page.getByRole('navigation', { name: language === 'zh' ? '主导航' : 'Main navigation' });
+            const housecut = navigation.getByRole('link', { name: 'Housecut', exact: true });
+            assert.ok(await housecut.isVisible());
+            assert.equal(await housecut.getAttribute('href'), 'https://skills.aaronguo.com/housecut');
             assert.equal(await navigation.locator('a[href$="#skills"]').count(), 1);
             assert.equal(await navigation.locator('a[href$="#workflow"]').count(), 0);
             assert.ok(await page.locator('#workflow').count(), 'legacy workflow anchor remains available');

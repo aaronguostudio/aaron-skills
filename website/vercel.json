@@ -76,6 +76,11 @@
   ],
   "redirects": [
     {
+      "source": "/housecut",
+      "destination": "https://aaron-demo-studio.vercel.app/",
+      "permanent": false
+    },
+    {
       "source": "/studio",
       "destination": "https://aaron-demo-studio.vercel.app/",
       "permanent": false
